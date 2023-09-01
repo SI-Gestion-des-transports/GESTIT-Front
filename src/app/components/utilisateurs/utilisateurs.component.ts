@@ -13,9 +13,13 @@ export class UtilisateursComponent implements OnInit{
 
   user:Utilisateur={};
 
+  loggedUser:Utilisateur={};
+
   userFeatured:Utilisateur={};
 
   modifBtn: boolean = true;
+
+  loggedBtn:boolean = true;
   constructor(private _utilisateursService:UtilisateursService) {
   }
 
@@ -60,6 +64,17 @@ export class UtilisateursComponent implements OnInit{
         this._init();
       });
     console.log("Sortie delete" + user.id);
+  }
+
+  loginUser(user:Utilisateur){
+    this.loggedUser = user;
+    console.log("User logged : " + this.loggedUser.nom);
+    this.loggedBtn = false;
+  }
+
+  logout(){
+    this.loggedUser = {};
+    this.loggedBtn = true;
   }
 
   startUpdateUser(user:Utilisateur){
