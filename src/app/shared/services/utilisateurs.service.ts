@@ -32,6 +32,7 @@ export class UtilisateursService {
   }
 
   delete(deletedUser:Utilisateur): Observable<Utilisateur>{
+    console.log("Entrée delete SERVICE" + deletedUser.id);
     return this._http.delete<Utilisateur>(`${this._baseUrl}/${deletedUser.id}`);
   }
 
