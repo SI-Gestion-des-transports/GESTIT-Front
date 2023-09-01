@@ -24,6 +24,7 @@ import { VehiculeServiceListComponent } from './components/vehicule-service/vehi
 import { VehiculeServiceItemComponent } from './components/vehicule-service/vehicule-service-item/vehicule-service-item.component';
 import { VehiculeServiceFormComponent } from './components/vehicule-service/vehicule-service-form/vehicule-service-form.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { FooterComponent } from './components/footer/footer.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
