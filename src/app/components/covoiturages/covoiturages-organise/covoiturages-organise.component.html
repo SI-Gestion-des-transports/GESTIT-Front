@@ -1,1 +1,13 @@
-<p>covoiturages-organise works!</p>
+<form (ngSubmit)="create(covoiOrg)" class="form">
+  <div>
+    <label for="adresseDepart"> Adresse de départ: </label>
+    <input
+      type="text"
+      name="adresseDepart"
+      id="adresseDepart"
+      [(ngModel)]="covoiOrg.adresseDepart"
+      placeholder="ex: 123 rue de Montpellier"
+    />
+  </div>
+  <!--  a finir après avoir fait Adresse -->
+</form>
