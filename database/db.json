@@ -1,0 +1,53 @@
+{
+  "users": [
+    {
+      "nom": "aaaa",
+      "motDePasse": "aaa",
+      "email": "jemangeplusvite@gfaim.com",
+      "id": 1
+    },
+    {
+      "nom": "bbb",
+      "motDePasse": "bbbb",
+      "email": "f.dupont@pizzorange.fr",
+      "id": 2
+    },
+    {
+      "nom": "ccc",
+      "motDePasse": "cccc",
+      "email": "irreductible@redpizz.fr",
+      "id": 3
+    },
+    {
+      "nom": "dddd",
+      "motDePasse": "ddd",
+      "email": "dav.azria@gmail.com",
+      "id": 4
+    },
+    {
+      "nom": "vvv",
+      "motDePasse": "vvv",
+      "email": "irreductible@redpizz.fr",
+      "id": 5
+    },
+    {
+      "nom": "aaaa",
+      "motDePasse": "ddd",
+      "email": "fra.dupont@pizzorange.fr",
+      "id": 6
+    },
+    {
+      "nom": "xxx",
+      "motDePasse": "xxx",
+      "email": "xxxxx",
+      "id": 7
+    },
+    {
+      "motDePasse": "xxx",
+      "nom": "xxx",
+      "email": "xxxx",
+      "id": 8
+    }
+  ],
+  "reservationsvs": []
+}
