@@ -1,0 +1,36 @@
+<p>utilisateurs works!</p>
+<app-covoiturages></app-covoiturages>
+<app-reservation-vs></app-reservation-vs>
+<app-vehicule-service></app-vehicule-service>
+
+
+<form (ngSubmit)="create(user)" class="form">
+  <div>
+    <label for="nom">Votre nom : </label>
+    <input type="text" name="nom" id="nom" [(ngModel)]="user.nom" placeholder="Nom">
+  </div>
+  <div>
+    <label for="motDePasse">Mot de passe : </label>
+    <input type="password" name="motDePasse" id="motDePasse"[(ngModel)]="user.motDePasse" placeholder="Mot de passe">
+  </div>
+  <div>
+    <label for="email">Email : </label>
+    <input type="email" name="email" id="email" [(ngModel)]="user.email" placeholder="email">
+  </div>
+  <button type="submit" class="btn btn-success">Créer</button>
+  <button type="button" class="btn btn-warning" (click)="update(user)">Modifier</button>
+  <button type="reset" class="btn btn-secondary">Cancel</button>
+</form>
+
+<div class="list">
+  <div *ngFor="let user of users" class="singleItem">
+    <h3>{{user.nom}}</h3>
+    <button type="button" class="btn btn-secondary" (click)="userFeatured = user">Détails</button>
+  </div>
+</div>
+
+<div *ngIf="userFeatured" class="singleItem">
+  <h3>{{userFeatured.nom}}</h3>
+  <p>{{userFeatured.email}}</p>
+</div>
+

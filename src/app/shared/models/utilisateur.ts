@@ -1,5 +1,6 @@
 export interface Utilisateur {
-  nom: string,
-  motDePasse: string,
-  email: string
+  id?: number;
+  nom?: string,
+  motDePasse?: string,
+  email?: string
 }

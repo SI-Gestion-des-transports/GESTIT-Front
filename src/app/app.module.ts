@@ -25,6 +25,9 @@ import { VehiculeServiceItemComponent } from './components/vehicule-service/vehi
 import { VehiculeServiceFormComponent } from './components/vehicule-service/vehicule-service-form/vehicule-service-form.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UtilisateursComponent } from './components/utilisateurs/utilisateurs.component';
+import { HttpClientModule} from "@angular/common/http";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -49,12 +52,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     VehiculeServiceListComponent,
     VehiculeServiceItemComponent,
     VehiculeServiceFormComponent,
-    FooterComponent
+    FooterComponent,
+    UtilisateursComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
