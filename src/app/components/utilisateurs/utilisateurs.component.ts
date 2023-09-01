@@ -14,6 +14,8 @@ export class UtilisateursComponent implements OnInit{
   user:Utilisateur={};
 
   userFeatured:Utilisateur={};
+
+  modifBtn: boolean = true;
   constructor(private _utilisateursService:UtilisateursService) {
   }
 
@@ -44,21 +46,35 @@ export class UtilisateursComponent implements OnInit{
     this._utilisateursService.update(userUpdated).subscribe(()=> {
       this.reInitUser();
       this._init();
+      this.modifBtn = true;
     });
 
   }
 
   delete(user:Utilisateur){
+    console.log("Entrée delete" + user.id);
     this._utilisateursService
       .delete(user)
       .subscribe(()=> {
         this.reInitUser();
         this._init();
       });
+    console.log("Sortie delete" + user.id);
+  }
+
+  startUpdateUser(user:Utilisateur){
+    console.log("strated update")
+    this.user = user;
+    this.modifBtn = false;
+  }
+
+  undoUpdate(){
+    this.modifBtn = !this.modifBtn;
+    this.reInitUser();
+    this._init();
   }
 
   reInitUser() {
     this.user = {};
   }
-
 }

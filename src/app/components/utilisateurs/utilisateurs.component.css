@@ -1,3 +1,9 @@
 .singleItem{
   cursor: pointer;
 }
+
+.users{
+  border: black solid 1px;
+  border-radius: 7px;
+  background-color: lightgray;
+}

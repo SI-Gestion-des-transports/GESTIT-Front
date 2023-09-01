@@ -1,0 +1,5 @@
+footer {
+  background-color: lightgray;
+  display: flex;
+  justify-content: center;
+}
