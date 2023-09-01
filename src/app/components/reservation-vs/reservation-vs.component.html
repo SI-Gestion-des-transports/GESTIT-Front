@@ -2,32 +2,9 @@
 
 
 <div class="reservationVs">
-  <h3>Réserver un véhicule de service</h3>
-  <form class="form">
-    <div>
-      <label for="userId"></label>
-      <input type="hidden" name ="" id="userId" value="{{user.id}}">
-    </div>
-    <div>
-      <app-vehicule-service-item></app-vehicule-service-item>
-      <label for="vehiculeServiceId"></label>
-      <input type="hidden" name ="vehiculeServiceId" id="vehiculeServiceId">
-    </div>
-    <div>
-      <label for="distanceKm"></label>
-      <input type="number" name ="distanceKm" id="distanceKm">
-    </div>
-    <div>
-      <label for=""></label>
-      <input type="" name ="" id="">
-    </div>
-    <div>
-      <label for=""></label>
-      <input type="" name ="" id="">
-    </div>
-    <button>Réserver</button>
-    <button>Annuler</button>
-  </form>
+  <app-reservation-vs-form [user]="user"></app-reservation-vs-form>
+
+  <app-reservation-vs-list [user]="user"></app-reservation-vs-list>
 
 
 </div>

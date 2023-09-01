@@ -25,6 +25,20 @@
       "id": 6
     }
   ],
-  "reservationsvs": [],
+  "reservationsvs": [
+    {
+      "dateHeureDepart": "2023-09-06",
+      "dateHeureRetour": "2023-09-07",
+      "userId": 3,
+      "id": 1
+    },
+    {
+      "dateHeureDepart": "2023-09-12",
+      "dateHeureRetour": "2023-09-14",
+      "userId": 3,
+      "distanceKm": 450,
+      "id": 2
+    }
+  ],
   "covoiturages": []
 }

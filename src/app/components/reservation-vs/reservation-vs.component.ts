@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ReservationVsService} from "../../shared/services/reservation.vs.service";
 import {ReservationVs} from "../../shared/models/reservation.vs";
 import {Utilisateur} from "../../shared/models/utilisateur";
@@ -8,7 +8,7 @@ import {Utilisateur} from "../../shared/models/utilisateur";
   templateUrl: './reservation-vs.component.html',
   styleUrls: ['./reservation-vs.component.css']
 })
-export class ReservationVsComponent implements OnInit {
+export class ReservationVsComponent implements OnInit, OnChanges {
 
   @Input()
   user: Utilisateur={};
@@ -24,6 +24,13 @@ export class ReservationVsComponent implements OnInit {
     this._init();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.user){
+      this._init();
+      console.log(this.user.nom)
+    }
+  }
+
   private _init(){
     this._reservationVsService
       .findAll()
@@ -33,12 +40,18 @@ export class ReservationVsComponent implements OnInit {
   }
 
   create(reservationVs:ReservationVs){
+    reservationVs.userId = this.user.id;
+    console.log("Réservation : " + reservationVs.userId);
+    console.log("Réservation : " + reservationVs.distanceKm);
+    console.log("Réservation : " + reservationVs.dateHeureRetour);
+
     this._reservationVsService
       .create(reservationVs)
       .subscribe(() =>{
         this.reInitResVs();
         this._init();
     });
+
   }
 
   update(reservationVs:ReservationVs){

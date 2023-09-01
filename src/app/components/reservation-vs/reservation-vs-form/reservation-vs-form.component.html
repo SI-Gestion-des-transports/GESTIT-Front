@@ -1,1 +1,28 @@
 <p>reservation-vs-form works!</p>
+
+<h3>Réserver un véhicule de service</h3>
+<form class="form">
+  <div>
+    <label for="userId"></label>
+    <input type="hidden" name="userId" id="userId" value="{{user.id}}" [(ngModel)]="reservationVs.userId">
+  </div>
+  <div>
+    <app-vehicule-service-list></app-vehicule-service-list>
+    <label for="vehiculeServiceId"></label>
+    <input type="hidden" name="vehiculeServiceId" id="vehiculeServiceId" value="1" [(ngModel)]="reservationVs.vehiculeServiceId">
+  </div>
+  <div>
+    <label for="distanceKm"></label>
+    <input type="range" min="10" max="2000" step="10" name="distanceKm" id="distanceKm" [(ngModel)]="reservationVs.distanceKm">
+  </div>
+  <div>
+    <label for="dateHeureDepart"></label>
+    <input type="date" name="dateHeureDepart" id="dateHeureDepart" [(ngModel)]="reservationVs.dateHeureDepart">
+  </div>
+  <div>
+    <label for="dateHeureRetour"></label>
+    <input type="date" name="dateHeureRetour" id="dateHeureRetour" [(ngModel)]="reservationVs.dateHeureRetour">
+  </div>
+  <button class="btn btn-success" (click)="create(reservationVs)">Réserver</button>
+  <button class="btn btn-danger">Annuler</button>
+</form>
