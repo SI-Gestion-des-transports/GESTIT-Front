@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
+import { CovoiturageReserveProv } from 'src/app/shared/models/covoiturageReserveProv';
 
 @Component({
   selector: 'app-covoiturages-reserve',
@@ -7,36 +8,29 @@ import { Covoiturage } from 'src/app/shared/models/covoiturage';
   styleUrls: ['./covoiturages-reserve.component.css']
 })
 export class CovoituragesReserveComponent implements OnInit {
-  @Input() covoituragereserve!:Covoiturage;
+  @Input() covoituragereserve!:CovoiturageReserveProv;
   
   title!:string;
-  id!: number;
-  dateDepart!: Date;
-  distance_km!: number;
-  duree_trajet!: number;
-  nombre_places_restantes!: number;
-  adresse_arrivee_id!: number;
-  adresse_depart_id!: number;
-  organisateur_id!: number;
-  vehicule_perso_id!: number;
+ 
 
   constructor() { }
 
   ngOnInit(): void {
     this.title = "Mon covoiturage";
-    this.id = 1;
-    this.dateDepart = new Date();
-    this.distance_km = 102;
-    this.duree_trajet = 75;
-    this.nombre_places_restantes = 2;
-    this.adresse_arrivee_id = 2;
-    this.adresse_depart_id = 3;
-    this.organisateur_id = 4;
-    this.vehicule_perso_id = 2;
+    this.covoituragereserve.id = 1;
+    this.covoituragereserve.nombrePlacesRestantes = 2;
+    this.covoituragereserve.dureeTrajet = 102;
+    this.covoituragereserve.distanceKm = 75;
+    this.covoituragereserve.dateDepart = new Date();
+    this.covoituragereserve.adresseDepart = "25 rue des Cornouailles 75000 Paris";
+    this.covoituragereserve.adresseArrivee = "45 place des vignobles royaux 33000 Bordeaux";
+    this.covoituragereserve.organisateur = undefined;
+    this.covoituragereserve.passagers = undefined;
+    this.covoituragereserve.vehiculePerso=undefined
   }
 
   onShowDetails() {
-    this.duree_trajet++;
+    /* this.covoituragereserve.dureeTrajet++; */
     
   }
 }
