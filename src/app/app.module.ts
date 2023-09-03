@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,7 +28,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UtilisateursComponent } from './components/utilisateurs/utilisateurs.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-
+import { registerLocaleData } from '@angular/common';
+import * as fr from '@angular/common/locales/fr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +63,12 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  /*Insertion de la locale française pour le formatage des dates*/
+  providers: [ { provide: LOCALE_ID, useValue: 'fr-FR'}],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(){
+    registerLocaleData(fr.default);
+  }
+}

@@ -3,8 +3,7 @@
     <p>numéro du covoiturage : {{covoituragereserve.id}}</p>
     <p>Distance : {{covoituragereserve.distanceKm}}</p>
     <p><button (click)="onShowDetails()" >Details</button></p>
-    <p>Date de départ : {{covoituragereserve.dateDepart|date:'le d MMMM yyyy à HH:mm    '}}</p>
-    
+    <p>Date de départ: {{ covoituragereserve.dateDepart | date: 'le d MMMM yyyy à HH:mm, ' }}</p>
     <p>Durée trajet : {{covoituragereserve.dureeTrajet}}</p>
     <p>Nombre de places restantes : {{covoituragereserve.nombrePlacesRestantes}}</p>
     <p>Adresse d'arrivée : {{covoituragereserve.adresseArrivee}}</p>
