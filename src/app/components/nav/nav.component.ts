@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent {
+  logoUrl!: string;
+
+  constructor(){
+    this.logoUrl= "../assets/logo.png"
+  }
+
+ 
+
+  
 
 }
