@@ -8,19 +8,24 @@ import { CovoiturageReserveProv } from 'src/app/shared/models/covoiturageReserve
   styleUrls: ['./covoiturages-reserve.component.css']
 })
 export class CovoituragesReserveComponent implements OnInit {
-  @Input() covoituragereserve!:CovoiturageReserveProv;
-  
-  title!:string;
- 
+  @Input() covoituragereserve!: CovoiturageReserveProv;
+
+  title!: string;
+  showDetailsInProgress!: boolean;
+
 
   constructor() { }
 
   ngOnInit(): void {
-    
+    this.title = "Mon covoiturage";
+    this.showDetailsInProgress = false;
+
   }
 
   onShowDetails() {
-    /* this.covoituragereserve.dureeTrajet++; */
-    
+    if (this.showDetailsInProgress)
+      this.showDetailsInProgress = false;
+    else
+      this.showDetailsInProgress = true;
   }
 }
