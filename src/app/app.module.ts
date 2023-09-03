@@ -30,6 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import * as fr from '@angular/common/locales/fr';
+import { CovoituragesReservesListComponent } from './components/covoiturages/covoiturages-reserves-list/covoiturages-reserves-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,6 +56,7 @@ import * as fr from '@angular/common/locales/fr';
     VehiculeServiceFormComponent,
     FooterComponent,
     UtilisateursComponent,
+    CovoituragesReservesListComponent,
   ],
   imports: [
     BrowserModule,
