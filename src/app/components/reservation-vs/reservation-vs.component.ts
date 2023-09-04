@@ -17,6 +17,8 @@ export class ReservationVsComponent implements OnInit, OnChanges {
 
   reservationVs: ReservationVs = {};
 
+  featuredResVs: ReservationVs = {};
+
   modifBtn:boolean = true;
   constructor(private _reservationVsService:ReservationVsService) {
 }
@@ -51,21 +53,20 @@ export class ReservationVsComponent implements OnInit, OnChanges {
         this.reInitResVs();
         this._init();
     });
-
   }
 
-  update(reservationVs:ReservationVs){
+  update(resVSUpdated:ReservationVs){
     this._reservationVsService
-      .update(reservationVs)
+      .update(resVSUpdated)
       .subscribe(()=>{
         this.reInitResVs();
         this._init();
     })
   }
 
-  delete(reservationVs:ReservationVs){
+  delete(resVSDeleted:ReservationVs){
     this._reservationVsService
-      .delete(reservationVs)
+      .delete(resVSDeleted)
       .subscribe(() => {
       this.reInitResVs();
       this._init()
@@ -85,8 +86,14 @@ export class ReservationVsComponent implements OnInit, OnChanges {
   }
 
   reInitResVs(){
-
   }
 
 
+  featuringResVs($event: ReservationVs) {
+    this.featuredResVs = $event;
+  }
+
+  startUpdateResVs($event: ReservationVs){
+    this.startUpdateResaVs($event);
+  }
 }
