@@ -8,13 +8,11 @@ import { NavComponent } from './components/nav/nav.component';
 import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
 import { AuthentificationComponent } from './components/authentification/authentification.component';
-import { ZorroComponent } from './components/zorro/zorro.component';
-import { ListeZorroComponent } from './components/zorro/liste-zorro/liste-zorro.component';
-import { CovoituragesItemComponent } from './components/zorro/covoiturages-item/covoiturages-item.component';
-import { CovoituragesFormComponent } from './components/zorro/covoiturages-form/covoiturages-form.component';
-import { CovoituragesVehiculePersoComponent } from './components/zorro/covoiturages-vehicule-perso/covoiturages-vehicule-perso.component';
-import { CovoituragesOrganiseComponent } from './components/zorro/covoiturages-organise/covoiturages-organise.component';
-import { CovoiturageComponent } from './components/zorro/covoiturage/covoiturage.component';
+import { CovoituragesItemComponent } from './components/covoiturages/covoiturages-item/covoiturages-item.component';
+import { CovoituragesFormComponent } from './components/covoiturages/covoiturages-form/covoiturages-form.component';
+import { CovoituragesVehiculePersoComponent } from './components/covoiturages/covoiturages-vehicule-perso/covoiturages-vehicule-perso.component';
+import { CovoituragesOrganiseComponent } from './components/covoiturages/covoiturages-organise/covoiturages-organise.component';
+import { CovoiturageComponent } from './components/covoiturages/covoiturage/covoiturage.component';
 import { ReservationVsComponent } from './components/reservation-vs/reservation-vs.component';
 import { ReservationVsListComponent } from './components/reservation-vs/reservation-vs-list/reservation-vs-list.component';
 import { ReservationVsItemComponent } from './components/reservation-vs/reservation-vs-item/reservation-vs-item.component';
@@ -30,9 +28,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import * as fr from '@angular/common/locales/fr';
-import { CovoiturageListComponent } from './components/zorro/covoiturage-list/covoiturage-list.component';
+import { CovoiturageListComponent } from './components/covoiturages/covoiturage-list/covoiturage-list.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { SingleCovoiturageComponent } from './components/zorro/single-covoiturage/single-covoiturage.component';
+import { SingleCovoiturageComponent } from './components/covoiturages/single-covoiturage/single-covoiturage.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,8 +39,6 @@ import { SingleCovoiturageComponent } from './components/zorro/single-covoiturag
     LoginComponent,
     MainComponent,
     AuthentificationComponent,
-    ZorroComponent,
-    ListeZorroComponent,
     CovoituragesItemComponent,
     CovoituragesFormComponent,
     CovoituragesVehiculePersoComponent,
