@@ -44,4 +44,17 @@ export class CovoiturageProvService {
             vehiculePerso: undefined
         }
     ];
+
+    getAllCovoiturages(): CovoiturageReserveProv[] {
+        return this.covoituragesReserves;
+    }
+
+    getCovoiturageById(covoiturageId: number): CovoiturageReserveProv {
+        const covoiturageReserveProv = this.covoituragesReserves.find(covoiturage => covoiturage.id === covoiturageId);
+        
+        if (!covoiturageReserveProv)
+            throw new Error('Cocoiturage not found');
+        else
+            return covoiturageReserveProv;
+    }
 }

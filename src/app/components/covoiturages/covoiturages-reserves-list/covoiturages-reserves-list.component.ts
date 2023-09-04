@@ -8,12 +8,13 @@ import { CovoiturageProvService } from 'src/app/shared/services/covoiturageProv.
   styleUrls: ['./covoiturages-reserves-list.component.css']
 })
 export class CovoituragesReservesListComponent implements OnInit {
-  covoituragesToInsert!: CovoiturageReserveProv[];
+  
+  covoituragesAinserer!:CovoiturageReserveProv[];
   
   /*Injection du service dans le composant*/
   constructor(private covoiturageProvService:CovoiturageProvService){}
   ngOnInit(): void {
-    this.covoituragesToInsert = this.covoiturageProvService.covoituragesReserves;
+    this.covoituragesAinserer = this.covoiturageProvService.getAllCovoiturages();
   }
 
 }

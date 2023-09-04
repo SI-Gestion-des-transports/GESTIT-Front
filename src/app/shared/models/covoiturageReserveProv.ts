@@ -2,7 +2,7 @@ import { Utilisateur } from "./utilisateur";
 import { VehiculePerso } from "./vehicule.perso";
 
 export class CovoiturageReserveProv {
-    id: number | undefined;
+    id!: number;
     nombrePlacesRestantes?: number | undefined;
     dureeTrajet?: number | undefined;
     distanceKm?: number | undefined;
