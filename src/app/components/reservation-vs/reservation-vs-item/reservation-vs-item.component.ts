@@ -12,7 +12,7 @@ export class ReservationVsItemComponent {
   @Input()
   reservationVs : ReservationVs = {};
 
-  featuredReservation : ReservationVs = {};
+  currentReservation : ReservationVs = this._reservationVsService.currentReservationVs;
 
   modifBtn: boolean = true;
 
@@ -21,7 +21,7 @@ export class ReservationVsItemComponent {
   }
   startUpdateResVs(resVSUpdated: ReservationVs){
     this.modifBtn = false;
-    this.startUpdateResVsFromItem.emit(resVSUpdated);
+    //this.startUpdateResVsFromItem.emit(resVSUpdated);
     //this._reservationVsService.update(resVSUpdated).subscribe();
   }
 
@@ -29,11 +29,17 @@ export class ReservationVsItemComponent {
     this._reservationVsService.delete(resVSDeleted).subscribe();
   }
 
+  featureResaVs(res: ReservationVs){
+    console.log(res.dateHeureRetour);
+    this._reservationVsService.currentReservationVs = res;
+
+  }
+
+  /*
   sendFeaturedRes(res: ReservationVs){
     if(res != this.featuredReservation){
       this.featuredReservation = res;
     } else {
-
       this.featuredReservation = {};
     }
     this.featuringVsFromItem.emit(this.featuredReservation);
@@ -43,6 +49,6 @@ export class ReservationVsItemComponent {
   featuringVsFromItem = new EventEmitter <ReservationVs>();
 
   @Output()
-  startUpdateResVsFromItem = new EventEmitter <ReservationVs>();
+  startUpdateResVsFromItem = new EventEmitter <ReservationVs>();*/
 
 }

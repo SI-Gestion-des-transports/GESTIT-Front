@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
 import { CovoiturageService } from 'src/app/shared/services/covoiturage.service';
+import {Utilisateur} from "../../../shared/models/utilisateur";
 
 @Component({
   selector: 'app-covoiturage-list',
@@ -13,6 +14,8 @@ export class CovoiturageListComponent implements OnInit {
   createdCovoiturage!: Covoiturage;
   covoiturageToPush!: Covoiturage;
 
+  user: Utilisateur = {}
+
 
   /*  Observable<Covoiturage[]> toto;
    covoituragesAinserer!:Covoiturage[]; */
@@ -21,7 +24,7 @@ export class CovoiturageListComponent implements OnInit {
   constructor(private covoiturageService: CovoiturageService) { }
 
   ngOnInit(): void {
-    this.covoiturageService.findAll().subscribe(covoiturageReceived => {
+    this.covoiturageService.findAll(this.user).subscribe(covoiturageReceived => {
       this.listeCovoiturages = covoiturageReceived;
     })
 
@@ -47,7 +50,7 @@ export class CovoiturageListComponent implements OnInit {
   }
 
   private _init() {
-    this.covoiturageService.findAll()
+    this.covoiturageService.findAll(this.user)
     .subscribe(covoiturages => {
       this.listeCovoiturages = covoiturages;
     })
@@ -55,11 +58,9 @@ export class CovoiturageListComponent implements OnInit {
 
   /*  this.covoiturageService.create(this.covoiturageToPush).subscribe(covoiturageReceived => {
      this.createdCovoiturage = covoiturageReceived;});
- 
+
      console.log("covoiturage créeeeeeeeee");
 */
-
-
 }
 
 

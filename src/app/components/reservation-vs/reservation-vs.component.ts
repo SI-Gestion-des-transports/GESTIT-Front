@@ -17,13 +17,16 @@ export class ReservationVsComponent implements OnInit, OnChanges {
 
   reservationVs: ReservationVs = {};
 
-  featuredResVs: ReservationVs = {};
+  currentReservationVs: ReservationVs = {};
 
   modifBtn:boolean = true;
   constructor(private _reservationVsService:ReservationVsService) {
 }
   ngOnInit() {
-    this._init();
+    this.reservationsVs = this._reservationVsService.allReservationsVs;
+    this.user = this._reservationVsService.currentUser;
+    this.currentReservationVs = this._reservationVsService.currentReservationVs;
+    //this._init();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -31,14 +34,19 @@ export class ReservationVsComponent implements OnInit, OnChanges {
       this._init();
       console.log(this.user.nom)
     }
+    if  (this.currentReservationVs){
+      console.log("TADA")
+      console.log(this.currentReservationVs.dateHeureRetour)
+      this._init();
+    }
   }
 
   private _init(){
     this._reservationVsService
-      .findAll()
-      .subscribe(reservations => {
+      .findAll();
+/*      .subscribe(reservations => {
         this.reservationsVs = reservations;
-      });
+      });*/
   }
 
   create(reservationVs:ReservationVs){
@@ -46,7 +54,6 @@ export class ReservationVsComponent implements OnInit, OnChanges {
     console.log("Réservation : " + reservationVs.userId);
     console.log("Réservation : " + reservationVs.distanceKm);
     console.log("Réservation : " + reservationVs.dateHeureRetour);
-
     this._reservationVsService
       .create(reservationVs)
       .subscribe(() =>{
@@ -90,7 +97,7 @@ export class ReservationVsComponent implements OnInit, OnChanges {
 
 
   featuringResVs($event: ReservationVs) {
-    this.featuredResVs = $event;
+    this.currentReservationVs = $event;
   }
 
   startUpdateResVs($event: ReservationVs){
