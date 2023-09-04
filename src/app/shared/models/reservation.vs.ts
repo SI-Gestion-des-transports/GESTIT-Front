@@ -5,6 +5,6 @@ export interface ReservationVs {
   userId?: number,
   vehiculeServiceId?: number,
   distanceKm?: number,
-  dateHeureDepart?: Date,
-  dateHeureRetour?: Date,
+  dateHeureDepart?: string,
+  dateHeureRetour?: string,
 }

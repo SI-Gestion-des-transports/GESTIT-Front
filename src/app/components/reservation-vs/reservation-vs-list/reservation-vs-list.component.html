@@ -1,1 +1,3 @@
-<p>reservation-vs-list works!</p>
+<app-reservation-vs-item *ngFor="let res of reservationsVs" class="singleItem" [reservationVs]="res" (featuringVsFromItem)="featuringResVs($event)" (startUpdateResVsFromItem)="startUpdateResVs($event)"></app-reservation-vs-item>
+
+
