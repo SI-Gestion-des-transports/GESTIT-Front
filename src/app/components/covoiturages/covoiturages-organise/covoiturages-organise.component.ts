@@ -37,10 +37,10 @@ export class CovoituragesOrganiseComponent implements OnInit, OnChanges {
   }
 
   private _init() {
-    this._covoitOrgService.findAll(this.organisateur)
+    /* this._covoitOrgService.findAll(this.organisateur)
       .subscribe(covoitOrgs => {
         this.covoiOrgs = covoitOrgs;
-      });
+      }); */
   }
 
   reInitCovoitOrg() {
