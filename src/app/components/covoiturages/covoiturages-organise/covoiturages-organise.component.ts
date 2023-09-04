@@ -1,5 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
+import { Utilisateur } from 'src/app/shared/models/utilisateur';
 import { CovoituragesService } from 'src/app/shared/services/covoiturages.service';
 
 @Component({
@@ -7,30 +14,48 @@ import { CovoituragesService } from 'src/app/shared/services/covoiturages.servic
   templateUrl: './covoiturages-organise.component.html',
   styleUrls: ['./covoiturages-organise.component.css'],
 })
-export class CovoituragesOrganiseComponent implements OnInit {
+export class CovoituragesOrganiseComponent implements OnInit, OnChanges {
+  @Input()
+  organisateur: Utilisateur = {};
+
   covoiOrgs: Covoiturage[] = [];
+
   covoiOrg: Covoiturage = {};
 
   constructor(private _covoitOrgService: CovoituragesService) {}
   ngOnInit(): void {
-    this.ngOnInit();
+    /*  this._init();
+    this.reInitCovoitOrg(); */
   }
 
-  private_init() {
-    this._covoitOrgService.findAll().subscribe((covoitOrgs) => {
-      this.covoiOrgs = covoitOrgs;
-    });
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.organisateur);
+    /*  if (this.organisateur) {
+      this._init();
+      this.reInitCovoitOrg();
+    } */
+  }
+
+  private _init() {
+    this._covoitOrgService
+      .findAll(this.organisateur)
+      .subscribe((covoitOrgs) => {
+        this.covoiOrgs = covoitOrgs;
+      });
   }
 
   reInitCovoitOrg() {
-    this.covoiOrg = {};
+    this.covoiOrg = {
+      organisateur: this.organisateur,
+    };
   }
 
-  create(covoitOrg: Covoiturage) {
-    console.log('Création utilisateur :' + covoitOrg.id);
-    this._covoitOrgService.create(covoitOrg).subscribe(() => {
-      this.reInitCovoitOrg();
-      this.ngOnInit();
+  create() {
+    console.log('AAAA' + this.organisateur);
+    this.covoiOrg.organisateur = this.organisateur;
+    this._covoitOrgService.create(this.covoiOrg).subscribe(() => {
+      //this.reInitCovoitOrg();
+      //this._init();
     });
   }
 }
