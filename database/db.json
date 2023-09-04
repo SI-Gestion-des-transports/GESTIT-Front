@@ -23,8 +23,49 @@
       "motDePasse": "ddd",
       "email": "fra.dupont@pizzorange.fr",
       "id": 6
+    },
+    {
+      "nom": "aazzaz",
+      "motDePasse": "eztqg",
+      "email": "gdfhsh",
+      "id": 7
     }
   ],
-  "reservationsvs": [],
+  "reservationsvs": [
+    {
+      "dateHeureDepart": "2023-09-06",
+      "dateHeureRetour": "2023-09-07",
+      "userId": 3,
+      "id": 1
+    },
+    {
+      "dateHeureDepart": "2023-09-12",
+      "dateHeureRetour": "2023-09-14",
+      "userId": 3,
+      "distanceKm": 450,
+      "id": 2
+    },
+    {
+      "distanceKm": 1250,
+      "dateHeureDepart": "2023-09-06T11:23",
+      "dateHeureRetour": "2023-09-08T13:24",
+      "userId": 3,
+      "id": 3
+    },
+    {
+      "distanceKm": 590,
+      "dateHeureDepart": "2023-09-07T12:44:00",
+      "dateHeureRetour": "2023-09-11T15:40:00",
+      "userId": 5,
+      "id": 4
+    },
+    {
+      "distanceKm": 1310,
+      "dateHeureDepart": "2023-09-06T14:49:00",
+      "dateHeureRetour": "2023-09-13T15:49:00",
+      "userId": 3,
+      "id": 5
+    }
+  ],
   "covoiturages": []
 }

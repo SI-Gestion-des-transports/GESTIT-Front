@@ -20,11 +20,17 @@ export class ReservationVsService {
     return this._http.get<ReservationVs[]>(this._baseUrl);
   }
 
-
-  findByVsId(vsIs: number): Observable<ReservationVs> {
-    return this._http.get<ReservationVs>(`${this._baseUrl}/${vsIs}`);
+  findById(id: number): Observable<ReservationVs[]> {
+    return this._http.get<ReservationVs[]>(`${this._baseUrl}/${id}`);
   }
 
+  findByVsId(vsId: number): Observable<ReservationVs> {
+    return this._http.get<ReservationVs>(`${this._baseUrl}/?vehiculeServiceId=${vsId}`);
+  }
+
+  findByUserId(userId: number): Observable<ReservationVs[]>{
+    return this._http.get<ReservationVs[]>(`${this._baseUrl}/?userId=${userId}`)
+  }
 
   create(resVSCreated: ReservationVs): Observable<ReservationVs> {
     return this._http.post<ReservationVs>(this._baseUrl, resVSCreated);
