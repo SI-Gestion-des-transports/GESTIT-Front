@@ -1,4 +1,4 @@
-<form (ngSubmit)="create(covoiOrg)" class="form">
+<form class="form">
   <div>
     <label for="adresseDepart"> Adresse de départ: </label>
     <input
@@ -9,5 +9,5 @@
       placeholder="ex: 123 rue de Montpellier"
     />
   </div>
-  <!--  a finir après avoir fait Adresse -->
+  <button (click)="create()">Go!</button>
 </form>
