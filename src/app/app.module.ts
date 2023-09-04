@@ -31,6 +31,7 @@ import { FormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import * as fr from '@angular/common/locales/fr';
 import { CovoituragesReservesListComponent } from './components/covoiturages/covoiturages-reserves-list/covoiturages-reserves-list.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,6 +58,7 @@ import { CovoituragesReservesListComponent } from './components/covoiturages/cov
     FooterComponent,
     UtilisateursComponent,
     CovoituragesReservesListComponent,
+    LandingPageComponent,
   ],
   imports: [
     BrowserModule,
