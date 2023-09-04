@@ -1,6 +1,9 @@
 
-<div class="border border-1">
-    <h2>Créer un covoiturage</h2>
+<div class="border border-1" style="text-align:center margin-right:auto margin-left:auto">
+    <h2  >Créer un covoiturage</h2>
     <button (click)="onCreateCovoiturage()" class="mb-5">create</button>
 </div>
-<app-covoiturage *ngFor="let cov of listeCovoiturages" [covoituragereserve]="cov"></app-covoiturage>
+<h2 class="mt-5" style="text-align:center">Liste des covoiturages enregistrés</h2>
+<div class="listeCovoiturages mt-5 border border-2" >
+    <app-covoiturage *ngFor="let cov of listeCovoiturages" [covoituragereserve]="cov"></app-covoiturage>
+</div>
