@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CovoiturageReserveProv } from 'src/app/shared/models/covoiturageReserveProv';
-import { CovoiturageProvService } from 'src/app/shared/services/covoiturageProv.service';
+import { Covoiturage } from 'src/app/shared/models/covoiturage';
+import { CovoiturageService } from 'src/app/shared/services/covoiturage.service';
+
 
 @Component({
   selector: 'app-single-covoiturage',
@@ -9,13 +10,13 @@ import { CovoiturageProvService } from 'src/app/shared/services/covoiturageProv.
   styleUrls: ['./single-covoiturage.component.css']
 })
 export class SingleCovoiturageComponent {
-  covoituragereserve!: CovoiturageReserveProv;
+  covoituragereserve!: Covoiturage;
 
   title!: string;
   showDetailsInProgress!: boolean;
 
 
-  constructor(private covoiturageReserveService: CovoiturageProvService,
+  constructor(private covoiturageService: CovoiturageService,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -25,12 +26,12 @@ export class SingleCovoiturageComponent {
     /* Nota: le typeCast permet, à l'aide du caractère '+', de transformer
     une chaine de caractères qui contient des nombres en numberAttribute. */
     const covoiturageId = +this.route.snapshot.params['id'];
-    this.covoituragereserve = this.covoiturageReserveService.getCovoiturageById(covoiturageId);
+    this.covoituragereserve = this.covoiturageService.getCovoiturageById(covoiturageId);
   }
 
   onShowDetails() {
     if (this.showDetailsInProgress) {
-      console.log(this.covoiturageReserveService.getCovoiturageById(this.covoituragereserve.id));
+      console.log(this.covoiturageService.getCovoiturageById(this.covoituragereserve.id));
     }
     else
       throw new Error('Covoiturage not found!');

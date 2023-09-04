@@ -1,15 +1,15 @@
-import { Utilisateur } from './utilisateur';
-import { VehiculePerso } from './vehicule.perso';
+import { Utilisateur } from "./utilisateur";
+import { VehiculePerso } from "./vehicule.perso";
 
-export interface Covoiturage {
-  id?: number;
-  nombrePlacesRestantes?: number;
-  dureeTrajet?: number;
-  distanceKm?: number;
-  dateDepart?: Date;
-  adresseDepart?: string;
-  adresseArrivee?: string;
-  organisateur?: Utilisateur;
-  passagers?: Utilisateur[];
-  vehiculePerso?: VehiculePerso;
+export class Covoiturage {
+    id!: number;
+    nombrePlacesRestantes?: number | undefined;
+    dureeTrajet?: number | undefined;
+    distanceKm?: number | undefined;
+    dateDepart?: Date | undefined;
+    adresseDepart?: string | undefined;
+    adresseArrivee?: string | undefined;
+    organisateur?: Utilisateur | undefined
+    passagers?: Utilisateur[] | undefined;
+    vehiculePerso?: VehiculePerso | undefined
 }

@@ -1,22 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core'
 import { Router } from '@angular/router';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
-import { CovoiturageReserveProv } from 'src/app/shared/models/covoiturageReserveProv';
-import { CovoiturageProvService } from 'src/app/shared/services/covoiturageProv.service';
+import { CovoiturageService } from 'src/app/shared/services/covoiturage.service';
+
 
 @Component({
-  selector: 'app-covoiturages-reserve',
-  templateUrl: './covoiturages-reserve.component.html',
-  styleUrls: ['./covoiturages-reserve.component.css']
+  selector: 'app-covoiturage',
+  templateUrl: './covoiturage.component.html',
+  styleUrls: ['./covoiturage.component.css']
 })
-export class CovoituragesReserveComponent implements OnInit {
-  @Input() covoituragereserve!: CovoiturageReserveProv;
+export class CovoiturageComponent implements OnInit {
+  @Input() covoituragereserve!: Covoiturage;
 
   title!: string;
   showDetailsInProgress!: boolean;
 
 
-  constructor(private covoiturageReserveService : CovoiturageProvService,
+  constructor(private covoiturageReserveService : CovoiturageService,
     private router:Router) { }
 
   ngOnInit(): void {

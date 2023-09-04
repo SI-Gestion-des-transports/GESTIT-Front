@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Covoiturage } from 'src/app/shared/models/covoiturage';
-import { CovoituragesService } from 'src/app/shared/services/covoiturages.service';
+import { Covoiturage_old } from 'src/app/shared/models/covoiturage_old';
+import { CovoituragesService } from 'src/app/shared/services/covoiturages.service_old';
 
 @Component({
   selector: 'app-covoiturages-organise',
@@ -8,8 +8,8 @@ import { CovoituragesService } from 'src/app/shared/services/covoiturages.servic
   styleUrls: ['./covoiturages-organise.component.css'],
 })
 export class CovoituragesOrganiseComponent implements OnInit {
-  covoiOrgs: Covoiturage[] = [];
-  covoiOrg: Covoiturage = {};
+  covoiOrgs: Covoiturage_old[] = [];
+  covoiOrg: Covoiturage_old = {};
 
   constructor(private _covoitOrgService: CovoituragesService) {}
   ngOnInit(): void {
@@ -26,7 +26,7 @@ export class CovoituragesOrganiseComponent implements OnInit {
     this.covoiOrg = {};
   }
 
-  create(covoitOrg: Covoiturage) {
+  create(covoitOrg: Covoiturage_old) {
     console.log('Création utilisateur :' + covoitOrg.id);
     this._covoitOrgService.create(covoitOrg).subscribe(() => {
       this.reInitCovoitOrg();

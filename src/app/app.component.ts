@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Covoiturage_old } from './shared/models/covoiturage_old';
 import { Covoiturage } from './shared/models/covoiturage';
-import { CovoiturageReserveProv } from './shared/models/covoiturageReserveProv';
 
 @Component({
   selector: 'app-root',

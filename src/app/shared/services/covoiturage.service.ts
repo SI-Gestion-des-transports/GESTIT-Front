@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Covoiturage } from '../models/covoiturage';
-import { CovoiturageReserveProv } from '../models/covoiturageReserveProv';
+
+
 
 @Injectable({
     providedIn: 'root'
 })
-export class CovoiturageProvService {
-    covoituragesReserves: CovoiturageReserveProv[] = [
+export class CovoiturageService {
+    covoituragesReserves: Covoiturage[] = [
         {
             id: 1,
             nombrePlacesRestantes: 2,
@@ -45,16 +46,16 @@ export class CovoiturageProvService {
         }
     ];
 
-    getAllCovoiturages(): CovoiturageReserveProv[] {
+    getAllCovoiturages(): Covoiturage[] {
         return this.covoituragesReserves;
     }
 
-    getCovoiturageById(covoiturageId: number): CovoiturageReserveProv {
-        const covoiturageReserveProv = this.covoituragesReserves.find(covoiturage => covoiturage.id === covoiturageId);
+    getCovoiturageById(covoiturageId: number): Covoiturage {
+        const covoiturageReserve = this.covoituragesReserves.find(covoiturage => covoiturage.id === covoiturageId);
         
-        if (!covoiturageReserveProv)
-            throw new Error('Cocoiturage not found');
+        if (!covoiturageReserve)
+            throw new Error('Covoiturage not found');
         else
-            return covoiturageReserveProv;
+            return covoiturageReserve;
     }
 }
