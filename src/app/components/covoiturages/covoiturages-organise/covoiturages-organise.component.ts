@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
 import { Utilisateur } from 'src/app/shared/models/utilisateur';
-import { CovoituragesService } from 'src/app/shared/services/covoiturages.service';
+import {CovoiturageService} from "../../../shared/services/covoiturage.service";
 
 @Component({
   selector: 'app-covoiturages-organise',
@@ -22,7 +22,7 @@ export class CovoituragesOrganiseComponent implements OnInit, OnChanges {
 
   covoiOrg: Covoiturage = {};
 
-  constructor(private _covoitOrgService: CovoituragesService) {}
+  constructor(private _covoitOrgService: CovoiturageService) {}
   ngOnInit(): void {
     /*  this._init();
     this.reInitCovoitOrg(); */
@@ -37,9 +37,8 @@ export class CovoituragesOrganiseComponent implements OnInit, OnChanges {
   }
 
   private _init() {
-    this._covoitOrgService
-      .findAll(this.organisateur)
-      .subscribe((covoitOrgs) => {
+    this._covoitOrgService.findAll(this.organisateur)
+      .subscribe(covoitOrgs => {
         this.covoiOrgs = covoitOrgs;
       });
   }
