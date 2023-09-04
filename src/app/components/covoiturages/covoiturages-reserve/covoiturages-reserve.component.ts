@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
 import { CovoiturageReserveProv } from 'src/app/shared/models/covoiturageReserveProv';
 import { CovoiturageProvService } from 'src/app/shared/services/covoiturageProv.service';
@@ -15,7 +16,8 @@ export class CovoituragesReserveComponent implements OnInit {
   showDetailsInProgress!: boolean;
 
 
-  constructor(private covoiturageReserveService : CovoiturageProvService) { }
+  constructor(private covoiturageReserveService : CovoiturageProvService,
+    private router:Router) { }
 
   ngOnInit(): void {
     this.title = "Mon covoiturage";
@@ -30,5 +32,10 @@ export class CovoituragesReserveComponent implements OnInit {
     }
       else
       throw new Error('Covoiturage not found!');
+  }
+
+  onViewCovoiturage(){
+    this.router.navigateByUrl(`covoiturages/${this.covoituragereserve.id}`);
+
   }
 }

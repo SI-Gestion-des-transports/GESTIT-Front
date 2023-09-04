@@ -4,8 +4,10 @@ import { CovoituragesReserveComponent } from './components/covoiturages/covoitur
 import { CovoituragesListComponent } from './components/covoiturages/covoiturages-list/covoiturages-list.component';
 import { CovoituragesReservesListComponent } from './components/covoiturages/covoiturages-reserves-list/covoiturages-reserves-list.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { SingleCovoiturageComponent } from './components/covoiturages/single-covoiturage/single-covoiturage.component';
 
 const routes: Routes = [
+  {path:'covoiturages/:id', component:SingleCovoiturageComponent},   //Route avec paramètre dynamique
   {path:'covoiturages', component: CovoituragesReservesListComponent},
   {path:'', component:LandingPageComponent}
 ];

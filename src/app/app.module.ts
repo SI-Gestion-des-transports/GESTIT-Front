@@ -32,6 +32,7 @@ import { registerLocaleData } from '@angular/common';
 import * as fr from '@angular/common/locales/fr';
 import { CovoituragesReservesListComponent } from './components/covoiturages/covoiturages-reserves-list/covoiturages-reserves-list.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { SingleCovoiturageComponent } from './components/covoiturages/single-covoiturage/single-covoiturage.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +60,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
     UtilisateursComponent,
     CovoituragesReservesListComponent,
     LandingPageComponent,
+    SingleCovoiturageComponent,
   ],
   imports: [
     BrowserModule,
