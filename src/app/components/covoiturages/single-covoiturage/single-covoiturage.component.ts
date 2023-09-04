@@ -10,7 +10,7 @@ import { CovoiturageService } from 'src/app/shared/services/covoiturage.service'
   styleUrls: ['./single-covoiturage.component.css']
 })
 export class SingleCovoiturageComponent {
-  covoituragereserve!: Covoiturage;
+  covoiturage? : Covoiturage = {}
 
   title!: string;
   showDetailsInProgress!: boolean;
@@ -26,15 +26,18 @@ export class SingleCovoiturageComponent {
     /* Nota: le typeCast permet, à l'aide du caractère '+', de transformer
     une chaine de caractères qui contient des nombres en numberAttribute. */
     const covoiturageId = +this.route.snapshot.params['id'];
-    this.covoituragereserve = this.covoiturageService.getCovoiturageById(covoiturageId);
+    
+
+    this.covoiturageService.findById(covoiturageId)
+     .subscribe(covoiturage => this.covoiturage = covoiturage);
+
   }
 
-  onShowDetails() {
+   onShowDetails() {
     if (this.showDetailsInProgress) {
-      console.log(this.covoiturageService.getCovoiturageById(this.covoituragereserve.id));
+      
     }
     else
       throw new Error('Covoiturage not found!');
   }
 }
-

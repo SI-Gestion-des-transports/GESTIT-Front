@@ -1,8 +1,7 @@
 <div class=covoiturages-organises-card [ngClass]="{showDetails : showDetailsInProgress === true}">
-    <h2>{{title | uppercase}}</h2>
-    <p>numéro du covoiturage : {{covoituragereserve.id}}</p>
+    <p><strong>Covoiturage n° {{covoituragereserve.id}}</strong> </p>
     <button (click)="onViewCovoiturage()">Détails</button>
-    <!-- <p>Distance : {{covoituragereserve.distanceKm}}</p>
+   <!--  <p>Distance : {{covoituragereserve.distanceKm}}</p>
     <p><button (click)="onShowDetails()" >Details</button></p>
     <p>Date de départ: {{ covoituragereserve.dateDepart | date: 'le d MMMM yyyy à HH:mm, ' }}</p>
     <p>Durée trajet : {{covoituragereserve.dureeTrajet}}</p>

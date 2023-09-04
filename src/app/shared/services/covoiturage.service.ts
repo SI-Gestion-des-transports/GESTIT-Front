@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Covoiturage } from '../models/covoiturage';
+import { environment } from 'src/environments/environment.development';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 
 
@@ -7,55 +10,40 @@ import { Covoiturage } from '../models/covoiturage';
     providedIn: 'root'
 })
 export class CovoiturageService {
-    covoituragesReserves: Covoiturage[] = [
-        {
-            id: 1,
-            nombrePlacesRestantes: 2,
-            dureeTrajet: 102,
-            distanceKm: 91,
-            dateDepart: new Date(),
-            adresseDepart: "25 rue des Cornouailles 75000 Paris",
-            adresseArrivee: "45 place des vignobles royaux 33000 Bordeaux",
-            organisateur: undefined,
-            passagers: undefined,
-            vehiculePerso: undefined
-        },
-        {
-            id: 2,
-            nombrePlacesRestantes: 4,
-            dureeTrajet: 450,
-            distanceKm: 800,
-            dateDepart: new Date(),
-            adresseDepart: "11 passage des Abesses 63000 Clermont-ferrand",
-            adresseArrivee: "1035 chemin du poullailler ancien 11000 Narbonne",
-            organisateur: undefined,
-            passagers: undefined,
-            vehiculePerso: undefined
-        },
-        {
-            id: 3,
-            nombrePlacesRestantes: 1,
-            dureeTrajet: 45,
-            distanceKm: 99,
-            dateDepart: new Date(),
-            adresseDepart: "1 place du menuet dansant 78350 Noisy les ardillons",
-            adresseArrivee: "87 avenue de Maupassant 23000 Guéret",
-            organisateur: undefined,
-            passagers: undefined,
-            vehiculePerso: undefined
-        }
-    ];
+    listeCovoiturages!: Covoiturage[]
+    private _baseCovoitUrl = environment.urlApi.covoiturages;
+    constructor(private _http: HttpClient) { }
 
-    getAllCovoiturages(): Covoiturage[] {
-        return this.covoituragesReserves;
+    public findAll(): Observable<Covoiturage[]> {
+        return this._http.get<Covoiturage[]>(this._baseCovoitUrl);
     }
 
-    getCovoiturageById(covoiturageId: number): Covoiturage {
-        const covoiturageReserve = this.covoituragesReserves.find(covoiturage => covoiturage.id === covoiturageId);
-        
-        if (!covoiturageReserve)
-            throw new Error('Covoiturage not found');
-        else
-            return covoiturageReserve;
+    public findById(covoiturageId: number) {
+        return this._http.get<Covoiturage>(`${this._baseCovoitUrl}/${covoiturageId}`);
+
+    }
+
+    public create(createdCovoiturage: Covoiturage):Observable<Covoiturage>{
+        console.log("creation demandee");
+        return this._http.post<Covoiturage>(
+            this._baseCovoitUrl,
+            createdCovoiturage
+        );
     }
 }
+
+
+
+
+/* public update(updatedCovoitOrg: Covoiturage_old) {
+   return this._http.put<Covoiturage_old>(
+     `${this._baseCovoitUrl}/${updatedCovoitOrg.id}`,
+     updatedCovoitOrg
+   );
+ }
+ 
+ public delete(deletedCovoitOrg: Covoiturage_old) {
+   return this._http.delete<Covoiturage_old>(
+     `${this._baseCovoitUrl}/${deletedCovoitOrg.id}`
+   );
+ } */

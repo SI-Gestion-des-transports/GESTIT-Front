@@ -15,5 +15,83 @@
   ],
   "profile": {
     "name": "typicode"
-  }
+  },
+  "covoiturages": [
+    {
+      "id": 23,
+      "nombrePlacesRestantes": 2,
+      "dureeTrajet": 102,
+      "distanceKm": 91,
+      "dateDepart": "",
+      "adresseDepart": "25 rue des Cornouailles 75000 Paris",
+      "adresseArrivee": "45 place des vignobles royaux 33000 Bordeaux",
+      "organisateur": "",
+      "passagers": "",
+      "vehiculePerso": ""
+    },
+    {
+      "id": 24,
+      "nombrePlacesRestantes": 4,
+      "dureeTrajet": 450,
+      "distanceKm": 800,
+      "dateDepart": "",
+      "adresseDepart": "11 passage des Abesses 63000 Clermont-ferrand",
+      "adresseArrivee": "1035 chemin du poullailler ancien 11000 Narbonne",
+      "organisateur": "",
+      "passagers": "",
+      "vehiculePerso": ""
+    },
+    {
+      "id": 25,
+      "nombrePlacesRestantes": 1,
+      "dureeTrajet": 45,
+      "distanceKm": 99,
+      "dateDepart": "",
+      "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
+      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret",
+      "organisateur": "",
+      "passagers": "",
+      "vehiculePerso": ""
+    },
+    {
+      "nombrePlacesRestantes": 45,
+      "dureeTrajet": 45,
+      "distanceKm": 99,
+      "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
+      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret",
+      "id": 26
+    },
+    {
+      "nombrePlacesRestantes": 45,
+      "dureeTrajet": 45,
+      "distanceKm": 99,
+      "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
+      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret",
+      "id": 27
+    },
+    {
+      "nombrePlacesRestantes": 45,
+      "dureeTrajet": 45,
+      "distanceKm": 99,
+      "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
+      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret",
+      "id": 28
+    },
+    {
+      "nombrePlacesRestantes": 45,
+      "dureeTrajet": 45,
+      "distanceKm": 99,
+      "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
+      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret",
+      "id": 29
+    },
+    {
+      "nombrePlacesRestantes": 45,
+      "dureeTrajet": 45,
+      "distanceKm": 99,
+      "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
+      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret",
+      "id": 30
+    }
+  ]
 }

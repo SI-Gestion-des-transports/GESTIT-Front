@@ -25,17 +25,17 @@ export class CovoiturageComponent implements OnInit {
     
 
   }
+ 
 
   onShowDetails() {
-    if (this.showDetailsInProgress){
+   /*  if (this.showDetailsInProgress){
       console.log(this.covoiturageReserveService.getCovoiturageById(this.covoituragereserve.id));
     }
       else
-      throw new Error('Covoiturage not found!');
+      throw new Error('Covoiturage not found!'); */
   }
 
   onViewCovoiturage(){
     this.router.navigateByUrl(`covoiturages/${this.covoituragereserve.id}`);
-
   }
 }

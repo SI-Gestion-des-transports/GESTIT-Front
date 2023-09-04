@@ -1,1 +1,6 @@
-<app-covoiturage *ngFor="let cov of covoituragesAinserer" [covoituragereserve]="cov"></app-covoiturage>
+
+<div class="border border-1">
+    <h2>Créer un covoiturage</h2>
+    <button (click)="onCreateCovoiturage()" class="mb-5">create</button>
+</div>
+<app-covoiturage *ngFor="let cov of listeCovoiturages" [covoituragereserve]="cov"></app-covoiturage>
