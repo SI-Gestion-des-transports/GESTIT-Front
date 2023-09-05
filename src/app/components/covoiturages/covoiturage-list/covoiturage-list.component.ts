@@ -18,8 +18,9 @@ export class CovoiturageListComponent implements OnInit {
   value!: number;
   value_str!: string;
   filtrage!: CovoiturageFiltrage;
+  listeFiltree!: Covoiturage[];
+  listeAremplir!: Covoiturage[];
 
-  
 
 
 
@@ -30,6 +31,7 @@ export class CovoiturageListComponent implements OnInit {
     this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
     this.covoituragesByIdUser$ = this.covoiturageService.getAllCovoiturages();
     this.filtrage = new CovoiturageFiltrage();
+
   }
 
   onKey(event: any) { // without type info
@@ -37,30 +39,62 @@ export class CovoiturageListComponent implements OnInit {
     this.covoituragesByIdUser$ = this.covoiturageService.getFilteredbyUsersCovoit(this.value);
   }
 
-  onVilleDepart(event: any) { // without type info
-    this.value_str = event.target.value;
-    if (this.value_str !== "") {
-      this.filtrage.isFilteringByVilleDepart = true;
-      //this.covoiturages$ = this.covoiturageService.getFilteredbyVilleDepart(this.value_str);
-    }
-    else {
-      this.filtrage.isFilteringByVilleDepart = false;
-      //this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
-    }
+
+  /* Politique de filtrage:
+  La liste de tous les covoiturages s'affiche par défaut au démarrage de la page.
+  Deux types de filtrage sont possibles:
+  -> La liste peut-être affichée filtrée par l'adresse de départ OU d'arrivée
+  -> La liste peut-être également filtrée par date;
+  Donc résultat filtrage = (Ville départ XOR ville d'arrivée)ET date.
+  */
+
+
+  onVilleDepart(event: any) {
+    console.log("event detectéd");
+    this.filtrage.filter_VilleDepart_Value = event.target.value;
+    this.filtrage.filter_VilleArrivee_value = '';
+
     this.listFiltering();
-    
-  }
-
-  listFiltering(){
-    /*To implement*/
-      
 
   }
 
-  onVilleArrivee(event: any) { // without type info
-    this.value_str = event.target.value;
-    this.covoiturages$ = this.covoiturageService.getFilteredbyVilleDepart(this.value_str);
+  onVilleArrivee(event: any) {
+    this.filtrage.filter_VilleArrivee_value = event.target.value;
+    this.filtrage.filter_VilleDepart_Value = '';
   }
+
+
+  listFiltering() {
+    console.log("Lancement du filtrage");
+    /*Pipe permet d'accéder à la liste de covoiturage encapsulée dans l'observable.
+      - l'opérateur primitif map permet d'executer une action sur chaque membre du tableau
+      - l'opérateur primitif filter permet de garder tout itération dans la mesure où 
+        la condition qui lui est fournie en paramètres est true.
+    En résumé:
+      1 - getAllCovoiturage renvoit la liste de tous les covoiturages enregistrés en base
+      2 - Pour chaque covoiturage, un lance un filtrage par l'intermédiaire de map, afin de
+      garder ou d"écarter l'occurence selon la condition précisée à filter().
+   listeFiltree : this.covoiturageService.getAllCovoiturages()*/
+    // listeFiltree: Covoiturage[] = this.covoiturageService.getAllCovoiturages()
+    //                               .pipe(map(res=>res.filter(res=> res.dateDepart === this.filtrage.)));
+
+
+   this.covoiturages$= this.covoiturageService.getAllCovoiturages()
+    .pipe(map(res=>res.filter(res=> res.adresseDepart === this.filtrage.filter_VilleDepart_Value)));
+     
+
+
+   
+
+
+
+
+
+
+
+
+  }
+
 
 
 

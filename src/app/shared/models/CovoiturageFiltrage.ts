@@ -1,41 +1,13 @@
 export class CovoiturageFiltrage {
-    isFilteringByVilleDepart:boolean;
-    isFilteringByVilleArrivee:boolean;
-    isFilteringByDate:boolean;
+    filter_VilleDepart_Value:string;
+    filter_VilleArrivee_value:string;
+    filter_Date_value: Date;
     
     constructor(){
-        this.isFilteringByDate = false;
-        this.isFilteringByVilleDepart = false;
-        this.isFilteringByVilleArrivee = false;
-    }
+        
+        this.filter_VilleDepart_Value = "";
+        this.filter_VilleArrivee_value = "";
+        this.filter_Date_value = new Date();
 
-    getStateFilter_villeDepart():boolean
-    {
-        return this.isFilteringByVilleDepart;
-    }
-
-    setStateFilter_villeDepart(state:boolean):void
-    {
-        this.isFilteringByVilleDepart = state;
-    }
-
-    getStateFilter_villeArrivee():boolean
-    {
-        return this.isFilteringByVilleArrivee;
-    }
-
-    setStateFilter_villeArrivee(state:boolean):void
-    {
-        this.isFilteringByVilleArrivee = state;
-    }
-
-    getStateFilter_date():boolean
-    {
-        return this.isFilteringByDate;
-    }
-
-    setStateFilter_date(state:boolean):void
-    {
-        this.isFilteringByDate = state;
     }
 }

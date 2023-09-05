@@ -39,6 +39,13 @@ export class CovoiturageService implements OnInit{
               .pipe(map(res=>res.filter(res=> res.adresseDepart === nomVille)));
 }
 
+createArrayFrom(newArray:Covoiturage[], oldArray:Covoiturage[]):void{
+  newArray = JSON.parse(JSON.stringify(oldArray));
+   
+}
+  
+
+
   
 
 
