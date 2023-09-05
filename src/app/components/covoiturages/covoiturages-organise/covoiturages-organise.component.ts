@@ -44,7 +44,7 @@ export class CovoituragesOrganiseComponent implements OnInit, OnChanges {
       });
   } */
 
-  
+
   private _init() {
     this._covoitOrgService.getAllCovoiturages()
       .subscribe(covoitOrgs => {
@@ -52,7 +52,6 @@ export class CovoituragesOrganiseComponent implements OnInit, OnChanges {
       });
   }
 
-  
 
   reInitCovoitOrg() {
     this.covoiOrg = {

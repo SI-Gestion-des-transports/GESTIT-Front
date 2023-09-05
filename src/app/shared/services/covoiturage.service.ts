@@ -9,46 +9,40 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class CovoiturageService implements OnInit {
+export class CovoiturageService {
 
   private _baseCovoitUrl = environment.urlApi.covoiturages;
 
-  constructor(private http: HttpClient) { }
-
-  ngOnInit(): void { }
+  constructor(private _http: HttpClient) { }
 
   getAllCovoiturages(): Observable<Covoiturage[]> {
-    return this.http.get<Covoiturage[]>(this._baseCovoitUrl);
+    return this._http.get<Covoiturage[]>(this._baseCovoitUrl);
   }
 
   getCovoiturageById(covoiturageId: number): Observable<Covoiturage> {
-    return this.http.get<Covoiturage>(`${this._baseCovoitUrl}/${covoiturageId}`);
+    return this._http.get<Covoiturage>(`${this._baseCovoitUrl}/${covoiturageId}`);
   }
 
   public create(createdCovoiturage: Covoiturage): Observable<Covoiturage> {
     console.log("creation demandee");
-    return this.http.post<Covoiturage>(
+    return this._http.post<Covoiturage>(
       this._baseCovoitUrl,
       createdCovoiturage
     );
   }
+
+  public update(updatedCovoitOrg: Covoiturage) {
+    return this._http.put<Covoiturage>(
+      `${this._baseCovoitUrl}/${updatedCovoitOrg.id}`,
+      updatedCovoitOrg
+    );
+  }
+
+  public delete(deletedCovoitOrg: Covoiturage) {
+    return this._http.delete<Covoiturage>(
+      `${this._baseCovoitUrl}/${deletedCovoitOrg.id}`
+    );
+  }
+
 }
 
-/*    
-} */
-
-
-
-
-/* public update(updatedCovoitOrg: Covoiturage_old) {
-   return this._http.put<Covoiturage_old>(
-     `${this._baseCovoitUrl}/${updatedCovoitOrg.id}`,
-     updatedCovoitOrg
-   );
- }
-
- public delete(deletedCovoitOrg: Covoiturage_old) {
-   return this._http.delete<Covoiturage_old>(
-     `${this._baseCovoitUrl}/${deletedCovoitOrg.id}`
-   );
- } */
