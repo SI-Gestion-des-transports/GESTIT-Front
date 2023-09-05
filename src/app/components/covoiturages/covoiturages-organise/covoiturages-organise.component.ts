@@ -5,9 +5,13 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
+import { Adresse } from 'src/app/shared/models/adresse';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
 import { Utilisateur } from 'src/app/shared/models/utilisateur';
-import {CovoiturageService} from "../../../shared/services/covoiturage.service";
+import { CovoiturageService } from '../../../shared/services/covoiturage.service';
+import {Subscription} from "rxjs";
+import {VehiculePerso} from "../../../shared/models/vehicule.perso";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-covoiturages-organise',
@@ -15,56 +19,102 @@ import {CovoiturageService} from "../../../shared/services/covoiturage.service";
   styleUrls: ['./covoiturages-organise.component.css'],
 })
 export class CovoituragesOrganiseComponent implements OnInit, OnChanges {
+ /* @Input()
+  organisateur: Utilisateur = {};*/
+
+  /*@Input()*/
+  covoitOrgs: Covoiturage[] | undefined = [];
+
+  /*
   @Input()
-  organisateur: Utilisateur = {};
+  adresseDepart: Adresse | null = null;
+  */
 
-  covoiOrgs: Covoiturage[] = [];
+  // Variables partagées via le service (observable, suscribe)
+  adresseDepart: Adresse = {};
+  adresseArrivee: Adresse ={};
+  currentUser: Utilisateur = {}
+  vehiculesPersoCurrentUser: VehiculePerso[] = [];
+  // Fin variables partagées
 
-  covoiOrg: Covoiturage = {};
 
-  constructor(private _covoitOrgService: CovoiturageService) {}
+  covoitOrg: Covoiturage = {};
+
+  private _subscription = new Subscription();
+  constructor(private _covoitOrgService: CovoiturageService,
+              private _router: Router) {}
   ngOnInit(): void {
-     this._init();
+    this._init();
     this.reInitCovoitOrg();
+    // Subscription aux variables du service
+    this._subscription.add(
+      this._covoitOrgService.adresseDepart$.subscribe(data => this.adresseDepart = data)
+    );
+    this._subscription.add(
+      this._covoitOrgService.adresseArrivee$.subscribe(data => this.adresseArrivee = data)
+    );
+    this._subscription.add(
+      this._covoitOrgService.currentUser$.subscribe(data => this.currentUser = data)
+    );
+    this._subscription.add(
+      this._covoitOrgService.vehiculesPersoCurrentUser$.subscribe(data => this.vehiculesPersoCurrentUser = data)
+    );
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.organisateur);
-     if (this.organisateur) {
+    console.log(this.currentUser);
+    if (this.currentUser) {
       this._init();
       this.reInitCovoitOrg();
     }
   }
 
-  /* LAN
-  private _init() {
-    this._covoitOrgService.findAll(this.organisateur)
-      .subscribe(covoitOrgs => {
-        this.covoiOrgs = covoitOrgs;
-      });
-  } */
-
 
   private _init() {
-    this._covoitOrgService.getAllCovoiturages()
-      .subscribe(covoitOrgs => {
-        this.covoiOrgs = covoitOrgs;
-      });
+    if (this.currentUser.nom != undefined) {
+      console.log("_init")
+      console.log("User : " + this.currentUser.nom)
+      this._covoitOrgService
+        .getCovoituragesByOrganisateur(this.currentUser)
+        .subscribe((covoitOrgsCreated) => {
+          this.covoitOrgs = covoitOrgsCreated;
+        });
+    }
   }
-
 
   reInitCovoitOrg() {
-    this.covoiOrg = {
-      organisateur: this.organisateur,
-    };
+    this.covoitOrg = {};
+    this.adresseDepart = {};
+    this.adresseArrivee = {};
+    this.covoitOrg.organisateur = this.currentUser;
+
   }
 
-  create() {
-    console.log('AAAA' + this.organisateur);
-    this.covoiOrg.organisateur = this.organisateur;
-    this._covoitOrgService.create(this.covoiOrg).subscribe(() => {
+/*  create() {
+    this.covoitOrg.organisateur = this.currentUser;
+    this.covoitOrg.adresseDepart = this.adresseDepart;
+    this._covoitOrgService.create(this.covoitOrg).subscribe(() => {
       this.reInitCovoitOrg();
       this._init();
     });
+  }*/
+
+
+  onSubmit(){
+    this.covoitOrg.organisateur = this.currentUser;
+    this.covoitOrg.adresseDepart = this.adresseDepart;
+    this.covoitOrg.adresseArrivee = this.adresseArrivee;
+    console.log(this.adresseDepart.codePostal);
+    console.log(this.covoitOrg.dureeTrajet);
+    console.log(this.covoitOrg.distanceKm);
+    this._covoitOrgService.create(this.covoitOrg).subscribe(() => {
+      console.log("Covoit created");
+      this.reInitCovoitOrg();
+    });
+  }
+
+  cancel(){
+    this._router.navigateByUrl('covoiturages');
   }
 }

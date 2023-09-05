@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UtilisateursService } from '../../shared/services/utilisateurs.service';
 import { Utilisateur } from '../../shared/models/utilisateur';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
+import {CovoiturageService} from "../../shared/services/covoiturage.service";
 
 @Component({
   selector: 'app-utilisateurs',
@@ -21,7 +22,8 @@ export class UtilisateursComponent implements OnInit {
 
   loggedBtn: boolean = true;
 
-  constructor(private _utilisateursService: UtilisateursService) {}
+  constructor(private _utilisateursService: UtilisateursService,
+              private _covoiturageService: CovoiturageService) {}
 
   ngOnInit() {
     this._init();
@@ -61,8 +63,10 @@ export class UtilisateursComponent implements OnInit {
 
   loginUser(user: Utilisateur) {
     this.loggedUser = user;
+    this._covoiturageService.updateCurrentUser(this.loggedUser);
     console.log('User logged : ' + this.loggedUser.nom);
     this.loggedBtn = false;
+    this._init();
   }
 
   logout() {

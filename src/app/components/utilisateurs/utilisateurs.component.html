@@ -1,8 +1,9 @@
 <p>utilisateurs works!</p>
 
-<app-covoiturages-organise
+<!--<app-covoiturages-organise
   [organisateur]="loggedUser"
-></app-covoiturages-organise>
+  [covoitOrgs]="loggedUser.covoituragesOrganises"
+></app-covoiturages-organise>-->
 
 <app-reservation-vs [user]="loggedUser"></app-reservation-vs>
 
@@ -62,23 +63,35 @@
       {{ modifBtn ? "Cancel" : "Annuler" }}
     </button>
   </form>
-  <hr>
+  <hr />
   <div class="list">
     <div *ngFor="let singleUser of users" class="singleItem">
-      <h3>{{singleUser.nom}}</h3>
-      <button type="button" class="btn btn-secondary" (click)="userFeatured = singleUser">Détails</button>
-      <button type="button"
-              (click)="modifBtn && startUpdateUser(singleUser)"
-              class="btn"
-              [class.btn-warning]="modifBtn"
-              [class.btn-secondary]="!modifBtn"
-      >Modifier</button>
-      <button type="button"
-              class="btn"
-              [class.btn-danger]="modifBtn"
-              [class.btn-secondary]="!modifBtn"
-              (click)="modifBtn && delete(singleUser)"
-      >Supprimer</button>
+      <h3>{{ singleUser.nom }}</h3>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="userFeatured = singleUser"
+      >
+        Détails
+      </button>
+      <button
+        type="button"
+        (click)="modifBtn && startUpdateUser(singleUser)"
+        class="btn"
+        [class.btn-warning]="modifBtn"
+        [class.btn-secondary]="!modifBtn"
+      >
+        Modifier
+      </button>
+      <button
+        type="button"
+        class="btn"
+        [class.btn-danger]="modifBtn"
+        [class.btn-secondary]="!modifBtn"
+        (click)="modifBtn && delete(singleUser)"
+      >
+        Supprimer
+      </button>
       <div>
         <p>Test & Dev :</p>
         <button
@@ -95,7 +108,7 @@
   </div>
 
   <div *ngIf="userFeatured" class="singleItem">
-    <h3>{{userFeatured.nom}}</h3>
-    <p>{{userFeatured.email}}</p>
+    <h3>{{ userFeatured.nom }}</h3>
+    <p>{{ userFeatured.email }}</p>
   </div>
 </div>

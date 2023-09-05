@@ -31,6 +31,7 @@ import * as fr from '@angular/common/locales/fr';
 import { CovoiturageListComponent } from './components/covoiturages/covoiturage-list/covoiturage-list.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SingleCovoiturageComponent } from './components/covoiturages/single-covoiturage/single-covoiturage.component';
+import { AdressesComponent } from './components/adresses/adresses.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +57,8 @@ import { SingleCovoiturageComponent } from './components/covoiturages/single-cov
     UtilisateursComponent,
     CovoiturageListComponent,
     LandingPageComponent,
-    SingleCovoiturageComponent
+    SingleCovoiturageComponent,
+    AdressesComponent
   ],
   imports: [
     BrowserModule,

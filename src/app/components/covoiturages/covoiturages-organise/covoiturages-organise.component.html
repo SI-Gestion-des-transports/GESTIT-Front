@@ -1,13 +1,80 @@
+
 <form class="form">
   <div>
-    <label for="adresseDepart"> Adresse de départ: </label>
+    <p>Adresse de départ :</p>
+    <label for="numeroD"> Numéro : </label>
+    <input
+      type="number"
+      name="numero"
+      id="numeroD"
+      [(ngModel)]="adresseDepart.numero"
+    />
+    <label for="voieD"> Voie : </label>
+    <input type="text" name="voie" id="voieD" [(ngModel)]="adresseDepart.voie" />
+
+    <label for="codePostalD"> Code Postal : </label>
+    <input
+      type="number"
+      name="codePostal"
+      id="codePostalD"
+      [(ngModel)]="adresseDepart.codePostal"
+    />
+
+    <label for="communeD"> Commune : </label>
     <input
       type="text"
-      name="adresseDepart"
-      id="adresseDepart"
-      [(ngModel)]="covoiOrg.adresseDepart"
-      placeholder="ex: 123 rue de Montpellier"
+      name="commune"
+      id="communeD"
+      [(ngModel)]="adresseDepart.commune"
     />
   </div>
-  <button (click)="create()">Go!</button>
+  <div>
+    <p>Adresse d'arrivée :</p>
+    <label for="numeroA"> Numéro : </label>
+    <input
+      type="number"
+      name="numero"
+      id="numeroA"
+      [(ngModel)]="adresseArrivee.numero"
+    />
+    <label for="voieA"> Voie : </label>
+    <input type="text" name="voie" id="voieA" [(ngModel)]="adresseArrivee.voie" />
+
+    <label for="codePostalA"> Code Postal : </label>
+    <input
+      type="number"
+      name="codePostal"
+      id="codePostalA"
+      [(ngModel)]="adresseArrivee.codePostal"
+    />
+
+    <label for="communeA"> Commune : </label>
+    <input
+      type="text"
+      name="commune"
+      id="communeA"
+      [(ngModel)]="adresseArrivee.commune"
+    />
+  </div>
+  <p>Trajet :</p>
+  <div>
+    <label for="dureeTrajet">Durée trajet</label>
+    <input type="time" name="dureeTrajet" id="dureeTrajet" [(ngModel)]="covoitOrg.dureeTrajet">
+  </div>
+  <div>
+    <label for="distanceKm">Distance</label>
+    <input type="number" name="distanceKm" id="distanceKm" [(ngModel)]="covoitOrg.distanceKm">
+  </div>
+  <div>
+    <label for="dateDepart">Date</label>
+    <input type="datetime-local" name="dateDepart" id="dateDepart" [(ngModel)]="covoitOrg.dateDepart">
+  </div>
+
+  <select name="Vehicule perso" value="Vehicule perso" [(ngModel)]="vehiculesPersoCurrentUser">
+    <option *ngFor="let vehicule of vehiculesPersoCurrentUser">{{vehicule.modele}}</option>
+  </select>
+
+
+  <button type="button" class="btn btn-success" (click)="onSubmit()">Ok</button>
+  <button class="btn btn-outline-danger" (click)="cancel()">Annuler</button>
 </form>
