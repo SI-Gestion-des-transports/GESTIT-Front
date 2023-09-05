@@ -1,8 +1,15 @@
-<div class=covoiturages-organises-card [ngClass]="{showDetails : showDetailsInProgress === true}">
-    <div>
-        <strong>Covoiturage n° {{covoituragereserve.id}}</strong>
-        <p>idOrganisateur : {{covoituragereserve.organisateur?.id}}</p>
-        <button (click)="onViewCovoiturage()">Détails</button>
+<div class="covoiturages-organises-card container " [ngClass]="{showDetails : showDetailsInProgress === true}">
+    <div class="d-flex justify-content-between border border-2 border-radius: 7px"  style="background-color: gray  ">
+        <div class="d-flex flex-column covoiturages-card"  >
+            <strong>Covoiturage n° {{covoituragereserve.id}}</strong>
+            <ul>
+                <li>idOrganisateur : {{covoituragereserve.organisateur?.id}}</li>
+                <li>Départ : {{covoituragereserve.adresseDepart}}</li>
+                <li>Arrivée : {{covoituragereserve.adresseArrivee}}</li>
+                <li>Le {{covoituragereserve.dateDepart}}</li>
+            </ul>
+        </div>
+        <button (click)="onViewCovoiturage()" class="btn btn-primary btn-sm">Réserver</button>
     </div>
 
     <!--  <p>Distance : {{covoituragereserve.distanceKm}}</p>

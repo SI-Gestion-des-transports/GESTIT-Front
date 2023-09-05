@@ -1,6 +1,27 @@
 html {
   padding: 10px;
 }
+.list {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+button {
+  margin: 5px;
+}
+
+.inputDate, input {
+  border: black solid 1px;
+  border-radius: 7px;
+  margin: 5px;
+  padding: 5px;
+}
+
+* {
+
+}
+
+
 
 
 /*
@@ -32,6 +53,20 @@ html {
   align-items: center
 }
 
+.itemInList{
+  cursor: pointer;
+  border: black solid 1px;
+  border-radius: 7px;
+  
+  padding: 5px;
+  margin: 5px;
+  
+  justify-content: center;
+  background-color: gray;
+}
+
+
+
 .detail {
   padding: 5px;
   margin: 5px;
@@ -42,37 +77,4 @@ html {
   align-items: center
 }
 
-.list {
-  display: flex;
-  flex-flow: row wrap;
-}
 
-button {
-  margin: 5px;
-}
-
-.inputDate, input {
-  border: black solid 1px;
-  border-radius: 7px;
-  margin: 5px;
-  padding: 5px;
-}
-* {
-
-}
-
-button {
-  background-color: transparent;
-  box-sizing: border-box;
-  padding: 5px 10px;
-  border: none;
-  box-shadow: lightgray 3px 3px 7px;
-  margin-right: 20px;
-  outline: none;
-  font-size: 14px;
-  font-weight: 500;
-  &:active {
-    transform: translate(1px, 1px);
-    box-shadow: lightgray 0 0 5px;
-  }
-}

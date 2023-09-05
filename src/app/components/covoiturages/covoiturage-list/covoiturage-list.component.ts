@@ -14,6 +14,7 @@ export class CovoiturageListComponent implements OnInit {
   covoituragesByIdUser$!:Observable<Covoiturage[]>;
   covoiturageToPush!: Covoiturage;
   value!: number;
+  value_str!:string;
   
 
   constructor(private covoiturageService: CovoiturageService) { }
@@ -27,6 +28,14 @@ export class CovoiturageListComponent implements OnInit {
     this.value = +event.target.value;
     this.covoituragesByIdUser$ = this.covoiturageService.getFilteredbyUsersCovoit(this.value);
   }
+
+  onDateDepart(event: any) { // without type info
+    this.value_str = event.target.value;
+    this.covoiturages$ = this.covoiturageService.getFilteredbyVilleDepart(this.value_str);
+  }
+
+  
+  
 
   onCreateCovoiturage(): void {
     this.covoiturageToPush = {

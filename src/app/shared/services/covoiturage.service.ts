@@ -37,6 +37,16 @@ export class CovoiturageService implements OnInit{
     return this._listOfAllCovoiturages$;
   }
 
+  getFilteredbyVilleDepart(nomVille:string): Observable<Covoiturage[]> {
+    return this._http.get<Covoiturage[]>(this._baseCovoitUrl)
+              .pipe(map(res=>res.filter(res=> res.adresseDepart === nomVille)));
+
+
+    return this._listOfAllCovoiturages$;
+  }
+
+  
+
 
 
 

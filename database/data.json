@@ -22,9 +22,9 @@
       "nombrePlacesRestantes": 2,
       "dureeTrajet": 102,
       "distanceKm": 91,
-      "dateDepart": "",
-      "adresseDepart": "25 rue des Cornouailles 75000 Paris",
-      "adresseArrivee": "45 place des vignobles royaux 33000 Bordeaux",
+      "dateDepart": "2012-04-23T18:25:43.511Z",
+      "adresseDepart": "Paris",
+      "adresseArrivee": "Bordeaux",
       "organisateur": {
         "nom": "ccc",
         "motDePasse": "cccc",
@@ -39,9 +39,9 @@
       "nombrePlacesRestantes": 2,
       "dureeTrajet": 102,
       "distanceKm": 91,
-      "dateDepart": "",
-      "adresseDepart": "25 rue des Cornouailles 75000 Paris",
-      "adresseArrivee": "45 place des vignobles royaux 33000 Bordeaux",
+      "dateDepart":"2012-04-23T18:25:43.511Z",
+      "adresseDepart": "Lille",
+      "adresseArrivee": "Marseille",
       "organisateur": {
         "nom": "ccc",
         "motDePasse": "cccc",
@@ -56,9 +56,9 @@
       "nombrePlacesRestantes": 2,
       "dureeTrajet": 102,
       "distanceKm": 91,
-      "dateDepart": "",
-      "adresseDepart": "25 rue des Cornouailles 75000 Paris",
-      "adresseArrivee": "45 place des vignobles royaux 33000 Bordeaux",
+      "dateDepart": "2012-04-23T18:25:43.511Z",
+      "adresseDepart": "Chartres",
+      "adresseArrivee": "Nimes",
       "organisateur": {
         "nom": "aaa",
         "motDePasse": "aaa",
@@ -67,7 +67,22 @@
       },
       "passagers": "",
       "vehiculePerso": ""
+    },
+    {
+      "nombrePlacesRestantes": 45,
+      "dureeTrajet": 45,
+      "distanceKm": 99,
+      "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
+      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret",
+      "id": 26
+    },
+    {
+      "nombrePlacesRestantes": 45,
+      "dureeTrajet": 45,
+      "distanceKm": 99,
+      "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
+      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret",
+      "id": 27
     }
-    
   ]
 }
