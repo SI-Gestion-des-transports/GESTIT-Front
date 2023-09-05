@@ -79,5 +79,26 @@
       "id": 7
     }
   ],
-  "covoiturages": []
+  "covoiturages": [
+    {
+      "organisateur": {
+        "nom": "ccc",
+        "motDePasse": "cccc",
+        "email": "irreductible@redpizz.fr",
+        "id": 3
+      },
+      "adresseDepart": "123, rue de fdsfdsf",
+      "id": 1
+    },
+    {
+      "organisateur": {
+        "nom": "ccc",
+        "motDePasse": "cccc",
+        "email": "irreductible@redpizz.fr",
+        "id": 3
+      },
+      "adresseDepart": "200 place royale",
+      "id": 2
+    }
+  ]
 }
