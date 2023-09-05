@@ -1,5 +1,62 @@
-<div  class="list">
-  <app-reservation-vs-item *ngFor="let res of reservationsVs" class="singleItem" [reservationVs]="res"></app-reservation-vs-item>
+<div class="list">
+  <div class="buttonOfList">
+    <button type="button"
+            class="btn"
+            [class.btn-primary]="upcompingReservations"
+            [class.btn-secondary]="!upcompingReservations"
+            (click)="getIncomingReservations()">Réservation en cours</button>
+    <button type="button"
+            class="btn"
+            [class.btn-secondary]="upcompingReservations"
+            [class.btn-primary]="!upcompingReservations"
+            (click)="getPasReservations()">Mon historique</button>
+  </div>
+
+  <div class="tableList">
+    <table>
+        <tr>
+          <th>Date de début</th>
+          <th>Heure de début</th>
+          <th>Date de fin</th>
+          <th>Heure de fin</th>
+          <th>Immatriculation</th>
+          <th>Marque</th>
+          <th>Modèle</th>
+          <th>Actions</th>
+        </tr>
+
+        <tr *ngFor="let res of allReservationsVs">
+          <td>{{extractDate(res.dateHeureDepart)}}</td>
+          <td>{{extractTime(res.dateHeureDepart)}}</td>
+          <td>{{extractDate(res.dateHeureRetour)}}</td>
+          <td>{{extractTime(res.dateHeureRetour)}}</td>
+          <td>{{res.vehiculeServiceId}}</td>
+          <td>{{res.vehiculeServiceId}}</td>
+          <td>{{res.vehiculeServiceId}}</td>
+          <td>
+            <button type="button"
+                    class="btn"
+                    [class.btn-warning]="modifBtn"
+                    [class.btn-secondary]="!modifBtn"
+                    (click)="startUpdateResVs(res)">Modifier</button>
+            <button type="button"
+                    class="btn"
+                    [class.btn-danger]="modifBtn"
+                    [class.btn-secondary]="!modifBtn"
+                    (click)="deleteReservationVs(res)">Supprimer</button>
+          </td>
+        </tr>
+    </table>
+  </div>
 </div>
 
+
+<!--
+
+<hr>
+<div  class="list">
+  <app-reservation-vs-item *ngFor="let res of allReservationsVs" class="singleItem" [resaVs]="res"></app-reservation-vs-item>
+</div>
+
+-->
 

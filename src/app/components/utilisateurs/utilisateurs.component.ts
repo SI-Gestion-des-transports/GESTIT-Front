@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UtilisateursService } from '../../shared/services/utilisateurs.service';
 import { Utilisateur } from '../../shared/models/utilisateur';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
+import {ReservationVsService} from "../../shared/services/reservation.vs.service";
 
 @Component({
   selector: 'app-utilisateurs',
@@ -21,7 +22,8 @@ export class UtilisateursComponent implements OnInit {
 
   loggedBtn: boolean = true;
 
-  constructor(private _utilisateursService: UtilisateursService) {}
+  constructor(private _utilisateursService: UtilisateursService,
+              private _reservationVsService: ReservationVsService) {}
 
   ngOnInit() {
     this._init();
@@ -63,11 +65,14 @@ export class UtilisateursComponent implements OnInit {
     this.loggedUser = user;
     console.log('User logged : ' + this.loggedUser.nom);
     this.loggedBtn = false;
+    this._reservationVsService.updateCurrentUser(user);
+    console.log("logged from resVsServ : "+ this._reservationVsService.currentUser$);
   }
 
   logout() {
     this.loggedUser = {};
     this.loggedBtn = true;
+    this._reservationVsService.updateCurrentUser({});
   }
 
   startUpdateUser(user: Utilisateur) {
