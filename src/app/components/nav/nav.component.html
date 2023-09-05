@@ -35,11 +35,19 @@
 </nav> -->
 
 
-  <nav>
-    <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-    <a routerLink="covoiturages" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Covoiturages</a>
-    <a routerLink="reservationsvs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Reservations VS</a>
-    <a routerLink="utilisateurs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Utilisateurs</a>
-  </nav>
+<nav>
+  <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+  <select (change)="getCovoiturageChoice($event)">
+    <option style="display:none">Covoiturage</option>
+    <option [value]="item.id" *ngFor="let item of covoiturageChoicies">{{item.name}}</option>
+  </select>
+  <select (change)="getVehiculeServiceChoice($event)">
+    <option style="display:none">Véhicule de société</option>
+    <option [value]="item.id" *ngFor="let item of ReservationsVehiculeServiceChoicies">{{item.name}}</option>
 
-
+  </select>
+  <a routerLink="utilisateurs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Utilisateurs</a>
+  <a routerLink="login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <button> Connexion </button>
+  </a>
+</nav>

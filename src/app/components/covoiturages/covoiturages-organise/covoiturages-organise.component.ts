@@ -24,24 +24,35 @@ export class CovoituragesOrganiseComponent implements OnInit, OnChanges {
 
   constructor(private _covoitOrgService: CovoiturageService) {}
   ngOnInit(): void {
-    /*  this._init();
-    this.reInitCovoitOrg(); */
+     this._init();
+    this.reInitCovoitOrg();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.organisateur);
-    /*  if (this.organisateur) {
+     if (this.organisateur) {
       this._init();
       this.reInitCovoitOrg();
-    } */
+    }
   }
 
+  /* LAN
   private _init() {
     this._covoitOrgService.findAll(this.organisateur)
       .subscribe(covoitOrgs => {
         this.covoiOrgs = covoitOrgs;
       });
+  } */
+
+  
+  private _init() {
+    this._covoitOrgService.getAllCovoiturages()
+      .subscribe(covoitOrgs => {
+        this.covoiOrgs = covoitOrgs;
+      });
   }
+
+  
 
   reInitCovoitOrg() {
     this.covoiOrg = {
@@ -53,8 +64,8 @@ export class CovoituragesOrganiseComponent implements OnInit, OnChanges {
     console.log('AAAA' + this.organisateur);
     this.covoiOrg.organisateur = this.organisateur;
     this._covoitOrgService.create(this.covoiOrg).subscribe(() => {
-      //this.reInitCovoitOrg();
-      //this._init();
+      this.reInitCovoitOrg();
+      this._init();
     });
   }
 }

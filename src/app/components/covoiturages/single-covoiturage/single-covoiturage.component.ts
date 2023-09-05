@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
 import { CovoiturageService } from 'src/app/shared/services/covoiturage.service';
 
@@ -10,11 +11,11 @@ import { CovoiturageService } from 'src/app/shared/services/covoiturage.service'
   styleUrls: ['./single-covoiturage.component.css']
 })
 export class SingleCovoiturageComponent {
-  covoiturage? : Covoiturage = {}
 
   title!: string;
   showDetailsInProgress!: boolean;
 
+  covoiturage$!: Observable<Covoiturage>;
 
   constructor(private covoiturageService: CovoiturageService,
     private route: ActivatedRoute) { }
@@ -26,18 +27,14 @@ export class SingleCovoiturageComponent {
     /* Nota: le typeCast permet, à l'aide du caractère '+', de transformer
     une chaine de caractères qui contient des nombres en numberAttribute. */
     const covoiturageId = +this.route.snapshot.params['id'];
-    
-
-    this.covoiturageService.findById(covoiturageId)
-     .subscribe(covoiturage => this.covoiturage = covoiturage);
-
+    this.covoiturage$ = this.covoiturageService.getCovoiturageById(covoiturageId);
   }
 
-   onShowDetails() {
+  onShowDetails() {
     if (this.showDetailsInProgress) {
-      
     }
     else
       throw new Error('Covoiturage not found!');
   }
 }
+

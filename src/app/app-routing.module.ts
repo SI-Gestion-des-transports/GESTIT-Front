@@ -9,14 +9,22 @@ import {UtilisateursComponent} from "./components/utilisateurs/utilisateurs.comp
 import {
   ReservationVsItemComponent
 } from "./components/reservation-vs/reservation-vs-item/reservation-vs-item.component";
+import { CovoituragesOrganiseComponent } from './components/covoiturages/covoiturages-organise/covoiturages-organise.component';
+import { AuthentificationComponent } from './components/authentification/authentification.component';
+import { VehiculeServiceComponent } from './components/vehicule-service/vehicule-service.component';
 
 const routes: Routes = [
   {path:'covoiturages/:id', component:SingleCovoiturageComponent},   //Route avec paramètre dynamique
   {path:'covoiturages', component: CovoiturageListComponent},
+  {path:'covoituragesOrganises', component: CovoituragesOrganiseComponent},
   {path:'', component:LandingPageComponent},
   {path:'reservationsvs', component:ReservationVsComponent},
   {path:'reservationsvs/:id', component:ReservationVsItemComponent},
-  {path:'utilisateurs', component:UtilisateursComponent}
+  {path:'utilisateurs', component:UtilisateursComponent},
+  {path:'login', component:AuthentificationComponent},
+  {path:'vehiculeService', component:VehiculeServiceComponent},
+  
+  
 ];
 
 @NgModule({
