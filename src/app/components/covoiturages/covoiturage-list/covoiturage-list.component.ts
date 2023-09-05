@@ -19,6 +19,8 @@ export class CovoiturageListComponent implements OnInit {
   value_str!: string;
   filtrage!: CovoiturageFiltrage;
 
+  
+
 
 
 
@@ -39,11 +41,20 @@ export class CovoiturageListComponent implements OnInit {
     this.value_str = event.target.value;
     if (this.value_str !== "") {
       this.filtrage.isFilteringByVilleDepart = true;
-      this.covoiturages$ = this.covoiturageService.getFilteredbyVilleDepart(this.value_str);
+      //this.covoiturages$ = this.covoiturageService.getFilteredbyVilleDepart(this.value_str);
     }
     else {
-      this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
+      this.filtrage.isFilteringByVilleDepart = false;
+      //this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
     }
+    this.listFiltering();
+    
+  }
+
+  listFiltering(){
+    /*To implement*/
+      
+
   }
 
   onVilleArrivee(event: any) { // without type info

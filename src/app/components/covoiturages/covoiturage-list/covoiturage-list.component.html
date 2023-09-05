@@ -1,42 +1,16 @@
-<!-- <div class="border border-1" style="text-align:center">
-    <button (click)="onCreateCovoiturage()" class="mb-5">Créer covoiturage</button>
-</div> -->
-
 <div class="container">
     <div class="d-flex flex-column align-items-center">
-        <div class = "d-flex flex-row mt-2 mb-3 ">
-            <p class="d-flex align-self-end" >filtrer par</p>
-            <input (keyup)="onVilleDepart($event)" type="text" placeholder="Ville de départ"  [ngClass]="{'activeFilter': filtrage.isFilteringByVilleDepart === true, 'disabledFilter':filtrage.isFilteringByVilleDepart === false}">
-            <!-- <input (keyup)="onVilleArrivee($event)" type="text" placeholder="Ville d'arrivée"  [ngClass]="filtrage.isFilteringByVilleArrivee == true ? 'activeFilter' : 'disabledFilter'"> -->
+        <div class="d-flex flex-row mt-2 mb-3 ">
+            <p class="d-flex align-self-end">filtrer par</p>
+            <input (keyup)="onVilleDepart($event)" type="text" placeholder="Ville de départ"
+                [ngClass]="{'activeFilter': filtrage.isFilteringByVilleDepart === true, 'disabledFilter':filtrage.isFilteringByVilleDepart === false}">
+            <input (keyup)="onVilleArrivee($event)" type="text" placeholder="Ville d'arrivée"
+                [ngClass]="filtrage.isFilteringByVilleArrivee == true ? 'activeFilter' : 'disabledFilter'">
             <input type="date" placeholder="Date départ">
-            
+
         </div>
         <div class="listeCovoiturages" style="background-color: whitesmoke">
-            <app-covoiturage *ngFor="let cov of covoiturages$ | async" [covoituragereserve]="cov" ></app-covoiturage>
-        </div>
-    </div>
-    <div class="d-flex flex-column">
-        <p> liste covoiturages filtrée par utilisateur</p>
-        <input (keyup)="onKey($event)">
-        <div class="listeCovoiturages border border-2">
-            <app-covoiturage *ngFor="let cov of covoituragesByIdUser$ | async"
-                [covoituragereserve]="cov"></app-covoiturage>
+            <app-covoiturage *ngFor="let cov of covoiturages$ | async" [covoituragereserve]="cov"></app-covoiturage>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-<!-- <h2 class="mt-5" >Liste des covoiturages enregistrés</h2>
-<div class="listeCovoiturages mt-5 border border-5 red" >
-    <app-covoiturage *ngFor="let toto of covoituragesByIdUser$ | async" [covoituragereserve]="toto"></app-covoiturage>
-</div> -->
-
-
-<!-- <h2 class="mt-5" style="text-align:center">Liste filtrée</h2>
-<div class="listeCovoituragesFiltree mt-5 border border-5" >
-    <app-covoiturage *ngFor="let toto of covoituragesByIdUser$ | async" [covoituragereserve]="toto"></app-covoiturage>
-</div> -->
