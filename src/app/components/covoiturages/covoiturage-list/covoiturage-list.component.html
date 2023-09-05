@@ -1,9 +1,37 @@
-
 <div class="border border-1" style="text-align:center">
-    <h2  >Créer un covoiturage</h2>
-    <button (click)="onCreateCovoiturage()" class="mb-5">create</button>
+    <button (click)="onCreateCovoiturage()" class="mb-5">Créer covoiturage</button>
 </div>
-<h2 class="mt-5" style="text-align:center">Liste des covoiturages enregistrés</h2>
-<div class="listeCovoiturages mt-5 border border-2" >
-    <app-covoiturage *ngFor="let cov of covoiturages$ | async" [covoituragereserve]="cov"></app-covoiturage>
+
+<div class="d-flex flex-row justify-content-center">
+    <div class="p-2">
+        <p> liste covoiturages complète</p>
+        <div class="listeCovoiturages border border-2 mt-5">
+            <app-covoiturage *ngFor="let cov of covoiturages$ | async" [covoituragereserve]="cov"></app-covoiturage>
+        </div>
+    </div>
+    <div class="d-flex flex-column">
+        <p> liste covoiturages filtrée par utilisateur</p>
+        <input (keyup)="onKey($event)">
+        <div class="listeCovoiturages border border-2">
+            <app-covoiturage *ngFor="let cov of covoituragesByIdUser$ | async"
+                [covoituragereserve]="cov"></app-covoiturage>
+        </div>
+    </div>
+
 </div>
+
+
+
+
+
+
+<!-- <h2 class="mt-5" >Liste des covoiturages enregistrés</h2>
+<div class="listeCovoiturages mt-5 border border-5 red" >
+    <app-covoiturage *ngFor="let toto of covoituragesByIdUser$ | async" [covoituragereserve]="toto"></app-covoiturage>
+</div> -->
+
+
+<!-- <h2 class="mt-5" style="text-align:center">Liste filtrée</h2>
+<div class="listeCovoituragesFiltree mt-5 border border-5" >
+    <app-covoiturage *ngFor="let toto of covoituragesByIdUser$ | async" [covoituragereserve]="toto"></app-covoiturage>
+</div> -->

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, interval} from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
 import { CovoiturageService } from 'src/app/shared/services/covoiturage.service';
 
@@ -10,12 +11,21 @@ import { CovoiturageService } from 'src/app/shared/services/covoiturage.service'
 })
 export class CovoiturageListComponent implements OnInit {
   covoiturages$!: Observable<Covoiturage[]>;
+  covoituragesByIdUser$!:Observable<Covoiturage[]>;
   covoiturageToPush!: Covoiturage;
+  value!: number;
+  
 
   constructor(private covoiturageService: CovoiturageService) { }
 
   ngOnInit(): void {
     this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
+    this.covoituragesByIdUser$ = this.covoiturageService.getAllCovoiturages();
+  }
+
+  onKey(event: any) { // without type info
+    this.value = +event.target.value;
+    this.covoituragesByIdUser$ = this.covoiturageService.getFilteredbyUsersCovoit(this.value);
   }
 
   onCreateCovoiturage(): void {
@@ -47,6 +57,10 @@ export class CovoiturageListComponent implements OnInit {
 
   }
 
+  onFiltrerUtilisateur(){
+    console.log("demande de filtrage");
+    this.covoiturages$.pipe(filter(value=>value ===null));
+  }
 }
 
 

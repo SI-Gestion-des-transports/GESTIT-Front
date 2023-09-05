@@ -16,26 +16,37 @@ export class CovoiturageComponent implements OnInit {
   showDetailsInProgress!: boolean;
 
 
-  constructor(private covoiturageReserveService : CovoiturageService,
-    private router:Router) { }
+  constructor(private covoiturageReserveService: CovoiturageService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.title = "Mon covoiturage";
     this.showDetailsInProgress = false;
-    
+
 
   }
- 
+
 
   onShowDetails() {
-   /*  if (this.showDetailsInProgress){
-      console.log(this.covoiturageReserveService.getCovoiturageById(this.covoituragereserve.id));
-    }
-      else
-      throw new Error('Covoiturage not found!'); */
+    /*  if (this.showDetailsInProgress){
+       console.log(this.covoiturageReserveService.getCovoiturageById(this.covoituragereserve.id));
+     }
+       else
+       throw new Error('Covoiturage not found!'); */
   }
 
-  onViewCovoiturage(){
+  onViewCovoiturage() {
     this.router.navigateByUrl(`covoiturages/${this.covoituragereserve.id}`);
   }
+
+  onModifCovoiturage() {
+
+   // this.covoiturageReserveService.mochizuki_getAllCovoituragesByIdUtilisateur(1);
+    //this.router.navigateByUrl(`covoiturages/${this.covoituragereserve.id}`);
+  }
+
+
+
+
+
 }
