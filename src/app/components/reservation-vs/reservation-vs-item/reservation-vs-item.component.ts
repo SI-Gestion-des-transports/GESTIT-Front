@@ -30,9 +30,9 @@ export class ReservationVsItemComponent {
   }
 
   featureResaVs(res: ReservationVs){
-    console.log(res.dateHeureRetour);
+    console.log("featureResaVs (currentRes) : " + res.dateHeureRetour);
     this._reservationVsService.currentReservationVs = res;
-
+    console.log("featureResaVs (currentRes Service) : " + this._reservationVsService.currentReservationVs.dateHeureRetour)
   }
 
   /*

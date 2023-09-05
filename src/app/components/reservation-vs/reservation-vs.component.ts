@@ -17,6 +17,7 @@ export class ReservationVsComponent implements OnInit, OnChanges {
 
   reservationVs: ReservationVs = {};
 
+  @Input()
   currentReservationVs: ReservationVs = {};
 
   modifBtn:boolean = true;
@@ -26,15 +27,16 @@ export class ReservationVsComponent implements OnInit, OnChanges {
     this.reservationsVs = this._reservationVsService.allReservationsVs;
     this.user = this._reservationVsService.currentUser;
     this.currentReservationVs = this._reservationVsService.currentReservationVs;
-    //this._init();
+    this._init();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.user){
       this._init();
-      console.log(this.user.nom)
+      console.log("On changes (user.nom) : " + this.user.nom)
     }
-    if  (this.currentReservationVs){
+    if (this.currentReservationVs.dateHeureRetour != undefined){
+      console.log("On changes (currentRes) : " + this.currentReservationVs.dateHeureRetour)
       console.log("TADA")
       console.log(this.currentReservationVs.dateHeureRetour)
       this._init();
