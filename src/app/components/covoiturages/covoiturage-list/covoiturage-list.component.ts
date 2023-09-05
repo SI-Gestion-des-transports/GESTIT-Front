@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, interval} from 'rxjs';
+import { Observable, interval } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { CovoiturageFiltrage } from 'src/app/shared/models/CovoiturageFiltrage';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
 import { CovoiturageService } from 'src/app/shared/services/covoiturage.service';
 
@@ -10,18 +11,23 @@ import { CovoiturageService } from 'src/app/shared/services/covoiturage.service'
   styleUrls: ['./covoiturage-list.component.css']
 })
 export class CovoiturageListComponent implements OnInit {
+
   covoiturages$!: Observable<Covoiturage[]>;
-  covoituragesByIdUser$!:Observable<Covoiturage[]>;
+  covoituragesByIdUser$!: Observable<Covoiturage[]>;
   covoiturageToPush!: Covoiturage;
   value!: number;
-  value_str!:string;
-  
+  value_str!: string;
+  filtrage!: CovoiturageFiltrage;
+
+
+
 
   constructor(private covoiturageService: CovoiturageService) { }
 
   ngOnInit(): void {
     this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
     this.covoituragesByIdUser$ = this.covoiturageService.getAllCovoiturages();
+    this.filtrage = new CovoiturageFiltrage();
   }
 
   onKey(event: any) { // without type info
@@ -29,13 +35,26 @@ export class CovoiturageListComponent implements OnInit {
     this.covoituragesByIdUser$ = this.covoiturageService.getFilteredbyUsersCovoit(this.value);
   }
 
-  onDateDepart(event: any) { // without type info
+  onVilleDepart(event: any) { // without type info
+    this.value_str = event.target.value;
+    if (this.value_str !== "") {
+      this.filtrage.isFilteringByVilleDepart = true;
+      this.covoiturages$ = this.covoiturageService.getFilteredbyVilleDepart(this.value_str);
+    }
+    else {
+      this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
+    }
+  }
+
+  onVilleArrivee(event: any) { // without type info
     this.value_str = event.target.value;
     this.covoiturages$ = this.covoiturageService.getFilteredbyVilleDepart(this.value_str);
   }
 
-  
-  
+
+
+
+
 
   onCreateCovoiturage(): void {
     this.covoiturageToPush = {
@@ -51,7 +70,7 @@ export class CovoiturageListComponent implements OnInit {
       .subscribe(() => {
         /* this.listeCovoiturages.push */
       });
-      this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
+    this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
     // this._init();
 
     /* private _init() {
@@ -66,18 +85,18 @@ export class CovoiturageListComponent implements OnInit {
 
   }
 
-  onFiltrerUtilisateur(){
+  onFiltrerUtilisateur() {
     console.log("demande de filtrage");
-    this.covoiturages$.pipe(filter(value=>value ===null));
+    this.covoiturages$.pipe(filter(value => value === null));
   }
 }
 
 
 
-  /*  this.covoiturageService.create(this.covoiturageToPush).subscribe(covoiturageReceived => {
-     this.createdCovoiturage = covoiturageReceived;});
+/*  this.covoiturageService.create(this.covoiturageToPush).subscribe(covoiturageReceived => {
+   this.createdCovoiturage = covoiturageReceived;});
 
-     console.log("covoiturage créeeeeeeeee");
+   console.log("covoiturage créeeeeeeeee");
 */
 
 
