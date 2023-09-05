@@ -1,8 +1,14 @@
-html {
-  padding: 10px;
+main {
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
 }
 
-
+app-reservation-vs-item, app-reservation-vs-form, app-authentification {
+  grid-column: 2 / 3;
+  grid-row: 1;
+  display: flex;
+  justify-content: center
+}
 /*
 .list{
   max-height: 200px;
@@ -11,9 +17,6 @@ html {
 */
 
 .form {
-  border: black solid 1px;
-  border-radius: 7px;
-  width: 700px;
   padding: 5px;
   margin: 5px;
 }
@@ -22,14 +25,11 @@ html {
   cursor: pointer;
   border: black solid 1px;
   border-radius: 7px;
-  width: 350px;
+  width: 450px;
   padding: 5px;
   margin: 5px;
   display: flex;
-  flex-flow: column wrap;
-  justify-content: center;
-  align-content: center;
-  align-items: center
+  flex-direction: column
 }
 
 .detail {
@@ -37,6 +37,16 @@ html {
   margin: 5px;
   display: flex;
   flex-flow: column wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: flex-start;
+}
+
+.action-btn {
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+  flex-flow: row wrap;
   justify-content: center;
   align-content: center;
   align-items: center
@@ -61,6 +71,13 @@ html {
   grid-column: 2 / 3;
   grid-row: 2;
   display: flex;
+  justify-content: center;
+  width: auto;
+}
+
+.itemList {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   width: auto;
 }
@@ -107,4 +124,15 @@ button {
     transform: translate(1px, 1px);
     box-shadow: lightgray 0 0 5px;
   }
+}
+
+.img {
+  width: 400px;
+  border-radius: 7px;
+  box-shadow: lightgray 0 0 5px;
+}
+
+a {
+  text-decoration: none;
+  color: grey;
 }

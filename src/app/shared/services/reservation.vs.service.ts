@@ -44,6 +44,7 @@ export class ReservationVsService {
 
 
   private _baseUrl = environment.urlApi.reservationsvs;
+  private _realBaseUrl = environment.urlApi.reservation;
 
   constructor(private _http: HttpClient) {
   }
@@ -63,10 +64,10 @@ export class ReservationVsService {
   }
 
   findUpcomingByUserId(userId?: number): Observable<ReservationVs[]>{
-    return this._http.get<ReservationVs[]>(`${this._baseUrl}/upcoming`)
+    return this._http.get<ReservationVs[]>(`${this._realBaseUrl}/upcoming`)
   }
   findPastByUserId(userId?: number): Observable<ReservationVs[]>{
-    return this._http.get<ReservationVs[]>(`${this._baseUrl}/past`)
+    return this._http.get<ReservationVs[]>(`${this._realBaseUrl}/past`)
   }
 
   create(resVSCreated: ReservationVs): Observable<ReservationVs> {

@@ -4,4 +4,7 @@
   border: black solid 1px;
   border-radius: 7px;
   background-color: lightgray;
+  width: 750px;
+  display: flex;
+  flex-flow: column wrap;
 }

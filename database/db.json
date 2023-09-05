@@ -35,16 +35,21 @@
     {
       "distanceKm": 1250,
       "dateHeureDepart": "2023-09-13T11:23",
-      "dateHeureRetour": "2023-09-14T13:28",
+      "dateHeureRetour": "2023-09-21T13:28",
       "userId": 3,
       "resId": 3,
       "id": 3
     },
     {
-      "dateHeureDepart": "2023-09-02T19:05:00",
-      "dateHeureRetour": "2023-09-18T22:05:00",
+      "dateHeureDepart": "2023-09-19T11:06",
+      "dateHeureRetour": "2023-09-20T22:05",
       "userId": 6,
       "id": 12
+    },
+    {
+      "dateHeureDepart": "2023-09-12T12:17:00",
+      "dateHeureRetour": "2023-09-18T11:19:00",
+      "id": 13
     }
   ],
   "covoiturages": []

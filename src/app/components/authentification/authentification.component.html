@@ -1,1 +1,22 @@
-<p>authentification works!</p>
+<div class="singleItem">
+  <h3>Authentification</h3>
+  <form class="form" *ngIf="loggedUser.nom == undefined">
+    <div class="detail">
+      <div>
+        <label for="email">Email : </label>
+        <input type="email" name="email" id="email" [(ngModel)]="unLoggedUser.email" placeholder="email@gestit.fr">
+      </div>
+      <div>
+        <label for="password">Mot de passe : </label>
+        <input type="password" name="password" id="password" [(ngModel)]="unLoggedUser.motDePasse" placeholder="Mot de passe">
+      </div>
+    </div>
+    <div class="action-btn">
+      <button type="submit" class="btn btn-primary" (click)="seConnecter()">Se connecter</button>
+      <button type="submit" class="btn btn-outline-primary" (click)="createAccount()">Créer un compte</button>
+    </div>
+    <div class="detail">
+      <a href="">Un soucis de connexion ?</a>
+    </div>
+  </form>
+</div>

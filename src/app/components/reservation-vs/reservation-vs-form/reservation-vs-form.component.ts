@@ -96,6 +96,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
     if (this.user){
       this._init();
       console.log(this.user.nom)
+      this._reservationVsService.updateCurrentUser(this.user);
     }
     if (this.reservationVs){
       console.log("Form : reservation changed")
@@ -130,13 +131,13 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   update(updatedReservation : ReservationVs){
     this._reservationVsService.update(updatedReservation).subscribe(() => {
       this.reInitResVs();
-      this._reservationVsService.updateModifBtn(true);
       this._router.navigateByUrl('reservationsvs-list');
     });
   }
 
   reInitResVs(){
     this._reservationVsService.updateCurrentReservationVs({});
+    this._reservationVsService.updateModifBtn(true);
   }
 
   private addSecondsToDate(reservationVs: ReservationVs): ReservationVs {
@@ -152,6 +153,11 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
     } else if (!this.currentReservationVs.id){
       this.create(this.reservationVs);
     }
+  }
+
+  cancel(){
+    this.reInitResVs();
+    this._router.navigateByUrl('reservationsvs-list');
   }
 
 }

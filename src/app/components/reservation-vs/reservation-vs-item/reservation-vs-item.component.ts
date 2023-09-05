@@ -3,6 +3,8 @@ import {ReservationVs} from "../../../shared/models/reservation.vs";
 import {ReservationVsService} from "../../../shared/services/reservation.vs.service";
 import {Subscription} from "rxjs";
 import {Utilisateur} from "../../../shared/models/utilisateur";
+import {ReservationVsComponent} from "../reservation-vs.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-reservation-vs-item',
@@ -29,7 +31,8 @@ export class ReservationVsItemComponent {
 
 
   private _subscription = new Subscription();
-  constructor(private _reservationVsService:ReservationVsService) {
+  constructor(private _reservationVsService:ReservationVsService,
+              private _router: Router) {
   }
 
   ngOnInit(): void {
@@ -102,8 +105,12 @@ export class ReservationVsItemComponent {
 
   delete(resVSDeleted: ReservationVs){
     this._reservationVsService.delete(resVSDeleted).subscribe();
+    this._router.navigateByUrl('reservationsvs-list');
   }
 
+  cancel(reservation: ReservationVs) {
+    this._router.navigateByUrl('reservationsvs-list');
+  }
   featureResaVs(res: ReservationVs){
 /*    console.log("featureResaVs (currentRes) : " + res.dateHeureRetour);
     this._reservationVsService.currentReservationVs = res;

@@ -118,46 +118,33 @@ export class ReservationVsListComponent implements OnInit{
     this._init();
   }
 
-  featuringResVs($event: ReservationVs){
-    console.log($event.dateHeureRetour);
-    //this.featuredResVs = $event;
-    //this.featuringVsFromList.emit(this.featuredResVs);
+  newReservation(){
+    this._reservationVsService.updateReservationVs({})
+    this._router.navigateByUrl('reservationsvs-form');
   }
 
   startUpdateResVs(reservationToEdit:ReservationVs){
     this._reservationVsService.updateModifBtn(false);
-    console.log(this.reservationVs.dateHeureRetour)
-    console.log(this.currentReservationVs.dateHeureRetour)
-
     this._reservationVsService.updateCurrentReservationVs(reservationToEdit);
     this._reservationVsService.updateReservationVs(reservationToEdit);
-    console.log(this.reservationVs.dateHeureRetour)
-    console.log(this.currentReservationVs.dateHeureRetour)
     this._router.navigateByUrl('reservationsvs-form');
     //this.startUpdateResVsFromList.emit(reservationToEdit);
   }
 
   deleteReservationVs(reservationToDelete: ReservationVs){
-    console.log(reservationToDelete.dateHeureRetour);
-    console.log(reservationToDelete.id);
-
-    this._reservationVsService.delete(reservationToDelete).subscribe(() =>
+    this._router.navigateByUrl('reservationsvs-item');
+    this._reservationVsService.updateCurrentReservationVs(reservationToDelete);
+/*    this._reservationVsService.delete(reservationToDelete).subscribe(() =>
       this._init()
-    );
+    );*/
   }
 
-  @Output()
-  featuringVsFromList = new EventEmitter <ReservationVs>();
-
-  @Output()
-  startUpdateResVsFromList = new EventEmitter <ReservationVs>();
-
+  /*
   removeSecondsToDate(reservationVs: ReservationVs): ReservationVs{
     reservationVs.dateHeureDepart?.slice(0, 16);
     reservationVs.dateHeureRetour?.slice(0, 16);
     return reservationVs;
   }
-
 
   extractDate(dateTime?: string): string {
     return dateTime?.split('T')[0] ?? '';
@@ -165,11 +152,6 @@ export class ReservationVsListComponent implements OnInit{
   extractTime(dateTime?: string): string {
     return dateTime?.split('T')[1]?.slice(0,5) ?? '';
   }
-
-/*  reservationVs.dateHeureDepart?.slice(0, 10);
-  reservationVs.dateHeureRetour?.slice(0, 10);
-  reservationVs.dateHeureDepart?.slice(12, 16);
-  reservationVs.dateHeureRetour?.slice(12, 16);*/
-
+  */
 
 }
