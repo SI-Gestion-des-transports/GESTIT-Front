@@ -1,9 +1,10 @@
-<div class=covoiturages-organises-card [ngClass]="{showDetails : showDetailsInProgress === true}">
-    <h2>{{title | uppercase}}</h2>
+<div class=covoiturages-organises-card *ngIf="covoiturage$ | async as covoiturage" [ngClass]="{showDetails : showDetailsInProgress === true}">
+    <h2>Covoiturage n° {{covoiturage.id}}</h2>
     <a routerLink = '/covoiturages'> Back</a>
+    <hr/><br>
     <!-- <p>numéro du covoiturage : {{covoiturage?.id}}</p> -->
     <p>Distance : {{covoiturage?.distanceKm}}</p>
-    <p><button (click)="onShowDetails()" >Details</button></p>
+    
     <p>Date de départ: {{ covoiturage?.dateDepart | date: 'le d MMMM yyyy à HH:mm, ' }}</p>
     <p>Durée trajet : {{covoiturage?.dureeTrajet}}</p>
     <p>Nombre de places restantes : {{covoiturage?.nombrePlacesRestantes}}</p>

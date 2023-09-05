@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
 import { CovoiturageService } from 'src/app/shared/services/covoiturage.service';
-import {Utilisateur} from "../../../shared/models/utilisateur";
 
 @Component({
   selector: 'app-covoiturage-list',
@@ -10,24 +9,13 @@ import {Utilisateur} from "../../../shared/models/utilisateur";
   styleUrls: ['./covoiturage-list.component.css']
 })
 export class CovoiturageListComponent implements OnInit {
-  listeCovoiturages: Covoiturage[] = [];
-  createdCovoiturage!: Covoiturage;
+  covoiturages$!: Observable<Covoiturage[]>;
   covoiturageToPush!: Covoiturage;
 
-  user: Utilisateur = {}
-
-
-  /*  Observable<Covoiturage[]> toto;
-   covoituragesAinserer!:Covoiturage[]; */
-
-  /*Injection du service dans le composant*/
   constructor(private covoiturageService: CovoiturageService) { }
 
   ngOnInit(): void {
-    this.covoiturageService.findAll(this.user).subscribe(covoiturageReceived => {
-      this.listeCovoiturages = covoiturageReceived;
-    })
-
+    this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
   }
 
   onCreateCovoiturage(): void {
@@ -42,25 +30,32 @@ export class CovoiturageListComponent implements OnInit {
     this.covoiturageService
       .create(this.covoiturageToPush)
       .subscribe(() => {
-        this.listeCovoiturages.push
+        /* this.listeCovoiturages.push */
       });
-      this._init();
+      this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
+    // this._init();
 
+    /* private _init() {
+  this.covoiturageService.findAll(this.user)
+   .subscribe(covoiturages => {
+     this.listeCovoiturages = covoiturages;
+   }) */
 
   }
-
   private _init() {
-    this.covoiturageService.findAll(this.user)
-    .subscribe(covoiturages => {
-      this.listeCovoiturages = covoiturages;
-    })
+    this.covoiturageService.getAllCovoiturages();
+
   }
+
+}
+
+
 
   /*  this.covoiturageService.create(this.covoiturageToPush).subscribe(covoiturageReceived => {
      this.createdCovoiturage = covoiturageReceived;});
 
      console.log("covoiturage créeeeeeeeee");
 */
-}
+
 
 

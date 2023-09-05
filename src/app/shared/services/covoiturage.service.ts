@@ -1,37 +1,41 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Covoiturage } from '../models/covoiturage';
 import { environment } from 'src/environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {Utilisateur} from "../models/utilisateur";
 
 
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
-export class CovoiturageService {
-    listeCovoiturages!: Covoiturage[]
-    private _baseCovoitUrl = environment.urlApi.covoiturages;
-    constructor(private _http: HttpClient) { }
+export class CovoiturageService implements OnInit {
 
-    public findAll(user: Utilisateur): Observable<Covoiturage[]> {
-        return this._http.get<Covoiturage[]>(this._baseCovoitUrl + '?organisateurId=' + user.id);
-    }
+  private _baseCovoitUrl = environment.urlApi.covoiturages;
 
-    public findById(covoiturageId: number) {
-        return this._http.get<Covoiturage>(`${this._baseCovoitUrl}/${covoiturageId}`);
+  constructor(private http: HttpClient) { }
 
-    }
+  ngOnInit(): void { }
 
-    public create(createdCovoiturage: Covoiturage):Observable<Covoiturage>{
-        console.log("creation demandee");
-        return this._http.post<Covoiturage>(
-            this._baseCovoitUrl,
-            createdCovoiturage
-        );
-    }
+  getAllCovoiturages(): Observable<Covoiturage[]> {
+    return this.http.get<Covoiturage[]>(this._baseCovoitUrl);
+  }
+
+  getCovoiturageById(covoiturageId: number): Observable<Covoiturage> {
+    return this.http.get<Covoiturage>(`${this._baseCovoitUrl}/${covoiturageId}`);
+  }
+
+  public create(createdCovoiturage: Covoiturage): Observable<Covoiturage> {
+    console.log("creation demandee");
+    return this.http.post<Covoiturage>(
+      this._baseCovoitUrl,
+      createdCovoiturage
+    );
+  }
 }
+
+/*    
+} */
 
 
 

@@ -15,7 +15,7 @@
           <a class="nav-link" href="#">Link</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true">
             Dropdown
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -32,14 +32,22 @@
       <button type="button" class="btn btn-primary">Connexion</button>
     </div>
   </div>
-</nav> -->
+</nav>-->
 
 
-  <nav>
-    <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-    <a routerLink="covoiturages" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Covoiturages</a>
-    <a routerLink="reservationsvs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Reservations VS</a>
-    <a routerLink="utilisateurs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Utilisateurs</a>
-  </nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
 
-
+  <select (change)="getCovoiturageChoice($event)" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <option style="display:none">Covoiturages</option>
+    <option [value]="item.id" *ngFor="let item of covoiturageChoicies">{{item.name}}</option>
+  </select>
+  <select (change)="getVehiculeServiceChoice($event)" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+    <option style="display:none">Véhicule de société</option>
+    <option [value]="item.id" *ngFor="let item of ReservationsVehiculeServiceChoicies">{{item.name}}</option>
+  </select>
+  <a routerLink="utilisateurs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Utilisateurs</a>
+  <a routerLink="login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <button type="button" class="btn btn-primary"> Connexion </button>
+  </a>
+</nav>
