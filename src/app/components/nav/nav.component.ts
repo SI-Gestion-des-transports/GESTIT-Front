@@ -22,11 +22,15 @@ export class NavComponent {
   ReservationsVehiculeServiceChoicies = [
     {
       id: 1,
-      name: "Mes réservations"
+      name: "Véhicule de société"
     },
     {
       id: 2,
       name: "Réserver un véhicule"
+    },
+    {
+      id: 3,
+      name: "Mes réservations"
     }
   ]
 
@@ -49,16 +53,19 @@ export class NavComponent {
   getVehiculeServiceChoice(event: any) {
     switch (event.target.value) {
       case '1':
-        this.router.navigateByUrl('vehiculeService');
+        this.router.navigateByUrl('reservationsvs');
         break;
       case '2': console.log(2);
-        this.router.navigateByUrl('reservationsvs');
+        this.router.navigateByUrl('reservationsvs-form');
+        break;
+      case '3': console.log(2);
+        this.router.navigateByUrl('reservationsvs-list');
         break;
       default: throw new Error();
     }
   }
 
-  
+
 
 
 

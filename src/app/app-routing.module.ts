@@ -12,6 +12,12 @@ import {
 import { CovoituragesOrganiseComponent } from './components/covoiturages/covoiturages-organise/covoiturages-organise.component';
 import { AuthentificationComponent } from './components/authentification/authentification.component';
 import { VehiculeServiceComponent } from './components/vehicule-service/vehicule-service.component';
+import {
+  ReservationVsFormComponent
+} from "./components/reservation-vs/reservation-vs-form/reservation-vs-form.component";
+import {
+  ReservationVsListComponent
+} from "./components/reservation-vs/reservation-vs-list/reservation-vs-list.component";
 
 const routes: Routes = [
   {path:'covoiturages/:id', component:SingleCovoiturageComponent},   //Route avec paramètre dynamique
@@ -19,12 +25,14 @@ const routes: Routes = [
   {path:'covoituragesOrganises', component: CovoituragesOrganiseComponent},
   {path:'', component:LandingPageComponent},
   {path:'reservationsvs', component:ReservationVsComponent},
+  {path:'reservationsvs-form', component:ReservationVsFormComponent},
+  {path:'reservationsvs-list', component:ReservationVsListComponent},
   {path:'reservationsvs/:id', component:ReservationVsItemComponent},
   {path:'utilisateurs', component:UtilisateursComponent},
   {path:'login', component:AuthentificationComponent},
   {path:'vehiculeService', component:VehiculeServiceComponent},
-  
-  
+
+
 ];
 
 @NgModule({
