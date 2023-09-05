@@ -79,5 +79,26 @@
       "id": 7
     }
   ],
-  "covoiturages": []
+  "covoiturages": [
+    {
+      "adresseDepart": "teste 1",
+      "organisateur": {
+        "nom": "ccc",
+        "motDePasse": "cccc",
+        "email": "irreductible@redpizz.fr",
+        "id": 3
+      },
+      "id": 1
+    },
+    {
+      "organisateur": {
+        "nom": "dddd",
+        "motDePasse": "ddeee",
+        "email": "dav.azria@gmail.com",
+        "id": 4
+      },
+      "adresseDepart": "teste 2",
+      "id": 2
+    }
+  ]
 }
