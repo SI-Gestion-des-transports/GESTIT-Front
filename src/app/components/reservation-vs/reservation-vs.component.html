@@ -2,15 +2,14 @@
   <p>reservation-vs works!</p>
   <app-reservation-vs-form [user]="user"></app-reservation-vs-form>
   <hr>
-  <app-reservation-vs-list [user]="user" class="list" (featuringVsFromList)="featuringResVs($event)" (startUpdateResVsFromList)="startUpdateResVs($event)"></app-reservation-vs-list>
+  <app-reservation-vs-list [user]="user"></app-reservation-vs-list>
   <hr>
   <div *ngIf="currentReservationVs.dateHeureRetour != undefined" class="detail">
-    <h3>Détail de la réservation n°{{currentReservationVs.resId}}</h3>
+    <h3>Détail de la réservation n°{{currentReservationVs.id}}</h3>
     <app-vehicule-service-item ></app-vehicule-service-item>
     <div class="singleItem">
       <p>Date de départ : {{currentReservationVs.dateHeureDepart}}</p>
       <p>Date de retour : {{currentReservationVs.dateHeureRetour}} </p>
-      <p>Distance : {{currentReservationVs.distanceKm}} km</p>
     </div>
   </div>
 

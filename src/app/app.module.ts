@@ -31,6 +31,9 @@ import * as fr from '@angular/common/locales/fr';
 import { CovoiturageListComponent } from './components/covoiturages/covoiturage-list/covoiturage-list.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SingleCovoiturageComponent } from './components/covoiturages/single-covoiturage/single-covoiturage.component';
+import { ExtractDatePipe } from './shared/utils/extract-date.pipe';
+import { ExtractTimePipe } from './shared/utils/extract-time.pipe';
+
 import { AdressesComponent } from './components/adresses/adresses.component';
 @NgModule({
   declarations: [
@@ -58,6 +61,8 @@ import { AdressesComponent } from './components/adresses/adresses.component';
     CovoiturageListComponent,
     LandingPageComponent,
     SingleCovoiturageComponent,
+    ExtractDatePipe,
+    ExtractTimePipe,
     AdressesComponent
   ],
   imports: [

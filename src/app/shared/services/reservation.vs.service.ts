@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {environment} from "../../../environments/environment.development";
 import {HttpClient} from "@angular/common/http";
 import {ReservationVs} from "../models/reservation.vs";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, catchError, Observable} from "rxjs";
 import {Utilisateur} from "../models/utilisateur";
 import {VehiculeService} from "../models/vehicule.service";
 
@@ -12,31 +12,46 @@ import {VehiculeService} from "../models/vehicule.service";
 })
 export class ReservationVsService {
 
+/*
   private _reservationVs: ReservationVs = {};
-
   private _allReservationsVs: ReservationVs [] = [];
-
   private _reservationsVsByUser: ReservationVs [] = [];
-
   private _currentUser: Utilisateur = {};
-
   //currentVs: VehiculeService = {};
-
   private _currentReservationVs: ReservationVs = {};
+*/
+
+  private reservationVsSource = new BehaviorSubject<ReservationVs>({});
+  private allReservationsVsSource = new BehaviorSubject<ReservationVs[]>([]);
+  private upcomingReservationsVsByUserSource = new BehaviorSubject<ReservationVs[]>([]);
+  private pastReservationsVsByUserSource = new BehaviorSubject<ReservationVs[]>([]);
+  private currentUserSource = new BehaviorSubject<Utilisateur>({});
+  //private currentVsSource = new BehaviorSubject<VehiculeService>({});
+  private currentReservationVsSource = new BehaviorSubject<ReservationVs>({});
+  private editedReservationVsSource
+    = new BehaviorSubject<ReservationVs>({});
+  private modifBtnSource = new BehaviorSubject<boolean>(true);
+
+  reservationVs$ = this.reservationVsSource.asObservable();
+  allReservationsVs$ = this.allReservationsVsSource.asObservable();
+  upcomingReservationsVsByUser$ = this.upcomingReservationsVsByUserSource.asObservable();
+  pastReservationsVsByUser$ = this.pastReservationsVsByUserSource.asObservable();
+  currentUser$ = this.currentUserSource.asObservable();
+  //currentVs$ = this.currentVsSource.asObservable();
+  currentReservationVs$ = this.currentReservationVsSource.asObservable();
+  editedReservationVs$ = this.editedReservationVsSource.asObservable();
+  modifBtn$ = this.modifBtnSource.asObservable();
 
 
   private _baseUrl = environment.urlApi.reservationsvs;
+  private _realBaseUrl = environment.urlApi.reservation;
 
   constructor(private _http: HttpClient) {
   }
 
-
   findAll(): Observable<ReservationVs[]> {
     this._http
-      .get<ReservationVs[]>(this._baseUrl)
-      .subscribe(reservationsVs => {
-      this._allReservationsVs = reservationsVs
-    });
+      .get<ReservationVs[]>(this._baseUrl);
     return this._http.get<ReservationVs[]>(this._baseUrl);
   }
 
@@ -48,62 +63,66 @@ export class ReservationVsService {
     return this._http.get<ReservationVs>(`${this._baseUrl}/?vehiculeServiceId=${vsId}`);
   }
 
-  findByUserId(userId: number): Observable<ReservationVs[]>{
-    return this._http.get<ReservationVs[]>(`${this._baseUrl}/?userId=${userId}`)
+  findUpcomingByUserId(userId?: number): Observable<ReservationVs[]>{
+    return this._http.get<ReservationVs[]>(`${this._realBaseUrl}/upcoming`)
+  }
+  findPastByUserId(userId?: number): Observable<ReservationVs[]>{
+    return this._http.get<ReservationVs[]>(`${this._realBaseUrl}/past`)
   }
 
   create(resVSCreated: ReservationVs): Observable<ReservationVs> {
-    this._http.post<ReservationVs>(this._baseUrl, resVSCreated).subscribe(() =>
-    this.findAll())
+    this.updateReservationVs({});
+    this.updateCurrentReservationVs({})
     return this._http.post<ReservationVs>(this._baseUrl, resVSCreated);
   }
 
   update(resVSUpdated: ReservationVs): Observable<ReservationVs> {
-    return this._http.put<ReservationVs>(`${this._baseUrl}/${resVSUpdated.resId}`, resVSUpdated);
+    this.updateReservationVs({});
+    this.updateCurrentReservationVs({})
+    return this._http.put<ReservationVs>(`${this._baseUrl}/${resVSUpdated.id}`, resVSUpdated);
   }
 
   delete(resVSDeleted: ReservationVs): Observable<ReservationVs> {
-    return this._http.delete<ReservationVs>(`${this._baseUrl}/${resVSDeleted.resId}`);
+    console.log(`${this._baseUrl}/${resVSDeleted.id}`)
+    console.log('Deleting reservation with ID:', resVSDeleted.id);
+    return this._http.delete<ReservationVs>(`${this._baseUrl}/${resVSDeleted.id}`);
   }
 
 
-  get reservationVs(): ReservationVs {
-    return this._reservationVs;
+
+  updateReservationVs(data: ReservationVs): void {
+    this.reservationVsSource.next(data);
   }
 
-  set reservationVs(value: ReservationVs) {
-    this._reservationVs = value;
+  updateAllReservationsVs(data: ReservationVs[]): void {
+    this.allReservationsVsSource.next(data);
   }
 
-  get allReservationsVs(): ReservationVs[] {
-    return this._allReservationsVs;
+  updateUpcomingReservationsVsByUser(data: ReservationVs[]): void {
+    this.upcomingReservationsVsByUserSource.next(data);
   }
 
-  set allReservationsVs(value: ReservationVs[]) {
-    this._allReservationsVs = value;
+  updatePastReservationsVsByUser(data: ReservationVs[]): void {
+    this.pastReservationsVsByUserSource.next(data);
   }
 
-  get reservationsVsByUser(): ReservationVs[] {
-    return this._reservationsVsByUser;
+  updateCurrentUser(data: Utilisateur): void {
+    this.currentUserSource.next(data);
+  }
+  /*
+  updateCurrentVs(data: VehiculeService): void {
+    this.currentVsSource.next(data);
+  }
+*/
+  updateCurrentReservationVs(data: ReservationVs): void {
+    this.currentReservationVsSource.next(data);
+  }
+  updateEditedReservationVs(data: ReservationVs): void {
+    this.editedReservationVsSource.next(data);
   }
 
-  set reservationsVsByUser(value: ReservationVs[]) {
-    this._reservationsVsByUser = value;
+  updateModifBtn(data: boolean): void {
+    this.modifBtnSource.next(data);
   }
 
-  get currentUser(): Utilisateur {
-    return this._currentUser;
-  }
-
-  set currentUser(value: Utilisateur) {
-    this._currentUser = value;
-  }
-
-  get currentReservationVs(): ReservationVs {
-    return this._currentReservationVs;
-  }
-
-  set currentReservationVs(value: ReservationVs) {
-    this._currentReservationVs = value;
-  }
 }

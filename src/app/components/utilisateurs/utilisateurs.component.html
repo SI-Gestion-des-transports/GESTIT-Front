@@ -63,8 +63,9 @@
       {{ modifBtn ? "Cancel" : "Annuler" }}
     </button>
   </form>
-  <hr />
-  <div class="list">
+  <hr>
+  <div class ="list">
+  <div class="itemList">
     <div *ngFor="let singleUser of users" class="singleItem">
       <h3>{{ singleUser.nom }}</h3>
       <button
@@ -105,6 +106,7 @@
         </button>
       </div>
     </div>
+  </div>
   </div>
 
   <div *ngIf="userFeatured" class="singleItem">

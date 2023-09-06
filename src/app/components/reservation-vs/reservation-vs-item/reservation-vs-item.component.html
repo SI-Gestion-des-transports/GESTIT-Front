@@ -1,21 +1,23 @@
-<div>
-  <p>reservation-vs-item works!</p>
-  <p> Date de départ : {{reservationVs.dateHeureDepart}}</p>
-  <p> Date de retour : {{reservationVs.dateHeureRetour}} </p>
-  <p> Distance : {{reservationVs.distanceKm}} km</p>
-</div>
-<div>
-  <button type="button" class="btn btn-secondary" (click)="featureResaVs(reservationVs)">Détails</button>
-  <button type="button"
-          (click)="modifBtn && startUpdateResVs(reservationVs)"
-          class="btn"
-          [class.btn-warning]="modifBtn"
-          [class.btn-secondary]="!modifBtn"
-  >Modifier</button>
-  <button type="button"
-          class="btn"
-          [class.btn-danger]="modifBtn"
-          [class.btn-secondary]="!modifBtn"
-          (click)="modifBtn && delete(reservationVs)"
-  >Supprimer</button>
+<div class="singleItem">
+  <h3>Supprimer la réservation</h3>
+  <div class="detail">
+    <p> Départ le {{ currentReservationVs.dateHeureDepart | extractDate }} à {{ currentReservationVs.dateHeureDepart | extractTime }}</p>
+    <p> Retour prévu le {{ currentReservationVs.dateHeureRetour | extractDate }} à {{ currentReservationVs.dateHeureRetour | extractTime }}</p>
+    <p> Véhicule utilisé : {{currentReservationVs.dateHeureRetour}} </p>
+    <img src="https://cdn.motor1.com/images/mgl/JO3m6Q/s1/peugeot-208.webp" class="img">
+  </div>
+  <div class="action-btn">
+    <button type="button"
+            (click)="modifBtn && delete(currentReservationVs)"
+            class="btn"
+            [class.btn-outline-danger]="modifBtn"
+            [class.btn-secondary]="!modifBtn"
+    >Supprimer</button>
+    <button type="button"
+            class="btn"
+            [class.btn-outline-primary]="modifBtn"
+            [class.btn-secondary]="!modifBtn"
+            (click)="cancel(reservationVs)"
+    >Annuler</button>
+  </div>
 </div>
