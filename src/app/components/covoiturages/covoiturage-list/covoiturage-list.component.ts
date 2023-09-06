@@ -23,7 +23,12 @@ export class CovoiturageListComponent implements OnInit {
   isFoundedVilleArrivee: boolean;
   isFoundedVilleDepart: boolean;
   isFoundedDate: boolean;
+  name:string;
+  villeArrivee_searchValue:string;
+  villeDepart_searchValue:string;
+  date_searchValue:Date;
 
+  placeholder_villeArrivee:string;
 
 
 
@@ -40,6 +45,10 @@ export class CovoiturageListComponent implements OnInit {
     this.isFoundedVilleArrivee = false;
     this.isFoundedVilleDepart = false;
     this.isFoundedDate = false;
+    this.placeholder_villeArrivee = "ville d'arrivée";
+    this.villeArrivee_searchValue = "";
+    this.villeDepart_searchValue="";
+    this.date_searchValue=null;
   }
 
   async onVilleDepart(event: any) {
@@ -58,6 +67,11 @@ export class CovoiturageListComponent implements OnInit {
   async onDateEntree(event: any) {
     console.log("récupération input date");
     this.filtrage.filter_Date_value = event.target.value;
+    this.filtrageListe();
+  }
+  onResetFiltrage(){
+  
+    this.ngOnInit();
     this.filtrageListe();
   }
 

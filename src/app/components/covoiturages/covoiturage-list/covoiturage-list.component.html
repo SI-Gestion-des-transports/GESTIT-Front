@@ -1,23 +1,25 @@
 <div class="container">
     <div class="d-flex flex-column align-items-center">
-        <div class="d-flex flex-row mt-2 mb-3 ">
+        <div class="d-flex flex-row mt-2 mb-3 ">s
             <p class="d-flex align-self-end">filtrer par</p>
 
-            <input [disabled]="disabledFilterVilleArrivee"(keyup)="onVilleArrivee($event)" type="text" placeholder="Ville d'arrivée"
+            <input [disabled]="disabledFilterVilleArrivee"(keyup)="onVilleArrivee($event)" type="text" placeholder="Ville arrivée" [(ngModel)]="villeArrivee_searchValue"
                 [ngClass]="{'activeFilterSearchInProgress': filtrage.filter_VilleArrivee_value !== '' && this.isFoundedVilleArrivee === false,
-                             'activeFilterFounded': filtrage.filter_VilleArrivee_value !== '' && this.isFoundedVilleArrivee === true}">
+                             'activeFilterFounded': filtrage.filter_VilleArrivee_value !== '' && this.isFoundedVilleArrivee === true}"
+                             [(ngModel)]="name"        >
 
             <input [disabled]="disabledFilterVilleDepart" (keyup)="onVilleDepart($event)" type="text"
-                placeholder="Ville de départ"
+                placeholder="Ville de départ" [(ngModel)]="villeDepart_searchValue"
                 [ngClass]="{'activeFilterSearchInProgress': filtrage.filter_VilleDepart_Value !== '' && this.isFoundedVilleDepart === false,
                 'activeFilterFounded': filtrage.filter_VilleDepart_Value !== '' && this.isFoundedVilleDepart === true}">
 
 
 
-            <input [disabled]="disabledFilterDate" type="date" (change)="onDateEntree($event)"placeholder="Date départ"
+            <input [disabled]="disabledFilterDate" type="date" (change)="onDateEntree($event)"placeholder="Date départ" [(ngModel)]="date_searchValue"
             [ngClass]="{'activeFilterSearchInProgress': filtrage.filter_Date_value && !this.isFoundedDate && this.isFoundedVilleDepart,
                 'activeFilterFounded': filtrage.filter_Date_value && this.isFoundedDate && this.isFoundedVilleDepart}">
 
+                <button type="button" (click)="onResetFiltrage()" class="btn btn-primary">Reset Filtrage</button>
         </div>
         <div class="listeCovoiturages" style="background-color: whitesmoke">
             <!-- <app-covoiturage *ngFor="let cov of covoiturages$ | async" [covoituragereserve]="cov"></app-covoiturage> -->
