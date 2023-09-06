@@ -15,11 +15,19 @@ export class NavComponent {
     },
     {
       id: 2,
-      name: "Organiser un covoiturage"
+      name: "Empty"
     },
     {
       id: 3,
-      name: "Véhicule personnel"
+      name: "Organisation"
+    },
+    {
+      id: 4,
+      name: "Créer un covoit"
+    },
+    {
+      id: 5,
+      name: "Lister mes covoits"
     }
   ]
 
@@ -37,6 +45,7 @@ export class NavComponent {
       name: "Mes réservations"
     }
   ]
+
 
   VehiculeServiceChoicies = [
     {
@@ -61,10 +70,16 @@ export class NavComponent {
         this.router.navigateByUrl('covoiturages');
         break;
       case '2': console.log(2);
+        this.router.navigateByUrl('');
+        break;
+      case '3':
         this.router.navigateByUrl('covoituragesOrganises');
         break;
-      case '3': console.log(2);
-        this.router.navigateByUrl('vehiculeperso');
+      case '4': console.log(2);
+        this.router.navigateByUrl('covoituragesOrganises/form');
+        break;
+      case '5': console.log(2);
+        this.router.navigateByUrl('covoituragesOrganises/list');
         break;
       default: throw new Error();
     }
@@ -80,6 +95,19 @@ export class NavComponent {
         break;
       case '3': console.log(2);
         this.router.navigateByUrl('reservationsvs/list');
+        break;
+      default: throw new Error();
+    }
+  }  getCovoitOrgChoice(event: any) {
+    switch (event.target.value) {
+      case '1':
+        this.router.navigateByUrl('covoituragesOrganises');
+        break;
+      case '2': console.log(2);
+        this.router.navigateByUrl('covoituragesOrganises/form');
+        break;
+      case '3': console.log(2);
+        this.router.navigateByUrl('covoituragesOrganises/list');
         break;
       default: throw new Error();
     }

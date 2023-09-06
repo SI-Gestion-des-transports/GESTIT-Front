@@ -52,14 +52,16 @@
       "id": 13
     },
     {
-      "dateHeureDepart": "2023-09-13T11:45:00",
-      "dateHeureRetour": "2023-09-20T11:45:00",
+      "dateHeureDepart": "2023-09-30T11:48:00",
+      "dateHeureRetour": "2023-10-01T11:48:00",
+
       "userId": 7,
       "id": 14
     },
     {
-      "dateHeureDepart": "2023-09-07T16:13:00",
-      "dateHeureRetour": "2023-09-14T16:13:00",
+      "dateHeureDepart": "2023-09-07T16:57:00",
+      "dateHeureRetour": "2023-09-14T16:57",
+      "userId": 7,
       "id": 15
     },
     {
@@ -81,21 +83,21 @@
   ],
   "covoiturages": [
     {
-      "organisateur": {
-        "nom": "ccc",
-        "motDePasse": "cccc",
-        "email": "irreductible@redpizz.fr",
-        "id": 3
+      "organisateur": {},
+      "dureeTrajet": "11:11",
+      "distanceKm": 1111,
+      "dateDepart": "2023-09-15T18:21",
+      "adresseDepart": {
+        "numero": 11111,
+        "voie": "AAAAA",
+        "codePostal": 11111,
+        "commune": "AAAAA"
       },
-      "adresseDepart": "123, rue de fdsfdsf",
-      "id": 1
-    },
-    {
-      "organisateur": {
-        "nom": "ccc",
-        "motDePasse": "cccc",
-        "email": "irreductible@redpizz.fr",
-        "id": 3
+      "adresseArrivee": {
+        "numero": 11111,
+        "codePostal": 11111,
+        "voie": "AAAAA",
+        "commune": "AAAAA"
       },
       "adresseDepart": "200 place royale",
       "id": 2

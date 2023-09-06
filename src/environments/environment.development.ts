@@ -15,6 +15,7 @@ export const environment = {
     vehiculeperso: 'http://localhost:3000/vehiculeperso',
 
     reservation: 'http://localhost:8080/reservation',
+    covoituragesReserves: 'http://localhost:8080/covoituragesReserves',
     login: 'http://localhost:8080/login',
 
   }
