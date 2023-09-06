@@ -2,15 +2,16 @@
     <div class="d-flex flex-column align-items-center">
         <div class="d-flex flex-row mt-2 mb-3 ">
             <p class="d-flex align-self-end">filtrer par</p>
-            <!-- <input (keyup)="onVilleDepart($event)" type="text" placeholder="Ville de départ"
-                [ngClass]="{'activeFilter': filtrage.filter_VilleDepart_Value !== ''}"> -->
-                <input (keyup)="onVilleDepart($event)" type="text" placeholder="Ville de départ">
-           <!--  <input (keyup)="onVilleArrivee($event)" type="text" placeholder="Ville d'arrivée"
-                [ngClass]="filtrage.isFilteringByVilleArrivee == true ? 'activeFilter' : 'disabledFilter'">
-            <input type="date" placeholder="Date départ"> -->
+           <input (keyup)="onVilleDepart($event)" type="text" placeholder="Ville de départ"
+                [ngClass]="{'activeFilter': filtrage.filter_VilleDepart_Value !== '','disabled': filtrage.filter_VilleDepart_Value === ''}">
+                
+                <input [disabled]="{'true': filtrage.filter_VilleDepart_Value !== ''}" (keyup)="onVilleArrivee($event)" type="text" placeholder="Ville d'arrivée">
+                <!-- [ngClass]="{'activeFilter': filtrage.fi !== ''}"> -->
+            <input type="date" placeholder="Date départ">
 
         </div>
         <div class="listeCovoiturages" style="background-color: whitesmoke">
+            <!-- <app-covoiturage *ngFor="let cov of covoiturages$ | async" [covoituragereserve]="cov"></app-covoiturage> -->
             <app-covoiturage *ngFor="let cov of covoiturages$ | async" [covoituragereserve]="cov"></app-covoiturage>
         </div>
     </div>

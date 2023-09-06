@@ -20,6 +20,9 @@ export class CovoiturageListComponent implements OnInit {
   filtrage!: CovoiturageFiltrage;
   listeFiltree!: Covoiturage[];
   listeAremplir!: Covoiturage[];
+  isVilleArriveeFilterDisabled!:boolean;
+  countFilteredVilleDepart!:number;
+  countries:Covoiturage[] = [];
 
 
 
@@ -31,6 +34,8 @@ export class CovoiturageListComponent implements OnInit {
     this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
     this.covoituragesByIdUser$ = this.covoiturageService.getAllCovoiturages();
     this.filtrage = new CovoiturageFiltrage();
+    this.isVilleArriveeFilterDisabled = true;
+    this.countFilteredVilleDepart =0;
 
   }
 
@@ -52,11 +57,27 @@ export class CovoiturageListComponent implements OnInit {
   onVilleDepart(event: any) {
     console.log("event detectéd");
     this.filtrage.filter_VilleDepart_Value = event.target.value;
-    this.filtrage.filter_VilleArrivee_value = '';
+    //this.filtrage.filter_VilleArrivee_value = '';
+   /* let cocov!:Covoiturage[];
+    this.covoiturageService.getAllCovoiturages()
+    .subscribe(res => cocov = res); */
+   
+ 
+  var covoituragesListeComplete:any = [];
+  this.covoiturageService.getAllCovoiturages()
+  .forEach((i) => covoituragesListeComplete.push(i) );
+  
+  console.log(covoituragesListeComplete);
 
-    this.listFiltering();
-
+    
+   
+     
   }
+    
+  
+    
+
+  
 
   onVilleArrivee(event: any) {
     this.filtrage.filter_VilleArrivee_value = event.target.value;
@@ -64,8 +85,8 @@ export class CovoiturageListComponent implements OnInit {
   }
 
 
-  listFiltering() {
-    console.log("Lancement du filtrage");
+  listFiltering(filtres:CovoiturageFiltrage){
+    console.log("Lancement du filtrage dans listFiltering");
     /*Pipe permet d'accéder à la liste de covoiturage encapsulée dans l'observable.
       - l'opérateur primitif map permet d'executer une action sur chaque membre du tableau
       - l'opérateur primitif filter permet de garder tout itération dans la mesure où 
@@ -78,53 +99,61 @@ export class CovoiturageListComponent implements OnInit {
     // listeFiltree: Covoiturage[] = this.covoiturageService.getAllCovoiturages()
     //                               .pipe(map(res=>res.filter(res=> res.dateDepart === this.filtrage.)));
 
+    /* ca marche*/
+    // if (this.filtrage.filter_VilleDepart_Value !== "") {
+    //   this.covoiturages$ = this.covoiturageService.getAllCovoiturages()
+    //     .pipe(map(res => res.filter(res => res.adresseDepart === this.filtrage.filter_VilleDepart_Value)));
+    //     this.isVilleArriveeFilterDisabled = false;
+    // }
+    
+    // else {
+    //   if (this.filtrage.filter_VilleArrivee_value !== "") {
+    //     this.covoiturages$ = this.covoiturageService.getAllCovoiturages()
+    //       .pipe(map(res => res.filter(res => res.adresseArrivee === this.filtrage.filter_VilleArrivee_value)));
+    //   }
+    // }
 
-   this.covoiturages$= this.covoiturageService.getAllCovoiturages()
-    .pipe(map(res=>res.filter(res=> res.adresseDepart === this.filtrage.filter_VilleDepart_Value)));
-     
 
-
+    //Ca marche
+    // this.covoiturageService.getAllCovoiturages().subscribe(countries => this.countries = countries);
+    // this.countries.forEach(()=>this.countFilteredVilleDepart++ );
+    // console.log(++this.countFilteredVilleDepart);
+    // this.countFilteredVilleDepart = 0;
+    let filteredItems: Covoiturage[]|undefined;
+    this.covoiturageService.getAllCovoiturages().subscribe(res=> filteredItems = res);
+    return filteredItems;
    
-
-
-
-
-
-
-
-
+    
+    
   }
+    
 
 
 
-
-
-
-
-  onCreateCovoiturage(): void {
-    this.covoiturageToPush = {
-      "nombrePlacesRestantes": 45,
-      "dureeTrajet": 45,
-      "distanceKm": 99,
-      "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
-      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret"
-    }
+ onCreateCovoiturage(): void {
+      this.covoiturageToPush = {
+        "nombrePlacesRestantes": 45,
+        "dureeTrajet": 45,
+        "distanceKm": 99,
+        "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
+        "adresseArrivee": "87 avenue de Maupassant 23000 Guéret"
+      }
 
     this.covoiturageService
-      .create(this.covoiturageToPush)
-      .subscribe(() => {
-        /* this.listeCovoiturages.push */
-      });
-    this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
-    // this._init();
+        .create(this.covoiturageToPush)
+        .subscribe(() => {
+          /* this.listeCovoiturages.push */
+        });
+      this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
+      // this._init();
 
-    /* private _init() {
-  this.covoiturageService.findAll(this.user)
-   .subscribe(covoiturages => {
-     this.listeCovoiturages = covoiturages;
-   }) */
+      /* private _init() {
+    this.covoiturageService.findAll(this.user)
+     .subscribe(covoiturages => {
+       this.listeCovoiturages = covoiturages;
+     }) */
 
-  }
+    }
   private _init() {
     this.covoiturageService.getAllCovoiturages();
 
