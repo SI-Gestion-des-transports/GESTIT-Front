@@ -35,10 +35,12 @@ import { VehiculeServiceAddComponent } from './components/vehicule-service/vehic
 import { VehiculeServiceModifyComponent } from './components/vehicule-service/vehicule-service-modify/vehicule-service-modify.component';
 import { ExtractDatePipe } from './shared/utils/extract-date.pipe';
 import { ExtractTimePipe } from './shared/utils/extract-time.pipe';
-
 import { AdressesComponent } from './components/adresses/adresses.component';
 import { CovoituragesOrganiseListComponent } from './components/covoiturages/covoiturages-organise/covoiturages-organise-list/covoiturages-organise-list.component';
 import { CovoituragesOrganiseFormComponent } from './components/covoiturages/covoiturages-organise/covoiturages-organise-form/covoiturages-organise-form.component';
+import { VehiculePersoComponent } from './components/vehicule-perso/vehicule-perso.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,7 +73,8 @@ import { CovoituragesOrganiseFormComponent } from './components/covoiturages/cov
     ExtractTimePipe,
     AdressesComponent,
     CovoituragesOrganiseListComponent,
-    CovoituragesOrganiseFormComponent
+    CovoituragesOrganiseFormComponent,
+    VehiculePersoComponent
   ],
   imports: [
     BrowserModule,

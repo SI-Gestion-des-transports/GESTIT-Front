@@ -9,6 +9,12 @@ app-reservation-vs-item, app-reservation-vs-form, app-authentification {
   display: flex;
   justify-content: center
 }
+
+app-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between
+}
 /*
 .list{
   max-height: 200px;
@@ -100,14 +106,14 @@ button {
   margin: 5px;
 }
 
-.inputDate, input {
+.inputDate, input, select {
   border: black solid 1px;
   border-radius: 7px;
   margin: 5px;
   padding: 5px;
 }
-* {
 
+* {
 }
 
 button {

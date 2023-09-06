@@ -12,13 +12,12 @@
         <tbody>
         <tr (click)="select(v)" *ngFor="let v of listVehiculeService;index as i">
           <td>
-            <h5>Marque-Modèle: {{v.modele}} Immatriculation: {{v.immatriculation}}</h5>
+            <h5>Marque:{{v.marque}}-Modèle: {{v.modele}}-Immatriculation: {{v.immatriculation}}</h5>
             <p>Catégorie: {{v.categorie}}</p>
             <p>Motor: {{v.motorisation}}</p>
             <p>CO2: {{v.emissionCO2}}</p>
             <p>Places: {{v.nombreDePlaceDisponibles}}</p>
           </td>
-
         </tr>
 
         </tbody>
@@ -29,7 +28,7 @@
         <img src="..." class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">Photo</h5>
-          <h5>Marque-Modèle: {{selectedVehiculeService.modele}} Immatriculation: {{selectedVehiculeService.immatriculation}}</h5>
+          <h5>Marque:{{selectedVehiculeService.marque}}-Modèle: {{selectedVehiculeService.modele}}-Immatriculation: {{selectedVehiculeService.immatriculation}}</h5>
           <p>Catégorie: {{selectedVehiculeService.categorie}}</p>
           <p>Motor: {{selectedVehiculeService.motorisation}}</p>
           <p>CO2: {{selectedVehiculeService.emissionCO2}}</p>

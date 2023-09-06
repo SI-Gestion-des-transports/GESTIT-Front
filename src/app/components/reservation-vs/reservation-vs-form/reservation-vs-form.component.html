@@ -7,10 +7,13 @@
         <input type="hidden" name="userId" id="userId" value="{{currentUser.id}}" [(ngModel)]="reservationVs.userId">
       </div>
       <div>
-        <img src="https://cdn.motor1.com/images/mgl/JO3m6Q/s1/peugeot-208.webp" class="img">
-        <app-vehicule-service-list></app-vehicule-service-list>
+        <img *ngIf="!currentVs.id" src="https://cdn.motor1.com/images/mgl/JO3m6Q/s1/peugeot-208.webp" class="img">
+        <img *ngIf="currentVs.id" src="{{currentVs.photoURL}}" class="img">
         <label for="vehiculeServiceId">Sélection du véhicule de service</label>
-        <input type="hidden" name="vehiculeServiceId" id="vehiculeServiceId" value="1" [(ngModel)]="reservationVs.vehiculeServiceId">
+
+        <select name="vehiculeServiceId" id="vehiculeServiceId"  [(ngModel)]="currentVs">
+          <option *ngFor="let vs of vehiculesSrv">{{vs.modele}} </option>
+        </select>
       </div>
       <!--
       <div style="display: flex;align-items: center">

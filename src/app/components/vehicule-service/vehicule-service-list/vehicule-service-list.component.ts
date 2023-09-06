@@ -25,16 +25,21 @@ export class VehiculeServiceListComponent implements OnInit {
       this.listMarque = res;
     });
     this.initListVs();
+    this._vehiculeServiceService.updateVehiculesSrv(this.listVehiculeService);
   }
 
   initListVs() {
     this._vehiculeServiceService.findAll().subscribe(res => {
-      this.listVehiculeService = res.filter(value => value.statut != "HORS_SERVICE");
+      if (this.marqueSelected=="all"){
+        this.listVehiculeService = res.filter(value => value.statut != "HORS_SERVICE");
+      } else {
+        this.listVehiculeService = res.filter(value => value.statut != "HORS_SERVICE" && value.marque == this.marqueSelected);
+      }
     });
   }
 
   marqueChanged() {
-    console.log(this.marqueSelected);
+    this.initListVs();
   }
 
   toAdd() {

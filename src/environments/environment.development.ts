@@ -12,6 +12,7 @@ export const environment = {
     motorisation:'http://localhost:8080/motorisation',
     statusVS:'http://localhost:8080/statusVS',
     adresses: 'http://localhost:3000/adresses',
+    vehiculeperso: 'http://localhost:3000/vehiculeperso',
 
     reservation: 'http://localhost:8080/reservation',
     covoituragesReserves: 'http://localhost:8080/covoituragesReserves',

@@ -2,23 +2,24 @@
 <div class="container d-flex justify-content-center mt-5">
   <div class="card" style="width: 18rem;">
     <div class="card-body">
-      <p>Email address:</p>
-      <input #loginUser="ngModel" name="username" type="email" placeholder="email@example.com" ngModel>
-      <p>Mot de passe</p>
-      <input #password="ngModel" name="password" type="password" placeholder="Password" ngModel>
+      <p>Email :</p>
+      <input [(ngModel)]="unLoggedUser.email" name="email" type="email" placeholder="email@gestit.fr">
+      <p>Mot de passe :</p>
+      <input [(ngModel)]="unLoggedUser.motDePasse" name="motDePasse" type="password" placeholder="Password">
       <br>
       <input #check="ngModel" name="check" type="checkbox" ngModel> Se souvenir de moi
       <br>
-      <button type="submit" class="btn btn-primary">Sign in</button>
+      <button type="submit" class="btn btn-primary" (click)="seConnecter()">Se connecter</button>
       <hr>
-      <a href="#">New around here?</a><a class="ms-2" href="#">Sign up.</a>
+      <a href="#">Nouveau ici ? Créer un compte.</a>
       <br>
-      <a href="#">Forgot password?</a>
+      <a href="#">Mot passe oublié ?</a>
     </div>
   </div>
 </div>
 </form>
-<div class="singleItem">
+
+<!--<div class="singleItem">
   <h3>Authentification</h3>
   <form class="form" *ngIf="loggedUser.nom == undefined">
     <div class="detail">
@@ -39,4 +40,4 @@
       <a href="">Un soucis de connexion ?</a>
     </div>
   </form>
-</div>
+</div>-->

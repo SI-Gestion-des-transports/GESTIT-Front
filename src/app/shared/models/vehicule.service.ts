@@ -7,5 +7,6 @@ export interface VehiculeService {
   emissionCO2?: number,
   motorisation?: string,
   statut?: string,
-  categorie?: string
+  categorie?: string,
+  marque?:string
 }

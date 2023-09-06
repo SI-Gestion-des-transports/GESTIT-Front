@@ -4,6 +4,9 @@ import {ReservationVs} from "../../shared/models/reservation.vs";
 import {Utilisateur} from "../../shared/models/utilisateur";
 import {VehiculeService} from "../../shared/models/vehicule.service";
 import {Subscription} from "rxjs";
+import {HttpHeaders} from "@angular/common/http";
+import {AuthentificationService} from "../../shared/services/authentification.service";
+import {UtilisateursService} from "../../shared/services/utilisateurs.service";
 
 @Component({
   selector: 'app-reservation-vs',
@@ -12,28 +15,23 @@ import {Subscription} from "rxjs";
 })
 export class ReservationVsComponent implements OnInit, OnChanges {
 
-  @Input()
-  user: Utilisateur={};
-
   reservationVs: ReservationVs = {};
   allReservationsVs: ReservationVs [] = [];
   upcomingReservationsVsByUser: ReservationVs [] = [];
   pastReservationsVsByUser: ReservationVs [] = [];
   currentUser: Utilisateur = {};
-  //currentVs: VehiculeService = {};
+  currentVs: VehiculeService = {};
   currentReservationVs: ReservationVs = {};
   editedReservationVs: ReservationVs = {};
   modifBtn!:boolean;
+  headers = new HttpHeaders();
 
   private _subscription = new Subscription();
-  constructor(private _reservationVsService:ReservationVsService) {
+  constructor(private _reservationVsService:ReservationVsService,
+              private _utilisateurService: UtilisateursService,
+              private _authService: AuthentificationService) {
 }
-/*  ngOnInit() {
-    this.allReservationsVs = this._reservationVsService.allReservationsVs;
-    this.user = this._reservationVsService.currentUser;
-    this.currentReservationVs = this._reservationVsService.currentReservationVs;
-    this._init();
-  }*/
+
 
   ngOnInit(): void {
     this._subscription.add(
@@ -61,17 +59,17 @@ export class ReservationVsComponent implements OnInit, OnChanges {
         })
     );
     this._subscription.add(
-      this._reservationVsService.currentUser$
+      this._utilisateurService.currentUser$
         .subscribe(data => {
         this.currentUser = data;
       })
     );
-/*    this._subscription.add(
+    this._subscription.add(
       this._reservationVsService.currentVs$
         .subscribe(data => {
         this.currentVs = data;
       })
-    );*/
+    );
     console.log(this.currentReservationVs.dateHeureRetour);
 
     this._subscription.add(
@@ -93,12 +91,18 @@ export class ReservationVsComponent implements OnInit, OnChanges {
           this.modifBtn = data;
         })
     );
+    this._subscription.add(
+      this._authService.headers$
+        .subscribe(data => {
+        this.headers = data
+      })
+    );
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.user){
+    if (this.currentUser){
       this._init();
-      console.log("On changes (user.nom) : " + this.user.nom)
+      console.log("On changes (currentUser.nom) : " + this.currentUser.nom)
     }
     if (this.currentReservationVs.dateHeureRetour != undefined){
       console.log("On changes (currentRes) : " + this.currentReservationVs.dateHeureRetour)
@@ -109,7 +113,7 @@ export class ReservationVsComponent implements OnInit, OnChanges {
   }
 
   ngOnDestroy(): void {
-    this._subscription.unsubscribe(); // Se désabonner de tous les observables en une fois
+    this._subscription.unsubscribe();
   }
 
   private _init(){
@@ -121,7 +125,7 @@ export class ReservationVsComponent implements OnInit, OnChanges {
   }
 
   create(reservationVs:ReservationVs){
-    reservationVs.userId = this.user.id;
+    reservationVs.userId = this.currentUser.id;
     console.log("Réservation : " + reservationVs.userId);
     console.log("Réservation : " + reservationVs.dateHeureRetour);
     this._reservationVsService

@@ -1,16 +1,18 @@
-import {Injectable} from "@angular/core";
+import {Injectable, OnInit} from "@angular/core";
 import {environment} from "../../../environments/environment.development";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ReservationVs} from "../models/reservation.vs";
-import {BehaviorSubject, catchError, Observable} from "rxjs";
+import {BehaviorSubject, catchError, Observable, Subscription} from "rxjs";
 import {Utilisateur} from "../models/utilisateur";
 import {VehiculeService} from "../models/vehicule.service";
+import {AuthentificationService} from "./authentification.service";
+import {UtilisateursService} from "./utilisateurs.service";
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class ReservationVsService {
+export class ReservationVsService implements OnInit {
 
 /*
   private _reservationVs: ReservationVs = {};
@@ -21,12 +23,15 @@ export class ReservationVsService {
   private _currentReservationVs: ReservationVs = {};
 */
 
+  headers = new HttpHeaders();
+  currentUser: Utilisateur = {};
+
   private reservationVsSource = new BehaviorSubject<ReservationVs>({});
   private allReservationsVsSource = new BehaviorSubject<ReservationVs[]>([]);
   private upcomingReservationsVsByUserSource = new BehaviorSubject<ReservationVs[]>([]);
   private pastReservationsVsByUserSource = new BehaviorSubject<ReservationVs[]>([]);
-  private currentUserSource = new BehaviorSubject<Utilisateur>({});
-  //private currentVsSource = new BehaviorSubject<VehiculeService>({});
+  //private currentUserSource = new BehaviorSubject<Utilisateur>({});
+  private currentVsSource = new BehaviorSubject<VehiculeService>({});
   private currentReservationVsSource = new BehaviorSubject<ReservationVs>({});
   private editedReservationVsSource
     = new BehaviorSubject<ReservationVs>({});
@@ -36,8 +41,8 @@ export class ReservationVsService {
   allReservationsVs$ = this.allReservationsVsSource.asObservable();
   upcomingReservationsVsByUser$ = this.upcomingReservationsVsByUserSource.asObservable();
   pastReservationsVsByUser$ = this.pastReservationsVsByUserSource.asObservable();
-  currentUser$ = this.currentUserSource.asObservable();
-  //currentVs$ = this.currentVsSource.asObservable();
+  //currentUser$ = this.currentUserSource.asObservable();
+  currentVs$ = this.currentVsSource.asObservable();
   currentReservationVs$ = this.currentReservationVsSource.asObservable();
   editedReservationVs$ = this.editedReservationVsSource.asObservable();
   modifBtn$ = this.modifBtnSource.asObservable();
@@ -46,7 +51,25 @@ export class ReservationVsService {
   private _baseUrl = environment.urlApi.reservationsvs;
   private _realBaseUrl = environment.urlApi.reservation;
 
-  constructor(private _http: HttpClient) {
+  private _subscription = new Subscription();
+  constructor(private _http: HttpClient,
+              private _authService: AuthentificationService,
+              private _utilisateurService: UtilisateursService) {
+  }
+
+  ngOnInit(): void {
+        this._subscription
+          .add(this._authService.headers$
+            .subscribe(data => {
+              this.headers = data
+            }));
+        this._subscription
+          .add(this._utilisateurService.currentUser$
+            .subscribe(data => {this.currentUser = data}));
+    }
+
+  ngOnDestroy(): void {
+    this._subscription.unsubscribe();
   }
 
   findAll(): Observable<ReservationVs[]> {
@@ -64,10 +87,11 @@ export class ReservationVsService {
   }
 
   findUpcomingByUserId(userId?: number): Observable<ReservationVs[]>{
-    return this._http.get<ReservationVs[]>(`${this._realBaseUrl}/upcoming`)
+    return this._http.get<ReservationVs[]>(`${this._realBaseUrl}/upcoming`, {headers: this.headers})
   }
   findPastByUserId(userId?: number): Observable<ReservationVs[]>{
-    return this._http.get<ReservationVs[]>(`${this._realBaseUrl}/past`)
+    console.log(this.headers.keys())
+    return this._http.get<ReservationVs[]>(`${this._realBaseUrl}/past`, {headers: this.headers})
   }
 
   create(resVSCreated: ReservationVs): Observable<ReservationVs> {
@@ -106,14 +130,12 @@ export class ReservationVsService {
     this.pastReservationsVsByUserSource.next(data);
   }
 
-  updateCurrentUser(data: Utilisateur): void {
+/*  updateCurrentUser(data: Utilisateur): void {
     this.currentUserSource.next(data);
-  }
-  /*
+  }*/
   updateCurrentVs(data: VehiculeService): void {
     this.currentVsSource.next(data);
   }
-*/
   updateCurrentReservationVs(data: ReservationVs): void {
     this.currentReservationVsSource.next(data);
   }
