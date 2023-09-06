@@ -13,6 +13,15 @@ import { CovoituragesOrganiseComponent } from './components/covoiturages/covoitu
 import { AuthentificationComponent } from './components/authentification/authentification.component';
 import { VehiculeServiceComponent } from './components/vehicule-service/vehicule-service.component';
 import {
+  VehiculeServiceListComponent
+} from "./components/vehicule-service/vehicule-service-list/vehicule-service-list.component";
+import {
+  VehiculeServiceAddComponent
+} from "./components/vehicule-service/vehicule-service-add/vehicule-service-add.component";
+import {
+  VehiculeServiceModifyComponent
+} from "./components/vehicule-service/vehicule-service-modify/vehicule-service-modify.component";
+import {
   ReservationVsFormComponent
 } from "./components/reservation-vs/reservation-vs-form/reservation-vs-form.component";
 import {
@@ -34,6 +43,18 @@ const routes: Routes = [
   {path:'reservationsvs/:id', component:ReservationVsItemComponent},
   {path:'utilisateurs', component:UtilisateursComponent},
   {path:'login', component:AuthentificationComponent},
+  {path:'vehiculeService', component:VehiculeServiceComponent,
+  children:[
+
+    {path:"list",component:VehiculeServiceListComponent},
+    {path:"add",component:VehiculeServiceAddComponent},
+    {path:"modify/:id",component:VehiculeServiceModifyComponent},
+    {path:"**",component:VehiculeServiceListComponent}
+
+  ]
+  },
+
+
   {path:'vehiculeService', component:VehiculeServiceComponent}
 ];
 
