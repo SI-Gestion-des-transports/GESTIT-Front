@@ -11,9 +11,13 @@
 
 }
 
-.activeFilter {
-  background-color: rgb(12, 136, 145);
+.activeFilterSearchInProgress {
+  background-color: red;  
 }
+.activeFilterFounded{
+  background-color: rgb(24, 164, 136);  
+}
+
 
 .disabledFilter{
   background-color: white;
