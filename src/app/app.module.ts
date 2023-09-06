@@ -37,6 +37,8 @@ import { ExtractDatePipe } from './shared/utils/extract-date.pipe';
 import { ExtractTimePipe } from './shared/utils/extract-time.pipe';
 
 import { AdressesComponent } from './components/adresses/adresses.component';
+import { CovoituragesOrganiseListComponent } from './components/covoiturages/covoiturages-organise/covoiturages-organise-list/covoiturages-organise-list.component';
+import { CovoituragesOrganiseFormComponent } from './components/covoiturages/covoiturages-organise/covoiturages-organise-form/covoiturages-organise-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +69,9 @@ import { AdressesComponent } from './components/adresses/adresses.component';
     VehiculeServiceModifyComponent,
     ExtractDatePipe,
     ExtractTimePipe,
-    AdressesComponent
+    AdressesComponent,
+    CovoituragesOrganiseListComponent,
+    CovoituragesOrganiseFormComponent
   ],
   imports: [
     BrowserModule,

@@ -27,11 +27,23 @@ import {
 import {
   ReservationVsListComponent
 } from "./components/reservation-vs/reservation-vs-list/reservation-vs-list.component";
+import {
+  CovoituragesOrganiseListComponent
+} from "./components/covoiturages/covoiturages-organise/covoiturages-organise-list/covoiturages-organise-list.component";
+import {
+  CovoituragesOrganiseFormComponent
+} from "./components/covoiturages/covoiturages-organise/covoiturages-organise-form/covoiturages-organise-form.component";
 
 const routes: Routes = [
   {path:'covoiturages/:id', component:SingleCovoiturageComponent},   //Route avec paramètre dynamique
   {path:'covoiturages', component: CovoiturageListComponent},
-  {path:'covoituragesOrganises', component: CovoituragesOrganiseComponent},
+  {path:'covoituragesOrganises-list', component: CovoituragesOrganiseListComponent},
+  {path:'covoituragesOrganises', component: CovoituragesOrganiseComponent,
+    children: [
+      {path:'list', component: CovoituragesOrganiseListComponent},
+      {path:'form', component: CovoituragesOrganiseFormComponent},
+      {path: 'form/:covoiturageId', component: CovoituragesOrganiseFormComponent},
+    ]},
   {path:'', component:LandingPageComponent},
   {path:'reservationsvs', component:ReservationVsComponent},
   {path:'reservation', component:ReservationVsComponent},
