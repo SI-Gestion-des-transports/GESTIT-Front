@@ -1,6 +1,10 @@
 <div class="container">
     <div class="d-flex flex-column align-items-center">
-        <div class="d-flex flex-row mt-2 mb-3 ">s
+        <div class="d-flex flex-row mt-2 mb-3 ">
+            <p class="d-flex align-self-end">filtrer par</p>
+            <!-- <select option *ngFor="let ville of villes"></select> -->
+        </div>    
+        <!-- <div class="d-flex flex-row mt-2 mb-3 ">s
             <p class="d-flex align-self-end">filtrer par</p>
 
             <input [disabled]="disabledFilterVilleArrivee"(keyup)="onVilleArrivee($event)" type="text" placeholder="Ville arrivée" [(ngModel)]="villeArrivee_searchValue"
@@ -20,7 +24,7 @@
                 'activeFilterFounded': filtrage.filter_Date_value && this.isFoundedDate && this.isFoundedVilleDepart}">
 
                 <button type="button" (click)="onResetFiltrage()" class="btn btn-primary">Reset Filtrage</button>
-        </div>
+        </div> -->
         <div class="listeCovoiturages" style="background-color: whitesmoke">
             <!-- <app-covoiturage *ngFor="let cov of covoiturages$ | async" [covoituragereserve]="cov"></app-covoiturage> -->
             <app-covoiturage *ngFor="let cov of listeAafficher" [covoituragereserve]="cov"></app-covoiturage>

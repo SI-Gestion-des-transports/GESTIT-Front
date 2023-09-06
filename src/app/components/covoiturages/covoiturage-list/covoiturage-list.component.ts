@@ -23,12 +23,17 @@ export class CovoiturageListComponent implements OnInit {
   isFoundedVilleArrivee: boolean;
   isFoundedVilleDepart: boolean;
   isFoundedDate: boolean;
-  name:string;
-  villeArrivee_searchValue:string;
-  villeDepart_searchValue:string;
-  date_searchValue:Date;
+  name: string;
+  villeArrivee_searchValue: string;
+  villeDepart_searchValue: string;
+  date_searchValue: Date;
 
-  placeholder_villeArrivee:string;
+  placeholder_villeArrivee: string;
+
+  VillesArrivee_liste: string[];
+
+  covoiturages_listeComplete: Array<Covoiturage>;
+
 
 
 
@@ -37,8 +42,8 @@ export class CovoiturageListComponent implements OnInit {
   ngOnInit(): void {
     this.filtrage = new CovoiturageFiltrage();
 
-    let listeToShow = this.covoiturageService.recupListeCovoituragesOnServer()
-      .then(res => this.listeAafficher = res);
+
+
     this.disabledFilterVilleDepart = true;
     this.disabledFilterDate = true;
     this.disabledFilterVilleArrivee = false;
@@ -47,156 +52,187 @@ export class CovoiturageListComponent implements OnInit {
     this.isFoundedDate = false;
     this.placeholder_villeArrivee = "ville d'arrivée";
     this.villeArrivee_searchValue = "";
-    this.villeDepart_searchValue="";
-    this.date_searchValue=null;
+    this.villeDepart_searchValue = "";
+    this.date_searchValue = null;
+    this.filtrage.villeArrivee_liste = null;
+
+    this.covoiturages_listeComplete = [];
+    this.VillesArrivee_liste = [];
+    this.setupFiltrage();
   }
+
+  async setupFiltrage() {
+    console.log("config filtrage");
+    this.filtrage = new CovoiturageFiltrage();
+
+    this.covoiturages_listeComplete = await this.covoiturageService.recupListeCovoituragesOnServer();
+
+    let listThisDuplicateItems: string[] = [];
+    this.covoiturages_listeComplete.forEach((covoit) => {
+      listThisDuplicateItems.push(covoit.adresseArrivee.commune);
+    });
+    this.VillesArrivee_liste = Array.from(new Set(listThisDuplicateItems));
+    
+        
+  }
+
+
+
+
+
+
 
   async onVilleDepart(event: any) {
     console.log("récupération input ville départ");
     this.filtrage.filter_VilleDepart_Value = event.target.value;
-    this.filtrageListe();
+    this.filtrageListe_old();
 
   }
 
   async onVilleArrivee(event: any) {
     console.log("récupération input ville arrivée");
     this.filtrage.filter_VilleArrivee_value = event.target.value;
-    this.filtrageListe();
+    this.filtrageListe_old();
   }
 
   async onDateEntree(event: any) {
     console.log("récupération input date");
     this.filtrage.filter_Date_value = event.target.value;
-    this.filtrageListe();
+    this.filtrageListe_old();
   }
-  onResetFiltrage(){
-  
+  onResetFiltrage() {
+
     this.ngOnInit();
-    this.filtrageListe();
+    this.filtrageListe_old();
   }
 
 
 
-  async filtrageListe() {
-    let completListOfCovoiturages = await this.covoiturageService.recupListeCovoituragesOnServer();
-    console.log("récupération de la liste OK");
-    if (this.filtrage.filter_VilleArrivee_value !== "") {
-      this.disabledFilterVilleArrivee = false;
-      let listeFiltree_villeArrivee = completListOfCovoiturages.filter((covoit) => covoit.adresseArrivee === this.filtrage.filter_VilleArrivee_value);
-      if (listeFiltree_villeArrivee.length > 0) {
-        this.isFoundedVilleArrivee = true;
-        this.disabledFilterVilleDepart = false;
-        this.disabledFilterDate = true;
+  async filtrageListe_old() {
+    // let completListOfCovoiturages = await this.covoiturageService.recupListeCovoituragesOnServer();
+    // console.log("récupération de la liste OK");
 
-        if (this.filtrage.filter_VilleDepart_Value !== "") {
-          let listeFiltree_villeDepart = completListOfCovoiturages.filter((covoit) => covoit.adresseDepart === this.filtrage.filter_VilleDepart_Value);
-
-          if (listeFiltree_villeDepart.length > 0) {
-            this.disabledFilterVilleArrivee = true;
-            this.isFoundedVilleDepart = true;
-            this.disabledFilterDate = false;
-            this.listeAafficher = listeFiltree_villeDepart;
-
-            if (this.filtrage.filter_Date_value) {
-              console.log("présence d'une date")
-              console.log(this.filtrage.filter_Date_value);
-              this.disabledFilterVilleDepart = true;
-              this.disabledFilterVilleArrivee = true;
-              
-              let listeFiltree_byDate = listeFiltree_villeDepart.filter((covoit) => {
-                const dateCovoit = new Date(covoit.dateDepart);
-                const dateSouhaitee = new Date(this.filtrage.filter_Date_value);
-                if(dateCovoit.getDate() !== dateSouhaitee.getDate()){
-                  return false;
-                }
-                if(dateCovoit.getMonth() !== dateSouhaitee.getMonth()){
-                  return false;
-                }
-                if(dateCovoit.getMonth() !== dateSouhaitee.getMonth()){
-                  return false;
-                }
-                if(dateCovoit.getFullYear() !== dateSouhaitee.getFullYear()){
-                  return false;
-                }
-                return true;
-              });
-              if (listeFiltree_byDate.length > 0) {
-               this.isFoundedDate = true;
-               this.listeAafficher = listeFiltree_byDate;
-
-              }
-              else {
-                console.log("aucune date trouvée après filtrage");
-                this.listeAafficher = listeFiltree_villeDepart;
-                this.isFoundedDate = false;
-
-              }
-            }
-            else {
-              console.log("aucune date");
-              console.log(this.filtrage.filter_Date_value)
-              this.listeAafficher = listeFiltree_villeDepart;
-            }
-
-
-          }
-          else {
-            this.isFoundedVilleDepart = false;
-            this.disabledFilterDate = true;
-            this.disabledFilterVilleArrivee = true;
-            this.listeAafficher = listeFiltree_villeArrivee;
-          }
-        }
-        else {
-          this.listeAafficher = listeFiltree_villeArrivee;
-        }
-      }
-      else {
-        this.disabledFilterVilleDepart = true;
-        this.disabledFilterDate = true;
-        this.listeAafficher = listeFiltree_villeArrivee;
-        this.isFoundedVilleArrivee = false;
-      }
-    }
-    else {
-      this.disabledFilterVilleArrivee = false;
-      console.log("le champ arrivé est vide");
-      this.listeAafficher = completListOfCovoiturages;
-
-    }
-
-
-
-    // if (this.filtrage.filter_VilleDepart_Value !== "") {
-    //   completListOfCovoiturages = await this.covoiturageService.recupListeCovoituragesOnServer();
-    //   this.listeAafficher = completListOfCovoiturages.filter(covoit => covoit.adresseDepart === this.filtrage.filter_VilleDepart_Value);
-    //   if (this.listeAafficher.length > 0) {
+    // if (this.filtrage.filter_VilleArrivee_value !== "") {
+    //   this.disabledFilterVilleArrivee = false;
+    //   let listeFiltree_villeArrivee = completListOfCovoiturages.filter((covoit) => covoit.adresseArrivee === this.filtrage.filter_VilleArrivee_value);
+    //   if (listeFiltree_villeArrivee.length > 0) {
+    //     this.isFoundedVilleArrivee = true;
     //     this.disabledFilterVilleDepart = false;
     //     this.disabledFilterDate = true;
-    //     if (this.filtrage.filter_VilleArrivee_value !== "") {
-    //       let listeFiltreeParVilleArrivee = this.listeAafficher.filter(covoit => covoit.adresseArrivee === this.filtrage.filter_VilleArrivee_value);
-    //       if (listeFiltreeParVilleArrivee.length > 0) {
-    //         this.disabledFilterVilleDepart = false;
+
+    //     if (this.filtrage.filter_VilleDepart_Value !== "") {
+    //       let listeFiltree_villeDepart = completListOfCovoiturages.filter((covoit) => covoit.adresseDepart === this.filtrage.filter_VilleDepart_Value);
+
+    //       if (listeFiltree_villeDepart.length > 0) {
+    //         this.disabledFilterVilleArrivee = true;
+    //         this.isFoundedVilleDepart = true;
     //         this.disabledFilterDate = false;
+    //         this.listeAafficher = listeFiltree_villeDepart;
+
+    //         if (this.filtrage.filter_Date_value) {
+    //           console.log("présence d'une date")
+    //           console.log(this.filtrage.filter_Date_value);
+    //           this.disabledFilterVilleDepart = true;
+    //           this.disabledFilterVilleArrivee = true;
+
+    //           let listeFiltree_byDate = listeFiltree_villeDepart.filter((covoit) => {
+    //             const dateCovoit = new Date(covoit.dateDepart);
+    //             const dateSouhaitee = new Date(this.filtrage.filter_Date_value);
+    //             if(dateCovoit.getDate() !== dateSouhaitee.getDate()){
+    //               return false;
+    //             }
+    //             if(dateCovoit.getMonth() !== dateSouhaitee.getMonth()){
+    //               return false;
+    //             }
+    //             if(dateCovoit.getMonth() !== dateSouhaitee.getMonth()){
+    //               return false;
+    //             }
+    //             if(dateCovoit.getFullYear() !== dateSouhaitee.getFullYear()){
+    //               return false;
+    //             }
+    //             return true;
+    //           });
+    //           if (listeFiltree_byDate.length > 0) {
+    //            this.isFoundedDate = true;
+    //            this.listeAafficher = listeFiltree_byDate;
+
+    //           }
+    //           else {
+    //             console.log("aucune date trouvée après filtrage");
+    //             this.listeAafficher = listeFiltree_villeDepart;
+    //             this.isFoundedDate = false;
+
+    //           }
+    //         }
+    //         else {
+    //           console.log("aucune date");
+    //           console.log(this.filtrage.filter_Date_value)
+    //           this.listeAafficher = listeFiltree_villeDepart;
+    //         }
+
+
     //       }
     //       else {
-    //         this.disabledFilterVilleDepart = true;
+    //         this.isFoundedVilleDepart = false;
     //         this.disabledFilterDate = true;
+    //         this.disabledFilterVilleArrivee = true;
+    //         this.listeAafficher = listeFiltree_villeArrivee;
     //       }
-
+    //     }
+    //     else {
+    //       this.listeAafficher = listeFiltree_villeArrivee;
     //     }
     //   }
     //   else {
     //     this.disabledFilterVilleDepart = true;
     //     this.disabledFilterDate = true;
+    //     this.listeAafficher = listeFiltree_villeArrivee;
+    //     this.isFoundedVilleArrivee = false;
     //   }
-
     // }
     // else {
-    //   this.listeAafficher = await this.covoiturageService.recupListeCovoituragesOnServer();
-    //   this.disabledFilterVilleDepart = true;
-    // }
+    //   this.disabledFilterVilleArrivee = false;
+    //   console.log("le champ arrivé est vide");
+    //   this.listeAafficher = completListOfCovoiturages;
 
+  }
+
+
+
+  // if (this.filtrage.filter_VilleDepart_Value !== "") {
+  //   completListOfCovoiturages = await this.covoiturageService.recupListeCovoituragesOnServer();
+  //   this.listeAafficher = completListOfCovoiturages.filter(covoit => covoit.adresseDepart === this.filtrage.filter_VilleDepart_Value);
+  //   if (this.listeAafficher.length > 0) {
+  //     this.disabledFilterVilleDepart = false;
+  //     this.disabledFilterDate = true;
+  //     if (this.filtrage.filter_VilleArrivee_value !== "") {
+  //       let listeFiltreeParVilleArrivee = this.listeAafficher.filter(covoit => covoit.adresseArrivee === this.filtrage.filter_VilleArrivee_value);
+  //       if (listeFiltreeParVilleArrivee.length > 0) {
+  //         this.disabledFilterVilleDepart = false;
+  //         this.disabledFilterDate = false;
+  //       }
+  //       else {
+  //         this.disabledFilterVilleDepart = true;
+  //         this.disabledFilterDate = true;
+  //       }
+
+  //     }
+  //   }
+  //   else {
+  //     this.disabledFilterVilleDepart = true;
+  //     this.disabledFilterDate = true;
+  //   }
+
+  // }
+  // else {
+  //   this.listeAafficher = await this.covoiturageService.recupListeCovoituragesOnServer();
+  //   this.disabledFilterVilleDepart = true;
+  // }
+
+
+
+
+  async filtrageList() {
 
   }
 
@@ -248,37 +284,37 @@ export class CovoiturageListComponent implements OnInit {
 
 
 
-  onCreateCovoiturage(): void {
-    let covoiturageToPush = {
-      "nombrePlacesRestantes": 45,
-      "dureeTrajet": 45,
-      "distanceKm": 99,
-      "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
-      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret"
-    }
+  // onCreateCovoiturage(): void {
+  //   let covoiturageToPush = {
+  //     "nombrePlacesRestantes": 45,
+  //     "dureeTrajet": 45,
+  //     "distanceKm": 99,
+  //     "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
+  //     "adresseArrivee": "87 avenue de Maupassant 23000 Guéret"
+  //   }
 
-    this.covoiturageService
-      .create(covoiturageToPush)
-      .subscribe(() => {
-        /* this.listeCovoiturages.push */
-      });
-    //this.covoituragesAuComplet$ = this.covoiturageService.getAllCovoiturages();
-    // this._init();
+  //   this.covoiturageService
+  //     .create(covoiturageToPush)
+  //     .subscribe(() => {
+  //       /* this.listeCovoiturages.push */
+  //     });
+  //this.covoituragesAuComplet$ = this.covoiturageService.getAllCovoiturages();
+  // this._init();
 
-    /* private _init() {
-  this.covoiturageService.findAll(this.user)
-   .subscribe(covoiturages => {
-     this.listeCovoiturages = covoiturages;
-   }) */
-
-  }
-  private _init() {
-    this.covoiturageService.getAllCovoiturages();
-
-  }
-
+  /* private _init() {
+this.covoiturageService.findAll(this.user)
+ .subscribe(covoiturages => {
+   this.listeCovoiturages = covoiturages;
+ }) */
 
 }
+  // private _init() {
+  //   this.covoiturageService.getAllCovoiturages();
+
+  // }
+
+
+
 
 
 

@@ -23,25 +23,18 @@
       "dureeTrajet": 102,
       "distanceKm": 91,
       "dateDepart": "2023-08-07T10:24",
-      "adresseDepart": "Paris",
-      "adresseArrivee": "Bordeaux",
-      "organisateur": {
-        "nom": "ccc",
-        "motDePasse": "cccc",
-        "email": "irreductible@redpizz.fr",
-        "id": 1
+      "adresseDepart": {
+        "numero": 205,
+        "codePostal": "75000",
+        "voie": "impasse des Hurons",
+        "commune": "Paris"
       },
-      "passagers": "",
-      "vehiculePerso": ""
-    },
-    {
-      "id": 24,
-      "nombrePlacesRestantes": 2,
-      "dureeTrajet": 102,
-      "distanceKm": 91,
-      "dateDepart":"2023-09-07T10:24",
-      "adresseDepart": "Paris",
-      "adresseArrivee": "Bordeaux",
+      "adresseArrivee": {
+        "numero": 200,
+        "voie": "avenue des cépages royaux",
+        "commune": "Bordeaux",
+        "codePostal": 33000
+      },
       "organisateur": {
         "nom": "ccc",
         "motDePasse": "cccc",
@@ -53,36 +46,31 @@
     },
     {
       "id": 25,
-      "nombrePlacesRestantes": 2,
-      "dureeTrajet": 102,
-      "distanceKm": 91,
-      "dateDepart": "2023-09-07T10:24",
-      "adresseDepart": "Chartres",
-      "adresseArrivee": "Nimes",
+      "nombrePlacesRestantes": 4,
+      "dureeTrajet": 125,
+      "distanceKm": 120,
+      "dateDepart": "2023-05-07T10:24",
+      "adresseDepart": {
+        "numero": 1002,
+        "codePostal": "75000",
+        "voie": "butte Montmartre",
+        "commune": "Paris"
+      },
+      "adresseArrivee": {
+        "numero": 1,
+        "voie": "chemin des bouteilles",
+        "commune": "Bordeaux",
+        "codePostal": 33000
+      },
       "organisateur": {
-        "nom": "aaa",
-        "motDePasse": "aaa",
-        "email": "aaa@redpizz.fr",
-        "id": 2
+        "nom": "ccc",
+        "motDePasse": "cccc",
+        "email": "irreductible@redpizz.fr",
+        "id": 1
       },
       "passagers": "",
       "vehiculePerso": ""
-    },
-    {
-      "nombrePlacesRestantes": 45,
-      "dureeTrajet": 45,
-      "distanceKm": 99,
-      "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
-      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret",
-      "id": 26
-    },
-    {
-      "nombrePlacesRestantes": 45,
-      "dureeTrajet": 45,
-      "distanceKm": 99,
-      "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
-      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret",
-      "id": 27
     }
+
   ]
 }

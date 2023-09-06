@@ -3,6 +3,7 @@ export class CovoiturageFiltrage {
     filter_VilleArrivee_value:string;
     filter_Date_value: Date;
     authorizeFilter_ByVilleArrivee:boolean;
+    villeArrivee_liste:string[];
     
     constructor(){
         
@@ -10,6 +11,7 @@ export class CovoiturageFiltrage {
         this.filter_VilleArrivee_value = "";
         this.filter_Date_value = null;
         this.authorizeFilter_ByVilleArrivee = false;
+        this.villeArrivee_liste = null;
 
     }
 }
