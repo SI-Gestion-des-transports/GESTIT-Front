@@ -12,186 +12,42 @@ import { CovoiturageService } from 'src/app/shared/services/covoiturage.service'
 })
 export class CovoiturageListComponent implements OnInit {
 
-  covoituragesAuComplet$!: Observable<Covoiturage[]>;
-  covoituragesFiltres$!: Observable<Covoiturage[]>;
-
-  covoituragesByIdUser$!: Observable<Covoiturage[]>;
-  covoiturageToPush!: Covoiturage;
-  value!: number;
-  value_str!: string;
   filtrage!: CovoiturageFiltrage;
-  listeFiltree!: Covoiturage[];
-  listeAremplir!: Covoiturage[];
-  isVilleArriveeFilterDisabled!: boolean;
-  countFilteredVilleDepart!: number;
-  countries: Covoiturage[] = [];
-
-  listeServeur: Array<Covoiturage>;
-
-
-  //
-  covoituragesToShow$: Observable<Covoiturage[]>;
   listeAafficher: Array<Covoiturage>;
 
-
-
-
+  disabled:boolean;
 
   constructor(private covoiturageService: CovoiturageService) { }
 
   ngOnInit(): void {
-
     this.filtrage = new CovoiturageFiltrage();
-    this.isVilleArriveeFilterDisabled = true;
-    this.countFilteredVilleDepart = 0;
-    this.covoituragesToShow$ = this.covoiturageService.getAllCovoiturages();
-    let listeToShow = this.covoiturageService.recupListeCovoituragesOnServer();
-    listeToShow.then((res) => this.listeAafficher = res);
-
+    let listeToShow = this.covoiturageService.recupListeCovoituragesOnServer()
+      .then(res => this.listeAafficher = res);
+    this.disabled=true;
   }
-
-  onKey(event: any) { // without type info
-    this.value = +event.target.value;
-    this.covoituragesByIdUser$ = this.covoiturageService.getFilteredbyUsersCovoit(this.value);
-  }
-
-
-  /* Politique de filtrage:
-  La liste de tous les covoiturages s'affiche par défaut au démarrage de la page.
-  Deux types de filtrage sont possibles:
-  -> La liste peut-être affichée filtrée par l'adresse de départ OU d'arrivée
-  -> La liste peut-être également filtrée par date;
-  Donc résultat filtrage = (Ville départ XOR ville d'arrivée)ET date.
-  */
-
 
   async onVilleDepart(event: any) {
-
-    let filterName: string = event.target.value;
-    if (filterName !== "") {
-      let list = await this.covoiturageService.recupListeCovoituragesOnServer();
-      let filteredByVilleDepart = list.filter((covoit) => covoit.adresseDepart === filterName);
-      this.listeAafficher = filteredByVilleDepart;
-    }
-    else{
-      this.covoiturageService.recupListeCovoituragesOnServer()
-      .then(res=>this.listeAafficher = res);
-    }
-
-    //Ceci marche mais comment recupérer le résultat?
-    // let listeComplete: any;
-    // console.log("lancement de la promesse:")
-    // this.covoiturageService.getAllCovoiturages()
-    //   .subscribe(arrayCovoits => arrayCovoits.forEach(covoit => {
-    //     listeComplete.push(covoit)
-    //   }));
+    this.filtrage.filter_VilleDepart_Value = event.target.value;
+    this.filtrageListe();
 
   }
 
+  async filtrageListe() {
+    let completListOfCovoiturages;
 
-
-
-
-
-
-
-
-
-
-
-
-  /*  if (result) {
-     resolve(result)
-   }
-   else {
-     reject()
-   } */
-
-
-  /* calcul.then((result)=>{
-    console.log('resultat:'+result);
-  }).catch(()=>{
-      console.log("oops, erreur")
-  }) */
-
-
-
-
-  //utilisation
-
-
-  /*  async recupCovoituragesFromServer(): Promise<Covoiturage[][]> {
-     let listeCovoiturages: Array<Covoiturage[]> = [];
-     await this.covoiturageService.getAllCovoiturages()
-       .forEach((covoit) => listeCovoiturages.push(covoit));
-     return listeCovoiturages;
-   }
-   
-   async recup():Array<Covoiturage[]>{
-     let listeCovoiturages: Array<Covoiturage[]> = [];
-     const resultPromise = new Promise((resolve, reject) => {
-       resolve(this.covoiturageService.getAllCovoiturages()
-             .forEach((covoit)=>listeCovoiturages.push(covoit)));
-     })
-     return listeCovoiturages
-   } */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /* const filtered=listeServ.filter(covoit => covoit.adresseDepart === filterName);
-  console.log(filtered); */
-
-  /*configuration du filtre et désactivation de son pendant*/
-  //this.filtrage.filter_VilleDepart_Value = event.target.value;
-  //this.filtrage.filter_VilleArrivee_value = '';
-
-  /*Application du filtre*/
-  //ca marche
-  // let ages: any[] = [];/*<=== ca MARCHE*/ p
-  // this.covoiturageService.getAllCovoiturages()
-  //   .forEach((i) => ages.push(i));
-
-  // let listeFiltree:any = ages.(age=>age.onVilleDepart==='Paris');
-  // console.log("affichage de la liste filtrée");
-  // console.log(listeFiltree); 
-
-  /*  let ages:any = [];
-  this.covoiturageService.getAllCovoiturages()
-    .subscribe(value=>ages = value); */
-
-
-
-
-  /* console.log(result);
-  filteredResearch = ages.filter((res:any) => res.adresseDepart===this.filtrage.filter_VilleDepart_Value);
-  console.log("Afficahge liste filtree");
-  console.log(filteredResearch); */
-  /* let listeFiltree:any = this.filtreur(covoituragesListeComplete);
-  console.log("affichage de la liste filtrée");
-  console.log(listeFiltree); */
-
-  // }
-
-
-
-
-
-
-
-
-
-
+    if (this.filtrage.filter_VilleDepart_Value !== "") {
+      completListOfCovoiturages = await this.covoiturageService.recupListeCovoituragesOnServer();
+      this.listeAafficher = completListOfCovoiturages.filter(covoit => covoit.adresseDepart === this.filtrage.filter_VilleDepart_Value); 
+      if(this.listeAafficher.length>0)
+        this.disabled = false;
+      else
+        this.disabled = true;
+    }
+    else {
+      this.listeAafficher = await this.covoiturageService.recupListeCovoituragesOnServer();
+      this.disabled = true;
+    }
+  }
 
   onVilleArrivee(event: any) {
     this.filtrage.filter_VilleArrivee_value = event.target.value;
@@ -245,7 +101,7 @@ export class CovoiturageListComponent implements OnInit {
 
 
   onCreateCovoiturage(): void {
-    this.covoiturageToPush = {
+    let covoiturageToPush = {
       "nombrePlacesRestantes": 45,
       "dureeTrajet": 45,
       "distanceKm": 99,
@@ -254,11 +110,11 @@ export class CovoiturageListComponent implements OnInit {
     }
 
     this.covoiturageService
-      .create(this.covoiturageToPush)
+      .create(covoiturageToPush)
       .subscribe(() => {
         /* this.listeCovoiturages.push */
       });
-    this.covoituragesAuComplet$ = this.covoiturageService.getAllCovoiturages();
+    //this.covoituragesAuComplet$ = this.covoiturageService.getAllCovoiturages();
     // this._init();
 
     /* private _init() {
@@ -273,10 +129,7 @@ export class CovoiturageListComponent implements OnInit {
 
   }
 
-  onFiltrerUtilisateur() {
-    console.log("demande de filtrage");
-    this.covoituragesAuComplet$.pipe(filter(value => value === null));
-  }
+
 }
 
 

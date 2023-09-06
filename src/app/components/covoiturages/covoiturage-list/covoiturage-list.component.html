@@ -5,7 +5,7 @@
            <input (keyup)="onVilleDepart($event)" type="text" placeholder="Ville de départ"
                 [ngClass]="{'activeFilter': filtrage.filter_VilleDepart_Value !== '','disabled': filtrage.filter_VilleDepart_Value === ''}">
                 
-                <input [disabled]="{'true': filtrage.filter_VilleDepart_Value !== ''}" (keyup)="onVilleArrivee($event)" type="text" placeholder="Ville d'arrivée">
+                <input [disabled]="disabled" (keyup)="onVilleArrivee($event)" type="text" placeholder="Ville d'arrivée">
                 <!-- [ngClass]="{'activeFilter': filtrage.fi !== ''}"> -->
             <input type="date" placeholder="Date départ">
 
