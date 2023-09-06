@@ -34,6 +34,7 @@ import { SingleCovoiturageComponent } from './components/covoiturages/single-cov
 import { ExtractDatePipe } from './shared/utils/extract-date.pipe';
 import { ExtractTimePipe } from './shared/utils/extract-time.pipe';
 
+import { AdressesComponent } from './components/adresses/adresses.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +62,8 @@ import { ExtractTimePipe } from './shared/utils/extract-time.pipe';
     LandingPageComponent,
     SingleCovoiturageComponent,
     ExtractDatePipe,
-    ExtractTimePipe
+    ExtractTimePipe,
+    AdressesComponent
   ],
   imports: [
     BrowserModule,
