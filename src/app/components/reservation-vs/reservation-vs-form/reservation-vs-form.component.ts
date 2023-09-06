@@ -4,6 +4,9 @@ import {ReservationVs} from "../../../shared/models/reservation.vs";
 import {ReservationVsService} from "../../../shared/services/reservation.vs.service";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
+import {VehiculeService} from "../../../shared/models/vehicule.service";
+import {UtilisateursService} from "../../../shared/services/utilisateurs.service";
+import {VehiculeServiceService} from "../../../shared/services/vehicule-service.service";
 
 @Component({
   selector: 'app-reservation-vs-form',
@@ -12,8 +15,6 @@ import {Router} from "@angular/router";
 })
 export class ReservationVsFormComponent implements OnInit, OnChanges{
 
-  @Input()
-  user: Utilisateur={};
   resasVs:ReservationVs[]=[];
   resaVs: ReservationVs = {};
 
@@ -22,7 +23,8 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   upcomingReservationsVsByUser: ReservationVs [] = [];
   pastReservationsVsByUser: ReservationVs [] = [];
   currentUser: Utilisateur = {};
-  //currentVs: VehiculeService = {};
+  currentVs: VehiculeService = {};
+  vehiculesSrv: VehiculeService [] = [];
   currentReservationVs: ReservationVs = {};
   editedReservationVs: ReservationVs = {};
   modifBtn!: boolean;
@@ -30,6 +32,8 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   private _subscription = new Subscription();
 
   constructor(private _reservationVsService:ReservationVsService,
+              private _utilisateurService: UtilisateursService,
+              private _vehiculeSrvService: VehiculeServiceService,
               private _router: Router) {
   }
 
@@ -59,18 +63,24 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
           this.pastReservationsVsByUser = data;
         })
     );
+    console.log("Réservation Form — Before SUBSCRIPTION / this.currentUser.id" + this.currentUser.id);
     this._subscription.add(
-      this._reservationVsService.currentUser$
+      this._utilisateurService.currentUser$
         .subscribe(data => {
           this.currentUser = data;
         })
     );
-    /*    this._subscription.add(
-          this._reservationVsService.currentVs$
-            .subscribe(data => {
-            this.currentVs = data;
-          })
-        );*/
+    console.log("Réservation Form — After SUBSCRIPTION / this.currentUser.id" + this.currentUser.id);
+    this._subscription.add(
+      this._reservationVsService.currentVs$
+        .subscribe(data => {
+          this.currentVs = data;
+        })
+    );
+    this._subscription.add(
+      this._vehiculeSrvService.vehiculesSrv$
+        .subscribe(data => {
+          this.vehiculesSrv = data}));
     this._subscription.add(
       this._reservationVsService.currentReservationVs$
         .subscribe(data => {
@@ -93,13 +103,13 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.user){
+    if (this.currentUser){
       this._init();
-      console.log(this.user.nom)
-      this._reservationVsService.updateCurrentUser(this.user);
+      console.log(this.currentUser.nom)
+      console.log("Réservation Form — ngOnChanges : currentUser");
     }
     if (this.reservationVs){
-      console.log("Form : reservation changed")
+      console.log("Réservation Form — ngOnChanges : reservationVs");
     }
   }
 
@@ -108,6 +118,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   }
 
   private _init(){
+    console.log("Réservation Form — _init");
     this._reservationVsService
       .findAll()
       .subscribe(reservations => {
@@ -115,27 +126,45 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
       });
   }
 
+  onSubmit(event: Event): void {
+    event.preventDefault();
+    console.log("Réservation Form — OnSubmit");
+    if(this.currentReservationVs.id){
+      this.update(this.reservationVs);
+    } else if (!this.currentReservationVs.id){
+      this.create(this.reservationVs);
+    }
+  }
+
+  cancel(){
+    console.log("Réservation Form — CANCEL");
+    this.reInitResVs();
+    this._router.navigateByUrl('reservationsvs/list');
+  }
+
   create(reservationVs:ReservationVs){
+    console.log("Réservation Form — CREATE / currentUser.id : " + this.currentUser.id)
     reservationVs.userId = this.currentUser.id;
-    console.log("Réservation : " + reservationVs.userId);
-    console.log("Réservation : " + reservationVs.dateHeureRetour);
+    console.log("Réservation Form — CREATE / reservation.user.id : " + reservationVs.userId);
     this._reservationVsService
       .create(this.addSecondsToDate(reservationVs))
       .subscribe(() =>{
         this.reInitResVs();
         this._init();
-        this._router.navigateByUrl('reservationsvs-list');
+        this._router.navigateByUrl('reservationsvs/list');
       });
   }
 
   update(updatedReservation : ReservationVs){
+    console.log("Réservation Form — UPDATE / reservation.user.id : " + updatedReservation.userId);
     this._reservationVsService.update(updatedReservation).subscribe(() => {
       this.reInitResVs();
-      this._router.navigateByUrl('reservationsvs-list');
+      this._router.navigateByUrl('reservationsvs/list');
     });
   }
 
   reInitResVs(){
+    console.log("Réservation Form — ReInitVs");
     this._reservationVsService.updateCurrentReservationVs({});
     this._reservationVsService.updateModifBtn(true);
   }
@@ -146,18 +175,6 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
     return reservationVs;
   }
 
-  onSubmit(event: Event): void {
-    event.preventDefault();
-    if(this.currentReservationVs.id){
-      this.update(this.reservationVs);
-    } else if (!this.currentReservationVs.id){
-      this.create(this.reservationVs);
-    }
-  }
 
-  cancel(){
-    this.reInitResVs();
-    this._router.navigateByUrl('reservationsvs-list');
-  }
 
 }

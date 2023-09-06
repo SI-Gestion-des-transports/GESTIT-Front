@@ -4,6 +4,8 @@ import {ReservationVs} from "../../../shared/models/reservation.vs";
 import {ReservationVsService} from "../../../shared/services/reservation.vs.service";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
+import {VehiculeService} from "../../../shared/models/vehicule.service";
+import {UtilisateursService} from "../../../shared/services/utilisateurs.service";
 
 @Component({
   selector: 'app-reservation-vs-list',
@@ -24,7 +26,7 @@ export class ReservationVsListComponent implements OnInit{
   upcomingReservationsVsByUser: ReservationVs [] = [];
   pastReservationsVsByUser: ReservationVs [] = [];
   currentUser: Utilisateur = {};
-  //currentVs: VehiculeService = {};
+  currentVs: VehiculeService = {};
   currentReservationVs: ReservationVs = {};
   editedReservationVs: ReservationVs = {};
   modifBtn!: boolean;
@@ -34,6 +36,7 @@ export class ReservationVsListComponent implements OnInit{
 
   private _subscription = new Subscription();
   constructor(private _reservationVsService:ReservationVsService,
+              private _utilisateurService: UtilisateursService,
               private _router: Router) {
   }
 
@@ -63,17 +66,17 @@ export class ReservationVsListComponent implements OnInit{
         })
     );
     this._subscription.add(
-      this._reservationVsService.currentUser$
+      this._utilisateurService.currentUser$
         .subscribe(data => {
           this.currentUser = data;
         })
     );
-    /*    this._subscription.add(
-          this._reservationVsService.currentVs$
-            .subscribe(data => {
+    this._subscription.add(
+      this._reservationVsService.currentVs$
+         .subscribe(data => {
             this.currentVs = data;
           })
-        );*/
+        );
     this._subscription.add(
       this._reservationVsService.currentReservationVs$
         .subscribe(data => {
@@ -100,6 +103,7 @@ export class ReservationVsListComponent implements OnInit{
   }
 
   private _init(){
+    console.log("Réservation List — _init");
     this._reservationVsService
       .findAll()
       .subscribe(reservationsvs => {this.allReservationsVs = reservationsvs});
@@ -118,40 +122,28 @@ export class ReservationVsListComponent implements OnInit{
     this._init();
   }
 
+  select(res: ReservationVs) {
+    this.currentReservationVs = res;
+  }
+
   newReservation(){
+    console.log("Réservation List — newReservation");
     this._reservationVsService.updateReservationVs({})
-    this._router.navigateByUrl('reservationsvs-form');
+    this._router.navigateByUrl('reservationsvs/form');
   }
 
   startUpdateResVs(reservationToEdit:ReservationVs){
     this._reservationVsService.updateModifBtn(false);
     this._reservationVsService.updateCurrentReservationVs(reservationToEdit);
     this._reservationVsService.updateReservationVs(reservationToEdit);
-    this._router.navigateByUrl('reservationsvs-form');
-    //this.startUpdateResVsFromList.emit(reservationToEdit);
+    console.log("Réservation List — startUpdateResVs");
+    this._router.navigateByUrl('reservationsvs/form');
   }
 
   deleteReservationVs(reservationToDelete: ReservationVs){
-    this._router.navigateByUrl('reservationsvs-item');
+    console.log("Réservation List — deleteReservationVs");
+    this._router.navigateByUrl('reservationsvs/item');
     this._reservationVsService.updateCurrentReservationVs(reservationToDelete);
-/*    this._reservationVsService.delete(reservationToDelete).subscribe(() =>
-      this._init()
-    );*/
   }
-
-  /*
-  removeSecondsToDate(reservationVs: ReservationVs): ReservationVs{
-    reservationVs.dateHeureDepart?.slice(0, 16);
-    reservationVs.dateHeureRetour?.slice(0, 16);
-    return reservationVs;
-  }
-
-  extractDate(dateTime?: string): string {
-    return dateTime?.split('T')[0] ?? '';
-  }
-  extractTime(dateTime?: string): string {
-    return dateTime?.split('T')[1]?.slice(0,5) ?? '';
-  }
-  */
 
 }

@@ -2,12 +2,18 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../../environments/environment.development";
 import {HttpClient} from "@angular/common/http";
 import {VehiculeService} from "../models/vehicule.service";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class VehiculeServiceService {
 private _baseUrl:string = environment.urlApi.vehiculeService;
+
+  private vehiculesSrvSource = new BehaviorSubject<VehiculeService[]>([{}]);
+  vehiculesSrv$ = this.vehiculesSrvSource.asObservable();
+
+
 
   constructor(private _http:HttpClient) { }
 
@@ -29,4 +35,9 @@ private _baseUrl:string = environment.urlApi.vehiculeService;
   modifyVehiculeService(vs:VehiculeService){
     return this._http.put<any>(`${this._baseUrl}/modify`,vs,{observe:"response"});
   }
+
+  updateVehiculesSrv(data: VehiculeService[]){
+    this.vehiculesSrvSource.next(data);
+  }
+
 }

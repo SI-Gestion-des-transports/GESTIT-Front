@@ -34,21 +34,24 @@ const routes: Routes = [
   {path:'covoiturages', component: CovoiturageListComponent},
   {path:'covoituragesOrganises', component: CovoituragesOrganiseComponent},
   {path:'', component:LandingPageComponent},
-  {path:'reservationsvs', component:ReservationVsComponent},
+
   {path:'reservation', component:ReservationVsComponent},
   {path:'reservation/upcoming', component:ReservationVsListComponent},
   {path:'reservation/past', component:ReservationVsListComponent},
-  {path:'reservationsvs-form', component:ReservationVsFormComponent},
-  {path:'reservationsvs-item', component:ReservationVsItemComponent},
-  {path:'reservationsvs-list', component:ReservationVsListComponent},
-  {path:'reservationsvs/:id', component:ReservationVsItemComponent},
+  {path:'reservationsvs', component:ReservationVsComponent,
+  children: [
+    {path:'form', component:ReservationVsFormComponent},
+    {path:'item', component:ReservationVsItemComponent},
+    {path:'list', component:ReservationVsListComponent},
+    {path:':id', component:ReservationVsItemComponent},
+  ]},
+
   {path:'utilisateurs', component:UtilisateursComponent},
   {path:'login', component:AuthentificationComponent},
   {path:'vehiculeperso', component:VehiculePersoComponent},
   {
     path: 'vehiculeService', component: VehiculeServiceComponent,
     children: [
-
       {path: "list", component: VehiculeServiceListComponent},
       {path: "add", component: VehiculeServiceAddComponent},
       {path: "modify/:id", component: VehiculeServiceModifyComponent},
