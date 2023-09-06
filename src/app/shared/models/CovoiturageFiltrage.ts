@@ -8,7 +8,7 @@ export class CovoiturageFiltrage {
         
         this.filter_VilleDepart_Value = "";
         this.filter_VilleArrivee_value = "";
-        this.filter_Date_value = new Date();
+        this.filter_Date_value = null;
         this.authorizeFilter_ByVilleArrivee = false;
 
     }

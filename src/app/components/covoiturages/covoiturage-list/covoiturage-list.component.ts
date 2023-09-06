@@ -16,11 +16,13 @@ export class CovoiturageListComponent implements OnInit {
   filtrage!: CovoiturageFiltrage;
   listeAafficher: Array<Covoiturage>;
 
+  disabledFilterVilleArrivee: boolean;
   disabledFilterVilleDepart: boolean;
   disabledFilterDate: boolean;
 
   isFoundedVilleArrivee: boolean;
   isFoundedVilleDepart: boolean;
+  isFoundedDate: boolean;
 
 
 
@@ -29,12 +31,15 @@ export class CovoiturageListComponent implements OnInit {
 
   ngOnInit(): void {
     this.filtrage = new CovoiturageFiltrage();
+
     let listeToShow = this.covoiturageService.recupListeCovoituragesOnServer()
       .then(res => this.listeAafficher = res);
     this.disabledFilterVilleDepart = true;
     this.disabledFilterDate = true;
+    this.disabledFilterVilleArrivee = false;
     this.isFoundedVilleArrivee = false;
     this.isFoundedVilleDepart = false;
+    this.isFoundedDate = false;
   }
 
   async onVilleDepart(event: any) {
@@ -50,23 +55,81 @@ export class CovoiturageListComponent implements OnInit {
     this.filtrageListe();
   }
 
+  async onDateEntree(event: any) {
+    console.log("récupération input date");
+    this.filtrage.filter_Date_value = event.target.value;
+    this.filtrageListe();
+  }
+
+
+
   async filtrageListe() {
     let completListOfCovoiturages = await this.covoiturageService.recupListeCovoituragesOnServer();
     console.log("récupération de la liste OK");
     if (this.filtrage.filter_VilleArrivee_value !== "") {
+      this.disabledFilterVilleArrivee = false;
       let listeFiltree_villeArrivee = completListOfCovoiturages.filter((covoit) => covoit.adresseArrivee === this.filtrage.filter_VilleArrivee_value);
       if (listeFiltree_villeArrivee.length > 0) {
         this.isFoundedVilleArrivee = true;
         this.disabledFilterVilleDepart = false;
         this.disabledFilterDate = true;
+
         if (this.filtrage.filter_VilleDepart_Value !== "") {
           let listeFiltree_villeDepart = completListOfCovoiturages.filter((covoit) => covoit.adresseDepart === this.filtrage.filter_VilleDepart_Value);
+
           if (listeFiltree_villeDepart.length > 0) {
+            this.disabledFilterVilleArrivee = true;
             this.isFoundedVilleDepart = true;
+            this.disabledFilterDate = false;
+            this.listeAafficher = listeFiltree_villeDepart;
+
+            if (this.filtrage.filter_Date_value) {
+              console.log("présence d'une date")
+              console.log(this.filtrage.filter_Date_value);
+              this.disabledFilterVilleDepart = true;
+              this.disabledFilterVilleArrivee = true;
+              
+              let listeFiltree_byDate = listeFiltree_villeDepart.filter((covoit) => {
+                const dateCovoit = new Date(covoit.dateDepart);
+                const dateSouhaitee = new Date(this.filtrage.filter_Date_value);
+                if(dateCovoit.getDate() !== dateSouhaitee.getDate()){
+                  return false;
+                }
+                if(dateCovoit.getMonth() !== dateSouhaitee.getMonth()){
+                  return false;
+                }
+                if(dateCovoit.getMonth() !== dateSouhaitee.getMonth()){
+                  return false;
+                }
+                if(dateCovoit.getFullYear() !== dateSouhaitee.getFullYear()){
+                  return false;
+                }
+                return true;
+              });
+              if (listeFiltree_byDate.length > 0) {
+               this.isFoundedDate = true;
+               this.listeAafficher = listeFiltree_byDate;
+
+              }
+              else {
+                console.log("aucune date trouvée après filtrage");
+                this.listeAafficher = listeFiltree_villeDepart;
+                this.isFoundedDate = false;
+
+              }
+            }
+            else {
+              console.log("aucune date");
+              console.log(this.filtrage.filter_Date_value)
+              this.listeAafficher = listeFiltree_villeDepart;
+            }
+
+
           }
           else {
             this.isFoundedVilleDepart = false;
             this.disabledFilterDate = true;
+            this.disabledFilterVilleArrivee = true;
             this.listeAafficher = listeFiltree_villeArrivee;
           }
         }
@@ -82,6 +145,7 @@ export class CovoiturageListComponent implements OnInit {
       }
     }
     else {
+      this.disabledFilterVilleArrivee = false;
       console.log("le champ arrivé est vide");
       this.listeAafficher = completListOfCovoiturages;
 

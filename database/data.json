@@ -22,7 +22,7 @@
       "nombrePlacesRestantes": 2,
       "dureeTrajet": 102,
       "distanceKm": 91,
-      "dateDepart": "2012-04-23T18:25:43.511Z",
+      "dateDepart": "2023-08-07T10:24",
       "adresseDepart": "Paris",
       "adresseArrivee": "Bordeaux",
       "organisateur": {
@@ -39,8 +39,8 @@
       "nombrePlacesRestantes": 2,
       "dureeTrajet": 102,
       "distanceKm": 91,
-      "dateDepart":"2012-04-23T18:25:43.511Z",
-      "adresseDepart": "Lille",
+      "dateDepart":"2023-09-07T10:24",
+      "adresseDepart": "Paris",
       "adresseArrivee": "Bordeaux",
       "organisateur": {
         "nom": "ccc",
@@ -56,7 +56,7 @@
       "nombrePlacesRestantes": 2,
       "dureeTrajet": 102,
       "distanceKm": 91,
-      "dateDepart": "2012-04-23T18:25:43.511Z",
+      "dateDepart": "2023-09-07T10:24",
       "adresseDepart": "Chartres",
       "adresseArrivee": "Nimes",
       "organisateur": {
