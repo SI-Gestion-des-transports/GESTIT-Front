@@ -66,7 +66,9 @@ export class NavComponent {
   }
 
 
-
+  login(){
+    this.router.navigateByUrl('login');
+  }
 
 
   // this.router.navigateByUrl('covoiturages');

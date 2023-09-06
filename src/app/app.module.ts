@@ -31,6 +31,9 @@ import * as fr from '@angular/common/locales/fr';
 import { CovoiturageListComponent } from './components/covoiturages/covoiturage-list/covoiturage-list.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SingleCovoiturageComponent } from './components/covoiturages/single-covoiturage/single-covoiturage.component';
+import { ExtractDatePipe } from './shared/utils/extract-date.pipe';
+import { ExtractTimePipe } from './shared/utils/extract-time.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +59,9 @@ import { SingleCovoiturageComponent } from './components/covoiturages/single-cov
     UtilisateursComponent,
     CovoiturageListComponent,
     LandingPageComponent,
-    SingleCovoiturageComponent
+    SingleCovoiturageComponent,
+    ExtractDatePipe,
+    ExtractTimePipe
   ],
   imports: [
     BrowserModule,

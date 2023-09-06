@@ -1,27 +1,38 @@
-<h3>Réserver un véhicule de service</h3>
-<form class="form">
-  <div>
-    <label for="userId"></label>
-    <input type="hidden" name="userId" id="userId" value="{{user.id}}" [(ngModel)]="reservationVs.userId">
-  </div>
-  <div>
-    <app-vehicule-service-list></app-vehicule-service-list>
-    <label for="vehiculeServiceId">Sélection du véhicule de service</label>
-    <input type="hidden" name="vehiculeServiceId" id="vehiculeServiceId" value="1" [(ngModel)]="reservationVs.vehiculeServiceId">
-  </div>
-  <div style="display: flex;align-items: center">
-    <label for="distanceKm">Distance : </label>
-    <input type="range" min="10" max="5000" step="10" name="distanceKm" id="distanceKm" [(ngModel)]="reservationVs.distanceKm" value="90">
-    {{reservationVs.distanceKm ? reservationVs.distanceKm : "0"}} km
-  </div>
-  <div>
-    <label for="dateHeureDepart">Date et heure de départ : </label>
-    <input type="datetime-local" name="dateHeureDepart" id="dateHeureDepart" [(ngModel)]="reservationVs.dateHeureDepart" class="inputDate">
-  </div>
-  <div>
-    <label for="dateHeureRetour">Date et heure de retour : </label>
-    <input type="datetime-local" name="dateHeureRetour" id="dateHeureRetour" [(ngModel)]="reservationVs.dateHeureRetour"  class="inputDate">
-  </div>
-  <button type="submit" class="btn btn-success" (click)="create(reservationVs)">Réserver</button>
-  <button type="reset" class="btn btn-danger">Annuler</button>
-</form>
+<div class="singleItem">
+  <h3>Réserver un véhicule de service</h3>
+  <form class="form" (submit)="onSubmit($event)">
+    <div class="detail">
+      <div>
+        <label for="userId"></label>
+        <input type="hidden" name="userId" id="userId" value="{{currentUser.id}}" [(ngModel)]="reservationVs.userId">
+      </div>
+      <div>
+        <img src="https://cdn.motor1.com/images/mgl/JO3m6Q/s1/peugeot-208.webp" class="img">
+        <app-vehicule-service-list></app-vehicule-service-list>
+        <label for="vehiculeServiceId">Sélection du véhicule de service</label>
+        <input type="hidden" name="vehiculeServiceId" id="vehiculeServiceId" value="1" [(ngModel)]="reservationVs.vehiculeServiceId">
+      </div>
+      <!--
+      <div style="display: flex;align-items: center">
+        <label for="distanceKm">Distance : </label>
+        <input type="range" min="10" max="5000" step="10" name="distanceKm" id="distanceKm" [(ngModel)]="reservationVs.distanceKm">
+        {{reservationVs.distanceKm ? reservationVs.distanceKm : "0"}} km
+      </div>
+      -->
+      <div>
+        <label for="dateHeureDepart">Date et heure de départ : </label>
+        <input type="datetime-local" name="dateHeureDepart" id="dateHeureDepart" [(ngModel)]="reservationVs.dateHeureDepart" class="inputDate">
+        <p *ngIf="currentReservationVs.id"> {{reservationVs.dateHeureDepart}}</p>
+      </div>
+      <div>
+        <label for="dateHeureRetour">Date et heure de retour : </label>
+        <input type="datetime-local" name="dateHeureRetour" id="dateHeureRetour" [(ngModel)]="reservationVs.dateHeureRetour" class="inputDate">
+        <p *ngIf="currentReservationVs.id"> {{reservationVs.dateHeureRetour}}</p>
+      </div>
+    </div>
+    <div class="action-btn">
+      <button type="submit" class="btn btn-outline-success" >{{ currentReservationVs.id ? "Sauvegarder" : "Réserver"}}</button>
+      <button type="button" class="btn btn-outline-danger" (click)="cancel()">Annuler</button>
+    </div>
+  </form>
+</div>

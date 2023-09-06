@@ -1,13 +1,3 @@
-<p>utilisateurs works!</p>
-
-<app-covoiturages-organise
-  [organisateur]="loggedUser"
-></app-covoiturages-organise>
-
-<app-reservation-vs [user]="loggedUser"></app-reservation-vs>
-
-<app-vehicule-service></app-vehicule-service>
-
 <div class="users">
   <h3>
     {{ user.id == null ? "Créer un utilisateur" : "Modifier l'utilisateur" }}
@@ -63,7 +53,8 @@
     </button>
   </form>
   <hr>
-  <div class="list">
+  <div class ="list">
+  <div class="itemList">
     <div *ngFor="let singleUser of users" class="singleItem">
       <h3>{{singleUser.nom}}</h3>
       <button type="button" class="btn btn-secondary" (click)="userFeatured = singleUser">Détails</button>
@@ -92,6 +83,7 @@
         </button>
       </div>
     </div>
+  </div>
   </div>
 
   <div *ngIf="userFeatured" class="singleItem">

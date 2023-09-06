@@ -25,14 +25,16 @@ const routes: Routes = [
   {path:'covoituragesOrganises', component: CovoituragesOrganiseComponent},
   {path:'', component:LandingPageComponent},
   {path:'reservationsvs', component:ReservationVsComponent},
+  {path:'reservation', component:ReservationVsComponent},
+  {path:'reservation/upcoming', component:ReservationVsListComponent},
+  {path:'reservation/past', component:ReservationVsListComponent},
   {path:'reservationsvs-form', component:ReservationVsFormComponent},
+  {path:'reservationsvs-item', component:ReservationVsItemComponent},
   {path:'reservationsvs-list', component:ReservationVsListComponent},
   {path:'reservationsvs/:id', component:ReservationVsItemComponent},
   {path:'utilisateurs', component:UtilisateursComponent},
   {path:'login', component:AuthentificationComponent},
-  {path:'vehiculeService', component:VehiculeServiceComponent},
-
-
+  {path:'vehiculeService', component:VehiculeServiceComponent}
 ];
 
 @NgModule({
