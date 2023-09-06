@@ -2,7 +2,9 @@
     <div class="d-flex flex-column align-items-center">
         <div class="d-flex flex-row mt-2 mb-3 ">
             <p class="d-flex align-self-end">filtrer par</p>
-            <!-- <select option *ngFor="let ville of villes"></select> -->
+            <select>
+                <option *ngFor="let ville of VillesArrivee_liste" value = "ville">{{ville}}</option>
+            </select>
         </div>    
         <!-- <div class="d-flex flex-row mt-2 mb-3 ">s
             <p class="d-flex align-self-end">filtrer par</p>
