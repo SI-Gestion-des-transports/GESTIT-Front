@@ -18,6 +18,7 @@ import {
 import {
   ReservationVsListComponent
 } from "./components/reservation-vs/reservation-vs-list/reservation-vs-list.component";
+import {VehiculePersoComponent} from "./components/vehicule-perso/vehicule-perso.component";
 
 const routes: Routes = [
   {path:'covoiturages/:id', component:SingleCovoiturageComponent},   //Route avec paramètre dynamique
@@ -34,7 +35,8 @@ const routes: Routes = [
   {path:'reservationsvs/:id', component:ReservationVsItemComponent},
   {path:'utilisateurs', component:UtilisateursComponent},
   {path:'login', component:AuthentificationComponent},
-  {path:'vehiculeService', component:VehiculeServiceComponent}
+  {path:'vehiculeService', component:VehiculeServiceComponent},
+  {path:'vehiculeperso', component:VehiculePersoComponent}
 ];
 
 @NgModule({

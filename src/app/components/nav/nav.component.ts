@@ -11,11 +11,15 @@ export class NavComponent {
   covoiturageChoicies = [
     {
       id: 1,
-      name: "Participer à un covoiturage"
+      name: "Réserver un covoiturage"
     },
     {
       id: 2,
       name: "Organiser un covoiturage"
+    },
+    {
+      id: 3,
+      name: "Véhicule personnel"
     }
   ]
 
@@ -45,6 +49,9 @@ export class NavComponent {
         break;
       case '2': console.log(2);
         this.router.navigateByUrl('covoituragesOrganises');
+        break;
+      case '3': console.log(2);
+        this.router.navigateByUrl('vehiculeperso');
         break;
       default: throw new Error();
     }

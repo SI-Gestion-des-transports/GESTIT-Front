@@ -35,6 +35,7 @@ import { ExtractDatePipe } from './shared/utils/extract-date.pipe';
 import { ExtractTimePipe } from './shared/utils/extract-time.pipe';
 
 import { AdressesComponent } from './components/adresses/adresses.component';
+import { VehiculePersoComponent } from './components/vehicule-perso/vehicule-perso.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +64,8 @@ import { AdressesComponent } from './components/adresses/adresses.component';
     SingleCovoiturageComponent,
     ExtractDatePipe,
     ExtractTimePipe,
-    AdressesComponent
+    AdressesComponent,
+    VehiculePersoComponent
   ],
   imports: [
     BrowserModule,

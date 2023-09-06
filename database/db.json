@@ -72,6 +72,30 @@
       },
       "adresseDepart": "200 place royale",
       "id": 2
+    },
+    {
+      "organisateur": {
+        "nom": "aaaa",
+        "motDePasse": "ddd",
+        "email": "fra.dupont@pizzorange.fr",
+        "id": 6
+      },
+      "dureeTrajet": "11:11",
+      "distanceKm": 2222,
+      "dateDepart": "2023-09-07T10:24",
+      "adresseDepart": {
+        "numero": 1234,
+        "codePostal": 123,
+        "voie": "AAA",
+        "commune": "AAA"
+      },
+      "adresseArrivee": {
+        "numero": 4321,
+        "voie": "ZZZ",
+        "commune": "ZZZ",
+        "codePostal": 321
+      },
+      "id": 3
     }
   ]
 }
