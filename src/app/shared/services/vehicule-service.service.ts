@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {environment} from "../../../environments/environment.development";
 import {HttpClient} from "@angular/common/http";
 import {VehiculeService} from "../models/vehicule.service";
@@ -21,6 +21,10 @@ private _baseUrl:string = environment.urlApi.vehiculeService;
     return this._http.get<VehiculeService[]>(`${this._baseUrl}/listall`);
   }
 
+  findAllEnService(){
+    return this._http.get<VehiculeService[]>(`${this._baseUrl}/list`);
+  }
+
   createVehiculeService(vs:VehiculeService){
 
     return this._http.post<any>(`${this._baseUrl}/create`,vs,{observe:'response'});
@@ -39,5 +43,6 @@ private _baseUrl:string = environment.urlApi.vehiculeService;
   updateVehiculesSrv(data: VehiculeService[]){
     this.vehiculesSrvSource.next(data);
   }
+
 
 }

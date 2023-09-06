@@ -81,6 +81,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
       this._vehiculeSrvService.vehiculesSrv$
         .subscribe(data => {
           this.vehiculesSrv = data}));
+    this._vehiculeSrvService.findAllEnService().subscribe(data => this.vehiculesSrv = data);
     this._subscription.add(
       this._reservationVsService.currentReservationVs$
         .subscribe(data => {
@@ -110,6 +111,9 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
     }
     if (this.reservationVs){
       console.log("Réservation Form — ngOnChanges : reservationVs");
+    }
+    if (this.currentVs){
+      console.log("CLICK")
     }
   }
 
@@ -175,6 +179,9 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
     return reservationVs;
   }
 
-
+  select(vs: VehiculeService) {
+    console.log("CLICK")
+    this.currentVs = vs;
+  }
 
 }
