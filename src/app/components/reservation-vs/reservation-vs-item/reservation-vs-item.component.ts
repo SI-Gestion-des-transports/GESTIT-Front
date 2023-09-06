@@ -5,6 +5,8 @@ import {Subscription} from "rxjs";
 import {Utilisateur} from "../../../shared/models/utilisateur";
 import {ReservationVsComponent} from "../reservation-vs.component";
 import {Router} from "@angular/router";
+import {VehiculeService} from "../../../shared/models/vehicule.service";
+import {UtilisateursService} from "../../../shared/services/utilisateurs.service";
 
 @Component({
   selector: 'app-reservation-vs-item',
@@ -14,17 +16,12 @@ import {Router} from "@angular/router";
 export class ReservationVsItemComponent {
 
 
-  @Input()
-  resaVs : ReservationVs = {};
-  //currentReservation : ReservationVs = this._reservationVsService.currentReservationVs;
-
-
   reservationVs: ReservationVs = {};
   allReservationsVs: ReservationVs [] = [];
   upcomingReservationsVsByUser: ReservationVs [] = [];
   pastReservationsVsByUser: ReservationVs [] = [];
   currentUser: Utilisateur = {};
-  //currentVs: VehiculeService = {};
+  currentVs: VehiculeService = {};
   currentReservationVs: ReservationVs = {};
   editedReservationVs: ReservationVs = {};
   modifBtn!: boolean;
@@ -32,6 +29,7 @@ export class ReservationVsItemComponent {
 
   private _subscription = new Subscription();
   constructor(private _reservationVsService:ReservationVsService,
+              private _utilisateurService: UtilisateursService,
               private _router: Router) {
   }
 
@@ -61,17 +59,17 @@ export class ReservationVsItemComponent {
         })
     );
     this._subscription.add(
-      this._reservationVsService.currentUser$
+      this._utilisateurService.currentUser$
         .subscribe(data => {
           this.currentUser = data;
         })
     );
-    /*    this._subscription.add(
+        this._subscription.add(
           this._reservationVsService.currentVs$
             .subscribe(data => {
             this.currentVs = data;
           })
-        );*/
+        );
     this._subscription.add(
       this._reservationVsService.currentReservationVs$
         .subscribe(data => {
@@ -105,11 +103,11 @@ export class ReservationVsItemComponent {
 
   delete(resVSDeleted: ReservationVs){
     this._reservationVsService.delete(resVSDeleted).subscribe();
-    this._router.navigateByUrl('reservationsvs-list');
+    this._router.navigateByUrl('reservationsvs/list');
   }
 
   cancel(reservation: ReservationVs) {
-    this._router.navigateByUrl('reservationsvs-list');
+    this._router.navigateByUrl('reservationsvs/list');
   }
   featureResaVs(res: ReservationVs){
 /*    console.log("featureResaVs (currentRes) : " + res.dateHeureRetour);

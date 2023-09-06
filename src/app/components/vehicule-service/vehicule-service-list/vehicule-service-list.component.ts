@@ -25,6 +25,7 @@ export class VehiculeServiceListComponent implements OnInit {
       this.listMarque = res;
     });
     this.initListVs();
+    this._vehiculeServiceService.updateVehiculesSrv(this.listVehiculeService);
   }
 
   initListVs() {

@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {environment} from "../../../environments/environment.development";
 import {HttpClient} from "@angular/common/http";
 import {VehiculeService} from "../models/vehicule.service";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,19 @@ import {VehiculeService} from "../models/vehicule.service";
 export class VehiculeServiceService {
 private _baseUrl:string = environment.urlApi.vehiculeService;
 
+  private vehiculesSrvSource = new BehaviorSubject<VehiculeService[]>([{}]);
+  vehiculesSrv$ = this.vehiculesSrvSource.asObservable();
+
+
+
   constructor(private _http:HttpClient) { }
 
   findAll(){
     return this._http.get<VehiculeService[]>(`${this._baseUrl}/listall`);
+  }
+
+  findAllEnService(){
+    return this._http.get<VehiculeService[]>(`${this._baseUrl}/list`);
   }
 
   createVehiculeService(vs:VehiculeService){
@@ -29,4 +39,10 @@ private _baseUrl:string = environment.urlApi.vehiculeService;
   modifyVehiculeService(vs:VehiculeService){
     return this._http.put<any>(`${this._baseUrl}/modify`,vs,{observe:"response"});
   }
+
+  updateVehiculesSrv(data: VehiculeService[]){
+    this.vehiculesSrvSource.next(data);
+  }
+
+
 }

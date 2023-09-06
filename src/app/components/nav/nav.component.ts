@@ -11,11 +11,15 @@ export class NavComponent {
   covoiturageChoicies = [
     {
       id: 1,
-      name: "Participer à un covoiturage"
+      name: "Réserver un covoiturage"
     },
     {
       id: 2,
       name: "Organiser un covoiturage"
+    },
+    {
+      id: 3,
+      name: "Véhicule personnel"
     }
   ]
 
@@ -34,7 +38,20 @@ export class NavComponent {
     }
   ]
 
-
+  VehiculeServiceChoicies = [
+    {
+      id: 1,
+      name: "Véhicule de société"
+    },
+    {
+      id: 2,
+      name: "Créer un véhicule"
+    },
+    {
+      id: 3,
+      name: "Gérer le parc"
+    }
+  ]
 
   constructor(private router: Router) { }
 
@@ -46,6 +63,9 @@ export class NavComponent {
       case '2': console.log(2);
         this.router.navigateByUrl('covoituragesOrganises');
         break;
+      case '3': console.log(2);
+        this.router.navigateByUrl('vehiculeperso');
+        break;
       default: throw new Error();
     }
   }
@@ -56,19 +76,35 @@ export class NavComponent {
         this.router.navigateByUrl('reservationsvs');
         break;
       case '2': console.log(2);
-        this.router.navigateByUrl('reservationsvs-form');
+        this.router.navigateByUrl('reservationsvs/form');
         break;
       case '3': console.log(2);
-        this.router.navigateByUrl('reservationsvs-list');
+        this.router.navigateByUrl('reservationsvs/list');
         break;
       default: throw new Error();
     }
   }
 
+  getServiceChoice(event: any) {
+    switch (event.target.value) {
+      case '1':
+        this.router.navigateByUrl('vehiculeService');
+        break;
+      case '2': console.log(2);
+        this.router.navigateByUrl('vehiculeService/add');
+        break;
+      case '3': console.log(2);
+        this.router.navigateByUrl('vehiculeService/list');
+        break;
+      default: throw new Error();
+    }
+  }
 
   login(){
     this.router.navigateByUrl('login');
   }
+
+
 
 
   // this.router.navigateByUrl('covoiturages');
