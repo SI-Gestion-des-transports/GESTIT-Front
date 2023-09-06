@@ -14,7 +14,7 @@ export class CovoiturageListComponent implements OnInit {
 
   covoituragesAuComplet$!: Observable<Covoiturage[]>;
   covoituragesFiltres$!: Observable<Covoiturage[]>;
-  
+
   covoituragesByIdUser$!: Observable<Covoiturage[]>;
   covoiturageToPush!: Covoiturage;
   value!: number;
@@ -26,7 +26,7 @@ export class CovoiturageListComponent implements OnInit {
   countFilteredVilleDepart!: number;
   countries: Covoiturage[] = [];
 
-  listeServeur:Array<Covoiturage>;
+  listeServeur: Array<Covoiturage>;
 
 
 
@@ -37,7 +37,7 @@ export class CovoiturageListComponent implements OnInit {
   ngOnInit(): void {
     this.covoituragesAuComplet$ = this.covoiturageService.getAllCovoiturages();
     this.covoituragesFiltres$ = this.covoiturageService.getAllCovoiturages();
-    
+
     this.covoituragesByIdUser$ = this.covoiturageService.getAllCovoiturages();
     this.filtrage = new CovoiturageFiltrage();
     this.isVilleArriveeFilterDisabled = true;
@@ -60,138 +60,212 @@ export class CovoiturageListComponent implements OnInit {
   */
 
 
-  onVilleDepart(event: any) {
-    console.log("event detected");
+  async onVilleDepart(event: any) {
 
-    this.listeServeur=this.covoiturageService.recupListCovoiturageFromServer();
-    console.log(this.listeServeur);
+    let filterName: string = event.target.value;
 
-
-    /*configuration du filtre et désactivation de son pendant*/
-    //this.filtrage.filter_VilleDepart_Value = event.target.value;
-    //this.filtrage.filter_VilleArrivee_value = '';
-
-    /*Application du filtre*/
-    //ca marche
-    // let ages: any[] = [];/*<=== ca MARCHE*/ p
+    //Ceci marche mais comment recupérer le résultat?
+    // let listeComplete: any;
+    // console.log("lancement de la promesse:")
     // this.covoiturageService.getAllCovoiturages()
-    //   .forEach((i) => ages.push(i));
-
-      // let listeFiltree:any = ages.(age=>age.onVilleDepart==='Paris');
-      // console.log("affichage de la liste filtrée");
-      // console.log(listeFiltree); 
-      
-    /*  let ages:any = [];
-    this.covoiturageService.getAllCovoiturages()
-      .subscribe(value=>ages = value); */
-   
-   
+    //   .subscribe(arrayCovoits => arrayCovoits.forEach(covoit => {
+    //     listeComplete.push(covoit)
+    //   }));
+    let list = await this.covoiturageService.recupListeCovoituragesOnServer();
+    console.log("Affichage de la liste:");
+    console.log(list);
+    //list.then((result) => console.log(result));
+  }
 
   
-    /* console.log(result);
-    filteredResearch = ages.filter((res:any) => res.adresseDepart===this.filtrage.filter_VilleDepart_Value);
-    console.log("Afficahge liste filtree");
-    console.log(filteredResearch); */
-    /* let listeFiltree:any = this.filtreur(covoituragesListeComplete);
-    console.log("affichage de la liste filtrée");
-    console.log(listeFiltree); */
 
+       
+
+
+        
+
+
+
+
+
+
+/*  if (result) {
+   resolve(result)
+ }
+ else {
+   reject()
+ } */
+
+
+/* calcul.then((result)=>{
+  console.log('resultat:'+result);
+}).catch(()=>{
+    console.log("oops, erreur")
+}) */
+
+
+
+
+//utilisation
+
+
+/*  async recupCovoituragesFromServer(): Promise<Covoiturage[][]> {
+   let listeCovoiturages: Array<Covoiturage[]> = [];
+   await this.covoiturageService.getAllCovoiturages()
+     .forEach((covoit) => listeCovoiturages.push(covoit));
+   return listeCovoiturages;
+ }
+ 
+ async recup():Array<Covoiturage[]>{
+   let listeCovoiturages: Array<Covoiturage[]> = [];
+   const resultPromise = new Promise((resolve, reject) => {
+     resolve(this.covoiturageService.getAllCovoiturages()
+           .forEach((covoit)=>listeCovoiturages.push(covoit)));
+   })
+   return listeCovoiturages
+ } */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* const filtered=listeServ.filter(covoit => covoit.adresseDepart === filterName);
+console.log(filtered); */
+
+/*configuration du filtre et désactivation de son pendant*/
+//this.filtrage.filter_VilleDepart_Value = event.target.value;
+//this.filtrage.filter_VilleArrivee_value = '';
+
+/*Application du filtre*/
+//ca marche
+// let ages: any[] = [];/*<=== ca MARCHE*/ p
+// this.covoiturageService.getAllCovoiturages()
+//   .forEach((i) => ages.push(i));
+
+// let listeFiltree:any = ages.(age=>age.onVilleDepart==='Paris');
+// console.log("affichage de la liste filtrée");
+// console.log(listeFiltree); 
+
+/*  let ages:any = [];
+this.covoiturageService.getAllCovoiturages()
+  .subscribe(value=>ages = value); */
+
+
+
+
+/* console.log(result);
+filteredResearch = ages.filter((res:any) => res.adresseDepart===this.filtrage.filter_VilleDepart_Value);
+console.log("Afficahge liste filtree");
+console.log(filteredResearch); */
+/* let listeFiltree:any = this.filtreur(covoituragesListeComplete);
+console.log("affichage de la liste filtrée");
+console.log(listeFiltree); */
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+onVilleArrivee(event: any) {
+  this.filtrage.filter_VilleArrivee_value = event.target.value;
+  this.filtrage.filter_VilleDepart_Value = '';
+}
+
+
+listFiltering(filtres: CovoiturageFiltrage) {
+  console.log("Lancement du filtrage dans listFiltering");
+  /*Pipe permet d'accéder à la liste de covoiturage encapsulée dans l'observable.
+    - l'opérateur primitif map permet d'executer une action sur chaque membre du tableau
+    - l'opérateur primitif filter permet de garder tout itération dans la mesure où 
+      la condition qui lui est fournie en paramètres est true.
+  En résumé:
+    1 - getAllCovoiturage renvoit la liste de tous les covoiturages enregistrés en base
+    2 - Pour chaque covoiturage, un lance un filtrage par l'intermédiaire de map, afin de
+    garder ou d"écarter l'occurence selon la condition précisée à filter().
+ listeFiltree : this.covoiturageService.getAllCovoiturages()*/
+  // listeFiltree: Covoiturage[] = this.covoiturageService.getAllCovoiturages()
+  //                               .pipe(map(res=>res.filter(res=> res.dateDepart === this.filtrage.)));
+
+  /* ca marche*/
+  // if (this.filtrage.filter_VilleDepart_Value !== "") {
+  //   this.covoiturages$ = this.covoiturageService.getAllCovoiturages()
+  //     .pipe(map(res => res.filter(res => res.adresseDepart === this.filtrage.filter_VilleDepart_Value)));
+  //     this.isVilleArriveeFilterDisabled = false;
   // }
 
-  return 0
+  // else {
+  //   if (this.filtrage.filter_VilleArrivee_value !== "") {
+  //     this.covoiturages$ = this.covoiturageService.getAllCovoiturages()
+  //       .pipe(map(res => res.filter(res => res.adresseArrivee === this.filtrage.filter_VilleArrivee_value)));
+  //   }
+  // }
 
 
+  //Ca marche
+  // this.covoiturageService.getAllCovoiturages().subscribe(countries => this.countries = countries);
+  // this.countries.forEach(()=>this.countFilteredVilleDepart++ );
+  // console.log(++this.countFilteredVilleDepart);
+  // this.countFilteredVilleDepart = 0;
+  let filteredItems: Covoiturage[] | undefined;
+  this.covoiturageService.getAllCovoiturages().subscribe(res => filteredItems = res);
+  return filteredItems;
+
+
+
+}
+
+
+
+
+onCreateCovoiturage(): void {
+  this.covoiturageToPush = {
+    "nombrePlacesRestantes": 45,
+    "dureeTrajet": 45,
+    "distanceKm": 99,
+    "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
+    "adresseArrivee": "87 avenue de Maupassant 23000 Guéret"
   }
-
-
-
-
-
-
-  onVilleArrivee(event: any) {
-    this.filtrage.filter_VilleArrivee_value = event.target.value;
-    this.filtrage.filter_VilleDepart_Value = '';
-  }
-
-
-  listFiltering(filtres: CovoiturageFiltrage) {
-    console.log("Lancement du filtrage dans listFiltering");
-    /*Pipe permet d'accéder à la liste de covoiturage encapsulée dans l'observable.
-      - l'opérateur primitif map permet d'executer une action sur chaque membre du tableau
-      - l'opérateur primitif filter permet de garder tout itération dans la mesure où 
-        la condition qui lui est fournie en paramètres est true.
-    En résumé:
-      1 - getAllCovoiturage renvoit la liste de tous les covoiturages enregistrés en base
-      2 - Pour chaque covoiturage, un lance un filtrage par l'intermédiaire de map, afin de
-      garder ou d"écarter l'occurence selon la condition précisée à filter().
-   listeFiltree : this.covoiturageService.getAllCovoiturages()*/
-    // listeFiltree: Covoiturage[] = this.covoiturageService.getAllCovoiturages()
-    //                               .pipe(map(res=>res.filter(res=> res.dateDepart === this.filtrage.)));
-
-    /* ca marche*/
-    // if (this.filtrage.filter_VilleDepart_Value !== "") {
-    //   this.covoiturages$ = this.covoiturageService.getAllCovoiturages()
-    //     .pipe(map(res => res.filter(res => res.adresseDepart === this.filtrage.filter_VilleDepart_Value)));
-    //     this.isVilleArriveeFilterDisabled = false;
-    // }
-
-    // else {
-    //   if (this.filtrage.filter_VilleArrivee_value !== "") {
-    //     this.covoiturages$ = this.covoiturageService.getAllCovoiturages()
-    //       .pipe(map(res => res.filter(res => res.adresseArrivee === this.filtrage.filter_VilleArrivee_value)));
-    //   }
-    // }
-
-
-    //Ca marche
-    // this.covoiturageService.getAllCovoiturages().subscribe(countries => this.countries = countries);
-    // this.countries.forEach(()=>this.countFilteredVilleDepart++ );
-    // console.log(++this.countFilteredVilleDepart);
-    // this.countFilteredVilleDepart = 0;
-    let filteredItems: Covoiturage[] | undefined;
-    this.covoiturageService.getAllCovoiturages().subscribe(res => filteredItems = res);
-    return filteredItems;
-
-
-
-  }
-
-
-
-
-  onCreateCovoiturage(): void {
-    this.covoiturageToPush = {
-      "nombrePlacesRestantes": 45,
-      "dureeTrajet": 45,
-      "distanceKm": 99,
-      "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
-      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret"
-    }
 
     this.covoiturageService
-      .create(this.covoiturageToPush)
-      .subscribe(() => {
-        /* this.listeCovoiturages.push */
-      });
-    this.covoituragesAuComplet$ = this.covoiturageService.getAllCovoiturages();
-    // this._init();
+    .create(this.covoiturageToPush)
+    .subscribe(() => {
+      /* this.listeCovoiturages.push */
+    });
+  this.covoituragesAuComplet$ = this.covoiturageService.getAllCovoiturages();
+  // this._init();
 
-    /* private _init() {
-  this.covoiturageService.findAll(this.user)
-   .subscribe(covoiturages => {
-     this.listeCovoiturages = covoiturages;
-   }) */
+  /* private _init() {
+this.covoiturageService.findAll(this.user)
+ .subscribe(covoiturages => {
+   this.listeCovoiturages = covoiturages;
+ }) */
 
-  }
+}
   private _init() {
-    this.covoiturageService.getAllCovoiturages();
+  this.covoiturageService.getAllCovoiturages();
 
-  }
+}
 
-  onFiltrerUtilisateur() {
-    console.log("demande de filtrage");
-    this.covoituragesAuComplet$.pipe(filter(value => value === null));
-  }
+onFiltrerUtilisateur() {
+  console.log("demande de filtrage");
+  this.covoituragesAuComplet$.pipe(filter(value => value === null));
+}
 }
 
 
