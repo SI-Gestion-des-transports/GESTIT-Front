@@ -1,9 +1,9 @@
 <form #modifyF="ngForm" (ngSubmit)="modify(modifyF)">
   <div class="container col-10 d-flex flex-column align-items-center">
-    <div class="card w-75 bg-warning">
+    <div class="card w-100 bg-warning">
       <p class="mt-1 mb-1 ms-1">Modifier le véhicule</p>
     </div>
-    <div class="row col-8 mt-5" >
+    <div class="row col-12 mt-5" >
       <div class="col-5"  >
         <div class="col-12 bg-secondary">
           photo
@@ -20,17 +20,17 @@
           <option disabled value="">{{selectedVs.modele}}</option>
           <option *ngFor="let m of listModele" [value]="m">{{m}}</option>
         </select>
-        <select #statut="ngModel" class="ms-3 col-5" name="statut" ngModel>
+        <select #statut="ngModel" class="ms-3 mt-2 col-5" name="statut" ngModel>
           <option disabled value="">{{selectedVs.statut}}</option>
           <option *ngFor="let s of listStatusVs" [value]="s">{{s}}</option>
 
         </select>
-        <select #cate="ngModel" class="ms-4 col-5" name="cate" ngModel>
+        <select #cate="ngModel" class="ms-4 mt-2 col-5" name="cate" ngModel>
           <option disabled value="">{{selectedVs.categorie}}</option>
           <option *ngFor="let cate of listCategorie" [value]="cate">{{cate}}</option>
 
         </select>
-        <select #place="ngModel"  class="ms-3 mt-1 col-5" name="place" ngModel>
+        <select #place="ngModel"  class="ms-3 mt-3 col-5" name="place" ngModel>
           <option disabled value="">{{selectedVs.nombreDePlaceDisponibles}}</option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -40,7 +40,7 @@
           <option value="6">6</option>
           <option value="7">7</option>
         </select>
-        <select #motorisation class="ms-4 mt-1 mb-1 col-5" name="motorisation" ngModel>
+        <select #motorisation class="ms-4 mt-3 mb-1 col-5" name="motorisation" ngModel>
           <option disabled selected value="">{{selectedVs.motorisation}}</option>
           <option *ngFor="let mo of listMotorisation" [value]="mo">{{mo}}</option>
         </select>
