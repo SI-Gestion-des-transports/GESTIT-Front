@@ -8,7 +8,7 @@
                              'activeFilterFounded': filtrage.filter_VilleArrivee_value !== '' && this.isFoundedVilleArrivee === true}"
                              [(ngModel)]="name"        >
 
-            <input [disabled]="disabledFilterVilleDepart" (keyup)="onVilleDepart($event)" type="text"
+            <input [disabled]="disabledFilterVilleDepart" (keyup)="onVilleDepart($event)" type="text" 
                 placeholder="Ville de départ" [(ngModel)]="villeDepart_searchValue"
                 [ngClass]="{'activeFilterSearchInProgress': filtrage.filter_VilleDepart_Value !== '' && this.isFoundedVilleDepart === false,
                 'activeFilterFounded': filtrage.filter_VilleDepart_Value !== '' && this.isFoundedVilleDepart === true}">
