@@ -29,20 +29,25 @@ export class CovoiturageListComponent implements OnInit {
   listeServeur: Array<Covoiturage>;
 
 
+  //
+  covoituragesToShow$:Observable<Covoiturage[]>;
+  listeAafficher:Array<Covoiturage>;
+
+
 
 
 
   constructor(private covoiturageService: CovoiturageService) { }
 
   ngOnInit(): void {
-    this.covoituragesAuComplet$ = this.covoiturageService.getAllCovoiturages();
-    this.covoituragesFiltres$ = this.covoiturageService.getAllCovoiturages();
-
-    this.covoituragesByIdUser$ = this.covoiturageService.getAllCovoiturages();
+    
     this.filtrage = new CovoiturageFiltrage();
     this.isVilleArriveeFilterDisabled = true;
     this.countFilteredVilleDepart = 0;
-
+    this.covoituragesToShow$ = this.covoiturageService.getAllCovoiturages();
+    let listeToShow = this.covoiturageService.recupListeCovoituragesOnServer();
+    listeToShow.then((res)=> this.listeAafficher = res);
+   
   }
 
   onKey(event: any) { // without type info
@@ -72,9 +77,9 @@ export class CovoiturageListComponent implements OnInit {
     //     listeComplete.push(covoit)
     //   }));
     let list = await this.covoiturageService.recupListeCovoituragesOnServer();
-    console.log("Affichage de la liste:");
-    console.log(list);
-    //list.then((result) => console.log(result));
+    
+    let filteredByVilleDepart = list.filter((covoit)=>covoit.adresseDepart===filterName);
+    this.listeAafficher = filteredByVilleDepart;
   }
 
   

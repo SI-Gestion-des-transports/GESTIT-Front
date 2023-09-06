@@ -12,12 +12,9 @@
         </div>
         <div class="listeCovoiturages" style="background-color: whitesmoke">
             <!-- <app-covoiturage *ngFor="let cov of covoiturages$ | async" [covoituragereserve]="cov"></app-covoiturage> -->
-            <app-covoiturage *ngFor="let cov of covoituragesAuComplet$ | async" [covoituragereserve]="cov"></app-covoiturage>
+            <app-covoiturage *ngFor="let cov of listeAafficher" [covoituragereserve]="cov"></app-covoiturage>
         </div>
-        <div class="listeCovoituragesFIltres" style="background-color: rgb(85, 85, 242)">
-            <!-- <app-covoiturage *ngFor="let cov of covoiturages$ | async" [covoituragereserve]="cov"></app-covoiturage> -->
-            <app-covoiturage *ngFor="let cuv of covoituragesFiltres$ | async" [covoituragereserve]="cuv"></app-covoiturage>
-        </div>
+        
         
     </div>
 </div>
