@@ -43,6 +43,18 @@ createArrayFrom(newArray:Covoiturage[], oldArray:Covoiturage[]):void{
   newArray = JSON.parse(JSON.stringify(oldArray));
    
 }
+
+recupListCovoiturageFromServer():Array<Covoiturage>{
+  console.log("récupération de la liste");
+  let listeToReturn: Array<Covoiturage> = [];
+  this.getAllCovoiturages();
+  this.getAllCovoiturages().subscribe(
+    response=>response.forEach(val=>listeToReturn.push(Object.assign({},val))))
+    return listeToReturn;
+}
+
+
+
   
 
 
