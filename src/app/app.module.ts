@@ -31,6 +31,8 @@ import * as fr from '@angular/common/locales/fr';
 import { CovoiturageListComponent } from './components/covoiturages/covoiturage-list/covoiturage-list.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SingleCovoiturageComponent } from './components/covoiturages/single-covoiturage/single-covoiturage.component';
+import { VehiculeServiceAddComponent } from './components/vehicule-service/vehicule-service-add/vehicule-service-add.component';
+import { VehiculeServiceModifyComponent } from './components/vehicule-service/vehicule-service-modify/vehicule-service-modify.component';
 import { ExtractDatePipe } from './shared/utils/extract-date.pipe';
 import { ExtractTimePipe } from './shared/utils/extract-time.pipe';
 
@@ -61,6 +63,8 @@ import { AdressesComponent } from './components/adresses/adresses.component';
     CovoiturageListComponent,
     LandingPageComponent,
     SingleCovoiturageComponent,
+    VehiculeServiceAddComponent,
+    VehiculeServiceModifyComponent,
     ExtractDatePipe,
     ExtractTimePipe,
     AdressesComponent

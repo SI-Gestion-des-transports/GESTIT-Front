@@ -1,3 +1,23 @@
+<form #loginF="ngForm">
+<div class="container d-flex justify-content-center mt-5">
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <p>Email address:</p>
+      <input #loginUser="ngModel" name="username" type="email" placeholder="email@example.com" ngModel>
+      <p>Mot de passe</p>
+      <input #password="ngModel" name="password" type="password" placeholder="Password" ngModel>
+      <br>
+      <input #check="ngModel" name="check" type="checkbox" ngModel> Se souvenir de moi
+      <br>
+      <button type="submit" class="btn btn-primary">Sign in</button>
+      <hr>
+      <a href="#">New around here?</a><a class="ms-2" href="#">Sign up.</a>
+      <br>
+      <a href="#">Forgot password?</a>
+    </div>
+  </div>
+</div>
+</form>
 <div class="singleItem">
   <h3>Authentification</h3>
   <form class="form" *ngIf="loggedUser.nom == undefined">
