@@ -17,88 +17,7 @@
     "name": "typicode"
   },
   "covoiturages": [
-    {
-      "id": 23,
-      "nombrePlacesRestantes": 2,
-      "dureeTrajet": 102,
-      "distanceKm": 91,
-      "dateDepart": "2023-08-07T10:24",
-      "adresseDepart": {
-        "numero": 205,
-        "codePostal": "75000",
-        "voie": "impasse des Hurons",
-        "commune": "Paris"
-      },
-      "adresseArrivee": {
-        "numero": 200,
-        "voie": "avenue des cépages royaux",
-        "commune": "Bordeaux",
-        "codePostal": 33000
-      },
-      "organisateur": {
-        "nom": "ccc",
-        "motDePasse": "cccc",
-        "email": "irreductible@redpizz.fr",
-        "id": 1
-      },
-      "passagers": "",
-      "vehiculePerso": ""
-    },
-    {
-      "id": 25,
-      "nombrePlacesRestantes": 4,
-      "dureeTrajet": 125,
-      "distanceKm": 120,
-      "dateDepart": "2023-05-07T10:24",
-      "adresseDepart": {
-        "numero": 1002,
-        "codePostal": "75000",
-        "voie": "butte Montmartre",
-        "commune": "Paris"
-      },
-      "adresseArrivee": {
-        "numero": 1,
-        "voie": "chemin des bouteilles",
-        "commune": "Bordeaux",
-        "codePostal": 33000
-      },
-      "organisateur": {
-        "nom": "ccc",
-        "motDePasse": "cccc",
-        "email": "irreductible@redpizz.fr",
-        "id": 1
-      },
-      "passagers": "",
-      "vehiculePerso": ""
-    },
-    {
-      "id": 28,
-      "nombrePlacesRestantes": 3,
-      "dureeTrajet": 600,
-      "distanceKm": 600,
-      "dateDepart": "2023-02-12T10:24",
-      "adresseDepart": {
-        "numero": 500,
-        "codePostal": "30000",
-        "voie": "boulevard Gambetta",
-        "commune": "Nimes"
-      },
-      "adresseArrivee": {
-        "numero": 6,
-        "voie": "lieu-dit les vieux pneus",
-        "commune": "Clermont-ferrand",
-        "codePostal": 63000
-      },
-      "organisateur": {
-        "nom": "ccc",
-        "motDePasse": "cccc",
-        "email": "irreductible@redpizz.fr",
-        "id": 1
-      },
-      "passagers": "",
-      "vehiculePerso": ""
-    },
-    {
+   {
       "id": 30,
       "nombrePlacesRestantes": 1,
       "dureeTrajet": 400,
@@ -117,14 +36,39 @@
         "codePostal": 62000
       },
       "organisateur": {
-        "nom": "ccc",
-        "motDePasse": "cccc",
-        "email": "irreductible@redpizz.fr",
+        "nom": "Marcoret",
+        "motDePasse": "1234",
+        "email": "JeanMarcMarcoret@yahoo.fr",
         "id": 1
       },
-      "passagers": "",
-      "vehiculePerso": ""
+      "passagers": [
+        {
+          "nom": "Barboula",
+          "motDePasse": "4578",
+          "email": "e.barboula@free.fr",
+          "id": 2
+        },
+        {
+          "nom": "Frigeon",
+          "motDePasse": "9785",
+          "email": "alice.frigeon@gmail.fr",
+          "id": 3
+        },
+        {
+          "nom": "Pinsonnet",
+          "motDePasse": "7918",
+          "email": "PinsonnetDu23@chu-gueret.fr",
+          "id": 4
+        }
+      ],
+      "vehiculePerso": {
+        "id": 1,
+        "modele": "3008",
+        "marque": "Peugeot",
+        "nombreDePlaceDisponibles": 5,
+        "immatriculation": "AA-123-BB",
+        "userId": 1
+      }
     }
-
   ]
 }

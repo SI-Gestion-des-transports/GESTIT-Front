@@ -49,6 +49,59 @@
   ],
   "covoiturages": [
     {
+      "id": 100,
+      "nombrePlacesRestantes": 2,
+      "dureeTrajet": 300,
+      "distanceKm": 444,
+      "dateDepart": "2023-11-12T10:24",
+      "adresseDepart": {
+        "numero": 30,
+        "codePostal": "26000",
+        "voie": "Rue de la moutarde",
+        "commune": "Valence"
+      },
+      "adresseArrivee": {
+        "numero": 41,
+        "voie": "impasse des bateaux",
+        "commune": "Vezay-en-brie",
+        "codePostal": 78000
+      },
+      "organisateur": {
+        "nom": "Fabre",
+        "motDePasse": "45678",
+        "email": "j-pFabre487@bbox.fr",
+        "id": 101
+      },
+      "passagers": [
+        {
+          "nom": "El Alghari",
+          "motDePasse": "789",
+          "email": "elalguarhi-mustapha@gmail.fr",
+          "id": 99
+        },
+        {
+          "nom": "Canop",
+          "motDePasse": "4zz",
+          "email": "Canop78@canoeKayak-vercors.fr",
+          "id": 98
+        },
+        {
+          "nom": "Pradoux",
+          "motDePasse": "878",
+          "email": "emmanuelle.pradoux@gmail.fr",
+          "id": 4
+        }
+      ],
+      "vehiculePerso": {
+        "id": 1,
+        "modele": "Q8",
+        "marque": "Audi",
+        "nombreDePlaceDisponibles": 5,
+        "immatriculation": "PP-428-XX",
+        "userId": 100
+      }
+    },
+    {
       "organisateur": {},
       "dureeTrajet": "11:11",
       "distanceKm": 1111,
