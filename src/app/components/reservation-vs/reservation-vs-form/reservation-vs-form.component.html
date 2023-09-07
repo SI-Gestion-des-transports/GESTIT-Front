@@ -2,10 +2,10 @@
   <h3>Réserver un véhicule de service</h3>
   <form class="form" (submit)="onSubmit($event)">
     <div class="detail">
-      <div>
+     <!-- <div>
         <label for="userId"></label>
         <input type="hidden" name="userId" id="userId" value="{{currentUser.id}}" [(ngModel)]="reservationVs.userId">
-      </div>
+      </div>-->
 <!--
       <div>
         <img *ngIf="!currentVs.id" src="https://cdn.motor1.com/images/mgl/JO3m6Q/s1/peugeot-208.webp" class="img">
@@ -18,7 +18,7 @@
       </div>
       -->
       <hr>
-      <div id="carousel" class="carousel slide" data-ride="carousel">
+      <!--<div id="carousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
 
           <div *ngFor="let vs of vehiculesSrv; let i = index"
@@ -40,7 +40,29 @@
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="sr-only">Suivant</span>
         </a>
+      </div>-->
+
+      <div id="carouselExampleCaptions" class="carousel col-10" >
+
+        <div class="carousel-inner">
+          <div *ngFor="let vs of vehiculesSrv;index as i" [class]="i==0? 'carousel-item active ':'carousel-item'">
+            <img src="./assets/1.jpg" class="d-block w-100" alt="...">
+          </div>
+        </div>
+
+
+        <button (click)="previous()" class="carousel-control-prev ms-0" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button (click)="next()" class="carousel-control-next me-0" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+
       </div>
+      <h5 >Id:{{currentVs.id? currentVs.id:vehiculesSrv[0].id}}--Marque:{{currentVs.id? currentVs.marque:vehiculesSrv[0].marque}}--modele:{{currentVs.id? currentVs.modele:vehiculesSrv[0].modele}}</h5>
+
       <hr>
 
       <!--
