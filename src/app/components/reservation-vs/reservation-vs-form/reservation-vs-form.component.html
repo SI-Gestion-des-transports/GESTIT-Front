@@ -6,6 +6,7 @@
         <label for="userId"></label>
         <input type="hidden" name="userId" id="userId" value="{{currentUser.id}}" [(ngModel)]="reservationVs.userId">
       </div>
+<!--
       <div>
         <img *ngIf="!currentVs.id" src="https://cdn.motor1.com/images/mgl/JO3m6Q/s1/peugeot-208.webp" class="img">
         <img *ngIf="currentVs.id" src="{{currentVs.photoURL}}" class="img">
@@ -15,6 +16,33 @@
           <option *ngFor="let vs of vehiculesSrv">{{vs.modele}} </option>
         </select>
       </div>
+      -->
+      <hr>
+      <div id="carousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+
+          <div *ngFor="let vs of vehiculesSrv; let i = index"
+               class="carousel-item"
+               [class.active]="i == 0"
+               (click)="currentVs = vs">
+            <img src="{{vs.photoURL}}" class="d-block w-100" alt="..." style="border: #333333 solid; border-radius: 7px">
+            <div class="carousel-model-text">
+              <p [(ngModel)]=currentVs.modele>{{ currentVs.modele }}</p>
+            </div>
+          </div>
+
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Précédent</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Suivant</span>
+        </a>
+      </div>
+      <hr>
+
       <!--
       <div style="display: flex;align-items: center">
         <label for="distanceKm">Distance : </label>
