@@ -7,13 +7,18 @@ import {BehaviorSubject} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class VehiculeServiceService {
+export class VehiculeServiceService implements OnInit {
 private _baseUrl:string = environment.urlApi.vehiculeService;
 
   private vehiculesSrvSource = new BehaviorSubject<VehiculeService[]>([{}]);
   vehiculesSrv$ = this.vehiculesSrvSource.asObservable();
 
 
+  ngOnInit() {
+    this.findAllEnService().subscribe(data => {
+      this.updateVehiculesSrv(data);
+    })
+  }
 
   constructor(private _http:HttpClient) { }
 

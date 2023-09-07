@@ -39,7 +39,6 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   }
 
   ngOnInit() {
-
     this._subscription.add(
       this._reservationVsService.reservationVs$.
       subscribe(data => {
@@ -85,7 +84,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
           if (this.vehiculesSrv.length !=0) {
             this.currentVs = this.vehiculesSrv[0];
             this.currentIndex=0;
-          };
+          }
         }));
     this._vehiculeSrvService.findAllEnService().subscribe(data => this.vehiculesSrv = data);
     this._subscription.add(
@@ -118,12 +117,13 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
     if (this.reservationVs){
       console.log("Réservation Form — ngOnChanges : reservationVs");
     }
-    if (this.currentVs){
+    if (this.reservationVs.vehiculeServiceId){
       console.log("CLICK")
     }
   }
 
   ngOnDestroy(): void {
+    console.log("Réservation FORM Destroyed — unsuscribe")
     this._subscription.unsubscribe(); // Se désabonner de tous les observables en une fois
   }
 
@@ -194,11 +194,12 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
     this.currentIndex= (this.vehiculesSrv.length+this.currentIndex-1)%this.vehiculesSrv.length;
     this.currentVs=this.vehiculesSrv[this.currentIndex];
     console.log(this.currentVs);
+    this.reservationVs.vehiculeServiceId = this.currentVs.id;
   }
   next(){
-
     this.currentIndex= (this.currentIndex+1)%this.vehiculesSrv.length;
     this.currentVs=this.vehiculesSrv[this.currentIndex];
     console.log(this.currentVs);
+    this.reservationVs.vehiculeServiceId = this.currentVs.id;
   }
 }

@@ -29,14 +29,14 @@
           <th>Modèle</th>
           <th>Actions</th>
         </tr>
-        <tr *ngFor="let res of allReservationsVs">
+        <tr *ngFor="let res of mergedArray">
           <td>{{ res.dateHeureDepart | extractDate }}</td>
           <td>{{ res.dateHeureDepart | extractTime }}</td>
           <td>{{ res.dateHeureRetour | extractDate }}</td>
           <td>{{ res.dateHeureRetour | extractTime }}</td>
-          <td>{{res.vehiculeServiceId}}</td>
-          <td>{{res.vehiculeServiceId}}</td>
-          <td>{{res.vehiculeServiceId}}</td>
+          <td>{{ res.immatriculation }}</td>
+          <td>{{ res.marque }}</td>
+          <td>{{ res.modele }}</td>
           <td>
             <button type="button"
                     class="btn"
