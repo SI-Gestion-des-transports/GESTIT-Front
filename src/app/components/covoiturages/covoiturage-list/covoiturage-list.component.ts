@@ -7,7 +7,7 @@ import { CovoiturageService } from 'src/app/shared/services/covoiturage.service'
 /**
  * Gestion visuelle de l'interface dédiée aux covoiturages
  * côté passager
- * 
+ *
  * @author Atsuhiko Mochizuki
  */
 @Component({
@@ -91,12 +91,13 @@ export class CovoiturageListComponent implements OnInit {
 		this.date_isFounded = false;
 
 		this.filtrageList();
+    //this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
 	}
 
 	/**
-	 * Récupère sur le serveur la liste des covoiturages enregistrés, puis 
+	 * Récupère sur le serveur la liste des covoiturages enregistrés, puis
 	 * en extrait les villes pour pourvoir les intégrer par la suite aux dropdown
-	 * 
+	 *
 	 * @author Atsuhimo Mochizuki
 	 */
 	async recupVilles() {
@@ -117,8 +118,8 @@ export class CovoiturageListComponent implements OnInit {
 
 	/**
 	 * Récupère la donnée transmise par l'évènement
-	 * @param event 
-	 * 
+	 * @param event
+	 *
 	 * @Author Atsuhiko Mochizuki
 	 */
 	onFiltrageVilleArriveeChanged(event: any): void {
@@ -133,8 +134,8 @@ export class CovoiturageListComponent implements OnInit {
 
 	/**
 	 * Récupère la donnée transmise par l'évènement
-	 * @param event 
-	 * 
+	 * @param event
+	 *
 	 * @Author Atsuhiko Mochizuki
 	 */
 	onFiltrageVilleDepartChanged(event: any): void {
@@ -150,8 +151,8 @@ export class CovoiturageListComponent implements OnInit {
 
 	/**
 	 * Récupère la donnée transmise par l'évènement
-	 * @param event 
-	 * 
+	 * @param event
+	 *
 	 * @Author Atsuhiko Mochizuki
 	 */
 	async onDateEntree(event: any) {
@@ -159,33 +160,30 @@ export class CovoiturageListComponent implements OnInit {
 		this.filtrageList();
 	}
 
-  constructor(private covoiturageService: CovoiturageService) {}
 
-  ngOnInit(): void {
-    //this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
-  }
 
-  onCreateCovoiturage(): void {
+
+/*  onCreateCovoiturage(): void {
     this.covoiturageToPush = {
       nombrePlacesRestantes: 45,
       dureeTrajet: 45,
       distanceKm: 99,
-      /*       "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
-      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret" */
+      /!*       "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
+      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret" *!/
     };
 
     this.covoiturageService.create(this.covoiturageToPush).subscribe(() => {
-      /* this.listeCovoiturages.push */
+      /!* this.listeCovoiturages.push *!/
     });
     //this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
     // this._init();
 
-    /* private _init() {
+    /!* private _init() {
   this.covoiturageService.findAll(this.user)
    .subscribe(covoiturages => {
      this.listeCovoiturages = covoiturages;
-   }) */
-  }
+   }) *!/
+  }*/
 
   /*
   private _init() {
@@ -194,7 +192,7 @@ export class CovoiturageListComponent implements OnInit {
 
 	/**
 	 *Réinitialisation du filtrage
-	 * 
+	 *
 	 * @Author Atsuhiko Mochizuki
 	 */
 	onResetFiltrage() {
@@ -206,7 +204,7 @@ export class CovoiturageListComponent implements OnInit {
 
 	/**
 	 * Traitement du filtrage de la listes de covoiturages côté passager
-	 * 
+	 *
 	 * @author Atsuhiko Mochizuki
 	 */
 	async filtrageList() {
@@ -356,8 +354,8 @@ export class CovoiturageListComponent implements OnInit {
 	}
 }
 
-   */
-}
+
+
 
 /*  this.covoiturageService.create(this.covoiturageToPush).subscribe(covoiturageReceived => {
      this.createdCovoiturage = covoiturageReceived;});
