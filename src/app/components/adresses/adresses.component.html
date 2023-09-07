@@ -1,0 +1,31 @@
+<form class="form" #adresseInput>
+  <div>
+    <label for="numero"> Numéro : </label>
+    <input
+      type="number"
+      name="numero"
+      id="numero"
+      [(ngModel)]="adresse.numero"
+    />
+
+    <label for="voie"> Voie : </label>
+    <input type="text" name="voie" id="voie" [(ngModel)]="adresse.voie" />
+
+    <label for="voie"> Code Postal : </label>
+    <input
+      type="number"
+      name="codePostal"
+      id="codePostal"
+      [(ngModel)]="adresse.codePostal"
+    />
+
+    <label for="voie"> Commune : </label>
+    <input
+      type="number"
+      name="commune"
+      id="commune"
+      [(ngModel)]="adresse.commune"
+    />
+  </div>
+  <button (click)="create(adresse)">Go!</button>
+</form>

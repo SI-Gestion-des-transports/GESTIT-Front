@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UtilisateursService } from '../../shared/services/utilisateurs.service';
 import { Utilisateur } from '../../shared/models/utilisateur';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
+import {ReservationVsService} from "../../shared/services/reservation.vs.service";
+import {CovoiturageService} from "../../shared/services/covoiturage.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-utilisateurs',
@@ -21,10 +24,20 @@ export class UtilisateursComponent implements OnInit {
 
   loggedBtn: boolean = true;
 
-  constructor(private _utilisateursService: UtilisateursService) {}
+  private _subscription = new Subscription();
+
+  constructor(private _utilisateursService: UtilisateursService,
+              private _reservationVsService: ReservationVsService,
+              private _covoiturageService: CovoiturageService) {}
 
   ngOnInit() {
     this._init();
+/*    this._subscription.add(
+      this._utilisateursService.currentUser$
+        .subscribe(data => {
+          this.loggedUser = data
+      })
+    );*/
   }
 
   private _init() {
@@ -61,13 +74,20 @@ export class UtilisateursComponent implements OnInit {
 
   loginUser(user: Utilisateur) {
     this.loggedUser = user;
+    this._covoiturageService.updateCurrentUser(this.loggedUser);
     console.log('User logged : ' + this.loggedUser.nom);
     this.loggedBtn = false;
+    //this._reservationVsService.updateCurrentUser(user);
+    this._utilisateursService.updateCurrentUser(user);
+    console.log("logged from resVsServ : "+ this._utilisateursService.currentUser$);
+    this._init();
   }
 
   logout() {
     this.loggedUser = {};
     this.loggedBtn = true;
+    //this._reservationVsService.updateCurrentUser({});
+    this._utilisateursService.updateCurrentUser({});
   }
 
   startUpdateUser(user: Utilisateur) {

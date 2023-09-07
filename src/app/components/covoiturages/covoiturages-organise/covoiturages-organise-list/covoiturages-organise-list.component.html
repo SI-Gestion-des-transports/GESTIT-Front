@@ -1,0 +1,59 @@
+<p>covoiturages-organise-list works!</p>
+<app-utilisateurs></app-utilisateurs>
+<div class="list">
+  <div class="buttonOfList">
+    <button type="button"
+            class="btn"
+            [class.btn-primary]="upcompingCovoiturages"
+            [class.btn-outline-secondary]="!upcompingCovoiturages"
+            (click)="getIncomingReservations()">Réservation en cours</button>
+    <button type="button"
+            class="btn"
+            [class.btn-outline-secondary]="upcompingCovoiturages"
+            [class.btn-primary]="!upcompingCovoiturages"
+            >Mon historique</button>
+    <button type="button"
+            class="btn btn-outline-primary"
+            (click)="newCovoitOrg()">Nouvelle réservation</button>
+  </div>
+
+  <div class="tableList">
+    <table>
+      <tr>
+        <th>Date de départ</th>
+        <th>Heure de départ</th>
+        <th>Adresse de départ</th>
+        <th>Adresse d'arrivée</th>
+        <th>Nombre de voyageur</th>
+      </tr>
+      <tr *ngFor="let c of covoitOrgs">
+        <td>{{ c.dateDepart?.toString() | extractDate }}</td>
+        <td>{{ c.dateDepart?.toString() | extractTime }}</td>
+        <td>{{ c.adresseDepart?.numero}} {{ c.adresseDepart?.voie}}, <br>
+          {{ c.adresseDepart?.codePostal}} {{ c.adresseDepart?.commune}}</td>
+        <td>{{ c.adresseArrivee?.numero}} {{ c.adresseArrivee?.voie}}, <br>
+          {{ c.adresseArrivee?.codePostal}} {{ c.adresseArrivee?.commune}}</td>
+        <td>{{c.passagers?.length}}</td>
+        <td>
+          <button type="button"
+                  class="btn btn-outline-secondary"
+                  (click)="updateCovoitOrg(c)">Modifier</button>
+          <button type="button"
+                  class="btn btn-outline-danger"
+                  (click)="deleteCovoitOrg(c)">Supprimer</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+
+<!--
+
+<hr>
+<div  class="list">
+  <app-reservation-vs-item *ngFor="let res of allReservationsVs" class="singleItem" [resaVs]="res"></app-reservation-vs-item>
+</div>
+
+-->
+

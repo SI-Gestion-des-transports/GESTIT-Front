@@ -38,16 +38,20 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
 
-  <select (change)="getCovoiturageChoice($event)" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <select (change)="getCovoiturageChoice($event)" class="nav-link dropdown-toggle" href="#" id="navbarDropdownCovoit" role="button" data-bs-toggle="dropdown" aria-expanded="true">
     <option style="display:none">Covoiturages</option>
     <option [value]="item.id" *ngFor="let item of covoiturageChoicies">{{item.name}}</option>
   </select>
-  <select (change)="getVehiculeServiceChoice($event)" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+  <select (change)="getVehiculeServiceChoice($event)" class="nav-link dropdown-toggle" href="#" id="navbarDropdownReservations" role="button" data-bs-toggle="dropdown" aria-expanded="true">
     <option style="display:none">Véhicule de société</option>
     <option [value]="item.id" *ngFor="let item of ReservationsVehiculeServiceChoicies">{{item.name}}</option>
   </select>
+  <select (change)="getServiceChoice($event)" class="nav-link dropdown-toggle" href="#" id="navbarDropdownVehiculeServ" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+    <option style="display:none">Parc de véhicules</option>
+    <option [value]="item.id" *ngFor="let item of VehiculeServiceChoicies">{{item.name}}</option>
+  </select>
   <a routerLink="utilisateurs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Utilisateurs</a>
-  <a routerLink="login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-    <button type="button" class="btn btn-primary"> Connexion </button>
-  </a>
 </nav>
+<a routerLink="login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+  <button type="button" class="btn btn-primary" (click)="login()"> Connexion </button>
+</a>

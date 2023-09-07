@@ -31,6 +31,16 @@ import * as fr from '@angular/common/locales/fr';
 import { CovoiturageListComponent } from './components/covoiturages/covoiturage-list/covoiturage-list.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SingleCovoiturageComponent } from './components/covoiturages/single-covoiturage/single-covoiturage.component';
+import { VehiculeServiceAddComponent } from './components/vehicule-service/vehicule-service-add/vehicule-service-add.component';
+import { VehiculeServiceModifyComponent } from './components/vehicule-service/vehicule-service-modify/vehicule-service-modify.component';
+import { ExtractDatePipe } from './shared/utils/extract-date.pipe';
+import { ExtractTimePipe } from './shared/utils/extract-time.pipe';
+import { AdressesComponent } from './components/adresses/adresses.component';
+import { CovoituragesOrganiseListComponent } from './components/covoiturages/covoiturages-organise/covoiturages-organise-list/covoiturages-organise-list.component';
+import { CovoituragesOrganiseFormComponent } from './components/covoiturages/covoiturages-organise/covoiturages-organise-form/covoiturages-organise-form.component';
+import { VehiculePersoComponent } from './components/vehicule-perso/vehicule-perso.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +66,15 @@ import { SingleCovoiturageComponent } from './components/covoiturages/single-cov
     UtilisateursComponent,
     CovoiturageListComponent,
     LandingPageComponent,
-    SingleCovoiturageComponent
+    SingleCovoiturageComponent,
+    VehiculeServiceAddComponent,
+    VehiculeServiceModifyComponent,
+    ExtractDatePipe,
+    ExtractTimePipe,
+    AdressesComponent,
+    CovoituragesOrganiseListComponent,
+    CovoituragesOrganiseFormComponent,
+    VehiculePersoComponent
   ],
   imports: [
     BrowserModule,

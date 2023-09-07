@@ -1,1 +1,48 @@
-<p>vehicule-service-list works!</p>
+<div class="container col-10">
+  <div>
+    Filter par Marque: <select [(ngModel)]="marqueSelected" (ngModelChange)="marqueChanged()">
+    <option value="all">ALL</option>
+    <option *ngFor="let m of listMarque;index as i" [value]="m">{{m}}</option>
+  </select>
+  </div>
+  <div class="row mt-2">
+    <div class="overflowDiv col-8">
+      <table class="border border-secondary table-hover table w-100 mt-1">
+
+        <tbody>
+        <tr (click)="select(v)" *ngFor="let v of listVehiculeService;index as i">
+          <td>
+            <h5>Marque:{{v.marque}}-Modèle: {{v.modele}}-Immatriculation: {{v.immatriculation}}</h5>
+            <p>Catégorie: {{v.categorie}}</p>
+            <p>Motor: {{v.motorisation}}</p>
+            <p>CO2: {{v.emissionCO2}}</p>
+            <p>Places: {{v.nombreDePlaceDisponibles}}</p>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="selectedVehiculeService.id" class="col-4 d-flex flex-column  align-items-center" >
+      <div class="card mt-2 w-100 ">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Photo</h5>
+          <h5>Marque:{{selectedVehiculeService.marque}}-Modèle: {{selectedVehiculeService.modele}}-Immatriculation: {{selectedVehiculeService.immatriculation}}</h5>
+          <p>Catégorie: {{selectedVehiculeService.categorie}}</p>
+          <p>Motor: {{selectedVehiculeService.motorisation}}</p>
+          <p>CO2: {{selectedVehiculeService.emissionCO2}}</p>
+          <p>Places: {{selectedVehiculeService.nombreDePlaceDisponibles}}</p>
+        </div>
+      </div>
+      <button (click)="toModify(selectedVehiculeService.id)" class="btn btn-light w-75 ">Modifier véhicule</button>
+      <button (click)="delete(selectedVehiculeService.id)" class="btn btn-danger w-75">Supprimer véhicule</button>
+    </div>
+
+
+  </div>
+  <div class="row d-flex justify-content-center mt-3">
+    <button (click)="toAdd()" class="btn btn-primary w-25">Ajouter véhicule</button>
+  </div>
+
+</div>
