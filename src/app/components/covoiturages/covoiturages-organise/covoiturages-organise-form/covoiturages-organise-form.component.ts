@@ -30,32 +30,26 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
   adresseArrivee: Adresse ={};
   currentUser: Utilisateur = {}
   vehiculesPersoCurrentUser: VehiculePerso[] = [];
+  currentCovoitOrg : Covoiturage = {};
+  covoitOrg: Covoiturage = {};
   // Fin variables partagées
 
 
-  covoitOrg: Covoiturage = {};
 
   private _subscription = new Subscription();
   constructor(private _covoitOrgService: CovoiturageService,
-              private _router: Router,
-              private _activatedRoute: ActivatedRoute) {}
+              private _router: Router) {}
   ngOnInit(): void {
-    this._init();
-    this.reInitCovoitOrg();
 
-  // Récupérez l'ID du covoiturage à partir de la route
-    this._activatedRoute.params.subscribe((params) => {
-      const covoiturageId = +params['covoiturageId']; // Convertissez en nombre
-      if (!isNaN(covoiturageId)) {
-        // Chargez les informations du covoiturage à partir de son ID
-        this._covoitOrgService.getCovoiturageById(covoiturageId).subscribe((covoiturage) => {
-          this.covoitOrg = covoiturage;
-          // Pré-remplir les autres champs comme adresseDepart, adresseArrivee, etc.
-        });
-      }
-    });
+    //this.reInitCovoitOrg();
 
     // Subscription aux variables du service
+    this._subscription.add(
+      this._covoitOrgService.covoiturage$.
+      subscribe(data => {
+        this.covoitOrg = data;
+      })
+    );
     this._subscription.add(
       this._covoitOrgService.adresseDepart$.subscribe(data => this.adresseDepart = data)
     );
@@ -68,6 +62,13 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
     this._subscription.add(
       this._covoitOrgService.vehiculesPersoCurrentUser$.subscribe(data => this.vehiculesPersoCurrentUser = data)
     );
+    this._subscription.add(
+      this._covoitOrgService.currentCovoiturage$
+        .subscribe(data => {
+          this.currentCovoitOrg = data;
+        })
+    );
+    this._init();
 
   }
 
@@ -79,21 +80,34 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
     }
   }
 
+  ngOnDestroy(){
+    console.log("Enter DESTROY")
+    this._subscription.unsubscribe();
+    console.log("Destroy ———— UNSUSCRIBED —————")
+  }
+
 
   private _init() {
     if (this.currentUser.nom != undefined) {
       console.log("_init")
       console.log("User : " + this.currentUser.nom)
-      this._covoitOrgService
+/*      this._covoitOrgService
         .getCovoituragesByOrganisateur(this.currentUser)
         .subscribe((covoitOrgsCreated) => {
           this.covoitOrgs = covoitOrgsCreated;
-        });
+        });*/
+      console.log("currentCovoitOrg : ", this.currentCovoitOrg.adresseDepart.commune)
+      console.log("currentCovoitOrg : ", this.currentCovoitOrg.adresseDepart.numero)
+      this.adresseDepart = this.currentCovoitOrg.adresseDepart;
+      console.log("adresseDepart : ", this.adresseDepart.commune)
+      console.log("adresseDepart : ", this.adresseDepart.numero)
+      this.adresseArrivee = this.currentCovoitOrg.adresseArrivee;
     }
   }
 
   reInitCovoitOrg() {
     this.covoitOrg = {};
+    this.currentCovoitOrg = {};
     this.adresseDepart = {};
     this.adresseArrivee = {};
     this.covoitOrg.organisateur = this.currentUser;
@@ -111,20 +125,33 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
 
 
   onSubmit(){
+    if(!this.currentCovoitOrg.id){
     this.covoitOrg.organisateur = this.currentUser;
     this.covoitOrg.adresseDepart = this.adresseDepart;
     this.covoitOrg.adresseArrivee = this.adresseArrivee;
     console.log(this.adresseDepart.codePostal);
     console.log(this.covoitOrg.dureeTrajet);
     console.log(this.covoitOrg.distanceKm);
-    this._covoitOrgService.create(this.covoitOrg).subscribe(() => {
-      console.log("Covoit created");
-      this.reInitCovoitOrg();
-      this._router.navigateByUrl('covoituragesOrganises-list');
-    });
+      this._covoitOrgService.create(this.covoitOrg).subscribe(() => {
+        console.log("Covoit created");
+        this.reInitCovoitOrg();
+        this._router.navigateByUrl('covoituragesOrganises-list');
+      });
+    } else {
+      this.covoitOrg.organisateur = this.currentUser;
+      this.covoitOrg.adresseDepart = this.adresseDepart;
+      this.covoitOrg.adresseArrivee = this.adresseArrivee;
+      this._covoitOrgService.update(this.currentCovoitOrg).subscribe(() => {
+        console.log("CovoitOrg uodated");
+        this.reInitCovoitOrg();
+        this._router.navigateByUrl('covoituragesOrganises-list');
+      });
+    }
+
   }
 
   cancel(){
     this._router.navigateByUrl('covoituragesOrganises-list');
   }
+
 }

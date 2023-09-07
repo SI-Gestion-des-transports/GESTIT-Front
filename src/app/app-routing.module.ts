@@ -43,8 +43,7 @@ const routes: Routes = [
   {path:'covoituragesOrganises', component: CovoituragesOrganiseComponent,
     children: [
       {path:'list', component: CovoituragesOrganiseListComponent},
-      {path:'form', component: CovoituragesOrganiseFormComponent},
-      {path: 'form/:covoiturageId', component: CovoituragesOrganiseFormComponent},
+      {path:'form', component: CovoituragesOrganiseFormComponent}
     ]},
   {path:'', component:LandingPageComponent},
 
