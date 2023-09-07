@@ -19,7 +19,8 @@
                     {{city}}
                 </option>
             </select>
-            <select [disabled]="disabledFilterVilleDepart" [ngClass]="buttonStyleInit" placeholder="City"
+
+            <select [ngClass]="filtre_Depart_style_widget" [disabled]="disabledFilterVilleDepart" placeholder="City"
                 [(ngModel)]="villeDepart" (change)="onFiltrageVilleDepartChanged($event)">
                 <option>--Ville de départ--</option>
                 <option *ngFor="let city of VillesDepart_liste">
