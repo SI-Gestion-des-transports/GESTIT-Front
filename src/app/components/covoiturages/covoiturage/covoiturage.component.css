@@ -1,10 +1,16 @@
+.elem{
+  background-color: gray;
+}
+
 .covoiturages-card{
-  box-sizing: border-box;
-  width: 50%;
-  margin: 20px auto;
-  padding: 10px 30px;
-  box-shadow: lightgray 4px 4px 20px;
-  img {
+  border: 5px blue;
+  background-color:unset;
+  box-sizing:content-box  ;
+  width: 100%;
+  
+  
+  
+  /*img {
     width: 100%;
   }
   h2 {
@@ -13,7 +19,7 @@
   p {
     font-weight: 300;
     font-size: 16px;
-  }
+  } */
  
 }
 .showDetails {
@@ -25,5 +31,21 @@
     &:active {
       box-shadow: lightgreen 0 0 5px;
     }
+  }
+}
+
+buttonInList {
+  background-color: yellow;
+  box-sizing: border-box;
+  padding: 5px 10px;
+  border: none;
+  box-shadow: lightgray 3px 3px 7px;
+  margin-right: 20px;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+  &:active {
+    transform: translate(1px, 1px);
+    box-shadow: lightgray 0 0 5px;
   }
 }
