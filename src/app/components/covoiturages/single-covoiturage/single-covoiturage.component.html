@@ -56,9 +56,7 @@
                     <div class="col  col-md-3"><img src="assets/passagers.png" alt="image_vehicule"></div>
                     <div class="col  ">
                         <ul>
-                            <li>Pierre</li>
-                            <li>Paul</li>
-                            <li>Jacques</li>
+                            <li *ngFor="let passager of covoiturage.passagers">{{passager.nom}}</li>
                         </ul>
                     </div>
                 </div>
@@ -101,7 +99,7 @@
 <div>
     <!-- div des boutons -->
     <div class="d-flex flex-row mb-3 justify-content-center mt-5 gap-4 ">
-        <button class="btn btn-success">Confirmer ma participation</button>
+        <button class="btn btn-success" (click)=" onClickConfirmerParticipation()">Confirmer ma participation</button>
         <button class="btn btn-danger" (click)="onClickAnnuler()">Annuler</button>
 
     </div>

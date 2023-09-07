@@ -14,8 +14,9 @@ export class SingleCovoiturageComponent {
 
   title!: string;
   showDetailsInProgress!: boolean;
-
   covoiturage$!: Observable<Covoiturage>;
+  
+
 
   constructor(private covoiturageService: CovoiturageService,
     private router: Router,
@@ -29,6 +30,9 @@ export class SingleCovoiturageComponent {
     une chaine de caractères qui contient des nombres en numberAttribute. */
     const covoiturageId = +this.route.snapshot.params['id'];
     this.covoiturage$ = this.covoiturageService.getCovoiturageById(covoiturageId);
+    this.covoiturage$.forEach((covoit)=>{
+      covoit.nombrePlacesRestantes = covoit.vehiculePerso.nombreDePlaceDisponibles - covoit.passagers.length;
+    })
   }
 
   onShowDetails() {
@@ -41,6 +45,11 @@ export class SingleCovoiturageComponent {
   onClickAnnuler()
   {
     this.router.navigateByUrl('covoiturages');
+  }
+
+  onClickConfirmerParticipation()
+  {
+
   }
  
 }
