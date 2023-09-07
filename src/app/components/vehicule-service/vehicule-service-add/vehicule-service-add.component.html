@@ -1,0 +1,56 @@
+<form #addF="ngForm" (ngSubmit)="add(addF)">
+<div class="container col-10 d-flex flex-column align-items-center">
+  <div class="card w-100 bg-light">
+    <p class="mt-1 mb-1 ms-1">Création d'un véhicule</p>
+  </div>
+  <div class="row col-12 mt-5" >
+    <div class="container d-flex justify-content-center align-items-center col-5 bg-secondary"  >
+      photo
+    </div>
+    <div class="col-6" >
+
+
+        <input #url="ngModel" class="col-12" type="text" placeholder="URL Photo" name="url" ngModel required>
+        <input #immatriculation="ngModel" class="col-6" type="text" placeholder="Immatriculation" name="immatriculation" ngModel required>
+
+        <select #marque="ngModel" (ngModelChange)="marqueSelectChange(marque)" class="ms-3 col-5" name="marque" ngModel required>
+          <option disabled value="">Marque</option>
+          <option *ngFor="let m of listMarque" [value]="m">{{m}}</option>
+        </select>
+        <input #co2="ngModel" class="col-6" type="text" placeholder="CO2/Km" name="co2" ngModel required>
+        <select #modele="ngModel" class="ms-3 col-5" name="modele" ngModel required>
+          <option disabled value="">Modèle</option>
+          <option *ngFor="let m of listModele" [value]="m">{{m}}</option>
+        </select>
+        <input disabled class="col-6" type="text" value="Statut: En service">
+        <select #cate="ngModel" class="ms-3 col-5" name="cate" ngModel required>
+          <option disabled value="">Catégorie</option>
+          <option *ngFor="let cate of listCategorie" [value]="cate">{{cate}}</option>
+
+        </select>
+        <select #place="ngModel"  class="ms-2 mt-1 col-5" name="place" ngModel required>
+          <option disabled value="">Nombre de place</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+        </select>
+        <select #motorisation class="ms-5 mt-1 mb-1 col-5" name="motorisation" ngModel required>
+          <option disabled selected value="">Motorisation</option>
+          <option *ngFor="let mo of listMotorisation" [value]="mo">{{mo}}</option>
+        </select>
+
+    </div>
+  </div>
+
+  <div class="mt-5 ">
+    <button [disabled]="addF.invalid" type="submit" class="btn btn-primary">Valider</button>
+    <button (click)="cancel()" class="btn btn-danger">Annuler</button>
+  </div>
+
+</div>
+
+</form>

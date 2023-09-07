@@ -1,1 +1,43 @@
-<p>authentification works!</p>
+<form #loginF="ngForm">
+<div class="container d-flex justify-content-center mt-5">
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <p>Email :</p>
+      <input [(ngModel)]="unLoggedUser.email" name="email" type="email" placeholder="email@gestit.fr">
+      <p>Mot de passe :</p>
+      <input [(ngModel)]="unLoggedUser.motDePasse" name="motDePasse" type="password" placeholder="Password">
+      <br>
+      <input #check="ngModel" name="check" type="checkbox" ngModel> Se souvenir de moi
+      <br>
+      <button type="submit" class="btn btn-primary" (click)="seConnecter()">Se connecter</button>
+      <hr>
+      <a href="#">Nouveau ici ? Créer un compte.</a>
+      <br>
+      <a href="#">Mot passe oublié ?</a>
+    </div>
+  </div>
+</div>
+</form>
+
+<!--<div class="singleItem">
+  <h3>Authentification</h3>
+  <form class="form" *ngIf="loggedUser.nom == undefined">
+    <div class="detail">
+      <div>
+        <label for="email">Email : </label>
+        <input type="email" name="email" id="email" [(ngModel)]="unLoggedUser.email" placeholder="email@gestit.fr">
+      </div>
+      <div>
+        <label for="password">Mot de passe : </label>
+        <input type="password" name="password" id="password" [(ngModel)]="unLoggedUser.motDePasse" placeholder="Mot de passe">
+      </div>
+    </div>
+    <div class="action-btn">
+      <button type="submit" class="btn btn-primary" (click)="seConnecter()">Se connecter</button>
+      <button type="submit" class="btn btn-outline-primary" (click)="createAccount()">Créer un compte</button>
+    </div>
+    <div class="detail">
+      <a href="">Un soucis de connexion ?</a>
+    </div>
+  </form>
+</div>-->

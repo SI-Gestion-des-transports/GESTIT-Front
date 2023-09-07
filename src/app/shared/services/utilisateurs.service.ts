@@ -1,18 +1,27 @@
-import {Injectable} from "@angular/core";
+import {Injectable, OnInit} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Utilisateur} from "../models/utilisateur";
 import {environment} from "../../../environments/environment.development";
+import {AuthentificationService} from "./authentification.service";
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class UtilisateursService {
+export class UtilisateursService implements OnInit{
+
+  private currentUserSource = new BehaviorSubject<Utilisateur>({});
+  currentUser$ = this.currentUserSource.asObservable();
 
   private _baseUrl = environment.urlApi.users;
 
-  constructor(private _http: HttpClient){
+  constructor(private _http: HttpClient,
+              private _authService: AuthentificationService){
+  }
+
+  ngOnInit() {
+
   }
 
   findAll(): Observable<Utilisateur[]>{
@@ -32,8 +41,11 @@ export class UtilisateursService {
   }
 
   delete(deletedUser:Utilisateur): Observable<Utilisateur>{
-    console.log("Entrée delete SERVICE" + deletedUser.id);
     return this._http.delete<Utilisateur>(`${this._baseUrl}/${deletedUser.id}`);
+  }
+
+  updateCurrentUser(data: Utilisateur): void {
+    this.currentUserSource.next(data);
   }
 
 }

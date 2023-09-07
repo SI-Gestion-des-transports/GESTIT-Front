@@ -1,8 +1,41 @@
-html {
-  padding: 10px;
+main {
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+}
+.list {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+button {
+  margin: 5px;
+}
+
+.inputDate, input {
+  border: black solid 1px;
+  border-radius: 7px;
+  margin: 5px;
+  padding: 5px;
+}
+
+* {
+
 }
 
 
+
+app-reservation-vs-item, app-reservation-vs-form, app-authentification {
+  grid-column: 2 / 3;
+  grid-row: 1;
+  display: flex;
+  justify-content: center
+}
+
+app-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between
+}
 /*
 .list{
   max-height: 200px;
@@ -10,7 +43,144 @@ html {
 }
 */
 
+.form {
+  padding: 5px;
+  margin: 5px;
+}
+
 .singleItem{
   cursor: pointer;
   border: black solid 1px;
+  border-radius: 7px;
+  width: 450px;
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column
 }
+
+.detail {
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: flex-start;
+}
+
+
+.itemInList {
+  cursor: pointer;
+  border: black solid 1px;
+  border-radius: 7px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.action-btn {
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  background-color: gray;
+}
+
+
+.list {
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+  margin: 10px;
+  padding: 5px;
+
+}
+
+.buttonOfList {
+  grid-column: 2 / 3;
+  grid-row: 1;
+  display: flex;
+  justify-content: flex-start
+}
+
+.tableList {
+  grid-column: 2 / 3;
+  grid-row: 2;
+  display: flex;
+  justify-content: center;
+  width: auto;
+}
+
+.itemList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: auto;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+th, td {
+  border-bottom: 1px solid #dddddd;
+  padding: 5px 5px;
+  white-space: nowrap;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+
+.inputDate, input, select {
+  border: black solid 1px;
+  border-radius: 7px;
+  margin: 5px;
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center
+}
+
+
+* {
+}
+
+button {
+  background-color: transparent;
+  box-sizing: border-box;
+  padding: 5px 10px;
+  border: none;
+  box-shadow: lightgray 3px 3px 7px;
+  margin-right: 20px;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+  &:active {
+    transform: translate(1px, 1px);
+    box-shadow: lightgray 0 0 5px;
+  }
+}
+
+.img {
+  width: 400px;
+  border-radius: 7px;
+  box-shadow: lightgray 0 0 5px;
+}
+
+a {
+  text-decoration: none;
+  color: grey;
+}
+
+
+.carousel-model-text {
+  text-align: center;
+  color: black;
+  margin-bottom: 10px;
+}
+

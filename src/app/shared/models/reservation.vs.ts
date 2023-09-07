@@ -1,9 +1,9 @@
 import {Adresse} from "./adresse";
 
 export interface ReservationVs {
-  userId: number,
-  vehiculeServiceId: number,
-  distanceKm: number,
-  dateHeureDepart: Date,
-  dateHeureRetour: Date,
+  id?: number,
+  userId?: number,
+  vehiculeServiceId?: number,
+  dateHeureDepart?: string,
+  dateHeureRetour?: string,
 }

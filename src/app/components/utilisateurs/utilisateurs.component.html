@@ -1,56 +1,122 @@
 <p>utilisateurs works!</p>
-<app-covoiturages></app-covoiturages>
+
+<!--<app-covoiturages-organise
+  [organisateur]="loggedUser"
+  [covoitOrgs]="loggedUser.covoituragesOrganises"
+></app-covoiturages-organise>-->
+
+
+<!--
+<app-reservation-vs [user]="loggedUser"></app-reservation-vs>
+
 <app-reservation-vs></app-reservation-vs>
+
+
 <app-vehicule-service></app-vehicule-service>
+-->
 
 <div class="users">
-
-  <h3>{{ user.id == null ? "Créer un utilisateur" : "Modifier l'utilisateur"}}</h3>
+  <h3>
+    {{ user.id == null ? "Créer un utilisateur" : "Modifier l'utilisateur" }}
+  </h3>
   <form class="form">
     <div>
       <label for="nom">Votre nom : </label>
-      <input type="text" name="nom" id="nom" [(ngModel)]="user.nom" placeholder="Nom">
+      <input
+        type="text"
+        name="nom"
+        id="nom"
+        [(ngModel)]="user.nom"
+        placeholder="Nom"
+      />
     </div>
     <div>
       <label for="motDePasse">Mot de passe : </label>
-      <input type="password" name="motDePasse" id="motDePasse"[(ngModel)]="user.motDePasse" placeholder="Mot de passe">
+      <input
+        type="password"
+        name="motDePasse"
+        id="motDePasse"
+        [(ngModel)]="user.motDePasse"
+        placeholder="Mot de passe"
+      />
     </div>
     <div>
       <label for="email">Email : </label>
-      <input type="email" name="email" id="email" [(ngModel)]="user.email" placeholder="email">
+      <input
+        type="email"
+        name="email"
+        id="email"
+        [(ngModel)]="user.email"
+        placeholder="email"
+      />
     </div>
 
-    <button (click)="user.id == null ? create(user) : update(user)" type="submit" class="btn btn-success">{{ user.id == null ? "Créer" : "Sauvegarder"}}</button>
+    <button
+      (click)="user.id == null ? create(user) : update(user)"
+      type="submit"
+      class="btn btn-success"
+    >
+      {{ user.id == null ? "Créer" : "Sauvegarder" }}
+    </button>
 
-    <button (click)="modifBtn ? reInitUser() : undoUpdate()" type="button"
-            class="btn"
-            [class.btn-warning]="modifBtn"
-            [class.btn-secondary]="!modifBtn">{{ modifBtn ? "Cancel" : "Annuler"}}</button>
-
+    <button
+      (click)="modifBtn ? reInitUser() : undoUpdate()"
+      type="button"
+      class="btn"
+      [class.btn-warning]="modifBtn"
+      [class.btn-secondary]="!modifBtn"
+    >
+      {{ modifBtn ? "Cancel" : "Annuler" }}
+    </button>
   </form>
-
-  <div class="list">
+  <hr>
+  <div class ="list">
+  <div class="itemList">
     <div *ngFor="let singleUser of users" class="singleItem">
-      <h3>{{singleUser.nom}}</h3>
-      <button type="button" class="btn btn-secondary" (click)="userFeatured = singleUser">Détails</button>
-      <button type="button"
-              (click)="modifBtn && startUpdateUser(singleUser)"
-              class="btn"
-              [class.btn-warning]="modifBtn"
-              [class.btn-secondary]="!modifBtn"
-      >Modifier</button>
-      <button type="button"
-              class="btn"
-              [class.btn-danger]="modifBtn"
-              [class.btn-secondary]="!modifBtn"
-              (click)="modifBtn && delete(singleUser)"
-      >Supprimer</button>
+      <h3>{{ singleUser.nom }}</h3>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="userFeatured = singleUser"
+      >
+        Détails
+      </button>
+      <button
+        type="button"
+        (click)="modifBtn && startUpdateUser(singleUser)"
+        class="btn"
+        [class.btn-warning]="modifBtn"
+        [class.btn-secondary]="!modifBtn"
+      >
+        Modifier
+      </button>
+      <button
+        type="button"
+        class="btn"
+        [class.btn-danger]="modifBtn"
+        [class.btn-secondary]="!modifBtn"
+        (click)="modifBtn && delete(singleUser)"
+      >
+        Supprimer
+      </button>
+      <div>
+        <p>Test & Dev :</p>
+        <button
+          type="button"
+          class="btn"
+          [class.btn-primary]="loggedBtn"
+          [class.btn-secondary]="!loggedBtn"
+          (click)="loggedBtn ? loginUser(singleUser) : logout()"
+        >
+          {{ loggedBtn ? "Login as this user" : "Logout" }}
+        </button>
+      </div>
     </div>
+  </div>
   </div>
 
   <div *ngIf="userFeatured" class="singleItem">
-    <h3>{{userFeatured.nom}}</h3>
-    <p>{{userFeatured.email}}</p>
+    <h3>{{ userFeatured.nom }}</h3>
+    <p>{{ userFeatured.email }}</p>
   </div>
-
 </div>

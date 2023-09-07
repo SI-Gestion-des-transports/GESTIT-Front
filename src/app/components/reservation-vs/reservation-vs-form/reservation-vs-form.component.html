@@ -1,1 +1,91 @@
-<p>reservation-vs-form works!</p>
+<div class="singleItem">
+  <h3>Réserver un véhicule de service</h3>
+  <form class="form" (submit)="onSubmit($event)">
+    <div class="detail">
+     <!-- <div>
+        <label for="userId"></label>
+        <input type="hidden" name="userId" id="userId" value="{{currentUser.id}}" [(ngModel)]="reservationVs.userId">
+      </div>-->
+<!--
+      <div>
+        <img *ngIf="!currentVs.id" src="https://cdn.motor1.com/images/mgl/JO3m6Q/s1/peugeot-208.webp" class="img">
+        <img *ngIf="currentVs.id" src="{{currentVs.photoURL}}" class="img">
+        <label for="vehiculeServiceId">Sélection du véhicule de service</label>
+
+        <select name="vehiculeServiceId" id="vehiculeServiceId"  [(ngModel)]="currentVs">
+          <option *ngFor="let vs of vehiculesSrv">{{vs.modele}} </option>
+        </select>
+      </div>
+      -->
+      <hr>
+      <!--<div id="carousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+
+          <div *ngFor="let vs of vehiculesSrv; let i = index"
+               class="carousel-item"
+               [class.active]="i == 0"
+               (click)="currentVs = vs">
+            <img src="{{vs.photoURL}}" class="d-block w-100" alt="..." style="border: #333333 solid; border-radius: 7px">
+            <div class="carousel-model-text">
+              <p [(ngModel)]=currentVs.modele>{{ currentVs.modele }}</p>
+            </div>
+          </div>
+
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Précédent</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Suivant</span>
+        </a>
+      </div>-->
+
+      <div id="carouselExampleCaptions" class="carousel col-10" >
+
+        <div class="carousel-inner">
+          <div *ngFor="let vs of vehiculesSrv;index as i" [class]="i==0? 'carousel-item active ':'carousel-item'">
+            <img src="./assets/1.jpg" class="d-block w-100" alt="...">
+          </div>
+        </div>
+
+
+        <button (click)="previous()" class="carousel-control-prev ms-0" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button (click)="next()" class="carousel-control-next me-0" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+
+      </div>
+      <h5 >Id:{{currentVs.id? currentVs.id:vehiculesSrv[0].id}}--Marque:{{currentVs.id? currentVs.marque:vehiculesSrv[0].marque}}--modele:{{currentVs.id? currentVs.modele:vehiculesSrv[0].modele}}</h5>
+
+      <hr>
+
+      <!--
+      <div style="display: flex;align-items: center">
+        <label for="distanceKm">Distance : </label>
+        <input type="range" min="10" max="5000" step="10" name="distanceKm" id="distanceKm" [(ngModel)]="reservationVs.distanceKm">
+        {{reservationVs.distanceKm ? reservationVs.distanceKm : "0"}} km
+      </div>
+      -->
+      <div>
+        <label for="dateHeureDepart">Date et heure de départ : </label>
+        <input type="datetime-local" name="dateHeureDepart" id="dateHeureDepart" [(ngModel)]="reservationVs.dateHeureDepart" class="inputDate">
+        <p *ngIf="currentReservationVs.id"> {{reservationVs.dateHeureDepart}}</p>
+      </div>
+      <div>
+        <label for="dateHeureRetour">Date et heure de retour : </label>
+        <input type="datetime-local" name="dateHeureRetour" id="dateHeureRetour" [(ngModel)]="reservationVs.dateHeureRetour" class="inputDate">
+        <p *ngIf="currentReservationVs.id"> {{reservationVs.dateHeureRetour}}</p>
+      </div>
+    </div>
+    <div class="action-btn">
+      <button type="submit" class="btn btn-outline-success" >{{ currentReservationVs.id ? "Sauvegarder" : "Réserver"}}</button>
+      <button type="button" class="btn btn-outline-danger" (click)="cancel()">Annuler</button>
+    </div>
+  </form>
+</div>
