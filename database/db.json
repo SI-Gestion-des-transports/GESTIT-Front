@@ -45,40 +45,6 @@
       "dateHeureRetour": "2023-09-20T22:05",
       "userId": 6,
       "id": 12
-    },
-    {
-      "dateHeureDepart": "2023-09-12T12:17:00",
-      "dateHeureRetour": "2023-09-18T11:19:00",
-      "id": 13
-    },
-    {
-      "dateHeureDepart": "2023-09-30T11:48:00",
-      "dateHeureRetour": "2023-10-01T11:48:00",
-
-      "userId": 7,
-      "id": 14
-    },
-    {
-      "dateHeureDepart": "2023-09-07T16:57:00",
-      "dateHeureRetour": "2023-09-14T16:57",
-      "userId": 7,
-      "id": 15
-    },
-    {
-      "dateHeureDepart": "2023-09-13T16:14:00",
-      "dateHeureRetour": "2023-09-14T20:18:00",
-      "id": 16
-    },
-    {
-      "dateHeureDepart": "2023-09-13T16:16:00",
-      "dateHeureRetour": "2023-09-30T16:16:00",
-      "id": 17
-    },
-    {
-      "dateHeureDepart": "2023-09-13T16:22:00",
-      "dateHeureRetour": "2023-09-15T16:22:00",
-      "userId": 3,
-      "id": 18
     }
   ],
   "covoiturages": [
@@ -87,19 +53,13 @@
       "dureeTrajet": "11:11",
       "distanceKm": 1111,
       "dateDepart": "2023-09-15T18:21",
-      "adresseDepart": {
-        "numero": 11111,
-        "voie": "AAAAA",
-        "codePostal": 11111,
-        "commune": "AAAAA"
-      },
+      "adresseDepart": "200 place royale",
       "adresseArrivee": {
         "numero": 11111,
         "codePostal": 11111,
         "voie": "AAAAA",
         "commune": "AAAAA"
       },
-      "adresseDepart": "200 place royale",
       "id": 2
     },
     {
