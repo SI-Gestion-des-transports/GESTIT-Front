@@ -1,11 +1,32 @@
 <div class="container">
     <div class="d-flex flex-column align-items-center">
         <div class="d-flex flex-row mt-2 mb-3 ">
-            <p class="d-flex align-self-end">filtrer par</p>
-            <select>
-                <option *ngFor="let ville of VillesArrivee_liste" value = "ville">{{ville}}</option>
+
+            <select [ngClass]="{'activeFilterSearchInProgress': filtrage.filter_VilleArrivee_value !== '' && this.isFoundedVilleArrivee === false,
+            'activeFilterFounded': filtrage.filter_VilleArrivee_value !== '' && this.isFoundedVilleArrivee === true}"
+                [(ngModel)]="name">
+                [disabled]="disabledFilterVilleArrivee" [class]="btn btn-secondary dropdown-toggle" placeholder="City"
+                [(ngModel)]="selectedCity" (change)="onFiltrageVilleArriveeChanged($event)">
+                <option>--Ville d'arrivée--</option>
+                <option *ngFor="let city of VillesArrivee_liste">
+                    {{city}}
+                </option>
             </select>
-        </div>    
+            <select [disabled]="disabledFilterVilleDepart" class="btn btn-secondary dropdown-toggle" placeholder="City"
+                [(ngModel)]="villeDepart" (change)="onFiltrageVilleDepartChanged($event)">
+                <option>--Ville de départ--</option>
+                <option *ngFor="let city of VillesDepart_liste">
+                    {{city}}
+                </option>
+            </select>
+
+            <input [disabled]="disabledFilterDate" type="date" (change)="onDateEntree($event)" placeholder="Date départ"
+                [(ngModel)]="date_searchValue" [ngClass]="{'activeFilterSearchInProgress': filtrage.filter_Date_value && !this.isFoundedDate && this.isFoundedVilleDepart,
+                'activeFilterFounded': filtrage.filter_Date_value && this.isFoundedDate && this.isFoundedVilleDepart}">
+
+            <button type="button" (click)="onResetFiltrage()" class="btn btn-primary">Reset Filtrage</button>
+
+        </div>
         <!-- <div class="d-flex flex-row mt-2 mb-3 ">s
             <p class="d-flex align-self-end">filtrer par</p>
 

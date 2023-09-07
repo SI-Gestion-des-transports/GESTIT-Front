@@ -31,8 +31,15 @@ export class CovoiturageListComponent implements OnInit {
   placeholder_villeArrivee: string;
 
   VillesArrivee_liste: string[];
+  VillesDepart_liste: string[];
 
   covoiturages_listeComplete: Array<Covoiturage>;
+  selectedCity: string;
+  villeDepart: string;
+  buttonStyleInit:string;
+  buttonStyleInProgress:string;
+  buttonStyleFoundResult:string;
+  
 
 
 
@@ -58,22 +65,29 @@ export class CovoiturageListComponent implements OnInit {
 
     this.covoiturages_listeComplete = [];
     this.VillesArrivee_liste = [];
-    this.setupFiltrage();
+
+    this.recupVilles();
+    this.selectedCity = "Vegeta";
+    this.villeDepart = "sangoku";
+
   }
 
-  async setupFiltrage() {
-    console.log("config filtrage");
-    this.filtrage = new CovoiturageFiltrage();
+  async recupVilles() {
+
 
     this.covoiturages_listeComplete = await this.covoiturageService.recupListeCovoituragesOnServer();
 
-    let listThisDuplicateItems: string[] = [];
+    let listVilleArriveeWhithDuplicateItems: string[] = [];
     this.covoiturages_listeComplete.forEach((covoit) => {
-      listThisDuplicateItems.push(covoit.adresseArrivee.commune);
+      listVilleArriveeWhithDuplicateItems.push(covoit.adresseArrivee.commune);
     });
-    this.VillesArrivee_liste = Array.from(new Set(listThisDuplicateItems));
-    
-        
+    this.VillesArrivee_liste = Array.from(new Set(listVilleArriveeWhithDuplicateItems));
+
+    let listVilleDepartWhithDuplicateItems: string[] = [];
+    this.covoiturages_listeComplete.forEach((covoit) => {
+      listVilleDepartWhithDuplicateItems.push(covoit.adresseDepart.commune);
+    });
+    this.VillesDepart_liste = Array.from(new Set(listVilleDepartWhithDuplicateItems));
   }
 
 
@@ -82,29 +96,9 @@ export class CovoiturageListComponent implements OnInit {
 
 
 
-  async onVilleDepart(event: any) {
-    console.log("récupération input ville départ");
-    this.filtrage.filter_VilleDepart_Value = event.target.value;
-    this.filtrageListe_old();
 
-  }
 
-  async onVilleArrivee(event: any) {
-    console.log("récupération input ville arrivée");
-    this.filtrage.filter_VilleArrivee_value = event.target.value;
-    this.filtrageListe_old();
-  }
 
-  async onDateEntree(event: any) {
-    console.log("récupération input date");
-    this.filtrage.filter_Date_value = event.target.value;
-    this.filtrageListe_old();
-  }
-  onResetFiltrage() {
-
-    this.ngOnInit();
-    this.filtrageListe_old();
-  }
 
 
 
@@ -229,11 +223,69 @@ export class CovoiturageListComponent implements OnInit {
   //   this.disabledFilterVilleDepart = true;
   // }
 
+  onFiltrageVilleArriveeChanged(event: any): void {
+    this.filtrage.filter_VilleArrivee_value = event.target.value;
+    if(this.filtrage.filter_VilleArrivee_value === "--Ville d'arrivée--")
+    {
+      console.log("demande init");
+      this.filtrage.filter_VilleArrivee_value = "";
+    }
+      
+    this.filtrageList();
+  }
+
+  onFiltrageVilleDepartChanged(event: any): void {
+    this.filtrage.filter_VilleDepart_Value = event.target.value;
+    this.filtrageList();
+  }
+
+  async onDateEntree(event: any) {
+    this.filtrage.filter_Date_value = event.target.value;
+    this.filtrageList();
+  }
+
+  onResetFiltrage() {
+
+    this.ngOnInit();
+    this.filtrageList();
+  }
 
 
 
   async filtrageList() {
+    console.log("il rentre dnas le filtrage");
+    let completListOfCovoiturages = await this.covoiturageService.recupListeCovoituragesOnServer();
+    if (this.filtrage.filter_VilleArrivee_value !== "") {
+      console.log("des filtres ont été activés");
+    }
+    else{
+      console.log("aucun filtre activé pour le moment");
+      //arrivée
+          //couleur widget
+          //verrouillage
+          this.disabledFilterVilleArrivee = false;      
+      //départ
+          //couleur widget
+          //verrouillage
+      
+      //date
+          //couleur widget
+          //verrouillage
 
+      //liste à affciher
+      this.listeAafficher = completListOfCovoiturages;
+      //Is founded
+        //arrivée
+        //depart
+        //date
+      
+
+
+
+
+      
+      
+    }
   }
 
 
