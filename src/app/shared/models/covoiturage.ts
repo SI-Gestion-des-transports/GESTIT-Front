@@ -14,4 +14,3 @@ export interface Covoiturage {
   passagers?: Utilisateur[];
   vehiculePerso?: VehiculePerso;
 }
-

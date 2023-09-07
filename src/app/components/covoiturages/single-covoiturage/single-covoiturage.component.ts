@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
 import { CovoiturageService } from 'src/app/shared/services/covoiturage.service';
@@ -18,6 +18,7 @@ export class SingleCovoiturageComponent {
   covoiturage$!: Observable<Covoiturage>;
 
   constructor(private covoiturageService: CovoiturageService,
+    private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -36,5 +37,11 @@ export class SingleCovoiturageComponent {
     else
       throw new Error('Covoiturage not found!');
   }
+
+  onClickAnnuler()
+  {
+    this.router.navigateByUrl('covoiturages');
+  }
+ 
 }
 

@@ -63,9 +63,9 @@
         "codePostal": 33000
       },
       "organisateur": {
-        "nom": "ccc",
-        "motDePasse": "cccc",
-        "email": "irreductible@redpizz.fr",
+        "nom": "Marcoret",
+        "motDePasse": "1234",
+        "email": "JeanMarcMarcoret@yahoo.fr",
         "id": 1
       },
       "passagers": "",
@@ -117,14 +117,20 @@
         "codePostal": 62000
       },
       "organisateur": {
-        "nom": "ccc",
-        "motDePasse": "cccc",
-        "email": "irreductible@redpizz.fr",
+        "nom": "Marcoret",
+        "motDePasse": "1234",
+        "email": "JeanMarcMarcoret@yahoo.fr",
         "id": 1
       },
       "passagers": "",
-      "vehiculePerso": ""
+      "vehiculePerso": {
+        "id":1,
+        "modele": "3008",
+        "marque":"Peugeot",
+        "nombreDePlaceDisponibles": 5,
+        "immatriculation": "AA-123-BB",
+        "userId": 1
+      }
     }
-
   ]
 }
