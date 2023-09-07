@@ -70,13 +70,13 @@ app-nav {
 }
 
 
-.itemInList{
+.itemInList {
   cursor: pointer;
   border: black solid 1px;
   border-radius: 7px;
   padding: 5px;
   margin: 5px;
-  
+}
 
 .action-btn {
   padding: 5px;
@@ -175,5 +175,12 @@ button {
 a {
   text-decoration: none;
   color: grey;
+}
+
+
+.carousel-model-text {
+  text-align: center;
+  color: black;
+  margin-bottom: 10px;
 }
 

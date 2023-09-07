@@ -2,7 +2,6 @@ import { Injectable, OnInit } from '@angular/core';
 import { Covoiturage } from '../models/covoiturage';
 import { environment } from 'src/environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Utilisateur } from '../models/utilisateur';
