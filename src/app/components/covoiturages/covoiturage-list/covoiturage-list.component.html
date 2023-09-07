@@ -2,17 +2,24 @@
     <div class="d-flex flex-column align-items-center">
         <div class="d-flex flex-row mt-2 mb-3 ">
 
-            <select [ngClass]="{'activeFilterSearchInProgress': filtrage.filter_VilleArrivee_value !== '' && this.isFoundedVilleArrivee === false,
+            <!-- <select [ngClass]="{'activeFilterSearchInProgress': filtrage.filter_VilleArrivee_value !== '' && this.isFoundedVilleArrivee === false,
             'activeFilterFounded': filtrage.filter_VilleArrivee_value !== '' && this.isFoundedVilleArrivee === true}"
                 [(ngModel)]="name">
-                [disabled]="disabledFilterVilleArrivee" [class]="btn btn-secondary dropdown-toggle" placeholder="City"
+                [disabled]="disabledFilterVilleArrivee"  placeholder="City"
                 [(ngModel)]="selectedCity" (change)="onFiltrageVilleArriveeChanged($event)">
+                <option>--Ville d'arrivée--</option>
+                <option *ngFor="let city of VillesArrivee_liste">
+                    {{city}}
+                </option></select> -->
+
+            <select [ngClass]="filtre_Arrivee_style_widget" [(ngModel)]="name" [disabled]="disabledFilterVilleArrivee"
+                placeholder="City" [(ngModel)]="selectedCity" (change)="onFiltrageVilleArriveeChanged($event)">
                 <option>--Ville d'arrivée--</option>
                 <option *ngFor="let city of VillesArrivee_liste">
                     {{city}}
                 </option>
             </select>
-            <select [disabled]="disabledFilterVilleDepart" class="btn btn-secondary dropdown-toggle" placeholder="City"
+            <select [disabled]="disabledFilterVilleDepart" [ngClass]="buttonStyleInit" placeholder="City"
                 [(ngModel)]="villeDepart" (change)="onFiltrageVilleDepartChanged($event)">
                 <option>--Ville de départ--</option>
                 <option *ngFor="let city of VillesDepart_liste">

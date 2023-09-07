@@ -4,8 +4,8 @@
             <strong>Covoiturage n° {{covoituragereserve.id}}</strong>
             <ul>
                 <li>idOrganisateur : {{covoituragereserve.organisateur?.id}}</li>
-                <li>Départ : {{covoituragereserve.adresseDepart}}</li>
-                <li>Arrivée : {{covoituragereserve.adresseArrivee}}</li>
+                <li>Départ : {{covoituragereserve.adresseDepart.commune}}</li>
+                <li>Arrivée : {{covoituragereserve.adresseArrivee.commune}}</li>
                 <li>Le {{covoituragereserve.dateDepart}}</li>
             </ul>
         </div>

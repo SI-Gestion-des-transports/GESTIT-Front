@@ -12,7 +12,9 @@ import { CovoiturageService } from 'src/app/shared/services/covoiturage.service'
   styleUrls: ['./covoiturage-list.component.css']
 })
 export class CovoiturageListComponent implements OnInit {
-
+  
+  WIDGET_STYLE_INIT="btn btn-secondary dropdown-toggle";
+  
   filtrage!: CovoiturageFiltrage;
   listeAafficher: Array<Covoiturage>;
 
@@ -39,6 +41,11 @@ export class CovoiturageListComponent implements OnInit {
   buttonStyleInit:string;
   buttonStyleInProgress:string;
   buttonStyleFoundResult:string;
+
+  filtre_Arrivee_style_widget:string;
+  filtre_Depart_style_widget:string;
+  filtre_Date_style_widget:string;
+
   
 
 
@@ -69,6 +76,13 @@ export class CovoiturageListComponent implements OnInit {
     this.recupVilles();
     this.selectedCity = "Vegeta";
     this.villeDepart = "sangoku";
+
+
+   this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_INIT;
+   filtre_Depart_style_widget:this.WIDGET_STYLE_INIT;
+  filtre_Date_style_widget: null;
+  this.filtrageList();
+    
 
   }
 
@@ -261,23 +275,30 @@ export class CovoiturageListComponent implements OnInit {
     else{
       console.log("aucun filtre activé pour le moment");
       //arrivée
-          //couleur widget
+          //style widget
+          this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_INIT;
           //verrouillage
           this.disabledFilterVilleArrivee = false;      
       //départ
           //couleur widget
+          filtre_Depart_style_widget:this.WIDGET_STYLE_INIT;
           //verrouillage
-      
+          this.disabledFilterVilleDepart = true;
       //date
           //couleur widget
+          filtre_Date_style_widget: null;
           //verrouillage
+          this.disabledFilterDate=true;
 
       //liste à affciher
       this.listeAafficher = completListOfCovoiturages;
       //Is founded
         //arrivée
+        this.isFoundedVilleArrivee = false;
         //depart
+        this.isFoundedVilleDepart = false;
         //date
+        this.isFoundedDate=false;
       
 
 

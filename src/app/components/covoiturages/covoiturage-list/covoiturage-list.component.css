@@ -12,7 +12,6 @@
 }
 
 .activeFilterSearchInProgress {
-  btn btn-secondary dropdown-toggle
   background-color: red;  
 }
 .activeFilterFounded{
