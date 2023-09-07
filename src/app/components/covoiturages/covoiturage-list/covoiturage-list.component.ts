@@ -1,7 +1,5 @@
-import { ElementSchemaRegistry } from '@angular/compiler';
+
 import { Component, OnInit } from '@angular/core';
-import { Observable, interval } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
 import { CovoiturageFiltrage } from 'src/app/shared/models/CovoiturageFiltrage';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
 import { CovoiturageService } from 'src/app/shared/services/covoiturage.service';
@@ -45,24 +43,24 @@ export class CovoiturageListComponent implements OnInit {
 	covoiturages_listeComplete: Array<Covoiturage>;
 
 	/*Gestion du filtre sur la ville d'arrivée*/
-	disabledFilterVilleArrivee: boolean;
-	isFoundedVilleArrivee: boolean;
-	villeArrivee_searchValue: string;
-	VillesArrivee_liste: string[];
-	filtre_Arrivee_style_widget: string;
+	arrivee_disabledFilter: boolean;
+	arrivee_isFounded: boolean;
+	arrivee_searchValue: string;
+	arrivee_liste: string[];
+	arrivee_style_widget: string;
 
 	/*Gestion du filtre sur la ville de départ*/
-	disabledFilterVilleDepart: boolean;
-	isFoundedVilleDepart: boolean;
-	villeDepart_searchValue: string;
-	VillesDepart_liste: string[];
-	filtre_Depart_style_widget: string;
+	depart_verrouillageWidget: boolean;
+	depart_isFounded: boolean;
+	depart_searchValue: string;
+	depart_liste: string[];
+	depart_styleWidget: string;
 
 	/*gestion du filtre sur la date*/
-	disabledFilterDate: boolean;
-	isFoundedDate: boolean;
+	date_verrouillageWidget: boolean;
+	date_isFounded: boolean;
 	date_searchValue: Date;
-	filtre_Date_style_widget: string;
+	date_styleWidget: string;
 
 	/*Injection du service*/
 	constructor(private covoiturageService: CovoiturageService) { }
@@ -73,23 +71,23 @@ export class CovoiturageListComponent implements OnInit {
 		this.covoiturages_listeComplete = [];
 		this.recupVilles();
 
-		this.disabledFilterVilleArrivee = false;
-		this.isFoundedVilleArrivee = false;
+		this.arrivee_disabledFilter = false;
+		this.arrivee_isFounded = false;
 		this.placeholder_villeArrivee = "ville d'arrivée";
-		this.villeArrivee_searchValue = "";
+		this.arrivee_searchValue = "";
 		this.filtrage.villeArrivee_liste = null;
-		this.VillesArrivee_liste = [];
-		this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_INIT;
+		this.arrivee_liste = [];
+		this.arrivee_style_widget = this.WIDGET_STYLE_INIT;
 
-		this.disabledFilterVilleDepart = true;
-		this.isFoundedVilleDepart = false;
-		this.disabledFilterDate = true;
-		this.villeDepart_searchValue = "";
-		this.filtre_Depart_style_widget = this.WIDGET_STYLE_INIT;
+		this.depart_verrouillageWidget = true;
+		this.depart_isFounded = false;
+		this.date_verrouillageWidget = true;
+		this.depart_searchValue = "";
+		this.depart_styleWidget = this.WIDGET_STYLE_INIT;
 
 		this.date_searchValue = null;
-		this.filtre_Date_style_widget = this.WIDGET_STYLE_DATE_INIT;
-		this.isFoundedDate = false;
+		this.date_styleWidget = this.WIDGET_STYLE_DATE_INIT;
+		this.date_isFounded = false;
 
 		this.filtrageList();
 	}
@@ -107,13 +105,13 @@ export class CovoiturageListComponent implements OnInit {
 		this.covoiturages_listeComplete.forEach((covoit) => {
 			listVilleArriveeWhithDuplicateItems.push(covoit.adresseArrivee.commune);
 		});
-		this.VillesArrivee_liste = Array.from(new Set(listVilleArriveeWhithDuplicateItems));
+		this.arrivee_liste = Array.from(new Set(listVilleArriveeWhithDuplicateItems));
 
 		let listVilleDepartWhithDuplicateItems: string[] = [];
 		this.covoiturages_listeComplete.forEach((covoit) => {
 			listVilleDepartWhithDuplicateItems.push(covoit.adresseDepart.commune);
 		});
-		this.VillesDepart_liste = Array.from(new Set(listVilleDepartWhithDuplicateItems));
+		this.depart_liste = Array.from(new Set(listVilleDepartWhithDuplicateItems));
 	}
 
 	/**
@@ -126,7 +124,6 @@ export class CovoiturageListComponent implements OnInit {
 		this.filtrage.filter_VilleArrivee_value = event.target.value;
 
 		if (this.filtrage.filter_VilleArrivee_value === "--Ville d'arrivée--") {
-			console.log("demande init");
 			this.filtrage.filter_VilleArrivee_value = "";
 		}
 
@@ -184,31 +181,31 @@ export class CovoiturageListComponent implements OnInit {
 			console.log("des filtres ont été activés");
 			let arrivee_listeFiltree = completListOfCovoiturages.filter((covoit) => covoit.adresseArrivee.commune === this.filtrage.filter_VilleArrivee_value);
 			if (arrivee_listeFiltree.length > 0) {
-				this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
-				this.disabledFilterVilleArrivee = false;
-				this.filtre_Depart_style_widget = this.WIDGET_STYLE_INIT;
-				this.disabledFilterVilleDepart = false;
+				this.arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
+				this.arrivee_disabledFilter = false;
+				this.depart_styleWidget = this.WIDGET_STYLE_INIT;
+				this.depart_verrouillageWidget = false;
 				filtre_Date_style_widget: null;
-				this.disabledFilterDate = true;
+				this.date_verrouillageWidget = true;
 				this.listeAafficher = arrivee_listeFiltree;
-				this.isFoundedVilleArrivee = true;
-				this.isFoundedVilleDepart = false;
-				this.isFoundedDate = false;
+				this.arrivee_isFounded = true;
+				this.depart_isFounded = false;
+				this.date_isFounded = false;
 
 				if (this.filtrage.filter_VilleDepart_Value !== "") {
 					let listeFiltree_villeDepart = arrivee_listeFiltree.filter((covoit) => covoit.adresseDepart.commune === this.filtrage.filter_VilleDepart_Value);
 					if (listeFiltree_villeDepart.length > 0) {
-						this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
-						this.disabledFilterVilleArrivee = true;
-						this.filtre_Depart_style_widget = this.WIDGET_STYLE_SUCCESS;
-						this.disabledFilterVilleDepart = false;
+						this.arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
+						this.arrivee_disabledFilter = true;
+						this.depart_styleWidget = this.WIDGET_STYLE_SUCCESS;
+						this.depart_verrouillageWidget = false;
 						filtre_Date_style_widget: null;
-						this.disabledFilterDate = false;
+						this.date_verrouillageWidget = false;
 
 						this.listeAafficher = listeFiltree_villeDepart;
-						this.isFoundedVilleArrivee = true;
-						this.isFoundedVilleDepart = true;
-						this.isFoundedDate = false;
+						this.arrivee_isFounded = true;
+						this.depart_isFounded = true;
+						this.date_isFounded = false;
 
 						if (this.filtrage.filter_Date_value) {
 							console.log("présence d'une date")
@@ -230,96 +227,96 @@ export class CovoiturageListComponent implements OnInit {
 								return true;
 							});
 							if (listeFiltree_byDate.length > 0) {
-								this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
-								this.disabledFilterVilleArrivee = true;
-								this.filtre_Depart_style_widget = this.WIDGET_STYLE_SUCCESS;
-								this.disabledFilterVilleDepart = true;
-								this.filtre_Date_style_widget = this.WIDGET_STYLE_DATE_SUCCESS;
-								this.disabledFilterDate = false;
+								this.arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
+								this.arrivee_disabledFilter = true;
+								this.depart_styleWidget = this.WIDGET_STYLE_SUCCESS;
+								this.depart_verrouillageWidget = true;
+								this.date_styleWidget = this.WIDGET_STYLE_DATE_SUCCESS;
+								this.date_verrouillageWidget = false;
 								this.listeAafficher = listeFiltree_byDate;
-								this.isFoundedVilleArrivee = true;
-								this.isFoundedVilleDepart = true;
-								this.isFoundedDate = true;
+								this.arrivee_isFounded = true;
+								this.depart_isFounded = true;
+								this.date_isFounded = true;
 							}
 							else {
-								this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
-								this.disabledFilterVilleArrivee = true;
-								this.filtre_Depart_style_widget = this.WIDGET_STYLE_SUCCESS;
-								this.disabledFilterVilleDepart = true;
-								this.filtre_Date_style_widget = this.WIDGET_STYLE_DATE_INPROGRESS;
-								this.disabledFilterDate = false;
+								this.arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
+								this.arrivee_disabledFilter = true;
+								this.depart_styleWidget = this.WIDGET_STYLE_SUCCESS;
+								this.depart_verrouillageWidget = true;
+								this.date_styleWidget = this.WIDGET_STYLE_DATE_INPROGRESS;
+								this.date_verrouillageWidget = false;
 
 								this.listeAafficher = listeFiltree_villeDepart;
-								this.isFoundedVilleArrivee = true;
-								this.isFoundedVilleDepart = true;
-								this.isFoundedDate = false;
+								this.arrivee_isFounded = true;
+								this.depart_isFounded = true;
+								this.date_isFounded = false;
 							}
 						}
 						else {
-							this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
-							this.disabledFilterVilleArrivee = true;
-							this.filtre_Depart_style_widget = this.WIDGET_STYLE_SUCCESS;
-							this.disabledFilterVilleDepart = false;
+							this.arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
+							this.arrivee_disabledFilter = true;
+							this.depart_styleWidget = this.WIDGET_STYLE_SUCCESS;
+							this.depart_verrouillageWidget = false;
 							filtre_Date_style_widget: null;
-							this.disabledFilterDate = false;
+							this.date_verrouillageWidget = false;
 
 
 							this.listeAafficher = listeFiltree_villeDepart;
-							this.isFoundedVilleArrivee = true;
-							this.isFoundedVilleDepart = true;
-							this.isFoundedDate = false;
+							this.arrivee_isFounded = true;
+							this.depart_isFounded = true;
+							this.date_isFounded = false;
 						}
 					}
 					else {
-						this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
-						this.disabledFilterVilleArrivee = true;
-						this.filtre_Depart_style_widget = this.WIDGET_STYLE_INPROGRESS;
-						this.disabledFilterVilleDepart = false;
+						this.arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
+						this.arrivee_disabledFilter = true;
+						this.depart_styleWidget = this.WIDGET_STYLE_INPROGRESS;
+						this.depart_verrouillageWidget = false;
 						filtre_Date_style_widget: null;
-						this.disabledFilterDate = true;
+						this.date_verrouillageWidget = true;
 						this.listeAafficher = arrivee_listeFiltree;
-						this.isFoundedVilleArrivee = true;
-						this.isFoundedVilleDepart = false;
-						this.isFoundedDate = false;
+						this.arrivee_isFounded = true;
+						this.depart_isFounded = false;
+						this.date_isFounded = false;
 					}
 				}
 				else {
-					this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
-					this.disabledFilterVilleArrivee = false;
-					this.filtre_Depart_style_widget = this.WIDGET_STYLE_INIT;
-					this.disabledFilterVilleDepart = false;
+					this.arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
+					this.arrivee_disabledFilter = false;
+					this.depart_styleWidget = this.WIDGET_STYLE_INIT;
+					this.depart_verrouillageWidget = false;
 					filtre_Date_style_widget: null;
-					this.disabledFilterDate = true;
+					this.date_verrouillageWidget = true;
 					this.listeAafficher = arrivee_listeFiltree;
-					this.isFoundedVilleArrivee = true;
-					this.isFoundedVilleDepart = false;
-					this.isFoundedDate = false;
+					this.arrivee_isFounded = true;
+					this.depart_isFounded = false;
+					this.date_isFounded = false;
 				}
 			}
 			else {
-				this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_INPROGRESS;
-				this.disabledFilterVilleArrivee = false;
-				this.filtre_Depart_style_widget = this.WIDGET_STYLE_INIT;
-				this.disabledFilterVilleDepart = false;
+				this.arrivee_style_widget = this.WIDGET_STYLE_INPROGRESS;
+				this.arrivee_disabledFilter = false;
+				this.depart_styleWidget = this.WIDGET_STYLE_INIT;
+				this.depart_verrouillageWidget = false;
 				filtre_Date_style_widget: null;
-				this.disabledFilterDate = true;
+				this.date_verrouillageWidget = true;
 				this.listeAafficher = arrivee_listeFiltree;
-				this.isFoundedVilleArrivee = false;
-				this.isFoundedVilleDepart = false;
-				this.isFoundedDate = false;
+				this.arrivee_isFounded = false;
+				this.depart_isFounded = false;
+				this.date_isFounded = false;
 			}
 		}
 		else {
-			this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_INIT;
-			this.disabledFilterVilleArrivee = false;
-			this.filtre_Depart_style_widget = this.WIDGET_STYLE_INIT;
-			this.disabledFilterVilleDepart = true;
+			this.arrivee_style_widget = this.WIDGET_STYLE_INIT;
+			this.arrivee_disabledFilter = false;
+			this.depart_styleWidget = this.WIDGET_STYLE_INIT;
+			this.depart_verrouillageWidget = true;
 			filtre_Date_style_widget: null;
-			this.disabledFilterDate = true;
+			this.date_verrouillageWidget = true;
 			this.listeAafficher = completListOfCovoiturages;
-			this.isFoundedVilleArrivee = false;
-			this.isFoundedVilleDepart = false;
-			this.isFoundedDate = false;
+			this.arrivee_isFounded = false;
+			this.depart_isFounded = false;
+			this.date_isFounded = false;
 		}
 	}
 }

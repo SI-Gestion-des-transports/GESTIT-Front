@@ -34,35 +34,8 @@ export class CovoiturageService implements OnInit {
       .pipe(map(res => res.filter(res => res.organisateur?.id === idUtilisateur)));
   }
 
-  // getFilteredbyVilleDepart(nomVille: string): Observable<Covoiturage[]> {
-  //   return this._http.get<Covoiturage[]>(this._baseCovoitUrl)
-  //     .pipe(map(res => res.filter(res => res.adresseDepart === nomVille)));
-  // }
-
   createArrayFrom(newArray: Covoiturage[], oldArray: Covoiturage[]): void {
     newArray = JSON.parse(JSON.stringify(oldArray));
-
-  }
-
-  recupListCovoiturageFromServer(): Array<Covoiturage> {
-    /* console.log("récupération de la liste");
-    let listeToReturn: Array<Covoiturage> = [];
-    this.getAllCovoiturages();
-    this.getAllCovoiturages().subscribe(
-      response=>response.forEach(val=>listeToReturn.push(Object.assign({},val))))
-      return listeToReturn; */
-    console.log("récupération de la liste");
-    let listeToReturn: Array<Covoiturage> = [];
-    this.getAllCovoiturages().subscribe(
-      response => response.forEach(val => {
-        // listeToReturn.push(Object.assign({},JSON.parse(JSON.stringify(val))))
-        listeToReturn.push(Object.assign({}, val))
-      }));
-
-
-    return listeToReturn;
-
-
 
   }
 
