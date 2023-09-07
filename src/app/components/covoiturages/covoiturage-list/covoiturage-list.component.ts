@@ -16,6 +16,10 @@ export class CovoiturageListComponent implements OnInit {
 	WIDGET_STYLE_INIT = "btn btn-secondary dropdown-toggle";
 	WIDGET_STYLE_INPROGRESS = "btn btn-danger dropdown-toggle";
 	WIDGET_STYLE_SUCCESS = "btn btn-success dropdown-toggle";
+	WIDGET_STYLE_DATE_INIT = "background-color:white";
+	WIDGET_STYLE_DATE_INPROGRESS = "background-color:red";
+	WIDGET_STYLE_DATE_SUCCESS = "background-color:green";
+	
 
 
 
@@ -85,7 +89,7 @@ export class CovoiturageListComponent implements OnInit {
 		this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_INIT;
 
 		this.filtre_Depart_style_widget = this.WIDGET_STYLE_INIT;
-		//filtre_Date_style_widget: null;
+		filtre_Date_style_widget: this.WIDGET_STYLE_DATE_INIT;
 		this.filtrageList();
 
 
@@ -244,7 +248,7 @@ export class CovoiturageListComponent implements OnInit {
 
 	onFiltrageVilleArriveeChanged(event: any): void {
 		this.filtrage.filter_VilleArrivee_value = event.target.value;
-		
+
 		if (this.filtrage.filter_VilleArrivee_value === "--Ville d'arrivée--") {
 			console.log("demande init");
 			this.filtrage.filter_VilleArrivee_value = "";
@@ -255,7 +259,7 @@ export class CovoiturageListComponent implements OnInit {
 
 	onFiltrageVilleDepartChanged(event: any): void {
 		this.filtrage.filter_VilleDepart_Value = event.target.value;
-		
+
 		if (this.filtrage.filter_VilleDepart_Value === "--Ville de départ--") {
 			console.log("demande init");
 			this.filtrage.filter_VilleDepart_Value = "";
@@ -338,6 +342,109 @@ export class CovoiturageListComponent implements OnInit {
 						this.isFoundedVilleDepart = true;
 						//date
 						this.isFoundedDate = false;
+
+						if (this.filtrage.filter_Date_value) {
+							console.log("présence d'une date")
+							let listeFiltree_byDate = listeFiltree_villeDepart.filter((covoit) => {
+								const dateCovoit = new Date(covoit.dateDepart);
+								const dateSouhaitee = new Date(this.filtrage.filter_Date_value);
+								if (dateCovoit.getDate() !== dateSouhaitee.getDate()) {
+									return false;
+								}
+								if (dateCovoit.getMonth() !== dateSouhaitee.getMonth()) {
+									return false;
+								}
+								if (dateCovoit.getMonth() !== dateSouhaitee.getMonth()) {
+									return false;
+								}
+								if (dateCovoit.getFullYear() !== dateSouhaitee.getFullYear()) {
+									return false;
+								}
+								return true;
+							});
+							if (listeFiltree_byDate.length > 0) {
+								//arrivée
+								//style widget
+								this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
+								//verrouillage
+								this.disabledFilterVilleArrivee = true;
+								//départ
+								//couleur widget
+								this.filtre_Depart_style_widget = this.WIDGET_STYLE_SUCCESS;
+								//verrouillage
+								this.disabledFilterVilleDepart = true;
+								//date
+								//couleur widget
+								this.filtre_Date_style_widget= this.WIDGET_STYLE_DATE_SUCCESS;
+								//verrouillage
+								this.disabledFilterDate = false;
+
+								//liste à affciher
+								this.listeAafficher = listeFiltree_byDate;
+								//Is founded
+								//arrivée
+								this.isFoundedVilleArrivee = true;
+								//depart
+								this.isFoundedVilleDepart = true;
+								//date
+								this.isFoundedDate = true;
+							}
+							else {
+								//arrivée
+								//style widget
+								this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
+								//verrouillage
+								this.disabledFilterVilleArrivee = true;
+								//départ
+								//couleur widget
+								this.filtre_Depart_style_widget = this.WIDGET_STYLE_SUCCESS;
+								//verrouillage
+								this.disabledFilterVilleDepart = true;
+								//date
+								//couleur widget
+								this.filtre_Date_style_widget= this.WIDGET_STYLE_DATE_INPROGRESS;
+								//verrouillage
+								this.disabledFilterDate = false;
+
+								//liste à affciher
+								this.listeAafficher = listeFiltree_villeDepart;
+								//Is founded
+								//arrivée
+								this.isFoundedVilleArrivee = true;
+								//depart
+								this.isFoundedVilleDepart = true;
+								//date
+								this.isFoundedDate = false;
+							}
+						}
+						else {
+							//arrivée
+							//style widget
+							this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
+							//verrouillage
+							this.disabledFilterVilleArrivee = true;
+							//départ
+							//couleur widget
+							this.filtre_Depart_style_widget = this.WIDGET_STYLE_SUCCESS;
+							//verrouillage
+							this.disabledFilterVilleDepart = false;
+							//date
+							//couleur widget
+							filtre_Date_style_widget: null;
+							//verrouillage
+							this.disabledFilterDate = false;
+
+							//liste à affciher
+							this.listeAafficher = listeFiltree_villeDepart;
+							//Is founded
+							//arrivée
+							this.isFoundedVilleArrivee = true;
+							//depart
+							this.isFoundedVilleDepart = true;
+							//date
+							this.isFoundedDate = false;
+						}
+
 					}
 					else {
 						//arrivée
