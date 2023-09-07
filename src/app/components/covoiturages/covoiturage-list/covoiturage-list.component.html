@@ -12,25 +12,25 @@
                     {{city}}
                 </option></select> -->
 
-            <select [ngClass]="filtre_Arrivee_style_widget" [(ngModel)]="name" [disabled]="disabledFilterVilleArrivee"
+            <select [ngClass]="arrivee_style_widget" [(ngModel)]="name" [disabled]="arrivee_verrouillageDropDown"
                 placeholder="City" [(ngModel)]="selectedCity" (change)="onFiltrageVilleArriveeChanged($event)">
                 <option>--Ville d'arrivée--</option>
-                <option *ngFor="let city of VillesArrivee_liste">
+                <option *ngFor="let city of arrivee_listeForDropDown">
                     {{city}}
                 </option>
             </select>
 
-            <select [ngClass]="filtre_Depart_style_widget" [disabled]="disabledFilterVilleDepart" placeholder="City"
+            <select [ngClass]="depart_style_widget" [disabled]="depart_style_widget" placeholder="City"
                 [(ngModel)]="villeDepart" (change)="onFiltrageVilleDepartChanged($event)">
                 <option>--Ville de départ--</option>
-                <option *ngFor="let city of VillesDepart_liste">
+                <option *ngFor="let city of depart_listeForDropDown">
                     {{city}}
                 </option>
             </select>
 
-            <input [disabled]="disabledFilterDate" type="date" (change)="onDateEntree($event)" placeholder="Date départ"
-                [(ngModel)]="date_searchValue" [ngClass]="{'activeFilterSearchInProgress': filtrage.filter_Date_value && !this.isFoundedDate && this.isFoundedVilleDepart,
-                'activeFilterFounded': filtrage.filter_Date_value && this.isFoundedDate && this.isFoundedVilleDepart}">
+            <input [disabled]="date_verrouillageDatePicker" type="date" (change)="onDateEntree($event)" placeholder="Date départ"
+                [(ngModel)]="date_searchValue" [ngClass]="{'activeFilterSearchInProgress': filtrage.filter_Date_value && !this.date_dateIsFounded && this.depart_villeIsFounded,
+                'activeFilterFounded': filtrage.filter_Date_value && this.date_dateIsFounded && this.depart_villeIsFounded}">
 
             <button type="button" (click)="onResetFiltrage()" class="btn btn-primary">Reset Filtrage</button>
 
