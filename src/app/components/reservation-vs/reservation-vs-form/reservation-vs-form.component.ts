@@ -24,6 +24,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   pastReservationsVsByUser: ReservationVs [] = [];
   currentUser: Utilisateur = {};
   currentVs: VehiculeService = {};
+  currentIndex:number = 0;
   vehiculesSrv: VehiculeService [] = [];
   currentReservationVs: ReservationVs = {};
   editedReservationVs: ReservationVs = {};
@@ -80,7 +81,12 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
     this._subscription.add(
       this._vehiculeSrvService.vehiculesSrv$
         .subscribe(data => {
-          this.vehiculesSrv = data}));
+          this.vehiculesSrv = data;
+          if (this.vehiculesSrv.length !=0) {
+            this.currentVs = this.vehiculesSrv[0];
+            this.currentIndex=0;
+          };
+        }));
     this._vehiculeSrvService.findAllEnService().subscribe(data => this.vehiculesSrv = data);
     this._subscription.add(
       this._reservationVsService.currentReservationVs$
@@ -184,4 +190,15 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
     this.currentVs = vs;
   }
 
+  previous(){
+    this.currentIndex= (this.vehiculesSrv.length+this.currentIndex-1)%this.vehiculesSrv.length;
+    this.currentVs=this.vehiculesSrv[this.currentIndex];
+    console.log(this.currentVs);
+  }
+  next(){
+
+    this.currentIndex= (this.currentIndex+1)%this.vehiculesSrv.length;
+    this.currentVs=this.vehiculesSrv[this.currentIndex];
+    console.log(this.currentVs);
+  }
 }
