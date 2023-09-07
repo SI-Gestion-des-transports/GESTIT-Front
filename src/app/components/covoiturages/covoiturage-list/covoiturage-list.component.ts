@@ -91,10 +91,6 @@ export class CovoiturageListComponent implements OnInit {
 		this.filtre_Date_style_widget = this.WIDGET_STYLE_DATE_INIT;
 		this.isFoundedDate = false;
 
-		//A supprimer?
-		// this.selectedCity = "Vegeta";
-		// this.villeDepart = "sangoku";
-
 		this.filtrageList();
 	}
 
@@ -188,58 +184,30 @@ export class CovoiturageListComponent implements OnInit {
 			console.log("des filtres ont été activés");
 			let arrivee_listeFiltree = completListOfCovoiturages.filter((covoit) => covoit.adresseArrivee.commune === this.filtrage.filter_VilleArrivee_value);
 			if (arrivee_listeFiltree.length > 0) {
-				//arrivée
-				//style widget
 				this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
-				//verrouillage
 				this.disabledFilterVilleArrivee = false;
-				//départ
-				//couleur widget
 				this.filtre_Depart_style_widget = this.WIDGET_STYLE_INIT;
-				//verrouillage
 				this.disabledFilterVilleDepart = false;
-				//date
-				//couleur widget
 				filtre_Date_style_widget: null;
-				//verrouillage
 				this.disabledFilterDate = true;
-				//liste à affciher
 				this.listeAafficher = arrivee_listeFiltree;
-				//Is founded
-				//arrivée
 				this.isFoundedVilleArrivee = true;
-				//depart
 				this.isFoundedVilleDepart = false;
-				//date
 				this.isFoundedDate = false;
 
 				if (this.filtrage.filter_VilleDepart_Value !== "") {
 					let listeFiltree_villeDepart = arrivee_listeFiltree.filter((covoit) => covoit.adresseDepart.commune === this.filtrage.filter_VilleDepart_Value);
 					if (listeFiltree_villeDepart.length > 0) {
-						//arrivée
-						//style widget
 						this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
-						//verrouillage
 						this.disabledFilterVilleArrivee = true;
-						//départ
-						//couleur widget
 						this.filtre_Depart_style_widget = this.WIDGET_STYLE_SUCCESS;
-						//verrouillage
 						this.disabledFilterVilleDepart = false;
-						//date
-						//couleur widget
 						filtre_Date_style_widget: null;
-						//verrouillage
 						this.disabledFilterDate = false;
 
-						//liste à affciher
 						this.listeAafficher = listeFiltree_villeDepart;
-						//Is founded
-						//arrivée
 						this.isFoundedVilleArrivee = true;
-						//depart
 						this.isFoundedVilleDepart = true;
-						//date
 						this.isFoundedDate = false;
 
 						if (this.filtrage.filter_Date_value) {
@@ -262,412 +230,96 @@ export class CovoiturageListComponent implements OnInit {
 								return true;
 							});
 							if (listeFiltree_byDate.length > 0) {
-								//arrivée
-								//style widget
 								this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
-								//verrouillage
 								this.disabledFilterVilleArrivee = true;
-								//départ
-								//couleur widget
 								this.filtre_Depart_style_widget = this.WIDGET_STYLE_SUCCESS;
-								//verrouillage
 								this.disabledFilterVilleDepart = true;
-								//date
-								//couleur widget
 								this.filtre_Date_style_widget = this.WIDGET_STYLE_DATE_SUCCESS;
-								//verrouillage
 								this.disabledFilterDate = false;
-
-								//liste à affciher
 								this.listeAafficher = listeFiltree_byDate;
-								//Is founded
-								//arrivée
 								this.isFoundedVilleArrivee = true;
-								//depart
 								this.isFoundedVilleDepart = true;
-								//date
 								this.isFoundedDate = true;
 							}
 							else {
-								//arrivée
-								//style widget
 								this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
-								//verrouillage
 								this.disabledFilterVilleArrivee = true;
-								//départ
-								//couleur widget
 								this.filtre_Depart_style_widget = this.WIDGET_STYLE_SUCCESS;
-								//verrouillage
 								this.disabledFilterVilleDepart = true;
-								//date
-								//couleur widget
 								this.filtre_Date_style_widget = this.WIDGET_STYLE_DATE_INPROGRESS;
-								//verrouillage
 								this.disabledFilterDate = false;
 
-								//liste à affciher
 								this.listeAafficher = listeFiltree_villeDepart;
-								//Is founded
-								//arrivée
 								this.isFoundedVilleArrivee = true;
-								//depart
 								this.isFoundedVilleDepart = true;
-								//date
 								this.isFoundedDate = false;
 							}
 						}
 						else {
-							//arrivée
-							//style widget
 							this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
-							//verrouillage
 							this.disabledFilterVilleArrivee = true;
-							//départ
-							//couleur widget
 							this.filtre_Depart_style_widget = this.WIDGET_STYLE_SUCCESS;
-							//verrouillage
 							this.disabledFilterVilleDepart = false;
-							//date
-							//couleur widget
 							filtre_Date_style_widget: null;
-							//verrouillage
 							this.disabledFilterDate = false;
 
-							//liste à affciher
+
 							this.listeAafficher = listeFiltree_villeDepart;
-							//Is founded
-							//arrivée
 							this.isFoundedVilleArrivee = true;
-							//depart
 							this.isFoundedVilleDepart = true;
-							//date
 							this.isFoundedDate = false;
 						}
 					}
 					else {
-						//arrivée
-						//style widget
 						this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
-						//verrouillage
 						this.disabledFilterVilleArrivee = true;
-						//départ
-						//couleur widget
 						this.filtre_Depart_style_widget = this.WIDGET_STYLE_INPROGRESS;
-						//verrouillage
 						this.disabledFilterVilleDepart = false;
-						//date
-						//couleur widget
 						filtre_Date_style_widget: null;
-						//verrouillage
 						this.disabledFilterDate = true;
-
-						//liste à affciher
 						this.listeAafficher = arrivee_listeFiltree;
-						//Is founded
-						//arrivée
 						this.isFoundedVilleArrivee = true;
-						//depart
 						this.isFoundedVilleDepart = false;
-						//date
 						this.isFoundedDate = false;
 					}
 				}
 				else {
-					//arrivée
-					//style widget
 					this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
-					//verrouillage
 					this.disabledFilterVilleArrivee = false;
-					//départ
-					//couleur widget
 					this.filtre_Depart_style_widget = this.WIDGET_STYLE_INIT;
-					//verrouillage
 					this.disabledFilterVilleDepart = false;
-					//date
-					//couleur widget
 					filtre_Date_style_widget: null;
-					//verrouillage
 					this.disabledFilterDate = true;
-
-					//liste à affciher
 					this.listeAafficher = arrivee_listeFiltree;
-					//Is founded
-					//arrivée
 					this.isFoundedVilleArrivee = true;
-					//depart
 					this.isFoundedVilleDepart = false;
-					//date
 					this.isFoundedDate = false;
 				}
 			}
 			else {
-				//arrivée
-				//style widget
 				this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_INPROGRESS;
-				//verrouillage
 				this.disabledFilterVilleArrivee = false;
-				//départ
-				//couleur widget
 				this.filtre_Depart_style_widget = this.WIDGET_STYLE_INIT;
-				//verrouillage
 				this.disabledFilterVilleDepart = false;
-				//date
-				//couleur widget
 				filtre_Date_style_widget: null;
-				//verrouillage
 				this.disabledFilterDate = true;
-
-				//liste à affciher
 				this.listeAafficher = arrivee_listeFiltree;
-				//Is founded
-				//arrivée
 				this.isFoundedVilleArrivee = false;
-				//depart
 				this.isFoundedVilleDepart = false;
-				//date
 				this.isFoundedDate = false;
 			}
 		}
 		else {
-			console.log("aucun filtre activé pour le moment");
-			//arrivée
-			//style widget
 			this.filtre_Arrivee_style_widget = this.WIDGET_STYLE_INIT;
-			//verrouillage
 			this.disabledFilterVilleArrivee = false;
-			//départ
-			//couleur widget
 			this.filtre_Depart_style_widget = this.WIDGET_STYLE_INIT;
-			//verrouillage
 			this.disabledFilterVilleDepart = true;
-			//date
-			//couleur widget
 			filtre_Date_style_widget: null;
-			//verrouillage
 			this.disabledFilterDate = true;
-
-			//liste à affciher
 			this.listeAafficher = completListOfCovoiturages;
-			//Is founded
-			//arrivée
 			this.isFoundedVilleArrivee = false;
-			//depart
 			this.isFoundedVilleDepart = false;
-			//date
 			this.isFoundedDate = false;
 		}
 	}
 }
-
-
-
-	// listFiltering(filtres: CovoiturageFiltrage) {
-	// 	console.log("Lancement du filtrage dans listFiltering");
-/*Pipe permet d'accéder à la liste de covoiturage encapsulée dans l'observable.
-	- l'opérateur primitif map permet d'executer une action sur chaque membre du tableau
-	- l'opérateur primitif filter permet de garder tout itération dans la mesure où
-		la condition qui lui est fournie en paramètres est true.
-En résumé:
-	1 - getAllCovoiturage renvoit la liste de tous les covoiturages enregistrés en base
-	2 - Pour chaque covoiturage, un lance un filtrage par l'intermédiaire de map, afin de
-	garder ou d"écarter l'occurence selon la condition précisée à filter().
-listeFiltree : this.covoiturageService.getAllCovoiturages()*/
-		// listeFiltree: Covoiturage[] = this.covoiturageService.getAllCovoiturages()
-		//                               .pipe(map(res=>res.filter(res=> res.dateDepart === this.filtrage.)));
-
-/* ca marche*/
-		// if (this.filtrage.filter_VilleDepart_Value !== "") {
-		//   this.covoiturages$ = this.covoiturageService.getAllCovoiturages()
-		//     .pipe(map(res => res.filter(res => res.adresseDepart === this.filtrage.filter_VilleDepart_Value)));
-		//     this.isVilleArriveeFilterDisabled = false;
-		// }
-
-		// else {
-		//   if (this.filtrage.filter_VilleArrivee_value !== "") {
-		//     this.covoiturages$ = this.covoiturageService.getAllCovoiturages()
-		//       .pipe(map(res => res.filter(res => res.adresseArrivee === this.filtrage.filter_VilleArrivee_value)));
-		//   }
-		// }
-
-
-		//Ca marche
-		// this.covoiturageService.getAllCovoiturages().subscribe(countries => this.countries = countries);
-		// this.countries.forEach(()=>this.countFilteredVilleDepart++ );
-		// console.log(++this.countFilteredVilleDepart);
-		// this.countFilteredVilleDepart = 0;
-	// 	let filteredItems: Covoiturage[] | undefined;
-	// 	this.covoiturageService.getAllCovoiturages().subscribe(res => filteredItems = res);
-	// 	return filteredItems;
-
-
-
-	// }
-
-
-
-
-	// onCreateCovoiturage(): void {
-	//   let covoiturageToPush = {
-	//     "nombrePlacesRestantes": 45,
-	//     "dureeTrajet": 45,
-	//     "distanceKm": 99,
-	//     "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
-	//     "adresseArrivee": "87 avenue de Maupassant 23000 Guéret"
-	//   }
-
-	//   this.covoiturageService
-	//     .create(covoiturageToPush)
-	//     .subscribe(() => {
-	//       /* this.listeCovoiturages.push */
-	//     });
-	//this.covoituragesAuComplet$ = this.covoiturageService.getAllCovoiturages();
-	// this._init();
-
-/* private _init() {
-this.covoiturageService.findAll(this.user)
-.subscribe(covoiturages => {
- this.listeCovoiturages = covoiturages;
-}) */
-
-//}
-  // private _init() {
-  //   this.covoiturageService.getAllCovoiturages();
-
-  // }
-
-
-
-
-
-
-/*  this.covoiturageService.create(this.covoiturageToPush).subscribe(covoiturageReceived => {
-	 this.createdCovoiturage = covoiturageReceived;});
-
-	 console.log("covoiturage créeeeeeeeee");
-*/
-
-
-
-
-
-// async filtrageListe_old() {
-		// let completListOfCovoiturages = await this.covoiturageService.recupListeCovoituragesOnServer();
-		// console.log("récupération de la liste OK");
-
-		// if (this.filtrage.filter_VilleArrivee_value !== "") {
-		//   this.disabledFilterVilleArrivee = false;
-		//   let listeFiltree_villeArrivee = completListOfCovoiturages.filter((covoit) => covoit.adresseArrivee === this.filtrage.filter_VilleArrivee_value);
-		//   if (listeFiltree_villeArrivee.length > 0) {
-		//     this.isFoundedVilleArrivee = true;
-		//     this.disabledFilterVilleDepart = false;
-		//     this.disabledFilterDate = true;
-
-		//     if (this.filtrage.filter_VilleDepart_Value !== "") {
-		//       let listeFiltree_villeDepart = completListOfCovoiturages.filter((covoit) => covoit.adresseDepart === this.filtrage.filter_VilleDepart_Value);
-
-		//       if (listeFiltree_villeDepart.length > 0) {
-		//         this.disabledFilterVilleArrivee = true;
-		//         this.isFoundedVilleDepart = true;
-		//         this.disabledFilterDate = false;
-		//         this.listeAafficher = listeFiltree_villeDepart;
-
-		//         if (this.filtrage.filter_Date_value) {
-		//           console.log("présence d'une date")
-		//           console.log(this.filtrage.filter_Date_value);
-		//           this.disabledFilterVilleDepart = true;
-		//           this.disabledFilterVilleArrivee = true;
-
-		//           let listeFiltree_byDate = listeFiltree_villeDepart.filter((covoit) => {
-		//             const dateCovoit = new Date(covoit.dateDepart);
-		//             const dateSouhaitee = new Date(this.filtrage.filter_Date_value);
-		//             if(dateCovoit.getDate() !== dateSouhaitee.getDate()){
-		//               return false;
-		//             }
-		//             if(dateCovoit.getMonth() !== dateSouhaitee.getMonth()){
-		//               return false;
-		//             }
-		//             if(dateCovoit.getMonth() !== dateSouhaitee.getMonth()){
-		//               return false;
-		//             }
-		//             if(dateCovoit.getFullYear() !== dateSouhaitee.getFullYear()){
-		//               return false;
-		//             }
-		//             return true;
-		//           });
-		//           if (listeFiltree_byDate.length > 0) {
-		//            this.isFoundedDate = true;
-		//            this.listeAafficher = listeFiltree_byDate;
-
-		//           }
-		//           else {
-		//             console.log("aucune date trouvée après filtrage");
-		//             this.listeAafficher = listeFiltree_villeDepart;
-		//             this.isFoundedDate = false;
-
-		//           }
-		//         }
-		//         else {
-		//           console.log("aucune date");
-		//           console.log(this.filtrage.filter_Date_value)
-		//           this.listeAafficher = listeFiltree_villeDepart;
-		//         }
-
-
-		//       }
-		//       else {
-		//         this.isFoundedVilleDepart = false;
-		//         this.disabledFilterDate = true;
-		//         this.disabledFilterVilleArrivee = true;
-		//         this.listeAafficher = listeFiltree_villeArrivee;
-		//       }
-		//     }
-		//     else {
-		//       this.listeAafficher = listeFiltree_villeArrivee;
-		//     }
-		//   }
-		//   else {
-		//     this.disabledFilterVilleDepart = true;
-		//     this.disabledFilterDate = true;
-		//     this.listeAafficher = listeFiltree_villeArrivee;
-		//     this.isFoundedVilleArrivee = false;
-		//   }
-		// }
-		// else {
-		//   this.disabledFilterVilleArrivee = false;
-		//   console.log("le champ arrivé est vide");
-		//   this.listeAafficher = completListOfCovoiturages;
-
-	// }
-
-
-
-	// if (this.filtrage.filter_VilleDepart_Value !== "") {
-	//   completListOfCovoiturages = await this.covoiturageService.recupListeCovoituragesOnServer();
-	//   this.listeAafficher = completListOfCovoiturages.filter(covoit => covoit.adresseDepart === this.filtrage.filter_VilleDepart_Value);
-	//   if (this.listeAafficher.length > 0) {
-	//     this.disabledFilterVilleDepart = false;
-	//     this.disabledFilterDate = true;
-	//     if (this.filtrage.filter_VilleArrivee_value !== "") {
-	//       let listeFiltreeParVilleArrivee = this.listeAafficher.filter(covoit => covoit.adresseArrivee === this.filtrage.filter_VilleArrivee_value);
-	//       if (listeFiltreeParVilleArrivee.length > 0) {
-	//         this.disabledFilterVilleDepart = false;
-	//         this.disabledFilterDate = false;
-	//       }
-	//       else {
-	//         this.disabledFilterVilleDepart = true;
-	//         this.disabledFilterDate = true;
-	//       }
-
-	//     }
-	//   }
-	//   else {
-	//     this.disabledFilterVilleDepart = true;
-	//     this.disabledFilterDate = true;
-	//   }
-
-	// }
-	// else {
-	//   this.listeAafficher = await this.covoiturageService.recupListeCovoituragesOnServer();
-	//   this.disabledFilterVilleDepart = true;
-	// }
-
