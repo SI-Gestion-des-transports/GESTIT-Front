@@ -2,6 +2,27 @@ main {
   display: grid;
   grid-template-columns: 1fr 6fr 1fr;
 }
+.list {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+button {
+  margin: 5px;
+}
+
+.inputDate, input {
+  border: black solid 1px;
+  border-radius: 7px;
+  margin: 5px;
+  padding: 5px;
+}
+
+* {
+
+}
+
+
 
 app-reservation-vs-item, app-reservation-vs-form, app-authentification {
   grid-column: 2 / 3;
@@ -48,15 +69,24 @@ app-nav {
   align-items: flex-start;
 }
 
+
+.itemInList {
+  cursor: pointer;
+  border: black solid 1px;
+  border-radius: 7px;
+  padding: 5px;
+  margin: 5px;
+}
+
 .action-btn {
   padding: 5px;
   margin: 5px;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  align-content: center;
-  align-items: center
+  background-color: gray;
 }
+
 
 .list {
   display: grid;
@@ -102,16 +132,20 @@ tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-button {
-  margin: 5px;
-}
 
 .inputDate, input, select {
   border: black solid 1px;
   border-radius: 7px;
   margin: 5px;
   padding: 5px;
+  margin: 5px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center
 }
+
 
 * {
 }
@@ -143,8 +177,10 @@ a {
   color: grey;
 }
 
+
 .carousel-model-text {
   text-align: center;
   color: black;
   margin-bottom: 10px;
 }
+
