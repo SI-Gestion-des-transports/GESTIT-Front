@@ -36,6 +36,13 @@ import {
 import { CovoiturageConformationComponent } from "./components/covoiturages/covoiturage-conformation/covoiturage-conformation.component";
 import {VehiculePersoComponent} from "./components/vehicule-perso/vehicule-perso.component";
 import {
+  VehiculePersoListComponent
+} from "./components/vehicule-perso/vehicule-perso-list/vehicule-perso-list.component";
+import {VehiculePersoAddComponent} from "./components/vehicule-perso/vehicule-perso-add/vehicule-perso-add.component";
+import {
+  VehiculePersoModifyComponent
+} from "./components/vehicule-perso/vehicule-perso-modify/vehicule-perso-modify.component";
+import {
   CovoituragesOrganiseModifyComponent
 } from "./components/covoiturages/covoiturages-organise/covoiturages-organise-modify/covoiturages-organise-modify.component";
 import { ConfirmationComponent } from './components/covoiturages/confirmation/confirmation.component';
@@ -45,7 +52,7 @@ const routes: Routes = [
   {path:'covoituragesConfirmReservation', component: CovoiturageConformationComponent},
   {path:'covoiturages/:id', component:SingleCovoiturageComponent},   //Route avec paramètre dynamique
   {path:'covoiturages', component: CovoiturageListComponent},
-  
+
   {path:'covoituragesOrganises-list', component: CovoituragesOrganiseListComponent},
   {path:'covoituragesOrganises', component: CovoituragesOrganiseComponent,
     children: [
@@ -68,7 +75,13 @@ const routes: Routes = [
 
   {path:'utilisateurs', component:UtilisateursComponent},
   {path:'login', component:AuthentificationComponent},
-  {path:'vehiculeperso', component:VehiculePersoComponent},
+  {path:'vehiculeperso', component:VehiculePersoComponent,
+  children:[
+    {path: "list",component: VehiculePersoListComponent},
+    {path: "add",component: VehiculePersoAddComponent},
+    {path: "modify/:id",component: VehiculePersoModifyComponent}
+  ]
+  },
   {
     path: 'vehiculeService', component: VehiculeServiceComponent,
     children: [
