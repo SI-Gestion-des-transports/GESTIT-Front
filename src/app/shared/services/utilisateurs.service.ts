@@ -13,9 +13,10 @@ export class UtilisateursService implements OnInit, OnChanges{
 
   headers = new HttpHeaders();
 
-
+  private fakeCurrentUserSource = new BehaviorSubject<Utilisateur>({});
   private currentUserSource = new BehaviorSubject<Utilisateur>({});
   private currentUserIdSource = new BehaviorSubject<number>(undefined);
+  fakeCurrentUser$ = this.fakeCurrentUserSource.asObservable();
   currentUser$ = this.currentUserSource.asObservable();
   currentIdUser$ = this.currentUserIdSource.asObservable();
 
@@ -81,7 +82,12 @@ export class UtilisateursService implements OnInit, OnChanges{
   updateCurrentUserId(userId: number): void {
     console.log("UserSrv — updateCurrentUserId / CurrentUserId : " + userId);
     this.currentUserIdSource.next(userId);
+    console.log("UserSrv — updateCurrentUserId / CurrentUserId : " + userId);
     this.updateCurrentUser();
+  }
+
+  updateFakeCurrentUser(user: Utilisateur){
+    this.fakeCurrentUserSource.next(user);
   }
 
 }
