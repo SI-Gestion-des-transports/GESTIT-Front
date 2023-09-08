@@ -1,0 +1,23 @@
+.adresseDepart {
+  display: flex ;
+  flex-direction: row;
+  margin-bottom: 2rem;
+}
+
+.adresseArrivee {
+  display: flex ;
+  flex-direction: row;
+  margin-bottom: 2rem;
+}
+
+.trajet {
+  display: flex ;
+  flex-direction: row;
+  margin-bottom: 2rem;
+  /*justify-content: space-around;*/
+}
+
+.trajetMargin {
+  margin-right: 25px;
+}
+
