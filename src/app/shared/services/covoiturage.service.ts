@@ -16,11 +16,12 @@ import {VehiculePerso} from "../models/vehicule.perso";
 export class CovoiturageService {
   user!: Utilisateur;
 
+
+
   private _baseCovoitUrl = environment.urlApi.covoiturages;
+  private _realBaseUrl = environment.urlApi.covoituragesReserves;
 
   private _listOfAllCovoiturages$!: Observable<Covoiturage[]>;
-
-  private _realBaseUrl = environment.urlApi.covoituragesReserves;
 
   private adresseDepartSource = new BehaviorSubject<Adresse>({});
   private adresseArriveeSource = new BehaviorSubject<Adresse>({});
@@ -87,7 +88,7 @@ export class CovoiturageService {
 
   getFilteredbyUsersCovoit(idUtilisateur: number): Observable<Covoiturage[]> {
     return this._http.get<Covoiturage[]>(this._baseCovoitUrl)
-      .pipe(map(res => res.filter(res => res.organisateur?.id === idUtilisateur)));
+      .pipe(map(res => res.filter(res => res.organisateurId === idUtilisateur)));
   }
 
   createArrayFrom(newArray: Covoiturage[], oldArray: Covoiturage[]): void {

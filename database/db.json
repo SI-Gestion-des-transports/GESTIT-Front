@@ -87,22 +87,11 @@
   "covoiturages": [
     {
       "organisateur": {
-        "nom": "aazzaz",
-        "motDePasse": "eztqg",
-        "email": "gdfhsh",
-        "id": 7
+        "nom": "Fabre",
+        "motDePasse": "45678",
+        "email": "j-pFabre487@bbox.fr",
+        "id": 101
       },
-      "dureeTrajet": "15:45",
-      "distanceKm": 122,
-      "dateDepart": "2023-09-21T09:46",
-      "adresseDepart": {
-        "numero": 7676,
-        "voie": "voie de Montpellier",
-        "codePostal": 34000,
-        "commune": "Montpellier"
-      },
-      "id": 100,
-      "nombrePlacesRestantes": 2,
       "dureeTrajet": 300,
       "distanceKm": 444,
       "dateDepart": "2023-11-12T10:24",
@@ -112,17 +101,13 @@
         "voie": "Rue de la moutarde",
         "commune": "Valence"
       },
+      "id": 100,
+      "nombrePlacesRestantes": 2,
       "adresseArrivee": {
         "numero": 41,
         "voie": "impasse des bateaux",
         "commune": "Vezay-en-brie",
         "codePostal": 78000
-      },
-      "organisateur": {
-        "nom": "Fabre",
-        "motDePasse": "45678",
-        "email": "j-pFabre487@bbox.fr",
-        "id": 101
       },
       "passagers": [
         {
@@ -423,6 +408,43 @@
         "commune": "ZGGTT"
       },
       "id": 25
+    },
+    {
+      "dureeTrajet": "03:33",
+      "distanceKm": 333333,
+      "dateDepart": "2023-09-03T13:23",
+      "adresseDepart": {
+        "numero": 1234,
+        "voie": "AZER",
+        "codePostal": 234,
+        "commune": "AZERTYUIOP"
+      },
+      "adresseArrivee": {
+        "numero": 54321,
+        "voie": "TREZA",
+        "codePostal": 4321,
+        "commune": "OIUYTREZA"
+      },
+      "id": 101
+    },
+    {
+      "dureeTrajet": "22:22",
+      "distanceKm": 222222222,
+      "dateDepart": "2023-09-02T22:22",
+      "organisateurId": 7,
+      "adresseDepart": {
+        "numero": 123456789,
+        "voie": "AZERTYUI",
+        "codePostal": 123456789,
+        "commune": "AZERTYUI"
+      },
+      "adresseArrivee": {
+        "numero": 87654321,
+        "voie": "OIUYTREZA",
+        "codePostal": 987654321,
+        "commune": "OIUYTREZA"
+      },
+      "id": 102
     }
   ]
 }
