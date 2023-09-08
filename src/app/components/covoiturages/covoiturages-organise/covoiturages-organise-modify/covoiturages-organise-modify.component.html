@@ -1,12 +1,10 @@
-
-
 <form class="form">
   <div>
     <p>Adresse de départ :</p>
     <label for="numeroD"> Numéro : </label>
     <input
       type="number"
-      name="numero"
+      name="adresseDepart.numero"
       id="numeroD"
       [(ngModel)]="adresseDepart.numero"
       placeholder="{{adresseDepart.numero}}"
@@ -14,13 +12,13 @@
 
 
     <label for="voieD"> Voie : </label>
-    <input type="text" name="voie" id="voieD" [(ngModel)]="adresseDepart.voie" placeholder="{{adresseDepart.voie}}"/>
+    <input type="text" name="adresseDepart.voie" id="voieD" [(ngModel)]="adresseDepart.voie" placeholder="{{adresseDepart.voie}}"/>
 
 
     <label for="codePostalD"> Code Postal : </label>
     <input
       type="number"
-      name="codePostal"
+      name="adresseDepart.codePostal"
       id="codePostalD"
       [(ngModel)]="adresseDepart.codePostal"
       placeholder="{{adresseDepart.codePostal}}"
@@ -30,7 +28,7 @@
     <label for="communeD"> Commune : </label>
     <input
       type="text"
-      name="commune"
+      name="adresseDepart.commune"
       id="communeD"
       [(ngModel)]="adresseDepart.commune"
       placeholder="{{adresseDepart.commune}}"
@@ -42,21 +40,21 @@
     <label for="numeroA"> Numéro : </label>
     <input
       type="number"
-      name="numero"
+      name="adresseArrivee.numero"
       id="numeroA"
       [(ngModel)]="adresseArrivee.numero"
     />
 
 
     <label for="voieA"> Voie : </label>
-    <input type="text" name="voie" id="voieA" [(ngModel)]="adresseArrivee.voie" />
+    <input type="text" name="adresseArrivee.voie" id="voieA" [(ngModel)]="adresseArrivee.voie" />
 
 
 
     <label for="codePostalA"> Code Postal : </label>
     <input
       type="number"
-      name="codePostal"
+      name="adresseArrivee.codePostal"
       id="codePostalA"
       [(ngModel)]="adresseArrivee.codePostal"
     />
@@ -65,7 +63,7 @@
     <label for="communeA"> Commune : </label>
     <input
       type="text"
-      name="commune"
+      name="adresseArrivee.commune"
       id="communeA"
       [(ngModel)]="adresseArrivee.commune"
     />
