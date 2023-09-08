@@ -1,5 +1,5 @@
 
-<!--<app-utilisateurs></app-utilisateurs>-->
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 <div class="list">
   <div class="buttonOfList">
     <button type="button"
@@ -44,6 +44,7 @@
         </td>
       </tr>
     </table>
+
   </div>
 </div>
 
