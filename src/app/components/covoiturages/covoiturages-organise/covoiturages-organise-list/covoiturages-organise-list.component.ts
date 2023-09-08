@@ -100,7 +100,7 @@ export class CovoituragesOrganiseListComponent {
     this.covoitOrg = covoitOrgToEdit;
     this._covoitOrgService.updateCurrentCovoitOrg(covoitOrgToEdit);
     //this._covoitOrgService.updateCovoitOrg(covoitOrgToEdit);
-    this._router.navigateByUrl('covoituragesOrganises/form');
+    this._router.navigateByUrl('covoituragesOrganises/modify/:id');
     console.log("covoitOrgToEdit numero : ",covoitOrgToEdit.adresseArrivee.numero)
     console.log("covoitOrgToEdit commune : ",covoitOrgToEdit.adresseArrivee.commune)
     console.log("covoitOrg numero : ",this.covoitOrg.adresseArrivee.numero)

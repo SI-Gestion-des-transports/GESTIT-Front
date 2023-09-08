@@ -34,6 +34,9 @@ import {
   CovoituragesOrganiseFormComponent
 } from "./components/covoiturages/covoiturages-organise/covoiturages-organise-form/covoiturages-organise-form.component";
 import {VehiculePersoComponent} from "./components/vehicule-perso/vehicule-perso.component";
+import {
+  CovoituragesOrganiseModifyComponent
+} from "./components/covoiturages/covoiturages-organise/covoiturages-organise-modify/covoiturages-organise-modify.component";
 
 
 const routes: Routes = [
@@ -43,7 +46,8 @@ const routes: Routes = [
   {path:'covoituragesOrganises', component: CovoituragesOrganiseComponent,
     children: [
       {path:'list', component: CovoituragesOrganiseListComponent},
-      {path:'form', component: CovoituragesOrganiseFormComponent}
+      {path:'form', component: CovoituragesOrganiseFormComponent},
+      {path:'modify/:id', component: CovoituragesOrganiseModifyComponent}
     ]},
   {path:'', component:LandingPageComponent},
 
