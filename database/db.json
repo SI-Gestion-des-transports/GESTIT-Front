@@ -33,24 +33,16 @@
   ],
   "reservationsvs": [
     {
-      "dateHeureDepart": "2023-09-13T14:57:00",
-      "dateHeureRetour": "2023-09-14T14:57:00",
+      "dateHeureDepart": "2023-09-14T17:27:00",
+      "dateHeureRetour": "2023-09-15T17:27:00",
       "userId": 1,
-      "id": 1,
-      "vehiculeServiceId": 3
+      "id": 1
     },
     {
-      "dateHeureDepart": "2023-09-14T15:02:00",
-      "dateHeureRetour": "2023-09-15T15:03:00",
+      "dateHeureDepart": "2023-09-15T17:39:00",
+      "dateHeureRetour": "2023-09-16T17:39:00",
       "userId": 1,
-      "id": 2,
-      "vehiculeServiceId": 1
-    },
-    {
-      "vehiculeServiceId": 2,
-      "dateHeureDepart": "2023-10-01T20:38:00",
-      "dateHeureRetour": "2023-10-08T15:38:00",
-      "id": 3
+      "id": 2
     }
   ],
   "covoiturages": [
