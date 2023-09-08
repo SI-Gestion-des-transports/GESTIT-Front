@@ -39,6 +39,8 @@ import { AdressesComponent } from './components/adresses/adresses.component';
 import { CovoituragesOrganiseListComponent } from './components/covoiturages/covoiturages-organise/covoiturages-organise-list/covoiturages-organise-list.component';
 import { CovoituragesOrganiseFormComponent } from './components/covoiturages/covoiturages-organise/covoiturages-organise-form/covoiturages-organise-form.component';
 import { VehiculePersoComponent } from './components/vehicule-perso/vehicule-perso.component';
+import { CovoiturageConformationComponent } from './components/covoiturages/covoiturage-conformation/covoiturage-conformation.component';
+import { ConfirmationComponent } from './components/covoiturages/confirmation/confirmation.component';
 
 
 @NgModule({
@@ -74,7 +76,9 @@ import { VehiculePersoComponent } from './components/vehicule-perso/vehicule-per
     AdressesComponent,
     CovoituragesOrganiseListComponent,
     CovoituragesOrganiseFormComponent,
-    VehiculePersoComponent
+    VehiculePersoComponent,
+    CovoiturageConformationComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,

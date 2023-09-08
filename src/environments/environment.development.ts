@@ -4,6 +4,7 @@ export const environment = {
 
     users:'http://localhost:3000/users',
     covoiturages: 'http://localhost:3000/covoiturages',
+    covoiturage_reservationOK: 'http://localhost:3000/covoiturages/reservationEffectuee',
     reservationsvs:'http://localhost:3000/reservationsvs',
     adresses: 'http://localhost:3000/adresses',
     vehiculeperso: 'http://localhost:3000/vehiculeperso',

@@ -33,12 +33,17 @@ import {
 import {
   CovoituragesOrganiseFormComponent
 } from "./components/covoiturages/covoiturages-organise/covoiturages-organise-form/covoiturages-organise-form.component";
+import { CovoiturageConformationComponent } from "./components/covoiturages/covoiturage-conformation/covoiturage-conformation.component";
 import {VehiculePersoComponent} from "./components/vehicule-perso/vehicule-perso.component";
+import { ConfirmationComponent } from './components/covoiturages/confirmation/confirmation.component';
+
 
 
 const routes: Routes = [
+  {path:'covoituragesConfirmReservation', component: CovoiturageConformationComponent},
   {path:'covoiturages/:id', component:SingleCovoiturageComponent},   //Route avec paramètre dynamique
   {path:'covoiturages', component: CovoiturageListComponent},
+  
   {path:'covoituragesOrganises-list', component: CovoituragesOrganiseListComponent},
   {path:'covoituragesOrganises', component: CovoituragesOrganiseComponent,
     children: [
