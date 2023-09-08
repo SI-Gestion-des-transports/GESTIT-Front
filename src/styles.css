@@ -84,7 +84,6 @@ app-nav {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  background-color: gray;
 }
 
 

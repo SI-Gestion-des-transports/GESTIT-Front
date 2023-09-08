@@ -1,12 +1,16 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
+import {BehaviorSubject, Subscription} from "rxjs";
+import {AuthentificationService} from "../../shared/services/authentification.service";
+import {HttpHeaders} from "@angular/common/http";
+import {UtilisateursService} from "../../shared/services/utilisateurs.service";
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent {
+export class NavComponent implements OnInit {
 
   covoiturageChoicies = [
     {
@@ -62,7 +66,53 @@ export class NavComponent {
     }
   ]
 
-  constructor(private router: Router) { }
+
+
+
+  // Données partagées : subscribe from services
+  loggedBtn: boolean = false;
+  currentUserId: number = null;
+
+
+  private _subscription = new Subscription();
+  constructor(private router: Router,
+              private _utilisateurService: UtilisateursService,
+              private _authService: AuthentificationService)
+  { }
+
+  ngOnInit(): void {
+    this._subscription.add(
+      this._utilisateurService.currentIdUser$
+        .subscribe(data => {
+          this.currentUserId = data;
+        })
+    );
+    this._subscription.add(
+      this._authService.loggedBtn$.subscribe(data =>{
+        this.loggedBtn = data;
+      })
+    )
+    this.ngOnChanges();
+  }
+
+  ngOnChanges(){
+    if(this.currentUserId != null){
+      console.log("NavComp — ngOnChanges / this.currentUserId : ",this.currentUserId);
+      console.log("NavComp — ngOnChanges / loggedBtn : ",this.loggedBtn);
+      this._authService.updateLoggedBtn(true);
+      console.log("NavComp — ngOnChanges / loggedBtn : ",this.loggedBtn);
+    }
+    if (this.currentUserId == null){
+      console.log("NavComp — ngOnChanges / this.currentUserId : ",this.currentUserId);
+      console.log("NavComp — ngOnChanges / loggedBtn : ",this.loggedBtn);
+      this._authService.updateLoggedBtn(false);
+      console.log("NavComp — ngOnChanges / loggedBtn : ",this.loggedBtn);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.unsubscribe();
+  }
 
   getCovoiturageChoice(event: any) {
     switch (event.target.value) {
@@ -130,6 +180,18 @@ export class NavComponent {
 
   login(){
     this.router.navigateByUrl('login');
+  }
+
+  logout() {
+    this._authService.logout();
+    this.router.navigateByUrl('')
+    this._authService.updateHeaders({});
+    console.log("NavComp — logout / currentUserId : ", this.currentUserId);
+    this._utilisateurService.updateCurrentUserId(null);
+    console.log("NavComp — logout / currentUserId : ", this.currentUserId);
+    console.log("NavComp — logout / loggedBtn : ",this.loggedBtn);
+    this._authService.updateLoggedBtn(false);
+    console.log("NavComp — logout / loggedBtn : ",this.loggedBtn);
   }
 
 

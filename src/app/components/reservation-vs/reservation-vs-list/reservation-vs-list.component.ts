@@ -2,10 +2,11 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Utilisateur} from "../../../shared/models/utilisateur";
 import {ReservationVs} from "../../../shared/models/reservation.vs";
 import {ReservationVsService} from "../../../shared/services/reservation.vs.service";
-import {Subscription} from "rxjs";
+import {forkJoin, Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {VehiculeService} from "../../../shared/models/vehicule.service";
 import {UtilisateursService} from "../../../shared/services/utilisateurs.service";
+import {VehiculeServiceService} from "../../../shared/services/vehicule-service.service";
 
 @Component({
   selector: 'app-reservation-vs-list',
@@ -27,15 +28,18 @@ export class ReservationVsListComponent implements OnInit{
   pastReservationsVsByUser: ReservationVs [] = [];
   currentUser: Utilisateur = {};
   currentVs: VehiculeService = {};
+  vehiculesSrv: VehiculeService [] = [];
   currentReservationVs: ReservationVs = {};
   editedReservationVs: ReservationVs = {};
   modifBtn!: boolean;
 
   upcompingReservations : boolean = true;
+  mergedArray = [];
 
 
   private _subscription = new Subscription();
   constructor(private _reservationVsService:ReservationVsService,
+              private _vehiculeSrvService: VehiculeServiceService,
               private _utilisateurService: UtilisateursService,
               private _router: Router) {
   }
@@ -78,6 +82,12 @@ export class ReservationVsListComponent implements OnInit{
           })
         );
     this._subscription.add(
+      this._vehiculeSrvService.vehiculesSrv$
+        .subscribe(data => {
+          this.vehiculesSrv = data
+        })
+    );
+    this._subscription.add(
       this._reservationVsService.currentReservationVs$
         .subscribe(data => {
           this.currentReservationVs = data;
@@ -99,18 +109,31 @@ export class ReservationVsListComponent implements OnInit{
   }
 
   ngOnDestroy(): void {
+    console.log("Réservation LIST Destroyed — unsuscribe")
     this._subscription.unsubscribe(); // Se désabonner de tous les observables en une fois
   }
 
   private _init(){
     console.log("Réservation List — _init");
-    this._reservationVsService
-      .findAll()
-      .subscribe(reservationsvs => {this.allReservationsVs = reservationsvs});
+    forkJoin({
+      reservations: this._reservationVsService.findAll(),
+      vehicules: this._vehiculeSrvService.findAllEnService()
+    }).subscribe(({ reservations, vehicules }) => {
+      console.log("Réservation List — forkJoin");
+      console.log("Réservations :", this.allReservationsVs);
+      this.allReservationsVs = reservations;
+      console.log("Réservations :", this.allReservationsVs);
+      console.log("Véhicules :", this.vehiculesSrv);
+      this.vehiculesSrv = vehicules;
+      console.log("Véhicules :", this.vehiculesSrv);
+      console.log("MergedArray :", this.mergedArray);
+      this.mergedArray = this.mergeReservationsWithVehicles();
+      console.log("MergedArray :", this.mergedArray);
+    });
 
     this.upcompingReservations = true;
     this._reservationVsService.findUpcomingByUserId(this.currentUser.id).subscribe(upcomingRes => this.upcomingReservationsVsByUser = upcomingRes)
-
+    this.mergedArray = this.mergeReservationsWithVehicles();
   }
 
   getPasReservations(){
@@ -144,6 +167,20 @@ export class ReservationVsListComponent implements OnInit{
     console.log("Réservation List — deleteReservationVs");
     this._router.navigateByUrl('reservationsvs/item');
     this._reservationVsService.updateCurrentReservationVs(reservationToDelete);
+  }
+
+  mergeReservationsWithVehicles(): any[] {
+    return this.allReservationsVs.map(reservation => {
+      const vehicule = this.vehiculesSrv.find(veh => veh.id === reservation.vehiculeServiceId);
+      if (!vehicule) {
+        console.warn(`Aucun véhicule trouvé pour vehiculeServiceId: ${reservation.vehiculeServiceId}`);
+        return reservation;
+      }
+      return {
+        ...reservation,
+        ...vehicule
+      };
+    });
   }
 
 }

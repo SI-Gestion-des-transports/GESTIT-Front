@@ -19,6 +19,7 @@ export class UtilisateursService implements OnInit, OnChanges{
   currentUser$ = this.currentUserSource.asObservable();
   currentIdUser$ = this.currentUserIdSource.asObservable();
 
+
   private _baseUrl = environment.urlApi.users;
   private _realBaseUrl = environment.urlApi.utilisateur;
 
@@ -40,7 +41,6 @@ export class UtilisateursService implements OnInit, OnChanges{
 
   ngOnChanges(changes: SimpleChanges) {
     if(this.currentIdUser$){
-
     }
   }
 

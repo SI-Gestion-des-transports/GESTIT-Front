@@ -53,5 +53,17 @@
   <a routerLink="utilisateurs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Utilisateurs</a>
 </nav>
 <a routerLink="login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-  <button type="button" class="btn btn-primary" (click)="login()"> Connexion </button>
+  <button type="button"
+          class="btn"
+          [class.btn-outline-primary]="loggedBtn"
+          [class.btn-primary]="!loggedBtn"
+          (click)="loggedBtn ? logout() : login()">
+          {{ loggedBtn ?"Déconnexion" :"Connexion"}}
+     </button>
 </a>
+
+          <!--
+          [class.btn-outline-primary]="loggedBtn"
+          [class.btn-primary]="!loggedBtn"
+          {{ loggedBtn ?"Déco" :"Co"}}
+          -->

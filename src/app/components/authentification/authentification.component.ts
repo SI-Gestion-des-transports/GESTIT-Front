@@ -22,7 +22,11 @@ export class AuthentificationComponent implements OnInit {
   password: string | undefined;
   userId: number = undefined;
 
+
+  // Données partagées : subscribe from services
   headers = new HttpHeaders();
+  currentUserId: number = null;
+  loggedBtn: boolean = false;
 
   private _subscription = new Subscription();
 
@@ -34,6 +38,7 @@ export class AuthentificationComponent implements OnInit {
   seConnecter() {
     console.log(this.unLoggedUser.email);
     console.log(this.unLoggedUser);
+
     this._authService.login(this.unLoggedUser).subscribe({
       next:data=>{
         console.log(data.status);
@@ -57,16 +62,20 @@ export class AuthentificationComponent implements OnInit {
 
           this.userId = data['userId'];
           this._authService.updateHeaders(data);
+          this._authService.updateLoggedBtn(true);
+          console.log("AuthComp — seConnecter / loggedBtn : ",this.loggedBtn);
+          this._router.navigateByUrl('');
 
       },
       //show error username or password is incorrect
       error: e=>{
         console.log("error");
       }
-
     });
     this.unLoggedUser = {};
   }
+
+
 
   createAccount() {
     this._router.navigateByUrl('utilisateurs');
@@ -74,7 +83,22 @@ export class AuthentificationComponent implements OnInit {
 
   ngOnInit(): void {
     this._subscription.add(
-      this._authService.headers$.subscribe(data => this.headers = data)
+      this._authService.headers$
+        .subscribe(data => {
+          this.headers = data;
+        })
+    );
+    this._subscription.add(
+      this._utilisateurService.currentIdUser$
+        .subscribe(data => {
+          this.currentUserId = data;
+        })
+    );
+    this._subscription.add(
+      this._authService.loggedBtn$
+        .subscribe(data => {
+          this.loggedBtn = data;
+        })
     );
   }
 
