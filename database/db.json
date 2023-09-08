@@ -434,17 +434,112 @@
       "organisateurId": 7,
       "adresseDepart": {
         "numero": 123456789,
-        "voie": "AZERTYUI",
+        "voie": "voie de départ",
         "codePostal": 123456789,
-        "commune": "AZERTYUI"
+        "commune": "commune de départ"
       },
       "adresseArrivee": {
         "numero": 87654321,
-        "voie": "OIUYTREZA",
+        "voie": "voie d'arrivée",
         "codePostal": 987654321,
         "commune": "OIUYTREZA"
       },
       "id": 102
+    },
+    {
+      "dureeTrajet": "16:35",
+      "distanceKm": 111,
+      "dateDepart": "2023-09-12T12:35",
+      "organisateurId": 3,
+      "adresseDepart": {
+        "numero": 2222,
+        "voie": "AAAA",
+        "codePostal": 3333,
+        "commune": "BBBBB"
+      },
+      "adresseArrivee": {
+        "numero": 4444,
+        "voie": "CCCC",
+        "codePostal": 5555,
+        "commune": "DDDD"
+      },
+      "id": 103
+    },
+    {
+      "dureeTrajet": "16:41",
+      "distanceKm": 111,
+      "dateDepart": "2023-09-26T12:42",
+      "organisateurId": 3,
+      "adresseDepart": {
+        "numero": 999,
+        "voie": "NNN",
+        "codePostal": 7777,
+        "commune": "MMMM"
+      },
+      "adresseArrivee": {
+        "numero": 888,
+        "voie": "YYY",
+        "codePostal": 444,
+        "commune": "ZZZZ"
+      },
+      "id": 104
+    },
+    {
+      "organisateurId": 3,
+      "dureeTrajet": "16:57",
+      "distanceKm": 11,
+      "dateDepart": "2023-10-03T12:57",
+      "adresseDepart": {
+        "numero": 12345,
+        "codePostal": 23456,
+        "voie": "AZERTY",
+        "commune": "ZERTY"
+      },
+      "adresseArrivee": {
+        "numero": 345678,
+        "voie": "RTYUI",
+        "codePostal": 6789,
+        "commune": "DFGHJ"
+      },
+      "id": 105
+    },
+    {
+      "organisateurId": 3,
+      "dureeTrajet": "12:03",
+      "distanceKm": 2,
+      "dateDepart": "2023-09-26T12:59",
+      "adresseDepart": {
+        "numero": 999,
+        "codePostal": 44,
+        "voie": "BBBBBBBBB",
+        "commune": "Q"
+      },
+      "adresseArrivee": {
+        "numero": 888,
+        "codePostal": 666,
+        "voie": "X",
+        "commune": "Z"
+      },
+      "id": 106
+    },
+    {
+      "organisateurId": 7,
+      "dureeTrajet": "18:01",
+      "distanceKm": 1,
+      "dateDepart": "2023-09-20T13:02",
+      "adresseDepart": {
+        "numero": 111,
+        "voie": "yoyoyoy",
+        "codePostal": 222,
+        "commune": "rurruru"
+      },
+      "adresseArrivee": {
+        "numero": 33,
+        "voie": "fjfjfj",
+        "codePostal": 66,
+        "commune": "eeeettee"
+      },
+      "id": 107
     }
   ]
 }
