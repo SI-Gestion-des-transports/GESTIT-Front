@@ -31,6 +31,11 @@ export class CovoiturageService {
   private modifBtnSource = new BehaviorSubject<boolean>(true);
 
 
+
+
+
+
+  covoiturage$ = this.covoitOrgSource.asObservable() ;
   adresseDepart$ = this.adresseDepartSource.asObservable();
   adresseArrivee$ = this.adresseArriveeSource.asObservable();
   currentCovoiturage$ = this.currentCovoitOrgSource.asObservable();
@@ -38,8 +43,17 @@ export class CovoiturageService {
   vehiculesPersoCurrentUser$ = this.vehiculesPersoCurrentUserSource.asObservable();
 
 
+/*  covoit:Covoiturage = {
+    adresseDepart: {},
+    adresseArrivee: {},
+  };
+  adresseDepart = this.adresseDepartSource.value;
+  adresseArrivee = this.adresseArriveeSource.value;*/
+
   ngOnInit(): void {
     this._listOfAllCovoiturages$.subscribe(value => console.log(value));
+
+    //this.updateCovoitOrg(this.covoit);
   }
 
   constructor(

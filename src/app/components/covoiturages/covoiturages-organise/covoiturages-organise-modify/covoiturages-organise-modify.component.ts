@@ -5,14 +5,14 @@ import {Utilisateur} from "../../../../shared/models/utilisateur";
 import {VehiculePerso} from "../../../../shared/models/vehicule.perso";
 import {Subscription} from "rxjs";
 import {CovoiturageService} from "../../../../shared/services/covoiturage.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-covoiturages-organise-form',
-  templateUrl: './covoiturages-organise-form.component.html',
-  styleUrls: ['./covoiturages-organise-form.component.css']
+  selector: 'app-covoiturages-organise-modify',
+  templateUrl: './covoiturages-organise-modify.component.html',
+  styleUrls: ['./covoiturages-organise-modify.component.css']
 })
-export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
+export class CovoituragesOrganiseModifyComponent implements OnInit, OnChanges {
 
   /* @Input()
   organisateur: Utilisateur = {};*/
@@ -69,7 +69,6 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
         })
     );
     this._init();
-    this.reInitCovoitOrg()
 
   }
 
@@ -92,11 +91,11 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
     if (this.currentUser.nom != undefined) {
       console.log("_init")
       console.log("User : " + this.currentUser.nom)
-/*      this._covoitOrgService
-        .getCovoituragesByOrganisateur(this.currentUser)
-        .subscribe((covoitOrgsCreated) => {
-          this.covoitOrgs = covoitOrgsCreated;
-        });*/
+      /*      this._covoitOrgService
+              .getCovoituragesByOrganisateur(this.currentUser)
+              .subscribe((covoitOrgsCreated) => {
+                this.covoitOrgs = covoitOrgsCreated;
+              });*/
       console.log("currentCovoitOrg : ", this.currentCovoitOrg.adresseDepart.commune)
       console.log("currentCovoitOrg : ", this.currentCovoitOrg.adresseDepart.numero)
       this.adresseDepart = this.currentCovoitOrg.adresseDepart;
@@ -126,19 +125,19 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
 
 
   onSubmit(){
-    if(!this.currentCovoitOrg.id){
-    this.covoitOrg.organisateur = this.currentUser;
-    this.covoitOrg.adresseDepart = this.adresseDepart;
-    this.covoitOrg.adresseArrivee = this.adresseArrivee;
-    console.log(this.adresseDepart.codePostal);
-    console.log(this.covoitOrg.dureeTrajet);
-    console.log(this.covoitOrg.distanceKm);
+    if(this.currentCovoitOrg.id){
+ /*     this.covoitOrg.organisateur = this.currentUser;
+      this.covoitOrg.adresseDepart = this.adresseDepart;
+      this.covoitOrg.adresseArrivee = this.adresseArrivee;
+      console.log(this.adresseDepart.codePostal);
+      console.log(this.covoitOrg.dureeTrajet);
+      console.log(this.covoitOrg.distanceKm);
       this._covoitOrgService.create(this.covoitOrg).subscribe(() => {
         console.log("Covoit created");
         this.reInitCovoitOrg();
         this._router.navigateByUrl('covoituragesOrganises-list');
       });
-    } /*else {
+    } else {*/
       this.covoitOrg.organisateur = this.currentUser;
       this.covoitOrg.adresseDepart = this.adresseDepart;
       this.covoitOrg.adresseArrivee = this.adresseArrivee;
@@ -147,7 +146,7 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
         this.reInitCovoitOrg();
         this._router.navigateByUrl('covoituragesOrganises-list');
       });
-    }*/
+    }
 
   }
 
