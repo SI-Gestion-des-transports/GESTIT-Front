@@ -19,6 +19,7 @@ export class AuthentificationService {
 
   headers$ = this.headersSource.asObservable();
 
+  headers = new HttpHeaders();
   constructor(private _http: HttpClient) {
   }
 
@@ -27,11 +28,11 @@ export class AuthentificationService {
     return this._http.post(this._baseUrl, tryLog);
   }
 
-  updateHeaders(data: HttpHeaders){
-    data.keys().forEach(k =>
-    console.log("FOR EACH K" + data.get(k))
-    )
-    console.log(data.keys());
-    this.headersSource.next(data);
+  updateHeaders(data: Object){
+    Object.keys(data).forEach(key => {
+      console.log("Header name:", key, "Values:", data[key]);
+      this.headers = this.headers.set(key, data[key]);
+    });
+    this.headersSource.next(this.headers);
   }
 }

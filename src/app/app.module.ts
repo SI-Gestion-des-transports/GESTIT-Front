@@ -40,6 +40,8 @@ import { CovoituragesOrganiseListComponent } from './components/covoiturages/cov
 import { CovoituragesOrganiseFormComponent } from './components/covoiturages/covoiturages-organise/covoiturages-organise-form/covoiturages-organise-form.component';
 import { VehiculePersoComponent } from './components/vehicule-perso/vehicule-perso.component';
 import { CovoituragesOrganiseModifyComponent } from './components/covoiturages/covoiturages-organise/covoiturages-organise-modify/covoiturages-organise-modify.component';
+import { CovoiturageConformationComponent } from './components/covoiturages/covoiturage-conformation/covoiturage-conformation.component';
+import { ConfirmationComponent } from './components/covoiturages/confirmation/confirmation.component';
 
 
 @NgModule({
@@ -76,7 +78,9 @@ import { CovoituragesOrganiseModifyComponent } from './components/covoiturages/c
     CovoituragesOrganiseListComponent,
     CovoituragesOrganiseFormComponent,
     VehiculePersoComponent,
-    CovoituragesOrganiseModifyComponent
+    CovoituragesOrganiseModifyComponent,
+    CovoiturageConformationComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,

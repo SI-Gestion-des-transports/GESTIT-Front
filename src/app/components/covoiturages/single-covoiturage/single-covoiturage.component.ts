@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
 import { CovoiturageService } from 'src/app/shared/services/covoiturage.service';
+import { environment } from 'src/environments/environment.development';
 
 
 @Component({
@@ -14,10 +15,12 @@ export class SingleCovoiturageComponent {
 
   title!: string;
   showDetailsInProgress!: boolean;
-
   covoiturage$!: Observable<Covoiturage>;
+  
+
 
   constructor(private covoiturageService: CovoiturageService,
+    private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -28,6 +31,9 @@ export class SingleCovoiturageComponent {
     une chaine de caractères qui contient des nombres en numberAttribute. */
     const covoiturageId = +this.route.snapshot.params['id'];
     this.covoiturage$ = this.covoiturageService.getCovoiturageById(covoiturageId);
+    this.covoiturage$.forEach((covoit)=>{
+      covoit.nombrePlacesRestantes = covoit.vehiculePerso.nombreDePlaceDisponibles - covoit.passagers.length;
+    })
   }
 
   onShowDetails() {
@@ -36,5 +42,16 @@ export class SingleCovoiturageComponent {
     else
       throw new Error('Covoiturage not found!');
   }
+
+  onClickAnnuler()
+  {
+    this.router.navigateByUrl('covoiturages');
+  }
+
+  onClickConfirmerParticipation()
+  {
+    this.router.navigateByUrl('covoituragesConfirmReservation');
+  }
+ 
 }
 

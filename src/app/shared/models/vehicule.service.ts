@@ -1,6 +1,6 @@
 export interface VehiculeService {
   id?: number,
-  modele?: number,
+  modele?: string,
   nombreDePlaceDisponibles?: number,
   immatriculation?: string,
   photoURL?: string,
