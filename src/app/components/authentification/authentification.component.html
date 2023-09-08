@@ -3,13 +3,16 @@
   <div class="card" style="width: 18rem;">
     <div class="card-body">
       <p>Email :</p>
-      <input [(ngModel)]="unLoggedUser.email" name="email" type="email" placeholder="email@gestit.fr">
+      <input (focus)="errorLogin=false" [(ngModel)]="unLoggedUser.email" name="email" type="email" placeholder="email@gestit.fr">
       <p>Mot de passe :</p>
-      <input [(ngModel)]="unLoggedUser.motDePasse" name="motDePasse" type="password" placeholder="Password">
+      <input (focus)="errorLogin=false" [(ngModel)]="unLoggedUser.motDePasse" name="motDePasse" type="password" placeholder="Password">
       <br>
+      <div class="container d-flex">
       <input #check="ngModel" name="check" type="checkbox" ngModel> Se souvenir de moi
+      </div>
       <br>
       <button type="submit" class="btn btn-primary" (click)="seConnecter()">Se connecter</button>
+      <p *ngIf="errorLogin" class="mt-2 text-bg-danger">username or password is incorrect</p>
       <hr>
       <a href="#">Nouveau ici ? Créer un compte.</a>
       <br>

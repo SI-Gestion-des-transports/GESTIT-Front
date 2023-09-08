@@ -1,0 +1,49 @@
+<form #modifyF="ngForm" (ngSubmit)="modify(modifyF)">
+  <div class="container col-10 d-flex flex-column align-items-center">
+    <div class="card w-100 bg-warning">
+      <p class="mt-1 mb-1 ms-1">Modifier le véhicule</p>
+    </div>
+    <div class="row col-12 mt-5" >
+      <div class="row col-5 bg-secondary justify-content-center align-items-center"  >
+          photo
+      </div>
+
+      <div class="fixHeigh col-6 " >
+        <input #url="ngModel" class="col-12 mt-3" type="text" placeholder="PhotoURL" name="url" ngModel>
+        <input #immatriculation="ngModel" class="col-12" type="text" [placeholder]="selectedVp.immatriculation"
+               name="immatriculation" ngModel>
+
+        <select #marque="ngModel" (ngModelChange)="marqueSelectChange(marque)" class=" col-12" name="marque" ngModel>
+          <option disabled value="">{{selectedVp.marque}}</option>
+          <option *ngFor="let m of listMarque" [value]="m">{{m}}</option>
+        </select>
+
+        <select #modele="ngModel" class="col-12" name="modele" ngModel>
+          <option disabled value="">{{selectedVp.modele}}</option>
+          <option *ngFor="let m of listModele" [value]="m">{{m}}</option>
+        </select>
+
+
+        <select #place="ngModel" class="col-5" name="place" ngModel>
+          <option disabled value="">{{selectedVp.nombreDePlaceDisponibles}}</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+        </select>
+
+
+      </div>
+    </div>
+
+    <div class="mt-5 ">
+      <button type="submit" class="btn btn-outline-primary">Valider</button>
+      <button (click)="cancel()" class="btn btn-outline-danger">Annuler</button>
+    </div>
+
+  </div>
+
+</form>
