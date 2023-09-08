@@ -80,6 +80,17 @@
         "email": "j-pFabre487@bbox.fr",
         "id": 101
       },
+      "dureeTrajet": "15:45",
+      "distanceKm": 122,
+      "dateDepart": "2023-09-21T09:46",
+      "adresseDepart": {
+        "numero": 7676,
+        "voie": "voie de Montpellier",
+        "codePostal": 34000,
+        "commune": "Montpellier"
+      },
+      "id": 100,
+      "nombrePlacesRestantes": 2,
       "dureeTrajet": 300,
       "distanceKm": 444,
       "dateDepart": "2023-11-12T10:24",
@@ -535,6 +546,7 @@
         "commune": "eeeettee"
       },
       "id": 107
+
     }
   ]
 }
