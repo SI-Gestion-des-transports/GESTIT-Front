@@ -5,5 +5,5 @@ export interface VehiculePerso{
   nombreDePlaceDisponibles?: number,
   immatriculation?: string,
   userId?: number,
-  marque?:string
+
 }
