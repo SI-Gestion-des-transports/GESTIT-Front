@@ -33,23 +33,39 @@ export class AuthentificationService {
   logout() {
     window.localStorage.removeItem(`JWT-TOKEN`);
     console.log("Auth Service — logout");
-    this._http.post(this._baseUrlLogout, {headers: this.headers});
-    this.headers.delete(`JWT-TOKEN`);
+    this._http.post(this._baseUrlLogout, {},{headers: this.headers});
+    this.headers =  this.headers.delete(`JWT-TOKEN`);
     console.log("Auth Service — Header (this.headers) : ", this.headers);
     console.log("Auth Service — updateHeaders");
     this.updateHeaders(this.headers);
   }
 
+  checkToken(headers : HttpHeaders){
+    console.log("Auth Service — checkToken");
+    if(window.localStorage.getItem("JWT-TOKEN") != null) {
+      this.updateHeaders(this.headers);
+    }
+  }
+
   updateHeaders(data: Object){
+    console.log("Auth Service — data : ", data);
+    this.headers = new HttpHeaders({});
     Object.keys(data).forEach(key => {
-      console.log("Auth Service — Header set : name:", key, "Values:", data[key]);
-      this.headers = this.headers.set(key, data[key]);
+      if(data[key] !== null && data[key] !== undefined) {  // Vérification ajoutée ici
+        console.log("Auth Service — Header set : name:", key, "Values:", data[key]);
+        this.headers = this.headers.set(key, data[key]);
+      }
     });
     console.log("Auth Service — Header (this.headers) : ", this.headers);
-    console.log("Auth Service — Header (this.headers JSON) : ", this.headersToJSON(this.headers));
-    let token = window.localStorage.getItem("JWT-TOKEN");
-    this.headers = new HttpHeaders({"JWT-TOKEN": token});
+    this.headersSource.next(this.headersToJSON(this.headers));
     console.log("Auth Service — Header (this.headersSource) : ", this.headersSource.getValue())
+/*    if(window.localStorage.getItem("JWT-TOKEN") != null){
+      let token = window.localStorage.getItem("JWT-TOKEN");
+      console.log("Auth Service — token : ", token)*/
+/*      console.log("Auth Service — Header (this.headers JSON) : ", this.headersToJSON(this.headers));
+      this.headersSource.next(this.headersToJSON(this.headers));
+      */
+/*    }*/
   }
 
   updateLoggedBtn(data){
@@ -59,18 +75,12 @@ export class AuthentificationService {
 
   headersToJSON(headers: HttpHeaders): any {
     console.log("Auth Service — headersToJSON");
-/*    if (headers.has("JWT-TOKEN")){
-      console.log("Auth Service — headersToJSON : headers true");
-      console.log("Auth Service — headersToJSON : headers = ",headers);
       let result = {};
-      headers.keys().forEach(key => {
-        result[key] = headers.get(key);
-      });
-      return result;
-    } else {
-      console.log("Auth Service — headersToJSON : headers undefined");
-      return null;
-    }*/
-    return headers;
+      if(headers) {
+        headers.keys().forEach(key => {
+          result[key] = headers.get(key);
+        });
+        return result;
+      }
   }
 }

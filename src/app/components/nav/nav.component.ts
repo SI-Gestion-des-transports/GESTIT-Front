@@ -185,7 +185,7 @@ export class NavComponent implements OnInit {
     console.log("NavComp — logout");
     this._authService.logout();
     this.router.navigateByUrl('')
-    this._authService.updateHeaders({});
+    this._authService.updateHeaders(new HttpHeaders());
     console.log("NavComp — logout / currentUserId : ", this.currentUserId);
     this._utilisateurService.updateCurrentUserId(null);
     console.log("NavComp — logout / currentUserId : ", this.currentUserId);
