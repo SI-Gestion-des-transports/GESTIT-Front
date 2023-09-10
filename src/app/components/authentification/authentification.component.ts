@@ -44,29 +44,25 @@ export class AuthentificationComponent implements OnInit {
       next: data => {
         console.log(data.status);
 
-        //console.log("AuthComp — seConnecter / login.subs(data['JWT-TOKEN']) : " + data['JWT-TOKEN']);
-        console.log("AuthComp — seConnecter / login.subs(data) : " + data['JWT-TOKEN']);
-        //console.log("AuthComp — seConnecter / login.subs(data['userId']) : " + data['userId']);
-        this.userId = data['userId'];
-        console.log("AuthComp — seConnecter / this.userId : " + this.userId);
-        this._utilisateurService.updateCurrentUserId(this.userId);
-
-
-        window.localStorage.setItem("JWT-TOKEN", data['JWT-TOKEN']);
-        console.log(this.headers);
-        this.headers = this.headers.set("JWT-TOKEN", data['JWT-TOKEN']);
-        console.log(this.headers.get("JWT-TOKEN"));
-        console.log(this.headers.keys());
-        this.headers.keys().forEach(key => {
-          console.log(`${key}: ${this.headers.get(key)}`);
-        });
-
+          //console.log("AuthComp — seConnecter / login.subs(data['JWT-TOKEN']) : " + data['JWT-TOKEN']);
+          console.log("Auth Comp — seConnecter / login.subs(data) : " + data['JWT-TOKEN']);
+          //console.log("AuthComp — seConnecter / login.subs(data['userId']) : " + data['userId']);
           this.userId = data['userId'];
-          this._authService.updateHeaders(data);
+          console.log("Auth Comp — seConnecter / this.userId : " + this.userId);
+          this._utilisateurService.updateCurrentUserId(this.userId);
+          window.localStorage.setItem("JWT-TOKEN", data['JWT-TOKEN']);
+/*          //console.log("Auth Comp — seConnecter / this.headers : ", this.headers);
+          //this.headers = this.headers.set("JWT-TOKEN", data['JWT-TOKEN']);
+          //console.log("Auth Comp — seConnecter / this.headers.get(\"JWT-TOKEN\") : ", this.headers.get("JWT-TOKEN"));
+          //console.log("Auth Comp — seConnecter / this.headers.keys() : ", this.headers.keys());
+          this.headers.keys().forEach(key => {
+            console.log("Auth Comp — seConnecter / key:value : ", `${key}: ${this.headers.get(key)}`);
+          });
+          this.userId = data['userId'];*/
           this._authService.updateLoggedBtn(true);
-          console.log("AuthComp — seConnecter / loggedBtn : ",this.loggedBtn);
+          console.log("Auth Comp — seConnecter / loggedBtn : ",this.loggedBtn);
+          this._authService.updateHeaders(data);
           this._router.navigateByUrl('');
-
       },
       //show error username or password is incorrect
       error: e => {
@@ -77,14 +73,14 @@ export class AuthentificationComponent implements OnInit {
     this.unLoggedUser = {};
   }
 
-
-
   createAccount() {
     this._router.navigateByUrl('utilisateurs');
   }
 
 
   ngOnInit(): void {
+    this._authService.updateLoggedBtn(false);
+    this._authService.updateHeaders(new HttpHeaders());
     this._subscription.add(
       this._authService.headers$
         .subscribe(data => {

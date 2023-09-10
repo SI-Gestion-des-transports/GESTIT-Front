@@ -11,6 +11,8 @@ export class AppComponent implements OnInit {
   title = 'GESTIT-Front';
 
   ngOnInit(): void {
-
+    if(window.localStorage.getItem("JWT-TOKEN") != null) {
+      window.localStorage.removeItem(`JWT-TOKEN`);
+    }
   }
 }
