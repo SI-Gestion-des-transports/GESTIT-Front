@@ -24,7 +24,7 @@ export class CovoiturageService implements OnInit {
 
 
   private _baseCovoitUrl = environment.urlApi.covoiturages;
-  private _realBaseUrl = environment.urlApi.covoituragesReserves;
+  //private _realBaseUrl = environment.urlApi.realCovoiturages;
 
   private _listOfAllCovoiturages$!: Observable<Covoiturage[]>;
 
@@ -82,7 +82,9 @@ private _subscription = new Subscription();
 
   public getAllCovoiturages(): Observable<Covoiturage[]> {
 
+
     return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/listall`);
+
   }
 
   public getCovoituragesByOrganisateur(
@@ -90,13 +92,16 @@ private _subscription = new Subscription();
   ): Observable<Covoiturage[]> {
     this.user = organisateur;
     return this._http.get<Covoiturage[]>(
+
       this._baseCovoitUrl + '?organisateurId=' + this.user.id,{headers: this.headers}
+
     );
   }
 
   getCovoiturageById(covoiturageId: number): Observable<Covoiturage> {
     return this._http.get<Covoiturage>(
       `${this._baseCovoitUrl}/${covoiturageId}`, {headers: this.headers}
+
     );
   }
 
@@ -181,6 +186,7 @@ private _subscription = new Subscription();
     console.log("Cov Srv — Create / createdCovoiturage : ", createdCovoiturage)
     return this._http.post<Covoiturage>(
       `${this._baseCovoitUrl}/create`, createdCovoiturage, {headers: this._httpHeaderService.getHeaders()}
+
     );
   }
 
@@ -188,12 +194,14 @@ private _subscription = new Subscription();
     return this._http.put<Covoiturage>(
       `${this._baseCovoitUrl}/${updatedCovoitOrg.id}`,
       updatedCovoitOrg, {headers: this._httpHeaderService.getHeaders()}
+
     );
   }
 
   public delete(deletedCovoitOrg: Covoiturage) {
     console.log("ADRESSE DELETE : "+`${this._baseCovoitUrl}/${deletedCovoitOrg.id}`)
     return this._http.delete<Covoiturage>(
+
       `${this._baseCovoitUrl}/${deletedCovoitOrg.id}`, {headers : this._httpHeaderService.getHeaders()}
     );
   }
