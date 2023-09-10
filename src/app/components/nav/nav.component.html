@@ -37,35 +37,38 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
 
-  <select (change)="getCovoiturageChoice($event)" class="nav-link dropdown-toggle" href="#" id="navbarDropdownCovoit" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+  <select (change)="getCovoiturageChoice($event)" class="nav-link dropdown-toggle" href="#" id="navbarDropdownCovoit"
+    role="button" data-bs-toggle="dropdown" aria-expanded="true">
     <option style="display:none">Covoiturages</option>
     <option [value]="item.id" *ngFor="let item of covoiturageChoicies">{{item.name}}</option>
   </select>
-  <select (change)="getVehiculeServiceChoice($event)" class="nav-link dropdown-toggle" href="#" id="navbarDropdownReservations" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+  <select (change)="getVehiculeServiceChoice($event)" class="nav-link dropdown-toggle" href="#"
+    id="navbarDropdownReservations" role="button" data-bs-toggle="dropdown" aria-expanded="true">
     <option style="display:none">Véhicule de société</option>
     <option [value]="item.id" *ngFor="let item of ReservationsVehiculeServiceChoicies">{{item.name}}</option>
   </select>
-  <select (change)="getServiceChoice($event)" class="nav-link dropdown-toggle" href="#" id="navbarDropdownVehiculeServ" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+  <select (change)="getServiceChoice($event)" class="nav-link dropdown-toggle" href="#" id="navbarDropdownVehiculeServ"
+    role="button" data-bs-toggle="dropdown" aria-expanded="true">
     <option style="display:none">Parc de véhicules</option>
     <option [value]="item.id" *ngFor="let item of VehiculeServiceChoicies">{{item.name}}</option>
   </select>
   <a routerLink="utilisateurs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Utilisateurs</a>
 </nav>
-<a routerLink="login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-  <button type="button"
-          class="btn"
-          [class.btn-outline-primary]="loggedBtn"
-          [class.btn-primary]="!loggedBtn"
-          (click)="loggedBtn ? logout() : login()">
-          {{ loggedBtn ?"Déconnexion" :"Connexion"}}
-          
-     </button>
-</a>
-<div>{{nomUtilisateurCourant$ | async}}
-  
+<div class="d-flex flex-row align-items-center p-3">
+  <img src="../../../assets/connectedUser.png" alt="logo_utilisateur_connecte" class="w-25">
+  <strong class="text-success ">{{nomUtilisateurCourant$ | async}}</strong>
+  <a routerLink="login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <button type="button" class="btn" [class.btn-outline-primary]="loggedBtn" [class.btn-primary]="!loggedBtn"
+      (click)="loggedBtn ? logout() : login()">
+      {{ loggedBtn ?"Déconnexion" :"Connexion"}}
+
+    </button>
+  </a>
 </div>
 
-          <!--
+
+
+<!--
           [class.btn-outline-primary]="loggedBtn"
           [class.btn-primary]="!loggedBtn"
           {{ loggedBtn ?"Déco" :"Co"}}
