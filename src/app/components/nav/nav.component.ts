@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import {BehaviorSubject, Subscription} from "rxjs";
+import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {AuthentificationService} from "../../shared/services/authentification.service";
 import {HttpHeaders} from "@angular/common/http";
 import {UtilisateursService} from "../../shared/services/utilisateurs.service";
+import { Utilisateur } from 'src/app/shared/models/utilisateur';
 
 @Component({
   selector: 'app-nav',
@@ -72,6 +73,9 @@ export class NavComponent implements OnInit {
   // Données partagées : subscribe from services
   loggedBtn: boolean = false;
   currentUserId: number = null;
+  exampleUser!:Utilisateur;
+  
+  nomUtilisateurCourant$: Observable<string>;
 
 
   private _subscription = new Subscription();
@@ -81,6 +85,10 @@ export class NavComponent implements OnInit {
   { }
 
   ngOnInit(): void {
+     /*récupération de la référence de l'observable sur le nom de l'utilisateur courant*/
+     this.nomUtilisateurCourant$=this._utilisateurService.currentUserNameSource$;
+     
+
     this._subscription.add(
       this._utilisateurService.currentIdUser$
         .subscribe(data => {
@@ -93,6 +101,8 @@ export class NavComponent implements OnInit {
       })
     )
     this.ngOnChanges();
+
+   
   }
 
   ngOnChanges(){
@@ -199,5 +209,3 @@ export class NavComponent implements OnInit {
 
   // this.router.navigateByUrl('covoiturages');
 }
-
-

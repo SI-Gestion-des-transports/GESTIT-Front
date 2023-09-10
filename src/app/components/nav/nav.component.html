@@ -34,7 +34,6 @@
   </div>
 </nav>-->
 
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
 
@@ -59,8 +58,12 @@
           [class.btn-primary]="!loggedBtn"
           (click)="loggedBtn ? logout() : login()">
           {{ loggedBtn ?"Déconnexion" :"Connexion"}}
+          
      </button>
 </a>
+<div>{{nomUtilisateurCourant$ | async}}
+  
+</div>
 
           <!--
           [class.btn-outline-primary]="loggedBtn"
