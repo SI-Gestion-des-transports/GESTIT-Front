@@ -1,7 +1,7 @@
 <form #addF="ngForm" (ngSubmit)="add(addF)">
   <div class="container col-10 d-flex flex-column align-items-center">
     <div class="card w-100 bg-light">
-      <p class="mt-1 mb-1 ms-1">Création d'un véhicule</p>
+      <p class="mt-1 mb-1 ms-1">Création d'un véhiculePerso</p>
     </div>
     <div class="row col-10 mt-5">
       <div class="container d-flex justify-content-center align-items-center col-5 bg-secondary">
@@ -11,26 +11,22 @@
 
 
         <input #url="ngModel" class="col-12" type="text" placeholder="URL Photo" name="url" ngModel required>
-        <input #immatriculation="ngModel" class="col-5 ms-4 " type="text" placeholder="Immatriculation" name="immatriculation"
+        <input #immatriculation="ngModel" class="col-12 " type="text" placeholder="Immatriculation" name="immatriculation"
                ngModel required>
 
-        <select #marque="ngModel" (ngModelChange)="marqueSelectChange(marque)" class=" col-5 ms-4 " name="marque" ngModel
+        <select #marque="ngModel" (ngModelChange)="marqueSelectChange(marque)" class=" col-12 " name="marque" ngModel
                 required>
           <option disabled value="">Marque</option>
           <option *ngFor="let m of listMarque" [value]="m">{{m}}</option>
         </select>
-        <input #co2="ngModel" class="col-5 ms-4" type="text" placeholder="CO2/Km" name="co2" ngModel required>
-        <select #modele="ngModel" class="ms-4 col-5" name="modele" ngModel required>
+
+        <select #modele="ngModel" class="col-12" name="modele" ngModel required>
           <option disabled value="">Modèle</option>
           <option *ngFor="let m of listModele" [value]="m">{{m}}</option>
         </select>
-        <input disabled class="col-5 ms-4" type="text" value="Statut: En service">
-        <select #cate="ngModel" class="ms-4 col-5" name="cate" ngModel required>
-          <option disabled value="">Catégorie</option>
-          <option *ngFor="let cate of listCategorie" [value]="cate">{{cate}}</option>
 
-        </select>
-        <select #place="ngModel" class="ms-4  col-5" name="place" ngModel required>
+
+        <select #place="ngModel" class="col-5" name="place" ngModel required>
           <option disabled value="">Nombre de place</option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -40,10 +36,7 @@
           <option value="6">6</option>
           <option value="7">7</option>
         </select>
-        <select #motorisation class="ms-4  mb-1 col-5" name="motorisation" ngModel required>
-          <option disabled selected value="">Motorisation</option>
-          <option *ngFor="let mo of listMotorisation" [value]="mo">{{mo}}</option>
-        </select>
+
 
       </div>
     </div>

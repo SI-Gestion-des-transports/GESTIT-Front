@@ -15,6 +15,7 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
 })
 export class AuthentificationComponent implements OnInit {
 
+  errorLogin: boolean = false;
 
   loggedUser: Utilisateur = {};
   unLoggedUser: Login = {};
@@ -40,8 +41,9 @@ export class AuthentificationComponent implements OnInit {
     console.log(this.unLoggedUser);
 
     this._authService.login(this.unLoggedUser).subscribe({
-      next:data=>{
+      next: data => {
         console.log(data.status);
+
           //console.log("AuthComp — seConnecter / login.subs(data['JWT-TOKEN']) : " + data['JWT-TOKEN']);
           console.log("Auth Comp — seConnecter / login.subs(data) : " + data['JWT-TOKEN']);
           //console.log("AuthComp — seConnecter / login.subs(data['userId']) : " + data['userId']);
@@ -63,9 +65,10 @@ export class AuthentificationComponent implements OnInit {
           this._router.navigateByUrl('');
       },
       //show error username or password is incorrect
-      error: e=>{
-        console.log("error");
+      error: e => {
+        this.errorLogin=true;
       }
+
     });
     this.unLoggedUser = {};
   }
@@ -73,6 +76,7 @@ export class AuthentificationComponent implements OnInit {
   createAccount() {
     this._router.navigateByUrl('utilisateurs');
   }
+
 
   ngOnInit(): void {
     this._authService.updateLoggedBtn(false);
@@ -100,4 +104,6 @@ export class AuthentificationComponent implements OnInit {
   ngOnDestroy(): void {
     this._subscription.unsubscribe();
   }
+
+
 }
