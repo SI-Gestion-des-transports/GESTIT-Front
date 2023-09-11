@@ -41,7 +41,7 @@
                 </div>
                 <div class="row ms-2">
                     <div class="col col-md-3"><img src="assets/organisateur.png" alt="image_vehicule"></div>
-                    <div class="col border-3 " *ngIf="organisateur$ |async as organisateur">
+                    <div class="col border-3 mt-4" *ngIf="organisateur$ |async as organisateur">
                         <ul>
                             <li>nom : {{organisateur.nom}}</li>
                             <li>email : {{organisateur.email}}</li>
@@ -70,9 +70,9 @@
                 </div>
                 <div class="row  ms-2">
                     <div class="col  col-md-3"><img src="assets/passagers.png" alt="image_vehicule"></div>
-                    <div class="col  ">
+                    <div class="col" >
                         <ul>
-                            <li *ngFor="let passager of covoiturage.passagers">{{passager.nom}}</li>
+                            <!-- <li *ngFor="let passager$ of passagers$"></li> -->
                         </ul>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                     <div class="col  col-md-3"><img src="assets/nbre_places_restantes.png" alt="image_vehicule">
                     </div>
                     <div class="col  ">
-                        <!-- <p class="mt-3">{{covoiturage.nombrePlacesRestantes}}</p> -->
+                        <p class="mt-3">{{covoiturage.nombrePlacesRestantes}}</p>
                     </div>
                 </div>
                 <div class="row ms-2 mt-2">

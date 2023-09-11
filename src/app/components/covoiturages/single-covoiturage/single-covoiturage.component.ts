@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
 import { Utilisateur } from 'src/app/shared/models/utilisateur';
 import { VehiculePerso } from 'src/app/shared/models/vehicule.perso';
@@ -23,11 +23,16 @@ export class SingleCovoiturageComponent {
   covoiturage$!: Observable<Covoiturage>;
   vehiculeObs$!: Observable<VehiculePerso>;
   organisateur$!: Observable<Utilisateur>;
+  toto!: number;
+  covoitNbrePlacesRestantesCalculees$!: Observable<number>;
+  passagers$:Observable<Utilisateur>[];
+  
+  passagers!:Utilisateur[];
 
 
 
   vehiculePerso!: VehiculePerso;
-  nombrePlacesRestantes!: number;
+
 
 
 
@@ -37,7 +42,7 @@ export class SingleCovoiturageComponent {
     private router: Router,
     private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.title = "Mon covoiturage";
     this.showDetailsInProgress = false;
 
@@ -46,19 +51,24 @@ export class SingleCovoiturageComponent {
     const covoiturageId = +this.route.snapshot.params['id'];
     this.covoiturage$ = this.covoiturageService.getCovoiturageById(covoiturageId);
     this.covoiturage$.subscribe((covoit) => {
-      
       this.vehiculeObs$ = this.vehiculePersoService.findVpById(covoit.vehiculePersoId.toString());
-      // this.vehiculeObs$.subscribe((vehicule) => {
-      //   console.log("******Affichage****vehicule");
-      //   console.log(vehicule);
-      //   // this.vehiculePerso = vehicule;
-      //   // this.nombrePlacesRestantes = vehicule.nombreDePlaceDisponibles - covoit.passagers.length;
-      //   // console.log("******Affichage****covoit");
-      //   // console.log(this.vehiculePerso);
-
-      // });
+      // covoit.passagersId.forEach(idPassager=>{
+      //   this.passagers$.push(this.utilisateurService.findById(idPassager));
+      //   console.log(this.passagers$);
+      // })
+      this.vehiculeObs$.subscribe((vehicule) => {
+        /*On recrée un observable à l'aide de pipe.
+        il y a un problème d'asynchronicité ici.
+        Le mécanisme de pipe.map() marche très bien, c'est le véhicule perso qu'il 
+        n'arrive pas à hydrater ici.
+        Je commente pour l'instant et laisse covoit.nbreDePlaceRestantes mais ce n'est pas bon
+        il faut trouver le problème, le nombre de places restantes doit être calculé*/
+        //this.covoitNbrePlacesRestantesCalculees$ = this.covoiturage$.pipe(map(covoit => covoit.nombrePlacesRestantes = vehicule.nombreDePlaceDisponibles - covoit.passagers.length));
+      });
       this.organisateur$ = this.utilisateurService.findById(covoit.organisateurId);
+      
     })
+
   }
 
   onShowDetails() {

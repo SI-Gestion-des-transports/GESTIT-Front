@@ -33,7 +33,11 @@
           {{ c.adresseDepart?.codePostal}} {{ c.adresseDepart?.commune}}</td>
         <td>{{ c.adresseArrivee?.numero}} {{ c.adresseArrivee?.voie}}, <br>
           {{ c.adresseArrivee?.codePostal}} {{ c.adresseArrivee?.commune}}</td>
-        <td>{{c.passagers?.length}}</td>
+        <!-- Le nouveau dto qui renvoit une liste d'id d'utilisateurs (auparavant une liste d'utilisateurs)
+        créer un conflit de nommage dans le code de lan. J'ai modifié en conséquence  Mochizuki 11092023 01h22-->
+        <!-- <td>{{c.passagers?.length}}</td> -->
+        <td>{{c.passagersId?.length}}</td>
+
         <td>
           <button type="button"
                   class="btn btn-outline-secondary"

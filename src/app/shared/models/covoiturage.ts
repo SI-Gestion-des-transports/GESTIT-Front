@@ -13,6 +13,6 @@ export interface Covoiturage {
   // organisateur?: Utilisateur;
   organisateurId?: number;
   
-  passagers?: Utilisateur[];
+  passagersId?: number[];
   vehiculePersoId?: number;
 }
