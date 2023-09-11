@@ -20,19 +20,19 @@ export class NavComponent implements OnInit {
     },
     {
       id: 2,
-      name: "Empty"
+      name: "Mes réservations"
     },
     {
       id: 3,
-      name: "Organisation"
+      name: "Créer un covoiturage"
     },
     {
       id: 4,
-      name: "Créer un covoit"
+      name: "Lister mes covoiturages"
     },
     {
       id: 5,
-      name: "Lister mes covoits"
+      name: "Véhicule personnel"
     }
   ]
 
@@ -74,7 +74,7 @@ export class NavComponent implements OnInit {
   loggedBtn: boolean = false;
   currentUserId: number = null;
   exampleUser!:Utilisateur;
-  
+
   nomUtilisateurCourant$: Observable<string>;
 
 
@@ -87,7 +87,7 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
      /*récupération de la référence de l'observable sur le nom de l'utilisateur courant*/
      this.nomUtilisateurCourant$=this._utilisateurService.currentUserNameSource$;
-     
+
 
     this._subscription.add(
       this._utilisateurService.currentIdUser$
@@ -128,16 +128,16 @@ export class NavComponent implements OnInit {
         this.router.navigateByUrl('covoiturages');
         break;
       case '2': console.log(2);
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('covoiturages/reservations');
         break;
       case '3':
-        this.router.navigateByUrl('covoituragesOrganises');
-        break;
-      case '4': console.log(2);
         this.router.navigateByUrl('covoituragesOrganises/form');
         break;
-      case '5': console.log(2);
+      case '4': console.log(2);
         this.router.navigateByUrl('covoituragesOrganises/list');
+        break;
+      case '5': console.log(2);
+        this.router.navigateByUrl('vehiculeperso');
         break;
       default: throw new Error();
     }
