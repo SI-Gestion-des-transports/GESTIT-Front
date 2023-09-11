@@ -1,21 +1,22 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Covoiturage } from '../models/covoiturage';
 import { environment } from 'src/environments/environment.development';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import { Utilisateur } from '../models/utilisateur';
 import { Adresse } from '../models/adresse';
 import { AdressesService } from './adresses.service';
 import {VehiculePerso} from "../models/vehicule.perso";
+import {AuthentificationService} from "./authentification.service";
 
 
 @Injectable({
   providedIn: 'root',
 })
-export class CovoiturageService {
+export class CovoiturageService implements OnInit {
   user!: Utilisateur;
-
+  headers = new HttpHeaders();
 
 
   private _baseCovoitUrl = environment.urlApi.covoiturages;
@@ -40,7 +41,7 @@ export class CovoiturageService {
   covoitByOrganisateur$ = this.covoitByOrganisateurSource.asObservable();
   vehiculesPersoCurrentUser$ = this.vehiculesPersoCurrentUserSource.asObservable();
 
-
+private _subscription = new Subscription();
 /*  covoit:Covoiturage = {
     adresseDepart: {},
     adresseArrivee: {},
@@ -49,14 +50,26 @@ export class CovoiturageService {
   adresseArrivee = this.adresseArriveeSource.value;*/
 
   ngOnInit(): void {
-    this._listOfAllCovoiturages$.subscribe(value => console.log(value));
+    console.log("covoit onInit")
+    /*this._listOfAllCovoiturages$.subscribe(value => console.log(value));*/
+    this._subscription.add(this._authService.headers$.subscribe(data => {
+      console.log("data :", data)
+      this.headers = data;
+      console.log("this.headers :", this.headers);
+    }));
 
     //this.updateCovoitOrg(this.covoit);
   }
 
+  ngOnDestroy(){
+    console.log("destroyed")
+    this._subscription.unsubscribe();
+  }
+
   constructor(
     private _http: HttpClient,
-    private _adresseService: AdressesService
+    private _adresseService: AdressesService,
+    private _authService: AuthentificationService
   ) {}
 
 
@@ -70,19 +83,28 @@ export class CovoiturageService {
   ): Observable<Covoiturage[]> {
     this.user = organisateur;
     return this._http.get<Covoiturage[]>(
-      this._baseCovoitUrl + '?organisateurId=' + this.user.id
+      this._baseCovoitUrl + '?organisateurId=' + this.user.id,{headers: this.headers}
     );
   }
 
   getCovoiturageById(covoiturageId: number): Observable<Covoiturage> {
     return this._http.get<Covoiturage>(
-      `${this._baseCovoitUrl}/${covoiturageId}`
+      `${this._baseCovoitUrl}/${covoiturageId}`, {headers: this.headers}
     );
   }
 
   findUpcomingCovoituragesByUserId(userId?: number): Observable<Covoiturage[]>{
-    return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/listerorganises`)
+    this.ngOnInit();
+    console.log(this.headers);
+    return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/upcoming`, {headers: this.headers})
   }
+
+  findPastCovoituragesByUserId(userId?: number): Observable<Covoiturage[]>{
+    this.ngOnInit();
+    console.log(this.headers);
+    return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/past`, {headers: this.headers})
+  }
+
 
   getFilteredbyUsersCovoit(idUtilisateur: number): Observable<Covoiturage[]> {
     return this._http.get<Covoiturage[]>(this._baseCovoitUrl)
@@ -137,8 +159,7 @@ export class CovoiturageService {
     }
     */
     return this._http.post<Covoiturage>(
-      this._baseCovoitUrl,
-      createdCovoiturage
+      `${this._baseCovoitUrl}/create`, createdCovoiturage, {headers: this.headers}
     );
   }
 
