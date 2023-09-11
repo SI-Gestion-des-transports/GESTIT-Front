@@ -125,18 +125,23 @@ export class NavComponent implements OnInit {
   getCovoiturageChoice(event: any) {
     switch (event.target.value) {
       case '1':
+        //console.log(1);
         this.router.navigateByUrl('covoiturages');
         break;
-      case '2': console.log(2);
+      case '2':
+        //console.log(2);
         this.router.navigateByUrl('covoiturages/reservations');
         break;
       case '3':
+        //console.log(3);
         this.router.navigateByUrl('covoituragesOrganises/form');
         break;
-      case '4': console.log(2);
+      case '4':
+        //console.log(4);
         this.router.navigateByUrl('covoituragesOrganises/list');
         break;
-      case '5': console.log(2);
+      case '5':
+        //console.log(5);
         this.router.navigateByUrl('vehiculeperso');
         break;
       default: throw new Error();
@@ -146,12 +151,15 @@ export class NavComponent implements OnInit {
   getVehiculeServiceChoice(event: any) {
     switch (event.target.value) {
       case '1':
+        //console.log(1);
         this.router.navigateByUrl('reservationsvs');
         break;
-      case '2': console.log(2);
+      case '2':
+        //console.log(2);
         this.router.navigateByUrl('reservationsvs/form');
         break;
-      case '3': console.log(2);
+      case '3':
+        //console.log(3);
         this.router.navigateByUrl('reservationsvs/list');
         break;
       default: throw new Error();
@@ -174,12 +182,15 @@ export class NavComponent implements OnInit {
   getServiceChoice(event: any) {
     switch (event.target.value) {
       case '1':
+        //console.log(1);
         this.router.navigateByUrl('vehiculeService');
         break;
-      case '2': console.log(2);
+      case '2':
+        //console.log(2);
         this.router.navigateByUrl('vehiculeService/add');
         break;
-      case '3': console.log(2);
+      case '3':
+        //console.log(3);
         this.router.navigateByUrl('vehiculeService/list');
         break;
       default: throw new Error();
@@ -191,19 +202,24 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
-    console.log("NavComp — logout");
+    //console.log("NavComp — logout");
     this._authService.logout();
     this.router.navigateByUrl('')
     this._authService.updateHeaders(new HttpHeaders());
-    console.log("NavComp — logout / currentUserId : ", this.currentUserId);
+    //console.log("NavComp — logout / currentUserId : ", this.currentUserId);
     this._utilisateurService.updateCurrentUserId(null);
-    console.log("NavComp — logout / currentUserId : ", this.currentUserId);
-    console.log("NavComp — logout / loggedBtn : ",this.loggedBtn);
+    this._utilisateurService.updateCurrentUserName("");
+    this.nomUtilisateurCourant$ = null;
+    //console.log("NavComp — logout / currentUserId : ", this.currentUserId);
+    //console.log("NavComp — logout / loggedBtn : ",this.loggedBtn);
     this._authService.updateLoggedBtn(false);
-    console.log("NavComp — logout / loggedBtn : ",this.loggedBtn);
+    //console.log("NavComp — logout / loggedBtn : ",this.loggedBtn);
   }
 
 
+  updatenomUtilisateurCourant (){
+
+  }
 
 
   // this.router.navigateByUrl('covoiturages');

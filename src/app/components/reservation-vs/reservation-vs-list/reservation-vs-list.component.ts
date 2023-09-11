@@ -112,20 +112,20 @@ export class ReservationVsListComponent implements OnInit{
   }
 
   ngOnDestroy(): void {
-    console.log("Réservation LIST Destroyed — unsuscribe")
+    //console.log("Réservation LIST Destroyed — unsuscribe")
     this._subscription.unsubscribe(); // Se désabonner de tous les observables en une fois
-    console.log("Réservation Service — onDestroy / this.currentUser :", this.currentUser);
+    //console.log("Réservation Service — onDestroy / this.currentUser :", this.currentUser);
     this.currentUser = {};
-    console.log("Réservation Service — onDestroy / this.currentUser :", this.currentUser);
+    //console.log("Réservation Service — onDestroy / this.currentUser :", this.currentUser);
   }
 
 
   private _init(){
-    console.log("Réservation List — _init");
-    console.log("Reservation List — _init / localStorage.getItem : ", window.localStorage.getItem("JWT-TOKEN"))
+    //console.log("Réservation List — _init");
+    //console.log("Reservation List — _init / localStorage.getItem : ", window.localStorage.getItem("JWT-TOKEN"))
     if(!window.localStorage.getItem("JWT-TOKEN")){
-      console.log("Reservation List — _init / localStorage.getItem : false");
-      console.log("Reservation List ——>>>> Login");
+      //console.log("Reservation List — _init / localStorage.getItem : false");
+      //console.log("Reservation List ——>>>> Login");
       this._router.navigateByUrl('login');
     } else {
       this.getIncomingReservations();
@@ -152,38 +152,37 @@ export class ReservationVsListComponent implements OnInit{
   }
 
   getPastReservations(){
-    console.log("Réservation List — getPastReservations");
+    //console.log("Réservation List — getPastReservations");
     this.upcompingReservations = false;
-
     forkJoin({
       reservations: this._reservationVsService.findPastByUserId(),
       vehicules : this._vehiculeSrvService.findAllEnService()
     }).subscribe(({reservations, vehicules}) => {
-      console.log("Réservation List — getPastReservations / reservations : ", reservations);
-      console.log("Réservation List — getPastReservations / vehicules : ", vehicules);
-      console.log("Réservation List — getIncomingReservations / forkJoin");
+      //console.log("Réservation List — getPastReservations / reservations : ", reservations);
+      //console.log("Réservation List — getPastReservations / vehicules : ", vehicules);
+      //console.log("Réservation List — getIncomingReservations / forkJoin");
       this._reservationVsService.updateAllReservationsVs(reservations);
       this._vehiculeSrvService.updateVehiculesSrv(vehicules);
       this.mergedArray = this.mergeReservationsWithVehicles();
-      console.log("Réservation List — getPastReservations / mergedArray", this.mergedArray);
+      //console.log("Réservation List — getPastReservations / mergedArray", this.mergedArray);
     });
     //this._reservationVsService.findPastByUserId(this.currentUser.id).subscribe(pastRes => this.pastReservationsVsByUser = pastRes);
   }
 
   getIncomingReservations(){
-    console.log("Réservation List — getIncomingReservations");
+    //console.log("Réservation List — getIncomingReservations");
     this.upcompingReservations = true;
     forkJoin({
       reservations: this._reservationVsService.findUpcomingByUserId(),
       vehicules: this._vehiculeSrvService.findAllEnService()
     }).subscribe(({reservations, vehicules}) =>{
-      console.log("Réservation List — getIncomingReservations / reservations : ", reservations);
-      console.log("Réservation List — getIncomingReservations / vehicules : ", vehicules);
-      console.log("Réservation List — getIncomingReservations / forkJoin");
+      //console.log("Réservation List — getIncomingReservations / reservations : ", reservations);
+      //console.log("Réservation List — getIncomingReservations / vehicules : ", vehicules);
+      //console.log("Réservation List — getIncomingReservations / forkJoin");
       this._reservationVsService.updateAllReservationsVs(reservations);
       this._vehiculeSrvService.updateVehiculesSrv(vehicules);
       this.mergedArray = this.mergeReservationsWithVehicles();
-      console.log("Réservation List — getIncomingReservations / mergedArray", this.mergedArray);
+      //console.log("Réservation List — getIncomingReservations / mergedArray", this.mergedArray);
     })
     //this._init();
   }
@@ -202,12 +201,12 @@ export class ReservationVsListComponent implements OnInit{
     this._reservationVsService.updateModifBtn(false);
     this._reservationVsService.updateCurrentReservationVs(reservationToEdit);
     this._reservationVsService.updateReservationVs(reservationToEdit);
-    console.log("Réservation List — startUpdateResVs");
+    //console.log("Réservation List — startUpdateResVs");
     this._router.navigateByUrl('reservationsvs/form');
   }
 
   deleteReservationVs(reservationToDelete: ReservationVs){
-    console.log("Réservation List — deleteReservationVs");
+    //console.log("Réservation List — deleteReservationVs");
     this._router.navigateByUrl('reservationsvs/item');
     this._reservationVsService.updateCurrentReservationVs(reservationToDelete);
   }
@@ -216,12 +215,20 @@ export class ReservationVsListComponent implements OnInit{
     return this.allReservationsVs.map(reservation => {
       const vehicule = this.vehiculesSrv.find(veh => veh.id === reservation.vehiculeServiceId);
       if (!vehicule) {
-        console.warn(`Aucun véhicule trouvé pour vehiculeServiceId: ${reservation.vehiculeServiceId}`);
+        //console.warn(`Aucun véhicule trouvé pour vehiculeServiceId: ${reservation.vehiculeServiceId}`);
         return reservation;
       }
       return {
         ...reservation,
-        ...vehicule
+        modele: vehicule.modele,
+        nombreDePlaceDisponibles: vehicule.nombreDePlaceDisponibles,
+        immatriculation: vehicule.immatriculation,
+        photoURL: vehicule.photoURL,
+        emissionCO2: vehicule.emissionCO2,
+        motorisation: vehicule.motorisation,
+        statut: vehicule.statut,
+        categorie: vehicule.categorie,
+        marque: vehicule.marque
       };
     });
   }

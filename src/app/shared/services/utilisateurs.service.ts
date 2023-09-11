@@ -119,6 +119,10 @@ export class UtilisateursService implements OnInit, OnChanges {
     this.updateCurrentUser();
   }
 
+  updateCurrentUserName(userName: string){
+    this.currentUserNameSource.next(userName);
+  }
+
   updateFakeCurrentUser(user: Utilisateur){
     this.fakeCurrentUserSource.next(user);
   }
