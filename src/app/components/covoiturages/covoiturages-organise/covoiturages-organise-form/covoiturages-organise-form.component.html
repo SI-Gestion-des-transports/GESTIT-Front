@@ -89,12 +89,12 @@
   <div class="trajet">
     <div class="trajetMargin">
       <label for="dureeTrajet">Durée trajet</label>
-      <input type="time" name="dureeTrajet" id="dureeTrajet" [(ngModel)]="covoitOrg.dureeTrajet">
+      <input type="number" name="dureeTrajet" id="dureeTrajet" [(ngModel)]="covoitOrg.dureeTrajet" placeholder="Durée en heures">
     </div>
 
     <div class="trajetMargin">
       <label for="distanceKm">Distance</label>
-      <input type="number" name="distanceKm" id="distanceKm" [(ngModel)]="covoitOrg.distanceKm">
+      <input type="number" name="distanceKm" id="distanceKm" [(ngModel)]="covoitOrg.distanceKm" placeholder="Distance en km">
     </div>
 
     <div class="trajetMargin">

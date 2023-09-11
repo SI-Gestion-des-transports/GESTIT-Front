@@ -6,12 +6,12 @@
             class="btn"
             [class.btn-primary]="upcompingCovoiturages"
             [class.btn-outline-secondary]="!upcompingCovoiturages"
-            (click)="getIncomingReservations()">Réservation en cours</button>
+            (click)="getIncomingCovoiturages()">Covoiturages à venir</button>
     <button type="button"
             class="btn"
             [class.btn-outline-secondary]="upcompingCovoiturages"
             [class.btn-primary]="!upcompingCovoiturages"
-            >Mon historique</button>
+            (click)="getPastCovoiturages()">Mon historique</button>
     <button type="button"
             class="btn btn-outline-primary"
             (click)="newCovoitOrg()">Nouveau covoiturage</button>

@@ -31,6 +31,7 @@ export class CovoituragesOrganiseListComponent {
   vehiculesPersoCurrentUser: VehiculePerso[] = [];
   currentCovoitOrg : Covoiturage = {};
   covoitOrg: Covoiturage = {};
+  covoitByOrganisateur: Covoiturage[] = [];
   // Fin variables partagées
   modifBtn!: boolean;
   upcompingCovoiturages : boolean = true;
@@ -66,6 +67,11 @@ export class CovoituragesOrganiseListComponent {
           this.currentCovoitOrg = data;
         })
     );
+    this._subscription.add(
+      this._covoitOrgService.covoitByOrganisateur$.subscribe(data => {
+        this.covoitByOrganisateur = data
+      })
+    );
     this._init();
   }
 
@@ -75,7 +81,9 @@ export class CovoituragesOrganiseListComponent {
 
 
   private _init() {
+    console.log("init")
     if (this.currentUser.nom != undefined) {
+      console.log("user != undefined")
       this._covoitOrgService
         .getCovoituragesByOrganisateur(this.currentUser)
         .subscribe((covoitOrgsCreated) => {
@@ -83,7 +91,10 @@ export class CovoituragesOrganiseListComponent {
         });
 
       this.upcompingCovoiturages =true;
-      this._covoitOrgService.findUpcomingCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => this.upcomingCovoitOrgsResByUser = upcomingCovoitOrgRes)
+      this._covoitOrgService.findUpcomingCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => {
+        console.log(upcomingCovoitOrgRes);
+        this.upcomingCovoitOrgsResByUser = upcomingCovoitOrgRes;
+      });
     }
   }
 
@@ -91,8 +102,24 @@ export class CovoituragesOrganiseListComponent {
     this._router.navigateByUrl('covoituragesOrganises/form');
   }
 
-  getIncomingReservations(){
-    this._init();
+  getIncomingCovoiturages(){
+    console.log("TEST");
+    this.upcompingCovoiturages = true;
+    //this._init();
+    this._covoitOrgService.findUpcomingCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => {
+      console.log(upcomingCovoitOrgRes);
+      this.covoitOrgs = upcomingCovoitOrgRes;
+    });
+  }
+
+  getPastCovoiturages(){
+    console.log("TEST");
+    this.upcompingCovoiturages = false;
+    //this._init();
+    this._covoitOrgService.findPastCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => {
+      console.log(upcomingCovoitOrgRes);
+      this.covoitOrgs = upcomingCovoitOrgRes;
+    });
   }
 
   updateCovoitOrg(covoitOrgToEdit: Covoiturage){
