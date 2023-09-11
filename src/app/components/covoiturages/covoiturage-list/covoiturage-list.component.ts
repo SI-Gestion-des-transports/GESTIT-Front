@@ -114,8 +114,6 @@ export class CovoiturageListComponent implements OnInit {
 			listVilleDepartWhithDuplicateItems.push(covoit.adresseDepart.commune);
 		});
 		this.depart_liste = Array.from(new Set(listVilleDepartWhithDuplicateItems));
-		console.log("*******");
-		console.log(this.covoiturages_listeComplete);
 	}
 
 	/**

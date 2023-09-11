@@ -1,10 +1,15 @@
+{{vehiculePerso.id}}
+{{vehiculePerso.immatriculation}}
+
+
 <div class="border border-2 p-3 border rounded-5 card mb-3 shadow-sm p-3 mb-5 bg-body-tertiary rounded"
     *ngIf="covoiturage$ | async as covoiturage" [ngClass]="{showDetails : showDetailsInProgress === true}">
+
     <h2 class="text-center mb-3 text-bg-danger">Demande de réservation</h2>
     <p class="text-danger  ">Vous êtes sur le point de réserver une place pour le trajet n° {{covoiturage.id}}.<br>
-    Veuillez vérifier les informations ci-dessous puis validez votre place en appuyant sur 
-    le bouton "Confirmer ma participation"
-    </p>
+        Veuillez vérifier les informations ci-dessous puis validez votre place en appuyant sur
+        le bouton "Confirmer ma participation"
+
     <div class="container mt-4 ">
         <div class="row border-5 gap-5 ">
             <!-- colonne de gauche -->
@@ -16,16 +21,18 @@
                     <div class="col border-5 col-md-3"><img src="assets/vehicule2.png" alt="image_vehicule"></div>
                     <div class="col border-3">
                         <ul>
-                            <li>Marque : {{covoiturage.vehiculePerso.marque}}</li>
-                            <li>Modèle : {{covoiturage.vehiculePerso.modele}}</li>
-                            <li>Nombre de places :{{covoiturage.vehiculePerso.nombreDePlaceDisponibles}} </li>
-                            <li>Immatriculation : {{covoiturage.vehiculePerso.immatriculation}}</li>
+                            <li>Marque : {{vehiculePerso.marque}}</li>
+                            <li>Modèle : {{vehiculePerso.modele}}</li>
+                            <li>Nombre de places :{{vehiculePerso.nombreDePlaceDisponibles}} </li>
+                            <li>Immatriculation : {{vehiculePerso.immatriculation}}</li>
                         </ul>
+
                     </div>
                 </div>
 
                 <div class="row ms-2 mt-2">
                     <h3>Organisateur</h3>
+
                 </div>
                 <div class="row ms-2">
                     <div class="col col-md-3"><img src="assets/organisateur.png" alt="image_vehicule"></div>
