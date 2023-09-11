@@ -1,0 +1,12 @@
+.overflowDiv{
+  height: 370px;
+  overflow: auto;
+}
+tr{
+  height: 60px;
+}
+td p{
+  font-size: 12px;
+  margin-bottom: 0;
+}
+

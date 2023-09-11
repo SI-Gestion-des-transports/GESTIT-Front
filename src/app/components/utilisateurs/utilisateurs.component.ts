@@ -78,7 +78,7 @@ export class UtilisateursComponent implements OnInit {
     console.log('User logged : ' + this.loggedUser.nom);
     this.loggedBtn = false;
     //this._reservationVsService.updateCurrentUser(user);
-    this._utilisateursService.updateCurrentUser(user);
+    //this._utilisateursService.updateCurrentUserDevTest(user);
     console.log("logged from resVsServ : "+ this._utilisateursService.currentUser$);
     this._init();
   }
@@ -87,7 +87,7 @@ export class UtilisateursComponent implements OnInit {
     this.loggedUser = {};
     this.loggedBtn = true;
     //this._reservationVsService.updateCurrentUser({});
-    this._utilisateursService.updateCurrentUser({});
+    //this._utilisateursService.updateCurrentUserDevTest({});
   }
 
   startUpdateUser(user: Utilisateur) {

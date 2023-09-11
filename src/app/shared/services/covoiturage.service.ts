@@ -1,13 +1,14 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Covoiturage } from '../models/covoiturage';
 import { environment } from 'src/environments/environment.development';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Utilisateur } from '../models/utilisateur';
 import { Adresse } from '../models/adresse';
 import { AdressesService } from './adresses.service';
 import {VehiculePerso} from "../models/vehicule.perso";
+import { AuthentificationService } from './authentification.service';
 
 
 @Injectable({
@@ -31,25 +32,45 @@ export class CovoiturageService {
   private modifBtnSource = new BehaviorSubject<boolean>(true);
 
 
+
+
+
+
+  covoiturage$ = this.covoitOrgSource.asObservable() ;
   adresseDepart$ = this.adresseDepartSource.asObservable();
   adresseArrivee$ = this.adresseArriveeSource.asObservable();
   currentCovoiturage$ = this.currentCovoitOrgSource.asObservable();
   currentUser$ = this.currentUserSource.asObservable();
   vehiculesPersoCurrentUser$ = this.vehiculesPersoCurrentUserSource.asObservable();
+  headers = new HttpHeaders();
+  private subscription = new Subscription();
 
+/*  covoit:Covoiturage = {
+    adresseDepart: {},
+    adresseArrivee: {},
+  };
+  adresseDepart = this.adresseDepartSource.value;
+  adresseArrivee = this.adresseArriveeSource.value;*/
 
   ngOnInit(): void {
     this._listOfAllCovoiturages$.subscribe(value => console.log(value));
+    this.subscription.add(this._authService.headers$.subscribe((data)=>{
+      this.headers = data;
+    }))
+
+    //this.updateCovoitOrg(this.covoit);
   }
 
   constructor(
     private _http: HttpClient,
-    private _adresseService: AdressesService
+    private _adresseService: AdressesService,
+    private _authService: AuthentificationService
   ) {}
 
 
   public getAllCovoiturages(): Observable<Covoiturage[]> {
-    return this._http.get<Covoiturage[]>(this._baseCovoitUrl);
+
+    return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/listall`);
   }
 
   public getCovoituragesByOrganisateur(
@@ -63,7 +84,7 @@ export class CovoiturageService {
 
   getCovoiturageById(covoiturageId: number): Observable<Covoiturage> {
     return this._http.get<Covoiturage>(
-      `${this._baseCovoitUrl}/${covoiturageId}`
+      `${this._baseCovoitUrl}/${covoiturageId}`,{headers:this.headers}
     );
   }
 
@@ -71,10 +92,11 @@ export class CovoiturageService {
     return this._http.get<Covoiturage[]>(`${this._realBaseUrl}/upcoming`)
   }
 
-  getFilteredbyUsersCovoit(idUtilisateur: number): Observable<Covoiturage[]> {
-    return this._http.get<Covoiturage[]>(this._baseCovoitUrl)
-      .pipe(map(res => res.filter(res => res.organisateur?.id === idUtilisateur)));
-  }
+  // getFilteredbyUsersCovoit(idUtilisateur: number): Observable<Covoiturage[]> {
+  //   return this._http.get<Covoiturage[]>(this._baseCovoitUrl)
+  //     .pipe(map(res => res.filter(res => res.organisateur?.id === idUtilisateur)));
+      
+  // }
 
   createArrayFrom(newArray: Covoiturage[], oldArray: Covoiturage[]): void {
     newArray = JSON.parse(JSON.stringify(oldArray));

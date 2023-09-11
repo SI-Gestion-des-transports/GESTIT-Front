@@ -9,7 +9,7 @@
             class="btn"
             [class.btn-outline-secondary]="upcompingReservations"
             [class.btn-primary]="!upcompingReservations"
-            (click)="getPasReservations()">Mon historique</button>
+            (click)="getPastReservations()">Mon historique</button>
     <button type="button"
             class="btn btn-outline-primary"
             (click)="newReservation()">Nouvelle réservation</button>
@@ -29,14 +29,14 @@
           <th>Modèle</th>
           <th>Actions</th>
         </tr>
-        <tr *ngFor="let res of allReservationsVs">
+        <tr *ngFor="let res of mergedArray">
           <td>{{ res.dateHeureDepart | extractDate }}</td>
           <td>{{ res.dateHeureDepart | extractTime }}</td>
           <td>{{ res.dateHeureRetour | extractDate }}</td>
           <td>{{ res.dateHeureRetour | extractTime }}</td>
-          <td>{{res.vehiculeServiceId}}</td>
-          <td>{{res.vehiculeServiceId}}</td>
-          <td>{{res.vehiculeServiceId}}</td>
+          <td>{{ res.immatriculation }}</td>
+          <td>{{ res.marque }}</td>
+          <td>{{ res.modele }}</td>
           <td>
             <button type="button"
                     class="btn"

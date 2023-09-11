@@ -1,0 +1,51 @@
+<form #addF="ngForm" (ngSubmit)="add(addF)">
+  <div class="container col-10 d-flex flex-column align-items-center">
+    <div class="card w-100 bg-light">
+      <p class="mt-1 mb-1 ms-1">Création d'un véhiculePerso</p>
+    </div>
+    <div class="row col-10 mt-5">
+      <div class="container d-flex justify-content-center align-items-center col-5 bg-secondary">
+        photo
+      </div>
+      <div class="row col-7">
+
+
+        <input #url="ngModel" class="col-12" type="text" placeholder="URL Photo" name="url" ngModel required>
+        <input #immatriculation="ngModel" class="col-12 " type="text" placeholder="Immatriculation" name="immatriculation"
+               ngModel required>
+
+        <select #marque="ngModel" (ngModelChange)="marqueSelectChange(marque)" class=" col-12 " name="marque" ngModel
+                required>
+          <option disabled value="">Marque</option>
+          <option *ngFor="let m of listMarque" [value]="m">{{m}}</option>
+        </select>
+
+        <select #modele="ngModel" class="col-12" name="modele" ngModel required>
+          <option disabled value="">Modèle</option>
+          <option *ngFor="let m of listModele" [value]="m">{{m}}</option>
+        </select>
+
+
+        <select #place="ngModel" class="col-5" name="place" ngModel required>
+          <option disabled value="">Nombre de place</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+        </select>
+
+
+      </div>
+    </div>
+
+    <div class="mt-5 ">
+      <button [disabled]="addF.invalid" type="submit" class="btn btn-outline-primary">Valider</button>
+      <button (click)="cancel()" class="btn btn-outline-danger">Annuler</button>
+    </div>
+
+  </div>
+
+</form>
