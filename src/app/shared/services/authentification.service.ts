@@ -33,8 +33,9 @@ export class AuthentificationService {
     return this._http.post(this._baseUrlLogin, tryLog);
   }
 
-  logout(): Observable<any>{
-    return this._http.post(this._baseUrlLogout, {headers:this._httpHeader.getHeaders()});
+  logout(){
+
+    return this._http.get(this._baseUrlLogout, {headers:this._httpHeader.getHeaders(),observe:"response"});
   }
 
   checkToken(headers : HttpHeaders){

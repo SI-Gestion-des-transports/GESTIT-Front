@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {AuthentificationService} from "../../shared/services/authentification.service";
 import {HttpHeaders} from "@angular/common/http";
 import {UtilisateursService} from "../../shared/services/utilisateurs.service";
+import {HttpHeaderService} from "../../shared/services/http-header.service";
 import { Utilisateur } from 'src/app/shared/models/utilisateur';
 
 @Component({
@@ -81,7 +82,8 @@ export class NavComponent implements OnInit {
   private _subscription = new Subscription();
   constructor(private router: Router,
               private _utilisateurService: UtilisateursService,
-              private _authService: AuthentificationService)
+              private _authService: AuthentificationService,
+              private _httpHeader:HttpHeaderService)
   { }
 
   ngOnInit(): void {
@@ -202,8 +204,11 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
-    //console.log("NavComp — logout");
-    this._authService.logout();
+    console.log("===================into logout()====================");
+    this._authService.logout().subscribe(res=> {
+      console.log("===================into logout()===================="+res.status);
+      if (res.status==200) window.localStorage.removeItem(this._httpHeader.tokenName);
+    });
     this.router.navigateByUrl('')
     this._authService.updateHeaders(new HttpHeaders());
     //console.log("NavComp — logout / currentUserId : ", this.currentUserId);
@@ -224,3 +229,5 @@ export class NavComponent implements OnInit {
 
   // this.router.navigateByUrl('covoiturages');
 }
+
+

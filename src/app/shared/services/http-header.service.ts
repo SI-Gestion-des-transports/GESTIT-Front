@@ -6,12 +6,12 @@ import {HttpHeaders} from "@angular/common/http";
 })
 export class HttpHeaderService {
   tokenName:string = "JWT-TOKEN";
-  headers:HttpHeaders = new HttpHeaders();
-  jwt:string= window.localStorage.getItem(this.tokenName);
+
   constructor() { }
   getHeaders():HttpHeaders{
-
-   this.headers= this.headers.set(this.tokenName,this.jwt);
-   return this.headers;
+    let headers:HttpHeaders = new HttpHeaders();
+    let jwt:string= window.localStorage.getItem(this.tokenName);
+   headers= headers.set(this.tokenName,jwt);
+   return headers;
   }
 }
