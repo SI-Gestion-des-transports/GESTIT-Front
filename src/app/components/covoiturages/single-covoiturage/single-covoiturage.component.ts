@@ -2,9 +2,11 @@ import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
+import { Utilisateur } from 'src/app/shared/models/utilisateur';
 import { VehiculePerso } from 'src/app/shared/models/vehicule.perso';
 import { VehiculeService } from 'src/app/shared/models/vehicule.service';
 import { CovoiturageService } from 'src/app/shared/services/covoiturage.service';
+import { UtilisateursService } from 'src/app/shared/services/utilisateurs.service';
 import { VehiculePersoService } from 'src/app/shared/services/vehicule.perso.service';
 import { environment } from 'src/environments/environment.development';
 
@@ -20,6 +22,10 @@ export class SingleCovoiturageComponent {
   showDetailsInProgress!: boolean;
   covoiturage$!: Observable<Covoiturage>;
   vehiculeObs$!: Observable<VehiculePerso>;
+  organisateur$!: Observable<Utilisateur>;
+
+
+
   vehiculePerso!: VehiculePerso;
   nombrePlacesRestantes!: number;
 
@@ -27,6 +33,7 @@ export class SingleCovoiturageComponent {
 
   constructor(private covoiturageService: CovoiturageService,
     private vehiculePersoService: VehiculePersoService,
+    private utilisateurService: UtilisateursService,
     private router: Router,
     private route: ActivatedRoute) { }
 
@@ -41,15 +48,16 @@ export class SingleCovoiturageComponent {
     this.covoiturage$.subscribe((covoit) => {
       
       this.vehiculeObs$ = this.vehiculePersoService.findVpById(covoit.vehiculePersoId.toString());
-      this.vehiculeObs$.subscribe((vehicule) => {
-        console.log("******Affichage****vehicule");
-        console.log(vehicule);
-        // this.vehiculePerso = vehicule;
-        // this.nombrePlacesRestantes = vehicule.nombreDePlaceDisponibles - covoit.passagers.length;
-        // console.log("******Affichage****covoit");
-        // console.log(this.vehiculePerso);
+      // this.vehiculeObs$.subscribe((vehicule) => {
+      //   console.log("******Affichage****vehicule");
+      //   console.log(vehicule);
+      //   // this.vehiculePerso = vehicule;
+      //   // this.nombrePlacesRestantes = vehicule.nombreDePlaceDisponibles - covoit.passagers.length;
+      //   // console.log("******Affichage****covoit");
+      //   // console.log(this.vehiculePerso);
 
-      });
+      // });
+      this.organisateur$ = this.utilisateurService.findById(covoit.organisateurId);
     })
   }
 
