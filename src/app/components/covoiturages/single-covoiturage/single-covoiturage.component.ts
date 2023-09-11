@@ -25,9 +25,9 @@ export class SingleCovoiturageComponent {
   organisateur$!: Observable<Utilisateur>;
   toto!: number;
   covoitNbrePlacesRestantesCalculees$!: Observable<number>;
-  passagers$:Observable<Utilisateur>[];
-  
-  passagers!:Utilisateur[];
+  passagers$: Observable<Utilisateur>[];
+
+  passagers!: Utilisateur[];
 
 
 
@@ -42,6 +42,13 @@ export class SingleCovoiturageComponent {
     private router: Router,
     private route: ActivatedRoute) { }
 
+
+  /*Mochizuki, note 12/09/2023.
+  Le fait de renvoyer un id plutôt qu'un utilisateur pose des difficulté à gérer le code asynchrone,
+  pour l'instant non résolue:
+  exemple : findCovoiturage() renvoit un observable, qui contient un covoiturage d'ou on peut récupérer
+  les id des passagers. Il faut donc itérer sur le tableau des passagers en faisant un findUtilisateur(), qui 
+  renvoit lui aussi un observable....Pose des difficultés à récupérer les valeurs*/
   async ngOnInit(): Promise<void> {
     this.title = "Mon covoiturage";
     this.showDetailsInProgress = false;
@@ -66,7 +73,7 @@ export class SingleCovoiturageComponent {
         //this.covoitNbrePlacesRestantesCalculees$ = this.covoiturage$.pipe(map(covoit => covoit.nombrePlacesRestantes = vehicule.nombreDePlaceDisponibles - covoit.passagers.length));
       });
       this.organisateur$ = this.utilisateurService.findById(covoit.organisateurId);
-      
+
     })
 
   }
