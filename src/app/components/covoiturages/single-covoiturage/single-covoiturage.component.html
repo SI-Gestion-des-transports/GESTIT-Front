@@ -58,7 +58,7 @@
                     <div class="col  col-md-3"><img src="assets/depart.png" alt="image_vehicule">
                     </div>
                     <div class="col mt-4">
-                        <p><!-- {{covoiturage.dateDepart | date:'le d MMMM yyyy à HH:mm'}} --></p>
+                        <p>{{covoiturage.dateDepart | date:'le d MMMM yyyy à HH:mm'}}</p>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                     <div class="col  col-md-3"><img src="assets/passagers.png" alt="image_vehicule"></div>
                     <div class="col  ">
                         <ul>
-                            <!-- <li *ngFor="let passager of covoiturage.passagers">{{passager.nom}}</li> -->
+                            <li *ngFor="let passager of covoiturage.passagers">{{passager.nom}}</li>
                         </ul>
                     </div>
                 </div>
@@ -93,8 +93,8 @@
                 <div class="row  ms-2">
                     <div class="col   col-md-3"><img src="assets/adresse_depart.png" alt="image_vehicule"></div>
                     <div class="col   ">
-                        <!--  <p class="mt-3"> {{covoiturage.adresseDepart.voie}} {{covoiturage.adresseDepart.codePostal}}
-                            {{covoiturage.adresseDepart.commune}}</p> -->
+                         <p class="mt-3"> {{covoiturage.adresseDepart.voie}} {{covoiturage.adresseDepart.codePostal}}
+                            {{covoiturage.adresseDepart.commune}}</p>
                     </div>
                 </div>
 
@@ -104,8 +104,8 @@
                 <div class="row  ms-2">
                     <div class="col  col-md-3"><img src="assets/adresse_arrivee.png" alt="image_vehicule"></div>
                     <div class="col  ">
-                        <!-- <p class="mt-3">{{covoiturage.adresseArrivee.voie}} {{covoiturage.adresseArrivee.codePostal}}
-                            {{covoiturage.adresseArrivee.commune}}</p> -->
+                        <p class="mt-3">{{covoiturage.adresseArrivee.voie}} {{covoiturage.adresseArrivee.codePostal}}
+                            {{covoiturage.adresseArrivee.commune}}</p>
                     </div>
                 </div>
             </div>
