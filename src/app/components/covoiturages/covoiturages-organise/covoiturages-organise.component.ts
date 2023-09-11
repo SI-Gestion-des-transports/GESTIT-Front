@@ -87,7 +87,7 @@ export class CovoituragesOrganiseComponent implements OnInit, OnChanges {
     this.covoitOrg = {};
     this.adresseDepart = {};
     this.adresseArrivee = {};
-    this.covoitOrg.organisateur = this.currentUser;
+    this.covoitOrg.organisateurId = this.currentUser.id;
 
   }
 
@@ -102,7 +102,7 @@ export class CovoituragesOrganiseComponent implements OnInit, OnChanges {
 
 
   onSubmit(){
-    this.covoitOrg.organisateur = this.currentUser;
+    this.covoitOrg.organisateurId = this.currentUser.id;
     this.covoitOrg.adresseDepart = this.adresseDepart;
     this.covoitOrg.adresseArrivee = this.adresseArrivee;
     console.log(this.adresseDepart.codePostal);
