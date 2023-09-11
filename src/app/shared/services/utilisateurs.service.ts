@@ -14,38 +14,36 @@ export class UtilisateursService implements OnInit, OnChanges {
   headers = new HttpHeaders();
 
   /*
-  Création d'un BehaviorSubject de type Utilisateur. 
-  Behavior s'attend à ce que nous lui fournissons une valeur initiale, 
+  Création d'un BehaviorSubject de type Utilisateur.
+  Behavior s'attend à ce que nous lui fournissons une valeur initiale,
   ce que nous faisons en lui assignant un objet vide.
   Le BehaviorSubject emettra toujours la dernière valeur de utilisateur.
-  Nous aurions pu utiliser Subject ici, mais l'avantage de BehaviorSubject est que 
-  les abonnés tardifs recevront toujours le dernier utilisateur immédiatement après l'abonnement. 
+  Nous aurions pu utiliser Subject ici, mais l'avantage de BehaviorSubject est que
+  les abonnés tardifs recevront toujours le dernier utilisateur immédiatement après l'abonnement.
   Nous n'avons pas besoin d'appeler la méthode next().
-  De plus, il est conseillé de ne pas exposer le BehaviorSubject en dehors du service. 
-  C'est pourquoi nous le convertissons en Observable normal et le retournons. 
-  En effet, les méthodes telles que next, complete ou error n'existent pas dans un 
-  observable normal. Cela garantit que l'utilisateur final ne les appellera pas 
+  De plus, il est conseillé de ne pas exposer le BehaviorSubject en dehors du service.
+  C'est pourquoi nous le convertissons en Observable normal et le retournons.
+  En effet, les méthodes telles que next, complete ou error n'existent pas dans un
+  observable normal. Cela garantit que l'utilisateur final ne les appellera pas
   accidentellement et qu'il ne s'y trompera pas.
   Pourquoi faisons-cela?
-    Créer un behaviorSubject, c'est créer un observable chaud, cad qui va emettre en continu une valeur, 
+    Créer un behaviorSubject, c'est créer un observable chaud, cad qui va emettre en continu une valeur,
     du type dont nous l'avons assigné, et de la valeur denière valeur que nous lu avons fourni.
     CurrentUserSource va donc, à ce stade, emettre un tableau vide en continu.
-    Tous les composants qui y seront abonné pourront accéder à cette valeur en continu, avec par 
+    Tous les composants qui y seront abonné pourront accéder à cette valeur en continu, avec par
     exemple le pipe async dans leur template html.
-    A chaque fois que currentUser est modifié, ses abonnés en seront donc automatiquement informés, 
+    A chaque fois que currentUser est modifié, ses abonnés en seront donc automatiquement informés,
     et pourront mettre, par exemple, leur affichage à jour
   */
   private currentUserSource = new BehaviorSubject<Utilisateur>({});
   private currentUserIdSource = new BehaviorSubject<number>(undefined);
   private currentUserNameSource = new BehaviorSubject<string>(undefined);
   private fakeCurrentUserSource = new BehaviorSubject<Utilisateur>({});
-  private currentUserSource = new BehaviorSubject<Utilisateur>({});
-  private currentUserIdSource = new BehaviorSubject<number>(undefined);
-  
+
   fakeCurrentUser$ = this.fakeCurrentUserSource.asObservable();
   currentUser$ = this.currentUserSource.asObservable();
   currentIdUser$ = this.currentUserIdSource.asObservable();
-  currentNameUser$ = this.currentUserNameSource.asObservable();
+  //currentNameUser$ = this.currentUserNameSource.asObservable();
   currentUserNameSource$ = this.currentUserNameSource.asObservable();
 
   private _baseUrl = environment.urlApi.users;
@@ -93,29 +91,31 @@ export class UtilisateursService implements OnInit, OnChanges {
 
   updateCurrentUser(): void {
     this.currentIdUser$.subscribe(userId => {
-      console.log("UserSrv — updateCurrentUser / CurrentUserId : " + userId);
-      
+      //console.log("UserSrv — updateCurrentUser / CurrentUserId : " + userId);
       this.findById(userId).subscribe(user => {
-        console.log("UserSrv — updateCurrentUser / currentUser.nom : " + user.nom);
+        //console.log("UserSrv — updateCurrentUser / currentUser.nom : " + user.nom);
         this.currentUserSource.next(user);
+        this.currentUserNameSource.next(user.nom);
       });
     })
   }
 
+/*
   updateCurrentUserDevTest(user: Utilisateur): void {
     this.currentUserSource.next(user);
 
-    /*petite incrustation de Mochizuki
+    /!*petite incrustation de Mochizuki
     Pour chaque mise à jour de l'utilisateur courant, le subject informe ses abonnés
-    de la mise à jour du nom d'utilisateur. Mochizuki l'utilise ici pour afficher le 
-    nom de l'utilisateur courant et connecté, dans la navBar*/
+    de la mise à jour du nom d'utilisateur. Mochizuki l'utilise ici pour afficher le
+    nom de l'utilisateur courant et connecté, dans la navBar*!/
     this.currentUserNameSource.next(user.nom);
   }
+  */
 
   updateCurrentUserId(userId: number): void {
-    console.log("UserSrv — updateCurrentUserId / CurrentUserId : " + userId);
+    //console.log("UserSrv — updateCurrentUserId / CurrentUserId : " + userId);
     this.currentUserIdSource.next(userId);
-    console.log("UserSrv — updateCurrentUserId / CurrentUserId : " + userId);
+    //console.log("UserSrv — updateCurrentUserId / CurrentUserId : " + userId);
     this.updateCurrentUser();
   }
 

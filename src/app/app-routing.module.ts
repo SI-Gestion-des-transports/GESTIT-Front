@@ -51,7 +51,11 @@ import { ConfirmationComponent } from './components/covoiturages/confirmation/co
 const routes: Routes = [
   {path:'covoituragesConfirmReservation', component: CovoiturageConformationComponent},
   {path:'covoiturages/:id', component:SingleCovoiturageComponent},   //Route avec paramètre dynamique
-  {path:'covoiturages', component: CovoiturageListComponent},
+  {path:'covoiturages', component: CovoiturageListComponent,
+    children: [
+      {path:'reservations', component: CovoituragesOrganiseListComponent}
+    ]},
+
 
   {path:'covoituragesOrganises-list', component: CovoituragesOrganiseListComponent},
   {path:'covoituragesOrganises', component: CovoituragesOrganiseComponent,
