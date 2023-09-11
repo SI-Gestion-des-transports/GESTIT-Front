@@ -110,7 +110,7 @@ export class CovoituragesOrganiseModifyComponent implements OnInit, OnChanges {
     this.currentCovoitOrg = {};
     this.adresseDepart = {};
     this.adresseArrivee = {};
-    this.covoitOrg.organisateur = this.currentUser;
+   // this.covoitOrg.organisateur = this.currentUser;
 
   }
 
@@ -138,7 +138,7 @@ export class CovoituragesOrganiseModifyComponent implements OnInit, OnChanges {
         this._router.navigateByUrl('covoituragesOrganises-list');
       });
     } else {*/
-      this.covoitOrg.organisateur = this.currentUser;
+    //  this.covoitOrg.organisateur = this.currentUser;
       this.covoitOrg.adresseDepart = this.adresseDepart;
       this.covoitOrg.adresseArrivee = this.adresseArrivee;
       this._covoitOrgService.update(this.currentCovoitOrg).subscribe(() => {

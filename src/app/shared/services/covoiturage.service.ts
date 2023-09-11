@@ -88,7 +88,8 @@ export class CovoiturageService {
 
   getFilteredbyUsersCovoit(idUtilisateur: number): Observable<Covoiturage[]> {
     return this._http.get<Covoiturage[]>(this._baseCovoitUrl)
-      .pipe(map(res => res.filter(res => res.organisateur?.id === idUtilisateur)));
+      //.pipe(map(res => res.filter(res => res.organisateur?.id === idUtilisateur)));
+      .pipe(map(res => res.filter(res => res.organisateurId === idUtilisateur)));
   }
 
   createArrayFrom(newArray: Covoiturage[], oldArray: Covoiturage[]): void {
