@@ -17,7 +17,6 @@ export const environment = {
     covoiturages: 'http://localhost:8080/covoiturages',
     vehiculeperso: 'http://localhost:8080/vehiculeperso',
     reservation: 'http://localhost:8080/reservation',
-    realCovoiturages: 'http://localhost:8080/covoiturages',
     login: 'http://localhost:8080/login',
     logout: 'http://localhost:8080/signout',
     utilisateur: 'http://localhost:8080/utilisateur'
