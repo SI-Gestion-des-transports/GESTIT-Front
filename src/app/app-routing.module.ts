@@ -79,14 +79,17 @@ const routes: Routes = [
   {path:'login', component:AuthentificationComponent},
   {path:'vehiculeperso', component:VehiculePersoComponent,
   children:[
+
     {path: "list",component: VehiculePersoListComponent},
     {path: "add",component: VehiculePersoAddComponent},
-    {path: "modify/:id",component: VehiculePersoModifyComponent}
+    {path: "modify/:id",component: VehiculePersoModifyComponent},
+    {path: "**",component: VehiculePersoListComponent}
   ]
   },
   {
     path: 'vehiculeService', component: VehiculeServiceComponent,
     children: [
+
       {path: "list", component: VehiculeServiceListComponent},
       {path: "add", component: VehiculeServiceAddComponent},
       {path: "modify/:id", component: VehiculeServiceModifyComponent},

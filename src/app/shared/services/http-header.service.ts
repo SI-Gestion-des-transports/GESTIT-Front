@@ -10,7 +10,7 @@ export class HttpHeaderService {
   jwt:string= window.localStorage.getItem(this.tokenName);
   constructor() { }
   getHeaders():HttpHeaders{
-    console.log(this.jwt);
+
    this.headers= this.headers.set(this.tokenName,this.jwt);
    return this.headers;
   }

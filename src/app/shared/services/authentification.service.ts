@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Injectable, OnInit} from "@angular/core";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Login} from "../models/login";
+import {HttpHeaderService} from "./http-header.service";
 import {UtilisateursService} from "./utilisateurs.service";
 import {ReservationVsService} from "./reservation.vs.service";
 
@@ -15,6 +16,7 @@ export class AuthentificationService {
   private _baseUrlLogin = environment.urlApi.login;
   private _baseUrlLogout = environment.urlApi.logout;
 
+
   private headersSource = new BehaviorSubject<HttpHeaders>(new HttpHeaders());
   private loggedBtnSource = new BehaviorSubject<boolean>(false);
 
@@ -22,7 +24,8 @@ export class AuthentificationService {
   loggedBtn$ = this.loggedBtnSource.asObservable();
 
   headers = new HttpHeaders();
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient,
+              private _httpHeader:HttpHeaderService) {
   }
 
 
@@ -30,14 +33,8 @@ export class AuthentificationService {
     return this._http.post(this._baseUrlLogin, tryLog);
   }
 
-  logout() {
-    window.localStorage.removeItem(`JWT-TOKEN`);
-    //console.log("Auth Service — logout");
-    this._http.post(this._baseUrlLogout, {},{headers: this.headers});
-    this.headers =  this.headers.delete(`JWT-TOKEN`);
-    //console.log("Auth Service — Header (this.headers) : ", this.headers);
-    //console.log("Auth Service — updateHeaders");
-    this.updateHeaders(this.headers);
+  logout(): Observable<any>{
+    return this._http.post(this._baseUrlLogout, {headers:this._httpHeader.getHeaders()});
   }
 
   checkToken(headers : HttpHeaders){
@@ -83,4 +80,5 @@ export class AuthentificationService {
         return result;
       }
   }
+
 }
