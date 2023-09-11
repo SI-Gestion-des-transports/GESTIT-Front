@@ -38,18 +38,16 @@ export class SingleCovoiturageComponent {
     une chaine de caractères qui contient des nombres en numberAttribute. */
     const covoiturageId = +this.route.snapshot.params['id'];
     this.covoiturage$ = this.covoiturageService.getCovoiturageById(covoiturageId);
-    this.covoiturage$.forEach((covoit) => {
-      console.log("******Affichage****covoit");
-      console.log(covoit);
-      console.log(covoit.vehiculePersoId.toString());
+    this.covoiturage$.subscribe((covoit) => {
+      
       this.vehiculeObs$ = this.vehiculePersoService.findVpById(covoit.vehiculePersoId.toString());
       this.vehiculeObs$.subscribe((vehicule) => {
         console.log("******Affichage****vehicule");
         console.log(vehicule);
-        this.vehiculePerso = vehicule;
-        this.nombrePlacesRestantes = vehicule.nombreDePlaceDisponibles - covoit.passagers.length;
-        console.log("******Affichage****covoit");
-        console.log(this.vehiculePerso);
+        // this.vehiculePerso = vehicule;
+        // this.nombrePlacesRestantes = vehicule.nombreDePlaceDisponibles - covoit.passagers.length;
+        // console.log("******Affichage****covoit");
+        // console.log(this.vehiculePerso);
 
       });
     })
