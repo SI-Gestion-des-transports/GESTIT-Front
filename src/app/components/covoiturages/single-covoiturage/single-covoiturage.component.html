@@ -2,7 +2,7 @@
     *ngIf="covoiturage$ | async as covoiturage" [ngClass]="{showDetails : showDetailsInProgress === true}">
     <h2 class="text-center mb-3 text-bg-danger">Demande de réservation</h2>
     <p class="text-danger  ">Vous êtes sur le point de réserver une place pour le trajet n° {{covoiturage.id}}.<br>
-    Veuillez vérifier les informations ci-dessous puis validez votre place en appuyant sur 
+    Veuillez vérifier les informations ci-dessous puis validez votre place en appuyant sur
     le bouton "Confirmer ma participation"
     </p>
     <div class="container mt-4 ">
@@ -30,7 +30,7 @@
                 <div class="row ms-2">
                     <div class="col col-md-3"><img src="assets/organisateur.png" alt="image_vehicule"></div>
                     <div class="col border-3 ">
-                        <p class="mt-4 ">{{covoiturage.organisateur.nom}}</p>
+                        <p class="mt-4 ">{{covoiturage.organisateurId}}</p>
                     </div>
                 </div>
 
