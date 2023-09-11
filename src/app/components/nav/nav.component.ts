@@ -101,12 +101,10 @@ export class NavComponent implements OnInit {
       })
     )
     this.ngOnChanges();
-
-   
   }
 
   ngOnChanges(){
-    if(this.currentUserId != null){
+/*    if(this.currentUserId != null){
       console.log("NavComp — ngOnChanges / this.currentUserId : ",this.currentUserId);
       console.log("NavComp — ngOnChanges / loggedBtn : ",this.loggedBtn);
       this._authService.updateLoggedBtn(true);
@@ -117,7 +115,7 @@ export class NavComponent implements OnInit {
       console.log("NavComp — ngOnChanges / loggedBtn : ",this.loggedBtn);
       this._authService.updateLoggedBtn(false);
       console.log("NavComp — ngOnChanges / loggedBtn : ",this.loggedBtn);
-    }
+    }*/
   }
 
   ngOnDestroy(): void {
@@ -193,9 +191,10 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
+    console.log("NavComp — logout");
     this._authService.logout();
     this.router.navigateByUrl('')
-    this._authService.updateHeaders({});
+    this._authService.updateHeaders(new HttpHeaders());
     console.log("NavComp — logout / currentUserId : ", this.currentUserId);
     this._utilisateurService.updateCurrentUserId(null);
     console.log("NavComp — logout / currentUserId : ", this.currentUserId);

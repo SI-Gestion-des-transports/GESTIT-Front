@@ -63,14 +63,14 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
           this.pastReservationsVsByUser = data;
         })
     );
-    console.log("Réservation Form — Before SUBSCRIPTION / this.currentUser.id" + this.currentUser.id);
+    console.log("Réservation Form — Before SUBSCRIPTION / this.currentUser.id : " + this.currentUser.id);
     this._subscription.add(
       this._utilisateurService.currentUser$
         .subscribe(data => {
           this.currentUser = data;
         })
     );
-    console.log("Réservation Form — After SUBSCRIPTION / this.currentUser.id" + this.currentUser.id);
+    console.log("Réservation Form — After SUBSCRIPTION / this.currentUser.id : " + this.currentUser.id);
     this._subscription.add(
       this._reservationVsService.currentVs$
         .subscribe(data => {
@@ -168,9 +168,9 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   update(updatedReservation : ReservationVs){
     console.log("Réservation Form — UPDATE / reservation.user.id : " + updatedReservation.userId);
     this._reservationVsService.update(updatedReservation).subscribe(() => {
-      this.reInitResVs();
-      this._router.navigateByUrl('reservationsvs/list');
     });
+    this.reInitResVs();
+    this._router.navigateByUrl('reservationsvs/list');
   }
 
   reInitResVs(){

@@ -13,32 +13,20 @@ export class UtilisateursService implements OnInit, OnChanges {
 
   headers = new HttpHeaders();
 
-  /*création d'un BehaviorSubject de type Utilisateur. 
+  /*
+  Création d'un BehaviorSubject de type Utilisateur. 
   Behavior s'attend à ce que nous lui fournissons une valeur initiale, 
   ce que nous faisons en lui assignant un objet vide.
   Le BehaviorSubject emettra toujours la dernière valeur de utilisateur.
   Nous aurions pu utiliser Subject ici, mais l'avantage de BehaviorSubject est que 
   les abonnés tardifs recevront toujours le dernier utilisateur immédiatement après l'abonnement. 
-  Nous n'avons pas besoin d'appeler la méthode next().*/ 
-  private currentUserSource = new BehaviorSubject<Utilisateur>({});
-  private currentUserIdSource = new BehaviorSubject<number>(undefined);
-
-  /*petite incrustation de Mochizuki*/
-  private currentUserNameSource = new BehaviorSubject<string>(undefined);
-
-  /*De plus, il est conseillé de ne pas exposer le BehaviorSubject en dehors du service. 
+  Nous n'avons pas besoin d'appeler la méthode next().
+  De plus, il est conseillé de ne pas exposer le BehaviorSubject en dehors du service. 
   C'est pourquoi nous le convertissons en Observable normal et le retournons. 
   En effet, les méthodes telles que next, complete ou error n'existent pas dans un 
   observable normal. Cela garantit que l'utilisateur final ne les appellera pas 
-  accidentellement et qu'il ne s'y trompera pas.*/
-  currentUser$ = this.currentUserSource.asObservable();
-  currentIdUser$ = this.currentUserIdSource.asObservable();
-  currentNameUser$ = this.currentUserNameSource.asObservable();
-
-  /*petite incrustation de Mochizuki*/
-  currentUserNameSource$ = this.currentUserNameSource.asObservable();
-
-  /*Pourquoi faisons-cela?
+  accidentellement et qu'il ne s'y trompera pas.
+  Pourquoi faisons-cela?
     Créer un behaviorSubject, c'est créer un observable chaud, cad qui va emettre en continu une valeur, 
     du type dont nous l'avons assigné, et de la valeur denière valeur que nous lu avons fourni.
     CurrentUserSource va donc, à ce stade, emettre un tableau vide en continu.
@@ -46,12 +34,22 @@ export class UtilisateursService implements OnInit, OnChanges {
     exemple le pipe async dans leur template html.
     A chaque fois que currentUser est modifié, ses abonnés en seront donc automatiquement informés, 
     et pourront mettre, par exemple, leur affichage à jour
-    */
-
+  */
+  private currentUserSource = new BehaviorSubject<Utilisateur>({});
+  private currentUserIdSource = new BehaviorSubject<number>(undefined);
+  private currentUserNameSource = new BehaviorSubject<string>(undefined);
+  private fakeCurrentUserSource = new BehaviorSubject<Utilisateur>({});
+  private currentUserSource = new BehaviorSubject<Utilisateur>({});
+  private currentUserIdSource = new BehaviorSubject<number>(undefined);
+  
+  fakeCurrentUser$ = this.fakeCurrentUserSource.asObservable();
+  currentUser$ = this.currentUserSource.asObservable();
+  currentIdUser$ = this.currentUserIdSource.asObservable();
+  currentNameUser$ = this.currentUserNameSource.asObservable();
+  currentUserNameSource$ = this.currentUserNameSource.asObservable();
 
   private _baseUrl = environment.urlApi.users;
   private _realBaseUrl = environment.urlApi.utilisateur;
-
 
   private _subscription = new Subscription();
 
@@ -117,7 +115,12 @@ export class UtilisateursService implements OnInit, OnChanges {
   updateCurrentUserId(userId: number): void {
     console.log("UserSrv — updateCurrentUserId / CurrentUserId : " + userId);
     this.currentUserIdSource.next(userId);
+    console.log("UserSrv — updateCurrentUserId / CurrentUserId : " + userId);
     this.updateCurrentUser();
+  }
+
+  updateFakeCurrentUser(user: Utilisateur){
+    this.fakeCurrentUserSource.next(user);
   }
 
 }
