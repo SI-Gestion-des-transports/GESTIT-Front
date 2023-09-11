@@ -85,7 +85,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
             this.currentVs = this.vehiculesSrv[0];
             this.currentIndex=0;
           }
-        }));
+        });
     this._vehiculeSrvService.findAllEnService().subscribe(data => this.vehiculesSrv = data);
     this._subscription.add(
       this._reservationVsService.currentReservationVs$
