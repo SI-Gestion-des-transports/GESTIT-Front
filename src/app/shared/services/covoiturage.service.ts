@@ -26,20 +26,17 @@ export class CovoiturageService {
   private adresseArriveeSource = new BehaviorSubject<Adresse>({});
   private currentCovoitOrgSource = new BehaviorSubject<Covoiturage>({});
   private covoitOrgSource = new BehaviorSubject<Covoiturage>({});
+  private covoitByOrganisateurSource = new BehaviorSubject<Covoiturage[]>([]);
   private currentUserSource = new BehaviorSubject({});
   private vehiculesPersoCurrentUserSource = new BehaviorSubject<VehiculePerso[]>([]);
   private modifBtnSource = new BehaviorSubject<boolean>(true);
-
-
-
-
-
 
   covoiturage$ = this.covoitOrgSource.asObservable() ;
   adresseDepart$ = this.adresseDepartSource.asObservable();
   adresseArrivee$ = this.adresseArriveeSource.asObservable();
   currentCovoiturage$ = this.currentCovoitOrgSource.asObservable();
   currentUser$ = this.currentUserSource.asObservable();
+  covoitByOrganisateur$ = this.covoitByOrganisateurSource.asObservable();
   vehiculesPersoCurrentUser$ = this.vehiculesPersoCurrentUserSource.asObservable();
 
 
@@ -83,7 +80,7 @@ export class CovoiturageService {
   }
 
   findUpcomingCovoituragesByUserId(userId?: number): Observable<Covoiturage[]>{
-    return this._http.get<Covoiturage[]>(`${this._realBaseUrl}/upcoming`)
+    return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/listerorganises`)
   }
 
   getFilteredbyUsersCovoit(idUtilisateur: number): Observable<Covoiturage[]> {
@@ -180,6 +177,9 @@ export class CovoiturageService {
     this.vehiculesPersoCurrentUserSource.next(data);
   }
 
+  updateCovoitByOrganisateur(data : Covoiturage[]){
+    this.covoitByOrganisateurSource.next(data);
+  }
 
   updateModifBtn(data: boolean): void {
     this.modifBtnSource.next(data);

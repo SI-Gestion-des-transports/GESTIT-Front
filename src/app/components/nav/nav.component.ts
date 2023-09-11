@@ -142,7 +142,7 @@ export class NavComponent implements OnInit {
         break;
       case '5':
         //console.log(5);
-        this.router.navigateByUrl('vehiculeperso');
+        this.router.navigateByUrl('vehiculeperso/list');
         break;
       default: throw new Error();
     }

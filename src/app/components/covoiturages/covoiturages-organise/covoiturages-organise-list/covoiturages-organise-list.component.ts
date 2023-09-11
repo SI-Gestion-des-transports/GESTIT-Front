@@ -31,6 +31,7 @@ export class CovoituragesOrganiseListComponent {
   vehiculesPersoCurrentUser: VehiculePerso[] = [];
   currentCovoitOrg : Covoiturage = {};
   covoitOrg: Covoiturage = {};
+  covoitByOrganisateur: Covoiturage[] = [];
   // Fin variables partagées
   modifBtn!: boolean;
   upcompingCovoiturages : boolean = true;
@@ -65,6 +66,11 @@ export class CovoituragesOrganiseListComponent {
           this.currentCovoitOrg = data;
         })
     );
+    this._subscription.add(
+      this._covoitOrgService.covoitByOrganisateur$.subscribe(data => {
+        this.covoitByOrganisateur = data
+      })
+    );
     this._init();
   }
 
@@ -82,7 +88,7 @@ export class CovoituragesOrganiseListComponent {
         });
 
       this.upcompingCovoiturages =true;
-      this._covoitOrgService.findUpcomingCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => this.upcomingCovoitOrgsResByUser = upcomingCovoitOrgRes)
+      this._covoitOrgService.findUpcomingCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => this.upcomingCovoitOrgsResByUser = upcomingCovoitOrgRes);
     }
   }
 
