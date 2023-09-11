@@ -32,33 +32,33 @@ export class AuthentificationService {
 
   logout() {
     window.localStorage.removeItem(`JWT-TOKEN`);
-    console.log("Auth Service — logout");
+    //console.log("Auth Service — logout");
     this._http.post(this._baseUrlLogout, {},{headers: this.headers});
     this.headers =  this.headers.delete(`JWT-TOKEN`);
-    console.log("Auth Service — Header (this.headers) : ", this.headers);
-    console.log("Auth Service — updateHeaders");
+    //console.log("Auth Service — Header (this.headers) : ", this.headers);
+    //console.log("Auth Service — updateHeaders");
     this.updateHeaders(this.headers);
   }
 
   checkToken(headers : HttpHeaders){
-    console.log("Auth Service — checkToken");
+    //console.log("Auth Service — checkToken");
     if(window.localStorage.getItem("JWT-TOKEN") != null) {
       this.updateHeaders(this.headers);
     }
   }
 
   updateHeaders(data: Object){
-    console.log("Auth Service — data : ", data);
+    //console.log("Auth Service — data : ", data);
     this.headers = new HttpHeaders({});
     Object.keys(data).forEach(key => {
       if(data[key] !== null && data[key] !== undefined) {  // Vérification ajoutée ici
-        console.log("Auth Service — Header set : name:", key, "Values:", data[key]);
+        //console.log("Auth Service — Header set : name:", key, "Values:", data[key]);
         this.headers = this.headers.set(key, data[key]);
       }
     });
-    console.log("Auth Service — Header (this.headers) : ", this.headers);
+    //console.log("Auth Service — Header (this.headers) : ", this.headers);
     this.headersSource.next(this.headersToJSON(this.headers));
-    console.log("Auth Service — Header (this.headersSource) : ", this.headersSource.getValue())
+    //console.log("Auth Service — Header (this.headersSource) : ", this.headersSource.getValue())
 /*    if(window.localStorage.getItem("JWT-TOKEN") != null){
       let token = window.localStorage.getItem("JWT-TOKEN");
       console.log("Auth Service — token : ", token)*/
@@ -70,11 +70,11 @@ export class AuthentificationService {
 
   updateLoggedBtn(data){
     this.loggedBtnSource.next(data);
-    console.log("Auth Service — updateLoggedBtn : ", data);
+    //console.log("Auth Service — updateLoggedBtn : ", data);
   }
 
   headersToJSON(headers: HttpHeaders): any {
-    console.log("Auth Service — headersToJSON");
+    //console.log("Auth Service — headersToJSON");
       let result = {};
       if(headers) {
         headers.keys().forEach(key => {

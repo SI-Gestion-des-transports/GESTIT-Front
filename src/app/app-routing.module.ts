@@ -55,8 +55,6 @@ const routes: Routes = [
     children: [
       {path:'reservations', component: CovoituragesOrganiseListComponent}
     ]},
-
-
   {path:'covoituragesOrganises-list', component: CovoituragesOrganiseListComponent},
   {path:'covoituragesOrganises', component: CovoituragesOrganiseComponent,
     children: [

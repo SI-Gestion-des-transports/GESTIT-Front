@@ -63,14 +63,14 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
           this.pastReservationsVsByUser = data;
         })
     );
-    console.log("Réservation Form — Before SUBSCRIPTION / this.currentUser.id : " + this.currentUser.id);
+    //console.log("Réservation Form — Before SUBSCRIPTION / this.currentUser.id : " + this.currentUser.id);
     this._subscription.add(
       this._utilisateurService.currentUser$
         .subscribe(data => {
           this.currentUser = data;
         })
     );
-    console.log("Réservation Form — After SUBSCRIPTION / this.currentUser.id : " + this.currentUser.id);
+    //console.log("Réservation Form — After SUBSCRIPTION / this.currentUser.id : " + this.currentUser.id);
     this._subscription.add(
       this._reservationVsService.currentVs$
         .subscribe(data => {
@@ -111,24 +111,30 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   ngOnChanges(changes: SimpleChanges) {
     if (this.currentUser){
       this._init();
-      console.log(this.currentUser.nom)
-      console.log("Réservation Form — ngOnChanges : currentUser");
+      //console.log(this.currentUser.nom)
+      //console.log("Réservation Form — ngOnChanges : currentUser");
     }
     if (this.reservationVs){
-      console.log("Réservation Form — ngOnChanges : reservationVs");
+      //console.log("Réservation Form — ngOnChanges : reservationVs");
     }
     if (this.reservationVs.vehiculeServiceId){
-      console.log("CLICK")
+      //console.log("Réservation Form — ngOnChanges : resVs.vehiculeServiceId")
     }
   }
 
   ngOnDestroy(): void {
-    console.log("Réservation FORM Destroyed — unsuscribe")
+    this.reInitResVs();
+    //console.log("Réservation FORM Destroyed — unsuscribe")
     this._subscription.unsubscribe(); // Se désabonner de tous les observables en une fois
   }
 
   private _init(){
-    console.log("Réservation Form — _init");
+    if(!window.localStorage.getItem("JWT-TOKEN")) {
+      //console.log("Reservation Form — _init / localStorage.getItem : false");
+      //console.log("Reservation Form ——>>>> Login");
+      this._router.navigateByUrl('login');
+    }
+    //console.log("Réservation Form — _init");
     this._reservationVsService
       .findAll()
       .subscribe(reservations => {
@@ -138,7 +144,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
 
   onSubmit(event: Event): void {
     event.preventDefault();
-    console.log("Réservation Form — OnSubmit");
+    //console.log("Réservation Form — OnSubmit");
     if(this.currentReservationVs.id){
       this.update(this.reservationVs);
     } else if (!this.currentReservationVs.id){
@@ -147,15 +153,15 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   }
 
   cancel(){
-    console.log("Réservation Form — CANCEL");
+    //console.log("Réservation Form — CANCEL");
     this.reInitResVs();
     this._router.navigateByUrl('reservationsvs/list');
   }
 
   create(reservationVs:ReservationVs){
-    console.log("Réservation Form — CREATE / currentUser.id : " + this.currentUser.id)
+    //console.log("Réservation Form — CREATE / currentUser.id : " + this.currentUser.id)
     reservationVs.userId = this.currentUser.id;
-    console.log("Réservation Form — CREATE / reservation.user.id : " + reservationVs.userId);
+    //console.log("Réservation Form — CREATE / reservation.user.id : " + reservationVs.userId);
     this._reservationVsService
       .create(this.addSecondsToDate(reservationVs))
       .subscribe(() =>{
@@ -166,27 +172,28 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   }
 
   update(updatedReservation : ReservationVs){
-    console.log("Réservation Form — UPDATE / reservation.user.id : " + updatedReservation.userId);
-    this._reservationVsService.update(updatedReservation).subscribe(() => {
+    //console.log("Réservation Form — UPDATE / reservation.user.id : " + updatedReservation.userId);
+    this._reservationVsService.update(this.addSecondsToDate(updatedReservation)).subscribe((data) => {
+      //console.log("Réservation Form — UPDATED ResVS : ",data)
     });
     this.reInitResVs();
     this._router.navigateByUrl('reservationsvs/list');
   }
 
   reInitResVs(){
-    console.log("Réservation Form — ReInitVs");
+    //console.log("Réservation Form — ReInitVs");
     this._reservationVsService.updateCurrentReservationVs({});
     this._reservationVsService.updateModifBtn(true);
   }
 
   private addSecondsToDate(reservationVs: ReservationVs): ReservationVs {
-    reservationVs.dateHeureDepart = `${reservationVs.dateHeureDepart}:00`;
-    reservationVs.dateHeureRetour = `${reservationVs.dateHeureRetour}:00`;
+    reservationVs.dateHeureDepart = `${reservationVs.dateHeureDepart.slice(0, 16)}:00`;
+    reservationVs.dateHeureRetour = `${reservationVs.dateHeureRetour.slice(0, 16)}:00`;
     return reservationVs;
   }
 
   select(vs: VehiculeService) {
-    console.log("CLICK")
+    //console.log("Réservation Form — Select vs")
     this.currentVs = vs;
   }
 

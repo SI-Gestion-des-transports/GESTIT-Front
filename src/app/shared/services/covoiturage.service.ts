@@ -63,7 +63,8 @@ export class CovoiturageService {
 
 
   public getAllCovoiturages(): Observable<Covoiturage[]> {
-    return this._http.get<Covoiturage[]>(this._baseCovoitUrl);
+
+    return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/listall`);
   }
 
   public getCovoituragesByOrganisateur(
