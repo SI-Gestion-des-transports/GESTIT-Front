@@ -1,3 +1,4 @@
+<div *ngFor="let device of arrayOfObservable">{{ device}}</div>
 <div *ngIf="mochizukiCovoiturage as covoit">
     <p>{{covoit.dureeTrajet}}</p>
     <p>{{covoit.adresseArrivee.codePostal}}</p>
@@ -14,14 +15,3 @@
     <p>{{vehicule.nombreDePlaceDisponibles}}</p>
     <p>{{vehicule.userId}}</p>
 </div>
-
-<!-- <div *ngIf="essaiUser as user">{{user.nom}}</div> -->
-
-
-<ul>
-    <li *ngFor="let liste of tab">{{ liste.nom }}</li>
-</ul>
-
-
-
-

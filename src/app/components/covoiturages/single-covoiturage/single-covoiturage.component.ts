@@ -52,9 +52,9 @@ export class SingleCovoiturageComponent {
   mochizukiListePassagers: Utilisateur[] | undefined;
   mochizukiListeIdPassagers: number[] | undefined;
   essaiUser: Utilisateur | undefined;
-  tab: Utilisateur[];
-  tableauObs: Observable<Utilisateur>[];
-
+  tab: string[];
+  tableauObs: Observable<any>[];
+  arrayOfObservable:any;
 
 
 
@@ -77,26 +77,12 @@ export class SingleCovoiturageComponent {
     let name: string[];
     this.covoiturageService.getCovoiturageById(covoiturageId).subscribe((covoit) => {
       this.mochizukiCovoiturage = covoit;
-
-      covoit.passagersId.forEach(idPassager => {
-        this.utilisateurService.findById(idPassager)
-        .subscribe(v => console.log(v));
-
-          
-
-
-      })
       
-
-
-      // covoit.passagersId.forEach(idPassager => {
-      //   console.log("idPaasager :",idPassager);
-      //   this.utilisateurService.findById(idPassager).subscribe(value => this.mochizukiListePassagers.push(value));
-
-      //   //this.utilisateurService.findById(idPassager).subscribe(value => this.mochizukiListePassagers.push(value));
-
-
-      // })
+        this.arrayOfObservable = covoit.passagersId.map(idPassager => {
+          return this.utilisateurService.findById(idPassager);
+        })
+        
+      
 
 
       this.vehiculePersoService.findVpById_Mochizuki(covoit.vehiculePersoId.toString())
