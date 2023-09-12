@@ -51,7 +51,9 @@ export class SingleCovoiturageComponent {
   mochizukiVehiculePerso: VehiculePerso | undefined;
   mochizukiListePassagers: Utilisateur[] | undefined;
   mochizukiListeIdPassagers: number[] | undefined;
-  essaiUser:Utilisateur|undefined;
+  essaiUser: Utilisateur | undefined;
+  tab: Utilisateur[];
+  tableauObs: Observable<Utilisateur>[];
 
 
 
@@ -66,13 +68,27 @@ export class SingleCovoiturageComponent {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.tab = new Array();
     this.title = "Mon covoiturage";
     this.showDetailsInProgress = false;
 
     const covoiturageId = +this.route.snapshot.params['id'];
 
+    let name: string[];
     this.covoiturageService.getCovoiturageById(covoiturageId).subscribe((covoit) => {
       this.mochizukiCovoiturage = covoit;
+
+      covoit.passagersId.forEach(idPassager => {
+        this.utilisateurService.findById(idPassager)
+        .subscribe(v => console.log(v));
+
+          
+
+
+      })
+      
+
+
       // covoit.passagersId.forEach(idPassager => {
       //   console.log("idPaasager :",idPassager);
       //   this.utilisateurService.findById(idPassager).subscribe(value => this.mochizukiListePassagers.push(value));
@@ -81,19 +97,21 @@ export class SingleCovoiturageComponent {
 
 
       // })
-      this.mochizukiListeIdPassagers = covoit.passagersId;
-      this.mochizukiListeIdPassagers.forEach(id => this.utilisateurService.findById(id).subscribe(v=> this.essaiUser=v))
-
-      console.log("liste des passagers:",this.mochizukiListePassagers);
-      
-
 
 
       this.vehiculePersoService.findVpById_Mochizuki(covoit.vehiculePersoId.toString())
         .subscribe(vehicule => this.mochizukiVehiculePerso = vehicule);
-    })
 
-    
+    });
+
+
+
+
+
+
+
+
+
 
 
 
