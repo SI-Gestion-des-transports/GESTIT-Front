@@ -18,49 +18,12 @@ import { environment } from 'src/environments/environment.development';
 })
 export class SingleCovoiturageComponent {
 
-  title!: string;
-  showDetailsInProgress!: boolean;
-  covoiturage$!: Observable<Covoiturage>;
-  vehiculeObs$!: Observable<VehiculePerso>;
-  organisateur$!: Observable<Utilisateur>;
-  toto!: number;
-  covoitNbrePlacesRestantesCalculees$!: Observable<number>;
-  passagers$: Observable<Utilisateur>[];
-
-  passagers!: Utilisateur[];
-  listePassagers!: Utilisateur[];
-
-  utilisateur!: Utilisateur
-  passagerId!: number[];
-
-
-  vehiculePerso: VehiculePerso;
-
-
-
-  mec$: Observable<Utilisateur>;
-  mecsDansBagnole$!: Observable<Utilisateur>[];
-
-  vehicule!: VehiculePerso;
-
-  covoiturage: Covoiturage | undefined;
-
-
   /*refection*/
   mochizukiCovoiturage: Covoiturage | undefined;
+  title!: string;
+  showDetailsInProgress!: boolean;
+  ObservableListePassagers: Observable<Utilisateur[]> | undefined;
   mochizukiVehiculePerso: VehiculePerso | undefined;
-  mochizukiListePassagers: Utilisateur[] | undefined;
-  mochizukiListeIdPassagers: number[] | undefined;
-  essaiUser: Utilisateur | undefined;
-  tab: string[];
-  tableauObs: Observable<any>[];
-  arrayOfObservable: Observable<Utilisateur>[];
-
-  ObservableListePassagers:Observable<Utilisateur[]>|undefined;
-
-
-
-
 
 
   constructor(private covoiturageService: CovoiturageService,
@@ -70,89 +33,31 @@ export class SingleCovoiturageComponent {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.tab = new Array();
     this.title = "Mon covoiturage";
     this.showDetailsInProgress = false;
 
-    const covoiturageId = +this.route.snapshot.params['id'];
+    const covoiturageId = +this.route.snapshot.params['id'];  /*L'opérateur '+' effectue un cast*/
 
-    let name: string[];
     this.covoiturageService.getCovoiturageById(covoiturageId).subscribe((covoit) => {
+      /*récupération du covoiturage depuis son Observable*/
       this.mochizukiCovoiturage = covoit;
 
-     this.ObservableListePassagers = this.getObservableOfPassengersList(covoit.passagersId);
+      /*récupération d'un Observable de la liste des Passagers à partir de la liste des ids*/
+      this.ObservableListePassagers = this.getObservableOfPassengersList(covoit.passagersId);
 
-
-
-
-
-
-
-
+      /*Récupération du véhicule sur lequel s'opère le covoiturage*/
       this.vehiculePersoService.findVpById_Mochizuki(covoit.vehiculePersoId.toString())
         .subscribe(vehicule => this.mochizukiVehiculePerso = vehicule);
-
     });
-
-
-
-
-
-
-
-
-
-
-
-
-    // this.covoiturage$.subscribe((covoit) => {
-    //   this.covoiturage = covoit;
-    //   console.log("********", this.covoiturage);
-
-    //   this.vehiculeObs$ = this.vehiculePersoService.findVpById_Mochizuki(covoit.vehiculePersoId.toString());
-    //   this.vehiculeObs$.subscribe(value => {
-
-    //     this.vehiculePerso = value;
-    //     console.log("tttttttt",this.vehiculePerso);
-    //   })
-
-    //   console.log("------> ", this.vehiculeObs$);
-
-    //   this.vehiculeObs$.subscribe();
-
-
-    //this.vehiculeObs$.subscribe(); //Pourquoi il a besoin de ca?
-
-    /*Récupération de la liste des id des passagers*/
-    // this.passagerId = covoit.passagersId;
-    /*test si on récupère un passager ca fonctionne*/
-    // this.mec$ = this.utilisateurService.findById(this.passagerId[0]);
-
-
-    // this.passagerId.forEach(idPassager => {
-    //   let type = this.utilisateurService.findById(idPassager);
-    //   console.log("passager dans la voiture");
-    //   type.subscribe(value => {
-    //     console.log(value)
-    // this.mecsDansBagnole$.push(value);
-    //   });
-    // })
-    // console.log("aaaaa",this.vehiculePerso);
-
-
-    // mec$
-    // console.log("affivhage tuilisaeur");
-
-
   }
 
 
 
-  getObservableOfPassengersList(listIdPassagers: number[]) : Observable<Utilisateur[]>{
+  getObservableOfPassengersList(listIdPassagers: number[]): Observable<Utilisateur[]> {
     const arrayOfObservables = listIdPassagers.map(idPassager => {
       return this.utilisateurService.findById(idPassager);
     });
-    return combineLatest(arrayOfObservables); 
+    return combineLatest(arrayOfObservables);
   }
 
 
