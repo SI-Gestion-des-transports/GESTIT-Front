@@ -22,12 +22,16 @@ import { environment } from 'src/environments/environment.development';
 })
 export class SingleCovoiturageComponent {
 
+  nomUtilisateurCourant$: Observable<string>;
+  idUtilisateurCourant$: Observable<number>;
+
   covoiturageAconfirmer!: Covoiturage;
   title!: string;
   showDetailsInProgress!: boolean;
   organisateur!: Utilisateur;
   observableListePassagers!: Observable<Utilisateur[]>;
   vehiculeForCovoiturage!: VehiculePerso;
+  nombreDePlacesRestances!: number;
 
   /*Injection des services*/
   constructor(private covoiturageService: CovoiturageService,
@@ -38,6 +42,11 @@ export class SingleCovoiturageComponent {
 
 
   ngOnInit(): void {
+    /*récupération de la référence de l'observable sur le nom de l'utilisateur courant*/
+    this.nomUtilisateurCourant$ = this.utilisateurService.currentUserNameSource$;
+
+    /*récupération de la référence de l'observable sur l'id de l'utilisateur courant*/
+    this.idUtilisateurCourant$ = this.utilisateurService.currentIdUser$;
     this.title = "Mon covoiturage";
     this.showDetailsInProgress = false;
 
@@ -45,6 +54,7 @@ export class SingleCovoiturageComponent {
 
     this.covoiturageService.getCovoiturageById(covoiturageId)
       .subscribe((covoit) => {
+
 
         /*récupération du covoiturage depuis son Observable*/
         this.covoiturageAconfirmer = covoit;
@@ -58,7 +68,11 @@ export class SingleCovoiturageComponent {
 
         /*Récupération du véhicule sur lequel s'opère le covoiturage*/
         this.vehiculePersoService.findVpById_Mochizuki(covoit.vehiculePersoId.toString())
-          .subscribe(vehicule => this.vehiculeForCovoiturage = vehicule);
+          .subscribe(vehicule => {
+            this.vehiculeForCovoiturage = vehicule;
+            /*Calcul du nombre de places restantes*/
+            this.nombreDePlacesRestances = vehicule.nombreDePlaceDisponibles - covoit.passagersId.length;
+          });
       });
   }
 
@@ -93,8 +107,14 @@ export class SingleCovoiturageComponent {
   }
 
   onClickConfirmerParticipation() {
-    this.router.navigateByUrl('covoituragesConfirmReservation');
-  }
+    if (this.nombreDePlacesRestances < 1)
+      throw new Error("Le nombre de places restantes pour le covoiturage ne devrait pas être inférieur à 1");
 
+    this.idUtilisateurCourant$
+      .subscribe(id => {
+        this.covoiturageAconfirmer.passagersId.push(id);
+        this.covoiturageService.update(this.covoiturageAconfirmer);
+      });
+  }
 }
 
