@@ -56,7 +56,7 @@ export class SingleCovoiturageComponent {
   tableauObs: Observable<any>[];
   arrayOfObservable: Observable<Utilisateur>[];
 
-  array:Observable<Utilisateur[]>|undefined;
+  ObservableListePassagers:Observable<Utilisateur[]>|undefined;
 
 
 
@@ -80,7 +80,7 @@ export class SingleCovoiturageComponent {
     this.covoiturageService.getCovoiturageById(covoiturageId).subscribe((covoit) => {
       this.mochizukiCovoiturage = covoit;
 
-     this.array = this.getDeviceItemData(covoit.passagersId);
+     this.ObservableListePassagers = this.getObservableOfPassengersList(covoit.passagersId);
 
 
 
@@ -148,9 +148,9 @@ export class SingleCovoiturageComponent {
 
 
 
-  getDeviceItemData(device_ids: number[]) : Observable<Utilisateur[]>{
-    const arrayOfObservables = device_ids.map(device_id => {
-      return this.utilisateurService.findById(device_id);
+  getObservableOfPassengersList(listIdPassagers: number[]) : Observable<Utilisateur[]>{
+    const arrayOfObservables = listIdPassagers.map(idPassager => {
+      return this.utilisateurService.findById(idPassager);
     });
     return combineLatest(arrayOfObservables); 
   }
