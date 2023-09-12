@@ -9,6 +9,8 @@ import { Adresse } from '../models/adresse';
 import { AdressesService } from './adresses.service';
 import {VehiculePerso} from "../models/vehicule.perso";
 import {AuthentificationService} from "./authentification.service";
+import {HttpHeaderService} from "./http-header.service";
+import {UtilisateursService} from "./utilisateurs.service";
 
 
 @Injectable({
@@ -17,6 +19,8 @@ import {AuthentificationService} from "./authentification.service";
 export class CovoiturageService implements OnInit {
   user!: Utilisateur;
   headers = new HttpHeaders();
+
+  currentUserId : number;
 
 
   private _baseCovoitUrl = environment.urlApi.covoiturages;
@@ -57,7 +61,8 @@ private _subscription = new Subscription();
       this.headers = data;
       console.log("this.headers :", this.headers);
     }));
-
+    this.currentUserId = this._utilisateurService.getSharedCurrentUserId();
+    console.log("Cov Srv — ngOnInit / getSharedCurrentUserId() : " + this._utilisateurService.getSharedCurrentUserId());
     //this.updateCovoitOrg(this.covoit);
   }
 
@@ -69,7 +74,9 @@ private _subscription = new Subscription();
   constructor(
     private _http: HttpClient,
     private _adresseService: AdressesService,
-    private _authService: AuthentificationService
+    private _authService: AuthentificationService,
+    private _httpHeaderService: HttpHeaderService,
+    private _utilisateurService: UtilisateursService
   ) {}
 
 
@@ -96,13 +103,22 @@ private _subscription = new Subscription();
   findUpcomingCovoituragesByUserId(userId?: number): Observable<Covoiturage[]>{
     this.ngOnInit();
     console.log(this.headers);
-    return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/upcoming`, {headers: this.headers})
+    return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/upcoming`, {headers: this._httpHeaderService.getHeaders()})
   }
 
   findPastCovoituragesByUserId(userId?: number): Observable<Covoiturage[]>{
     this.ngOnInit();
     console.log(this.headers);
-    return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/past`, {headers: this.headers})
+    return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/past`, {headers: this._httpHeaderService.getHeaders()})
+  }
+
+  updateCovoiturageOrganise(covoiturage: Covoiturage){
+    return this._http.put<Covoiturage>(`${this._baseCovoitUrl}/co${covoiturage.id}`,{covoiturage}, {headers: this._httpHeaderService.getHeaders()})
+  }
+
+  updateCovoituragePassager(covoiturage: Covoiturage){
+    console.log("Covoiturage Service — updateCovoituragePassager");
+    return this._http.put<Covoiturage>(`${this._baseCovoitUrl}/cp${covoiturage.id}`,{covoiturage}, {headers: this._httpHeaderService.getHeaders()})
   }
 
 
@@ -158,22 +174,27 @@ private _subscription = new Subscription();
         .subscribe((adresse) => (covoiturageCreated.adresseArrivee = adresse));
     }
     */
+    console.log("Cov Srv — Create / organisateurId : ", createdCovoiturage.organisateurId);
+    createdCovoiturage.organisateurId=this._utilisateurService.getSharedCurrentUserId();
+    console.log("Cov Srv — Create / organisateurId : ", createdCovoiturage.organisateurId);
+
+    console.log("Cov Srv — Create / createdCovoiturage : ", createdCovoiturage)
     return this._http.post<Covoiturage>(
-      `${this._baseCovoitUrl}/create`, createdCovoiturage, {headers: this.headers}
+      `${this._baseCovoitUrl}/create`, createdCovoiturage, {headers: this._httpHeaderService.getHeaders()}
     );
   }
 
   public update(updatedCovoitOrg: Covoiturage) {
     return this._http.put<Covoiturage>(
       `${this._baseCovoitUrl}/${updatedCovoitOrg.id}`,
-      updatedCovoitOrg
+      updatedCovoitOrg, {headers: this._httpHeaderService.getHeaders()}
     );
   }
 
   public delete(deletedCovoitOrg: Covoiturage) {
     console.log("ADRESSE DELETE : "+`${this._baseCovoitUrl}/${deletedCovoitOrg.id}`)
     return this._http.delete<Covoiturage>(
-      `${this._baseCovoitUrl}/${deletedCovoitOrg.id}`
+      `${this._baseCovoitUrl}/${deletedCovoitOrg.id}`, {headers : this._httpHeaderService.getHeaders()}
     );
   }
 

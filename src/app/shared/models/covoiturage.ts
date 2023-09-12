@@ -11,6 +11,6 @@ export interface Covoiturage {
   adresseDepart?: Adresse;
   adresseArrivee?: Adresse;
   organisateurId?: number;
-  passagers?: Utilisateur[];
-  vehiculePerso?: VehiculePerso;
+  passagers?: number[];
+  vehiculePersoId?: number;
 }

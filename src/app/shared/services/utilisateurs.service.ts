@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, Subscription } from "rxjs";
 import { Utilisateur } from "../models/utilisateur";
 import { environment } from "../../../environments/environment.development";
 import { AuthentificationService } from "./authentification.service";
+import {HttpHeaderService} from "./http-header.service";
 
 
 @Injectable({
@@ -35,6 +36,10 @@ export class UtilisateursService implements OnInit, OnChanges {
     A chaque fois que currentUser est modifié, ses abonnés en seront donc automatiquement informés,
     et pourront mettre, par exemple, leur affichage à jour
   */
+
+  private _sharedCurrentUser: Utilisateur = {}
+  private _sharedCurrentUserId: number;
+
   private currentUserSource = new BehaviorSubject<Utilisateur>({});
   private currentUserIdSource = new BehaviorSubject<number>(undefined);
   private currentUserNameSource = new BehaviorSubject<string>(undefined);
@@ -52,16 +57,18 @@ export class UtilisateursService implements OnInit, OnChanges {
   private _subscription = new Subscription();
 
   constructor(private _http: HttpClient,
-    private _authService: AuthentificationService) {
+              private _authService: AuthentificationService,
+              private _httpHeaderService: HttpHeaderService) {
   }
 
   ngOnInit() {
-    this._subscription
+/*    this._subscription
       .add(this._authService.headers$
         .subscribe(data => {
           this.headers = data
         })
-      );
+      );*/
+    this.headers = this._httpHeaderService.getHeaders();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -75,6 +82,12 @@ export class UtilisateursService implements OnInit, OnChanges {
 
   findById(userId: number): Observable<Utilisateur> {
     return this._http.get<Utilisateur>(`${this._realBaseUrl}/${userId}`, { headers: this.headers });
+  }
+
+  findbyId2(userId: number): Utilisateur {
+    let user: Utilisateur = {};
+    this._http.get<Utilisateur>(`${this._realBaseUrl}/${userId}`, { headers: this.headers }).subscribe(u => user = u);
+    return user;
   }
 
   create(createdUser: Utilisateur): Observable<Utilisateur> {
@@ -127,4 +140,20 @@ export class UtilisateursService implements OnInit, OnChanges {
     this.fakeCurrentUserSource.next(user);
   }
 
+
+  get getSharedCurrentUser(): Utilisateur {
+    return this._sharedCurrentUser;
+  }
+
+  setSharedCurrentUser(value: Utilisateur) {
+    this._sharedCurrentUser = value;
+  }
+
+  getSharedCurrentUserId(): number {
+    return this._sharedCurrentUserId;
+  }
+
+  setSharedCurrentUserId(value: number) {
+    this._sharedCurrentUserId = value;
+  }
 }
