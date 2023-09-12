@@ -77,6 +77,14 @@ export class UtilisateursService implements OnInit, OnChanges {
     return this._http.get<Utilisateur>(`${this._realBaseUrl}/${userId}`, { headers: this.headers });
   }
 
+
+
+  findbyId2(userId: number): Utilisateur {
+    let user: Utilisateur = {};
+    this._http.get<Utilisateur>(`${this._realBaseUrl}/${userId}`, { headers: this.headers }).subscribe(u => user = u);
+    return user;
+  }
+
   create(createdUser: Utilisateur): Observable<Utilisateur> {
     return this._http.post<Utilisateur>(this._baseUrl, createdUser);
   }
@@ -100,17 +108,17 @@ export class UtilisateursService implements OnInit, OnChanges {
     })
   }
 
-/*
-  updateCurrentUserDevTest(user: Utilisateur): void {
-    this.currentUserSource.next(user);
-
-    /!*petite incrustation de Mochizuki
-    Pour chaque mise à jour de l'utilisateur courant, le subject informe ses abonnés
-    de la mise à jour du nom d'utilisateur. Mochizuki l'utilise ici pour afficher le
-    nom de l'utilisateur courant et connecté, dans la navBar*!/
-    this.currentUserNameSource.next(user.nom);
-  }
-  */
+  /*
+    updateCurrentUserDevTest(user: Utilisateur): void {
+      this.currentUserSource.next(user);
+  
+      /!*petite incrustation de Mochizuki
+      Pour chaque mise à jour de l'utilisateur courant, le subject informe ses abonnés
+      de la mise à jour du nom d'utilisateur. Mochizuki l'utilise ici pour afficher le
+      nom de l'utilisateur courant et connecté, dans la navBar*!/
+      this.currentUserNameSource.next(user.nom);
+    }
+    */
 
   updateCurrentUserId(userId: number): void {
     //console.log("UserSrv — updateCurrentUserId / CurrentUserId : " + userId);
@@ -119,11 +127,11 @@ export class UtilisateursService implements OnInit, OnChanges {
     this.updateCurrentUser();
   }
 
-  updateCurrentUserName(userName: string){
+  updateCurrentUserName(userName: string) {
     this.currentUserNameSource.next(userName);
   }
 
-  updateFakeCurrentUser(user: Utilisateur){
+  updateFakeCurrentUser(user: Utilisateur) {
     this.fakeCurrentUserSource.next(user);
   }
 

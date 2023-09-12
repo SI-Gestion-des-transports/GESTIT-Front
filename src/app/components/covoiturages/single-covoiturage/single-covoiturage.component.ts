@@ -28,10 +28,18 @@ export class SingleCovoiturageComponent {
   passagers$: Observable<Utilisateur>[];
 
   passagers!: Utilisateur[];
+  listePassagers!: Utilisateur[];
 
+  utilisateur!: Utilisateur
+  passagerId!: number[];
 
 
   vehiculePerso!: VehiculePerso;
+
+  mecsDansBagnole$!:Observable<Utilisateur>[];
+
+  mec$:Observable<Utilisateur>;
+  mecName$:Observable<string>;
 
 
 
@@ -49,7 +57,7 @@ export class SingleCovoiturageComponent {
   exemple : findCovoiturage() renvoit un observable, qui contient un covoiturage d'ou on peut récupérer
   les id des passagers. Il faut donc itérer sur le tableau des passagers en faisant un findUtilisateur(), qui 
   renvoit lui aussi un observable....Pose des difficultés à récupérer les valeurs*/
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.title = "Mon covoiturage";
     this.showDetailsInProgress = false;
 
@@ -58,11 +66,8 @@ export class SingleCovoiturageComponent {
     const covoiturageId = +this.route.snapshot.params['id'];
     this.covoiturage$ = this.covoiturageService.getCovoiturageById(covoiturageId);
     this.covoiturage$.subscribe((covoit) => {
+     
       this.vehiculeObs$ = this.vehiculePersoService.findVpById(covoit.vehiculePersoId.toString());
-      // covoit.passagersId.forEach(idPassager=>{
-      //   this.passagers$.push(this.utilisateurService.findById(idPassager));
-      //   console.log(this.passagers$);
-      // })
       this.vehiculeObs$.subscribe((vehicule) => {
         /*On recrée un observable à l'aide de pipe.
         il y a un problème d'asynchronicité ici.
@@ -71,12 +76,23 @@ export class SingleCovoiturageComponent {
         Je commente pour l'instant et laisse covoit.nbreDePlaceRestantes mais ce n'est pas bon
         il faut trouver le problème, le nombre de places restantes doit être calculé*/
         //this.covoitNbrePlacesRestantesCalculees$ = this.covoiturage$.pipe(map(covoit => covoit.nombrePlacesRestantes = vehicule.nombreDePlaceDisponibles - covoit.passagers.length));
+
       });
-      this.organisateur$ = this.utilisateurService.findById(covoit.organisateurId);
+
+      this.passagerId = covoit.passagersId;
+      this.mec$ = this.utilisateurService.findById(this.passagerId[0]);
+     
+      // mec$
+      // console.log("affivhage tuilisaeur");
+      
+      
 
     })
-
   }
+
+
+
+
 
   onShowDetails() {
     if (this.showDetailsInProgress) {

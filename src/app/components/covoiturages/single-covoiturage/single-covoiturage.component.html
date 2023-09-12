@@ -1,3 +1,6 @@
+<div class="container mt-4 " *ngIf="mec$ |async as mec">
+{{mec.nom}}
+</div>
 <div class="border border-2 p-3 border rounded-5 card mb-3 shadow-sm p-3 mb-5 bg-body-tertiary rounded"
     *ngIf="covoiturage$ | async as covoiturage" [ngClass]="{showDetails : showDetailsInProgress === true}">
 
