@@ -19,9 +19,11 @@ export class SingleCovoiturageComponent {
   title!: string;
   showDetailsInProgress!: boolean;
   covoiturage$!: Observable<Covoiturage>;
+
   covoiturage!: Covoiturage;
   // Shared attributes
   currentUser: Utilisateur = {};
+
 
   private _subscription = new Subscription();
   constructor(private covoiturageService: CovoiturageService,
@@ -73,6 +75,7 @@ export class SingleCovoiturageComponent {
     this.router.navigateByUrl('covoituragesConfirmReservation');
   }
 
+
   updatePass(covoit: Covoiturage){
     console.log("SingleCovoitComp —updatePass")
     console.log("SingleCovoitComp —updatePass / covoit.passagers : ", covoit.passagers)
@@ -84,6 +87,7 @@ export class SingleCovoiturageComponent {
       });
     //}
   }
+
 
 }
 
