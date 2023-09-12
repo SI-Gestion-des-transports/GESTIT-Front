@@ -34,16 +34,26 @@ export class SingleCovoiturageComponent {
   passagerId!: number[];
 
 
-  vehiculePerso!: VehiculePerso;
+  vehiculePerso: VehiculePerso;
 
-  
 
-  mec$:Observable<Utilisateur>;
-  mecsDansBagnole$!:Observable<Utilisateur>[];
 
-  vehicule!:VehiculePerso;
+  mec$: Observable<Utilisateur>;
+  mecsDansBagnole$!: Observable<Utilisateur>[];
 
-  
+  vehicule!: VehiculePerso;
+
+  covoiturage: Covoiturage | undefined;
+
+
+  /*refection*/
+  mochizukiCovoiturage: Covoiturage | undefined;
+  mochizukiVehiculePerso: VehiculePerso | undefined;
+  mochizukiListePassagers: Utilisateur[] | undefined;
+  mochizukiListeIdPassagers: number[] | undefined;
+  essaiUser:Utilisateur|undefined;
+
+
 
 
 
@@ -55,50 +65,77 @@ export class SingleCovoiturageComponent {
     private router: Router,
     private route: ActivatedRoute) { }
 
-ngOnInit(): void {
+  ngOnInit(): void {
     this.title = "Mon covoiturage";
     this.showDetailsInProgress = false;
 
-    /* Nota: le typeCast permet, à l'aide du caractère '+', de transformer
-    une chaine de caractères qui contient des nombres en numberAttribute. */
-
     const covoiturageId = +this.route.snapshot.params['id'];
-    
-    
-    this.covoiturage$ = this.covoiturageService.getCovoiturageById(covoiturageId);
-    
-    this.covoiturage$.subscribe((covoit) => {
-    this.vehiculeObs$ = this.vehiculePersoService.findVpById(covoit.vehiculePersoId.toString());
-      
-      console.log("------> ",this.vehiculeObs$);
-      
-      this.vehiculeObs$.subscribe();
-     
-      
-      //this.vehiculeObs$.subscribe(); //Pourquoi il a besoin de ca?
-     
-      /*Récupération de la liste des id des passagers*/
-      this.passagerId = covoit.passagersId;
-      /*test si on récupère un passager ca fonctionne*/
-      this.mec$ = this.utilisateurService.findById(this.passagerId[0]);
-      
-      
-      this.passagerId.forEach(idPassager =>{
-        let type = this.utilisateurService.findById(idPassager);
-        console.log("passager dans la voiture");
-        type.subscribe(value=> {
-          console.log(value)
-          // this.mecsDansBagnole$.push(value);
-        });
-      })
-      
-     
-      // mec$
-      // console.log("affivhage tuilisaeur");
-      
+
+    this.covoiturageService.getCovoiturageById(covoiturageId).subscribe((covoit) => {
+      this.mochizukiCovoiturage = covoit;
+      // covoit.passagersId.forEach(idPassager => {
+      //   console.log("idPaasager :",idPassager);
+      //   this.utilisateurService.findById(idPassager).subscribe(value => this.mochizukiListePassagers.push(value));
+
+      //   //this.utilisateurService.findById(idPassager).subscribe(value => this.mochizukiListePassagers.push(value));
+
+
+      // })
+      this.mochizukiListeIdPassagers = covoit.passagersId;
+      this.mochizukiListeIdPassagers.forEach(id => this.utilisateurService.findById(id).subscribe(v=> this.essaiUser=v))
+
+      console.log("liste des passagers:",this.mochizukiListePassagers);
       
 
+
+
+      this.vehiculePersoService.findVpById_Mochizuki(covoit.vehiculePersoId.toString())
+        .subscribe(vehicule => this.mochizukiVehiculePerso = vehicule);
     })
+
+    
+
+
+
+    // this.covoiturage$.subscribe((covoit) => {
+    //   this.covoiturage = covoit;
+    //   console.log("********", this.covoiturage);
+
+    //   this.vehiculeObs$ = this.vehiculePersoService.findVpById_Mochizuki(covoit.vehiculePersoId.toString());
+    //   this.vehiculeObs$.subscribe(value => {
+
+    //     this.vehiculePerso = value;
+    //     console.log("tttttttt",this.vehiculePerso);
+    //   })
+
+    //   console.log("------> ", this.vehiculeObs$);
+
+    //   this.vehiculeObs$.subscribe();
+
+
+    //this.vehiculeObs$.subscribe(); //Pourquoi il a besoin de ca?
+
+    /*Récupération de la liste des id des passagers*/
+    // this.passagerId = covoit.passagersId;
+    /*test si on récupère un passager ca fonctionne*/
+    // this.mec$ = this.utilisateurService.findById(this.passagerId[0]);
+
+
+    // this.passagerId.forEach(idPassager => {
+    //   let type = this.utilisateurService.findById(idPassager);
+    //   console.log("passager dans la voiture");
+    //   type.subscribe(value => {
+    //     console.log(value)
+    // this.mecsDansBagnole$.push(value);
+    //   });
+    // })
+    // console.log("aaaaa",this.vehiculePerso);
+
+
+    // mec$
+    // console.log("affivhage tuilisaeur");
+
+
   }
 
 
