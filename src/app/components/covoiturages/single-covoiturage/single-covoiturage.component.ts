@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable, combineLatest, forkJoin, map, switchMap } from 'rxjs';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
 import { Utilisateur } from 'src/app/shared/models/utilisateur';
 import { VehiculePerso } from 'src/app/shared/models/vehicule.perso';
@@ -54,7 +54,9 @@ export class SingleCovoiturageComponent {
   essaiUser: Utilisateur | undefined;
   tab: string[];
   tableauObs: Observable<any>[];
-  arrayOfObservable:any;
+  arrayOfObservable: Observable<Utilisateur>[];
+
+  array:Observable<Utilisateur[]>|undefined;
 
 
 
@@ -77,12 +79,14 @@ export class SingleCovoiturageComponent {
     let name: string[];
     this.covoiturageService.getCovoiturageById(covoiturageId).subscribe((covoit) => {
       this.mochizukiCovoiturage = covoit;
-      
-        this.arrayOfObservable = covoit.passagersId.map(idPassager => {
-          return this.utilisateurService.findById(idPassager);
-        })
-        
-      
+
+     this.array = this.getDeviceItemData(covoit.passagersId);
+
+
+
+
+
+
 
 
       this.vehiculePersoService.findVpById_Mochizuki(covoit.vehiculePersoId.toString())
@@ -142,6 +146,14 @@ export class SingleCovoiturageComponent {
 
   }
 
+
+
+  getDeviceItemData(device_ids: number[]) : Observable<Utilisateur[]>{
+    const arrayOfObservables = device_ids.map(device_id => {
+      return this.utilisateurService.findById(device_id);
+    });
+    return combineLatest(arrayOfObservables); 
+  }
 
 
 

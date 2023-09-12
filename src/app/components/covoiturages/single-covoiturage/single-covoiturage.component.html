@@ -1,4 +1,4 @@
-<div *ngFor="let device of arrayOfObservable">{{ device}}</div>
+<div *ngFor="let device of array | async">{{device.nom}}</div>
 <div *ngIf="mochizukiCovoiturage as covoit">
     <p>{{covoit.dureeTrajet}}</p>
     <p>{{covoit.adresseArrivee.codePostal}}</p>
