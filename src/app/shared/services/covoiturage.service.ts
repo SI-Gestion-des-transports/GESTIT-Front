@@ -10,6 +10,7 @@ import { AdressesService } from './adresses.service';
 import {VehiculePerso} from "../models/vehicule.perso";
 import {AuthentificationService} from "./authentification.service";
 import {HttpHeaderService} from "./http-header.service";
+
 import {UtilisateursService} from "./utilisateurs.service";
 
 
@@ -77,15 +78,17 @@ private _subscription = new Subscription();
     private _http: HttpClient,
     private _adresseService: AdressesService,
     private _authService: AuthentificationService,
+
     private _httpHeaderService: HttpHeaderService,
     private _utilisateurService: UtilisateursService
+
   ) {}
 
 
   public getAllCovoiturages(): Observable<Covoiturage[]> {
 
 
-    return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/listall`);
+    return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/listall`, {headers:this._httpHeaderService.getHeaders()});
 
   }
 
@@ -96,7 +99,7 @@ private _subscription = new Subscription();
     return this._http.get<Covoiturage[]>(
 
 
-      this._baseCovoitUrl + '?organisateurId=' + this.user.id,{headers: this.headers}
+      this._baseCovoitUrl + '?organisateurId=' + this.user.id,{headers:this._httpHeaderService.getHeaders()}
 
     );
   }
@@ -104,7 +107,7 @@ private _subscription = new Subscription();
   getCovoiturageById(covoiturageId: number): Observable<Covoiturage> {
     return this._http.get<Covoiturage>(
 
-      `${this._baseCovoitUrl}/${covoiturageId}`, {headers: this.headers}
+      `${this._baseCovoitUrl}/${covoiturageId}`, {headers:this._httpHeaderService.getHeaders()}
 
 
     );
@@ -116,11 +119,13 @@ private _subscription = new Subscription();
     console.log(this.headers);
     return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/upcoming`, {headers: this._httpHeaderService.getHeaders()})
 
+
   }
 
   findPastCovoituragesByUserId(userId?: number): Observable<Covoiturage[]>{
     this.ngOnInit();
     console.log(this.headers);
+
     return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/past`, {headers: this._httpHeaderService.getHeaders()})
   }
 
@@ -131,6 +136,7 @@ private _subscription = new Subscription();
   updateCovoituragePassager(covoiturage: Covoiturage){
     console.log("Covoiturage Service — updateCovoituragePassager");
     return this._http.put<Covoiturage>(`${this._baseCovoitUrl}/cp${covoiturage.id}`,{covoiturage}, {headers: this._httpHeaderService.getHeaders()})
+
   }
 
 
@@ -193,7 +199,9 @@ private _subscription = new Subscription();
     console.log("Cov Srv — Create / createdCovoiturage : ", createdCovoiturage)
     return this._http.post<Covoiturage>(
 
+
       `${this._baseCovoitUrl}/create`, createdCovoiturage, {headers: this._httpHeaderService.getHeaders()}
+
 
 
 
@@ -204,7 +212,9 @@ private _subscription = new Subscription();
     return this._http.put<Covoiturage>(
       `${this._baseCovoitUrl}/${updatedCovoitOrg.id}`,
 
+
       updatedCovoitOrg, {headers: this._httpHeaderService.getHeaders()}
+
 
 
     );
@@ -215,7 +225,9 @@ private _subscription = new Subscription();
     return this._http.delete<Covoiturage>(
 
 
+
       `${this._baseCovoitUrl}/${deletedCovoitOrg.id}`, {headers : this._httpHeaderService.getHeaders()}
+
 
     );
   }
