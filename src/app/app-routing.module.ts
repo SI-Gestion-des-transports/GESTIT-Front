@@ -92,7 +92,7 @@ const routes: Routes = [
   {
     path: 'vehiculeService', component: VehiculeServiceComponent,
     canActivate:[authGuard],
-    data:{roles:"ADMINISTRATEU"},
+    data:{roles:"ADMINISTRATEUR"},
     children: [
 
       {path: "list", component: VehiculeServiceListComponent},
