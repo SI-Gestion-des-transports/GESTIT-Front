@@ -56,14 +56,19 @@ export class CovoiturageService implements OnInit {
   ngOnInit(): void {
 
     console.log("covoit onInit")
-    /*this._listOfAllCovoiturages$.subscribe(value => console.log(value));*/
+    /*
+    this._listOfAllCovoiturages$.subscribe(value => console.log(value));
+    */
+    /*
     this._subscription.add(this._authService.headers$.subscribe(data => {
       console.log("data :", data)
       this.headers = data;
       console.log("this.headers :", this.headers);
     }));
+    */
     this.currentUserId = this._utilisateurService.getSharedCurrentUserId();
     console.log("Cov Srv — ngOnInit / getSharedCurrentUserId() : " + this._utilisateurService.getSharedCurrentUserId());
+    this.headers = this._httpHeaderService.getHeaders();
     //this.updateCovoitOrg(this.covoit);
   }
 
@@ -82,8 +87,7 @@ export class CovoiturageService implements OnInit {
 
 
   public getAllCovoiturages(): Observable<Covoiturage[]> {
-
-    return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/listall`);
+    return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/listall`, {headers: this._httpHeaderService.getHeaders()});
   }
 
   public getCovoituragesByOrganisateur(
@@ -91,13 +95,13 @@ export class CovoiturageService implements OnInit {
   ): Observable<Covoiturage[]> {
     this.user = organisateur;
     return this._http.get<Covoiturage[]>(
-      this._baseCovoitUrl + '?organisateurId=' + this.user.id,{headers: this.headers}
+      this._baseCovoitUrl + '?organisateurId=' + this.user.id,{headers: this._httpHeaderService.getHeaders()}
     );
   }
 
   getCovoiturageById(covoiturageId: number): Observable<Covoiturage> {
     return this._http.get<Covoiturage>(
-      `${this._baseCovoitUrl}/${covoiturageId}`, {headers: this.headers}
+      `${this._baseCovoitUrl}/${covoiturageId}`, {headers: this._httpHeaderService.getHeaders()}
     );
   }
 
@@ -106,12 +110,10 @@ export class CovoiturageService implements OnInit {
     console.log(this.headers);
     return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/upcoming`, {headers: this._httpHeaderService.getHeaders()})
   }
-
-
   // getFilteredbyUsersCovoit(idUtilisateur: number): Observable<Covoiturage[]> {
   //   return this._http.get<Covoiturage[]>(this._baseCovoitUrl)
   //     .pipe(map(res => res.filter(res => res.organisateur?.id === idUtilisateur)));
-      
+
   // }
 
   findPastCovoituragesByUserId(userId?: number): Observable<Covoiturage[]>{
@@ -182,11 +184,10 @@ export class CovoiturageService implements OnInit {
         .subscribe((adresse) => (covoiturageCreated.adresseArrivee = adresse));
     }
     */
-    console.log("Cov Srv — Create / organisateurId : ", createdCovoiturage.organisateurId);
-    createdCovoiturage.organisateurId=this._utilisateurService.getSharedCurrentUserId();
-    console.log("Cov Srv — Create / organisateurId : ", createdCovoiturage.organisateurId);
-
-    console.log("Cov Srv — Create / createdCovoiturage : ", createdCovoiturage)
+    //console.log("Cov Srv — Create / organisateurId : ", createdCovoiturage.organisateurId);
+    createdCovoiturage.organisateurId = parseInt(String(this._utilisateurService.getSharedCurrentUserId()), 10);
+    //console.log("Cov Srv — Create / organisateurId : ", createdCovoiturage.organisateurId);
+   // console.log("Cov Srv — Create / createdCovoiturage : ", createdCovoiturage)
     return this._http.post<Covoiturage>(
       `${this._baseCovoitUrl}/create`, createdCovoiturage, {headers: this._httpHeaderService.getHeaders()}
     );
