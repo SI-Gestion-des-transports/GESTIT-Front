@@ -20,6 +20,12 @@ export class AdressesService {
   findById(adresse: Adresse): Observable<Adresse> {
     return this._http.get<Adresse>(`${this._baseAdressesUrl}/${adresse.id}`,{headers:this._httpHeader.getHeaders()});
   }
+  
+  /*Ajout Mochizuki 13/09/2023 19h07*/
+  findById2(id:number): Observable<Adresse> {
+    return this._http.get<Adresse>(`${this._baseAdressesUrl}/${id}`,{headers:this._httpHeader.getHeaders()});
+  }
+  
 
   create(createdAdresse: Adresse): Observable<Adresse> {
     return this._http.post<Adresse>(this._baseAdressesUrl, createdAdresse,{headers:this._httpHeader.getHeaders()});
