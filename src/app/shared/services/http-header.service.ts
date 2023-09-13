@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import {HttpHeaders} from "@angular/common/http";
+import {environment} from "../../../environments/environment.development";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpHeaderService {
-  tokenName:string = "JWT-TOKEN";
+  tokenName:string = environment.JWT;
 
   constructor() { }
   getHeaders():HttpHeaders{

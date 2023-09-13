@@ -22,8 +22,11 @@ export const environment = {
     covoituragesOrganises: 'http://localhost:8080/covoiturages',
     login: 'http://localhost:8080/login',
     logout: 'http://localhost:8080/signout',
-    utilisateur: 'http://localhost:8080/utilisateur'
+    utilisateur: 'http://localhost:8080/utilisateur',
+    verifyJwt:'http://localhost:8080/getuserbyjwt'
 
-  }
+
+  },
+  JWT:"JWT-TOKEN"
 }
 

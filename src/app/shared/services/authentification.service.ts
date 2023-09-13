@@ -4,6 +4,7 @@ import {Injectable, OnInit} from "@angular/core";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Login} from "../models/login";
 import {HttpHeaderService} from "./http-header.service";
+import {Utilisateur} from "../models/utilisateur";
 import {UtilisateursService} from "./utilisateurs.service";
 import {ReservationVsService} from "./reservation.vs.service";
 
@@ -15,6 +16,7 @@ export class AuthentificationService {
 
   private _baseUrlLogin = environment.urlApi.login;
   private _baseUrlLogout = environment.urlApi.logout;
+  private _verifyJWT = environment.urlApi.verifyJwt;
 
 
   private headersSource = new BehaviorSubject<HttpHeaders>(new HttpHeaders());
@@ -24,18 +26,19 @@ export class AuthentificationService {
   loggedBtn$ = this.loggedBtnSource.asObservable();
 
   headers = new HttpHeaders();
+
   constructor(private _http: HttpClient,
-              private _httpHeader:HttpHeaderService) {
+              private _httpHeader: HttpHeaderService) {
   }
 
 
-  login(tryLog: Login): Observable<any>{
+  login(tryLog: Login): Observable<any> {
     return this._http.post(this._baseUrlLogin, tryLog);
   }
 
-  logout(){
+  logout() {
 
-    return this._http.get(this._baseUrlLogout, {headers:this._httpHeader.getHeaders(),observe:"response"});
+    return this._http.get(this._baseUrlLogout, {headers: this._httpHeader.getHeaders(), observe: "response"});
   }
 
   checkToken(headers : HttpHeaders){
@@ -66,7 +69,7 @@ export class AuthentificationService {
 /*    }*/
   }
 
-  updateLoggedBtn(data){
+  updateLoggedBtn(data) {
     this.loggedBtnSource.next(data);
     //console.log("Auth Service — updateLoggedBtn : ", data);
   }
@@ -80,6 +83,15 @@ export class AuthentificationService {
         });
         return result;
       }
+  }
+
+  verifyJWT() {
+    return this._http.get<Utilisateur>(`${this._verifyJWT}`,
+      {
+        headers: this._httpHeader.getHeaders(),
+        observe: "response"
+      });
+
   }
 
 }
