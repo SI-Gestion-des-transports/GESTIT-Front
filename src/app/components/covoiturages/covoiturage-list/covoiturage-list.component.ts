@@ -66,6 +66,8 @@ export class CovoiturageListComponent implements OnInit {
 	date_searchValue: Date;
 	date_styleWidget: string;
 
+	covoiturageArray: Covoiturage[] = [];
+
 	/*Injection du service*/
 	constructor(private covoiturageService: CovoiturageService,
 		private adresseService: AdressesService) { }
@@ -108,21 +110,22 @@ export class CovoiturageListComponent implements OnInit {
 	 * @author Atsuhiko Mochizuki
 	 */
 	recupVilles() {
-		
+
 		this.covoiturageService.recupListeCovoituragesOnServer2()
 			.subscribe(liste => {
 				this.covoiturages_listeComplete = liste;
-				
-				liste.forEach(covoit =>{
-					this.adresseService.findById2(covoit.adresseDepartId)
-					.subscribe(adresse => this.depart_liste.push(adresse.commune))
-				});
-				
-				console.log(this.depart_liste);
 
-				
+				liste.forEach(covoit => {
+					this.adresseService.findById2(covoit.adresseDepartId)
+						.subscribe(adresse => this.depart_liste.push(adresse.commune))
+				});
+
+				liste.forEach(covoit => {
+					this.adresseService.findById2(covoit.adresseArriveeId)
+						.subscribe(adresse => this.arrivee_liste.push(adresse.commune))
+				});
 			});
-			
+
 	}
 
 
@@ -236,9 +239,15 @@ export class CovoiturageListComponent implements OnInit {
 	 *
 	 * @author Atsuhiko Mochizuki
 	 */
-	async filtrageList() {
-		//console.log("il rentre dnas le filtrage");
-		let completListOfCovoiturages = await this.covoiturageService.recupListeCovoituragesOnServer();
+	filtrageList() {
+		console.log("il rentre dnas le filtrage");
+		this.covoiturageService.recupListeCovoituragesOnServer2()
+		.subscribe(listeCovoit => {
+			listeCovoit.forEach(covoit => {
+				this.covoiturageArray.push(covoit);
+			})
+		})
+		console.log("liste des covoits:", this.covoiturageArray);
 		if (this.filtrage.filter_VilleArrivee_value !== "") {
 			//console.log("des filtres ont été activés");
 			let arrivee_listeFiltree = completListOfCovoiturages.filter((covoit) => covoit.adresseArrivee.commune === this.filtrage.filter_VilleArrivee_value);
