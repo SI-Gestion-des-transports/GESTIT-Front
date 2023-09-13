@@ -123,7 +123,7 @@ export class CovoituragesOrganiseListComponent {
   }
 
   updateCovoitOrg(covoitOrgToEdit: Covoiturage){
-    if(!covoitOrgToEdit.passagers){
+    if(!covoitOrgToEdit.passagersId){
       console.log("UpdateCovoitOrg")
       this._covoitOrgService.updateModifBtn(false);
       this.covoitOrg = covoitOrgToEdit;

@@ -9,8 +9,6 @@ import { CovoiturageService } from 'src/app/shared/services/covoiturage.service'
 import { UtilisateursService } from 'src/app/shared/services/utilisateurs.service';
 import { VehiculePersoService } from 'src/app/shared/services/vehicule.perso.service';
 import { environment } from 'src/environments/environment.development';
-import {Utilisateur} from "../../../shared/models/utilisateur";
-import {UtilisateursService} from "../../../shared/services/utilisateurs.service";
 import {add} from "ngx-bootstrap/chronos";
 
 /**
@@ -27,6 +25,7 @@ export class SingleCovoiturageComponent {
 
   nomUtilisateurCourant$: Observable<string>;
   idUtilisateurCourant$: Observable<number>;
+  currentUser: Utilisateur = {};
 
   covoiturageAconfirmer!: Covoiturage;
   title!: string;
@@ -70,7 +69,7 @@ export class SingleCovoiturageComponent {
         this.observableListePassagers = this.getObservableOfPassengersList(covoit.passagersId);
 
         /*Récupération du véhicule sur lequel s'opère le covoiturage*/
-        this.vehiculePersoService.findVpById_Mochizuki(covoit.vehiculePersoId.toString())
+        this.vehiculePersoService.findVpById(covoit.vehiculePersoId.toString())
           .subscribe(vehicule => {
             this.vehiculeForCovoiturage = vehicule;
             /*Calcul du nombre de places restantes*/
@@ -87,9 +86,9 @@ export class SingleCovoiturageComponent {
    * Le contenu de ce dernier pourra donc être directement affiché dans le template à l'aide
    * du pipe async.
    * exemple : <div *ngFor="let passager of observableListePassagers | async">{{passager.nom}}</div>.
-   * 
-   * @param listIdPassagers 
-   * @returns 
+   *
+   * @param listIdPassagers
+   * @returns
    */
   getObservableOfPassengersList(listIdPassagers: number[]): Observable<Utilisateur[]> {
     const arrayOfObservables = listIdPassagers.map(idPassager => {
@@ -122,10 +121,10 @@ export class SingleCovoiturageComponent {
 
   updatePass(covoit: Covoiturage){
     console.log("SingleCovoitComp —updatePass")
-    console.log("SingleCovoitComp —updatePass / covoit.passagers : ", covoit.passagers)
+    console.log("SingleCovoitComp —updatePass / covoit : ", covoit)
     //if (covoit.nombrePlacesRestantes>0){
-    covoit.passagers.push(this.currentUser.id)
-    console.log("SingleCovoitComp —updatePass / covoit.passagers : ", covoit.passagers)
+    covoit.passagersId.push(this.currentUser.id)
+    console.log("SingleCovoitComp —updatePass / covoit : ", covoit)
     this.covoiturageService.updateCovoituragePassager(covoit).subscribe(() => {
         console.log("CovoitOrg uodated");
       });

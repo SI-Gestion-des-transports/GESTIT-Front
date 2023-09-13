@@ -7,8 +7,6 @@ import {HttpHeaderService} from "./http-header.service";
 import {Utilisateur} from "../models/utilisateur";
 import {UtilisateursService} from "./utilisateurs.service";
 import {ReservationVsService} from "./reservation.vs.service";
-import {HttpHeaderService} from "./http-header.service";
-import {Utilisateur} from "../models/utilisateur";
 
 
 @Injectable({
@@ -41,7 +39,7 @@ export class AuthentificationService {
   }
 
   logout() {
-
+    console.log("Auth Service — Logout")
     return this._http.get(this._baseUrlLogout, {headers: this._httpHeader.getHeaders(), observe: "response"});
   }
 
@@ -53,7 +51,7 @@ export class AuthentificationService {
   }
 
   updateHeaders(data: HttpHeaders){
-    console.log("Auth Service — data : ", data);
+    //console.log("Auth Service — data : ", data);
     this.headers = new HttpHeaders({});
 /*    Object.keys(data).forEach(key => {
       if(data[key] !== null && data[key] !== undefined) {  // Vérification ajoutée ici
@@ -61,18 +59,18 @@ export class AuthentificationService {
         this.headers = this.headers.set(key, data[key]);
       }
     });*/
-    console.log("Auth Service — Header (this.headers) : ", this.headers);
+    //console.log("Auth Service — Header (this.headers) : ", this.headers);
     //this.headersSource.next(this.headersToJSON(this.headers));
     this.headersSource.next(data);
-    console.log("Auth Service — Header (this.headersSource) : ", this.headersSource.getValue())
-    this.headers$.subscribe(data =>
-    console.log("Auth Service — header$ : ", data));
+    //console.log("Auth Service — Header (this.headersSource) : ", this.headersSource.getValue())
+    this.headers$.subscribe(data => {
+    //console.log("Auth Service — header$ : ", data));
     if(window.localStorage.getItem("JWT-TOKEN") != null){
       let token = window.localStorage.getItem("JWT-TOKEN");
-      console.log("Auth Service — token : ", token)
+      //console.log("Auth Service — token : ", token)
       //console.log("Auth Service — Header (this.headers JSON) : ", this.headersToJSON(this.headers));
       //this.headersSource.next(this.headersToJSON(this.headers));
-    }
+    }});
   }
 
   updateLoggedBtn(data) {
