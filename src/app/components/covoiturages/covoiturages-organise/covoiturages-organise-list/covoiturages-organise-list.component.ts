@@ -92,9 +92,9 @@ export class CovoituragesOrganiseListComponent {
 
 
   private _init() {
-    console.log("init")
+    //console.log("init")
     if (this.currentUser.nom != undefined) {
-      console.log("user != undefined")
+      //console.log("user != undefined")
       this._covoitOrgService
         .getCovoituragesByOrganisateur(this.currentUser)
         .subscribe((covoitOrgsCreated) => {
@@ -111,15 +111,15 @@ export class CovoituragesOrganiseListComponent {
   }
 
   getIncomingCovoiturages(){
-    console.log("TEST");
+    //console.log("TEST");
     this.upcompingCovoiturages = true;
     this.mergedCovoitArray = [];
     forkJoin({
       covoiturages: this._covoitOrgService.findUpcomingCovoituragesByUserId(this.currentUser.id),
       adresses: this._adresseService.findAll()
     }).subscribe(({covoiturages, adresses}) => {
-      console.log(covoiturages);
-      console.log(adresses);
+      //console.log(covoiturages);
+      //console.log(adresses);
       this.covoitFromDB = covoiturages;
       this.allAdresses = adresses;
       this.mergedCovoitArray = this.mergedCovoituragesWithAdresses();
@@ -134,15 +134,15 @@ export class CovoituragesOrganiseListComponent {
   }
 
   getPastCovoiturages(){
-    console.log("TEST");
+    //console.log("TEST");
     this.upcompingCovoiturages = false;
     this.mergedCovoitArray = [];
     forkJoin({
       covoiturages: this._covoitOrgService.findPastCovoituragesByUserId(this.currentUser.id),
       adresses: this._adresseService.findAll()
     }).subscribe(({covoiturages, adresses}) => {
-      console.log(covoiturages);
-      console.log(adresses);
+      //console.log(covoiturages);
+      //console.log(adresses);
       this.covoitFromDB = covoiturages;
       this.allAdresses = adresses;
       this.mergedCovoitArray = this.mergedCovoituragesWithAdresses();
@@ -157,16 +157,16 @@ export class CovoituragesOrganiseListComponent {
 
   updateCovoitOrg(covoitOrgToEdit: Covoiturage){
     if(covoitOrgToEdit.passagersId != null){
-      console.log("UpdateCovoitOrg")
+      //console.log("UpdateCovoitOrg")
       this._covoitOrgService.updateModifBtn(false);
       this.covoitOrg = covoitOrgToEdit;
       this._covoitOrgService.updateCurrentCovoitOrg(covoitOrgToEdit);
       //this._covoitOrgService.updateCovoitOrg(covoitOrgToEdit);
         this._router.navigateByUrl('covoituragesOrganises/modify/${covoitOrgToEdit.id}');
-      console.log("covoitOrgToEdit numero : ",covoitOrgToEdit.adresseArrivee.numero)
-      console.log("covoitOrgToEdit commune : ",covoitOrgToEdit.adresseArrivee.commune)
-      console.log("covoitOrg numero : ",this.covoitOrg.adresseArrivee.numero)
-      console.log("covoitOrg commune : ",this.covoitOrg.adresseArrivee.commune)
+      //console.log("covoitOrgToEdit numero : ",covoitOrgToEdit.adresseArrivee.numero)
+      //console.log("covoitOrgToEdit commune : ",covoitOrgToEdit.adresseArrivee.commune)
+      //console.log("covoitOrg numero : ",this.covoitOrg.adresseArrivee.numero)
+      //console.log("covoitOrg commune : ",this.covoitOrg.adresseArrivee.commune)
     } else {
       this.errorMessage = "Vous ne pouvez pas modifier ce covoiturage car il a des passagers.";
     }

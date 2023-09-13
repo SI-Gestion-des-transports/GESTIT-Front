@@ -16,7 +16,7 @@ export class HttpHeaderService {
   getHeaders():HttpHeaders{
     let headers:HttpHeaders = new HttpHeaders();
     let jwt:string = window.localStorage.getItem(this.tokenName);
-    console.log(jwt);
+    //console.log(jwt);
     headers= headers.set(this.tokenName,jwt);
     return headers;
   }

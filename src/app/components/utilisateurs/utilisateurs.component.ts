@@ -47,7 +47,7 @@ export class UtilisateursComponent implements OnInit {
   }
 
   create(user: Utilisateur) {
-    console.log('Création utilisateur :' + user.nom);
+    //console.log('Création utilisateur :' + user.nom);
     this._utilisateursService.create(user).subscribe(() => {
       this.reInitUser();
       this._init();
@@ -55,7 +55,7 @@ export class UtilisateursComponent implements OnInit {
   }
 
   update(userUpdated: Utilisateur) {
-    console.log('updated' + userUpdated);
+    //console.log('updated' + userUpdated);
     this._utilisateursService.update(userUpdated).subscribe(() => {
       this.reInitUser();
       this._init();
@@ -64,22 +64,22 @@ export class UtilisateursComponent implements OnInit {
   }
 
   delete(user: Utilisateur) {
-    console.log('Entrée delete' + user.id);
+    //console.log('Entrée delete' + user.id);
     this._utilisateursService.delete(user).subscribe(() => {
       this.reInitUser();
       this._init();
     });
-    console.log('Sortie delete' + user.id);
+    //console.log('Sortie delete' + user.id);
   }
 
   loginUser(user: Utilisateur) {
     this.loggedUser = user;
     this._covoiturageService.updateCurrentUser(this.loggedUser);
-    console.log('User logged : ' + this.loggedUser.nom);
+    //console.log('User logged : ' + this.loggedUser.nom);
     this.loggedBtn = false;
     //this._reservationVsService.updateCurrentUser(user);
     //this._utilisateursService.updateCurrentUserDevTest(user);
-    console.log("logged from resVsServ : "+ this._utilisateursService.currentUser$);
+    //console.log("logged from resVsServ : "+ this._utilisateursService.currentUser$);
     this._init();
   }
 
@@ -91,7 +91,7 @@ export class UtilisateursComponent implements OnInit {
   }
 
   startUpdateUser(user: Utilisateur) {
-    console.log('strated update');
+    //console.log('strated update');
     this.user = user;
     this.modifBtn = false;
   }

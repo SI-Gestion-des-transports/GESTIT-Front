@@ -120,13 +120,13 @@ export class SingleCovoiturageComponent {
   }
 
   updatePass(covoit: Covoiturage){
-    console.log("SingleCovoitComp —updatePass")
-    console.log("SingleCovoitComp —updatePass / covoit : ", covoit)
+    //console.log("SingleCovoitComp —updatePass")
+    //console.log("SingleCovoitComp —updatePass / covoit : ", covoit)
     //if (covoit.nombrePlacesRestantes>0){
     covoit.passagersId.push(this.currentUser.id)
-    console.log("SingleCovoitComp —updatePass / covoit : ", covoit)
+    //console.log("SingleCovoitComp —updatePass / covoit : ", covoit)
     this.covoiturageService.updateCovoituragePassager(covoit).subscribe(() => {
-        console.log("CovoitOrg uodated");
+      //console.log("CovoitOrg uodated");
       });
     //}
   }

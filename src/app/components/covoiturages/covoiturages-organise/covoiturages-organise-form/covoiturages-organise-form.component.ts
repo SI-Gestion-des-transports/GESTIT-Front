@@ -94,7 +94,7 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.currentUser);
+    //console.log(this.currentUser);
     if (this.currentUser) {
       this._init();
       this.reInitCovoitOrg();
@@ -102,26 +102,26 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
   }
 
   ngOnDestroy(){
-    console.log("Enter DESTROY")
+    //console.log("Enter DESTROY")
     this._subscription.unsubscribe();
-    console.log("Destroy ———— UNSUSCRIBED —————")
+    //console.log("Destroy ———— UNSUSCRIBED —————")
   }
 
 
   private _init() {
     if (this.currentUser.nom != undefined) {
-      console.log("_init")
-      console.log("User : " + this.currentUser.nom)
+      //console.log("_init")
+      //console.log("User : " + this.currentUser.nom)
 /*      this._covoitOrgService
         .getCovoituragesByOrganisateur(this.currentUser)
         .subscribe((covoitOrgsCreated) => {
           this.covoitOrgs = covoitOrgsCreated;
         });*/
-      console.log("currentCovoitOrg : ", this.currentCovoitOrg.adresseDepart.commune)
-      console.log("currentCovoitOrg : ", this.currentCovoitOrg.adresseDepart.numero)
+      //console.log("currentCovoitOrg : ", this.currentCovoitOrg.adresseDepart.commune)
+      //console.log("currentCovoitOrg : ", this.currentCovoitOrg.adresseDepart.numero)
       this.adresseDepart = this.currentCovoitOrg.adresseDepart;
-      console.log("adresseDepart : ", this.adresseDepart.commune)
-      console.log("adresseDepart : ", this.adresseDepart.numero)
+      //console.log("adresseDepart : ", this.adresseDepart.commune)
+      //console.log("adresseDepart : ", this.adresseDepart.numero)
       this.adresseArrivee = this.currentCovoitOrg.adresseArrivee;
     }
   }
@@ -195,17 +195,17 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
         this._adresseService
          .create(this.adresseDepart)
          .subscribe((adresse) => {
-           console.log("adresseDepart", adresse);
+           //console.log("adresseDepart", adresse);
            covoit.adresseDepartId = adresse.id;
-           console.log("covoiturageCreated.adresseDepart : ", covoit.adresseDepartId);
+           //console.log("covoiturageCreated.adresseDepart : ", covoit.adresseDepartId);
 
            /// 2E subscribe
             this._adresseService
              .create(this.adresseArrivee)
              .subscribe((adresse) => {
-               console.log("adresseArrivee", adresse);
+               //console.log("adresseArrivee", adresse);
                covoit.adresseArriveeId = adresse.id;
-               console.log("covoiturageCreated.adresseArrivee : ", covoit.adresseArriveeId);
+               //console.log("covoiturageCreated.adresseArrivee : ", covoit.adresseArriveeId);
 
                //// 3E Subscribe
                 this._vehiculePersoService.findVpById(this.selectedVehiculePersoId.toString()).subscribe(data =>{
@@ -225,7 +225,7 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
                 */
             // FIN 2E SUB
              });
-           console.log("Cov Org Form — Create / covoit after adresses : ", covoit)
+           //console.log("Cov Org Form — Create / covoit after adresses : ", covoit)
 
           // FIN 1ER SUB
          });
@@ -233,9 +233,9 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
        });
 
        observer.subscribe(response => {
-          console.log("Cov Org Form — Create / covoit before Srv call : ", covoit);
+         //console.log("Cov Org Form — Create / covoit before Srv call : ", covoit);
           this._covoitOrgService.create(covoit).subscribe((data) => {
-            console.log("Covoit created : ", data);
+            //console.log("Covoit created : ", data);
             this.reInitCovoitOrg();
             this._router.navigateByUrl('covoituragesOrganises-list');
         });
@@ -258,7 +258,7 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
     covoit.adresseArrivee = this.adresseArrivee;
     covoit.vehiculePersoId = this.selectedVehiculePerso.id;
     this._covoitOrgService.updateCovoiturageOrganise(covoit).subscribe(() => {
-      console.log("CovoitOrg uodated");
+      //console.log("CovoitOrg uodated");
       this.reInitCovoitOrg();
       this._router.navigateByUrl('covoituragesOrganises-list');
     });
@@ -272,7 +272,7 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
 
   private reformatDate(covoit: Covoiturage): Covoiturage {
     covoit.dateDepart = covoit.dateDepart.toString().slice(0, 16);
-    console.log("reformatDate / covoit.dateDepart : ", covoit.dateDepart);
+    //console.log("reformatDate / covoit.dateDepart : ", covoit.dateDepart);
     return covoit;
   }
 

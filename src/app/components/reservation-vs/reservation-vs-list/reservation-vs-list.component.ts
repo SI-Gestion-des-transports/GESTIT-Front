@@ -196,7 +196,7 @@ export class ReservationVsListComponent implements OnInit{
   }
 
   newReservation(){
-    console.log("Réservation List — newReservation");
+    //console.log("Réservation List — newReservation");
     this.mergedArray = [];
     this._reservationVsService.updateReservationVs({})
     this._router.navigateByUrl('reservationsvs/form');
