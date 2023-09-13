@@ -5,5 +5,6 @@ export interface Utilisateur {
   nom?: string,
   motDePasse?: string,
   email?: string,
-  covoituragesOrganises?: Covoiturage[]
+  covoituragesOrganises?: Covoiturage[],
+  roles?:string[]
 }

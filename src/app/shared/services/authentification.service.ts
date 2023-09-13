@@ -3,6 +3,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Injectable, OnInit} from "@angular/core";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Login} from "../models/login";
+import {HttpHeaderService} from "./http-header.service";
+import {Utilisateur} from "../models/utilisateur";
 import {UtilisateursService} from "./utilisateurs.service";
 import {ReservationVsService} from "./reservation.vs.service";
 import {HttpHeaderService} from "./http-header.service";
@@ -16,6 +18,8 @@ export class AuthentificationService {
 
   private _baseUrlLogin = environment.urlApi.login;
   private _baseUrlLogout = environment.urlApi.logout;
+  private _verifyJWT = environment.urlApi.verifyJwt;
+
 
   private headersSource = new BehaviorSubject<HttpHeaders>(new HttpHeaders());
   private loggedBtnSource = new BehaviorSubject<boolean>(false);
@@ -23,25 +27,22 @@ export class AuthentificationService {
   headers$ = this.headersSource.asObservable();
   loggedBtn$ = this.loggedBtnSource.asObservable();
 
-  headers = this._httpHeaderService.getHeaders();
+
+  //headers = this._httpHeader.getHeaders();
+  headers = new HttpHeaders();
 
   constructor(private _http: HttpClient,
-              private _httpHeaderService: HttpHeaderService) {
+              private _httpHeader: HttpHeaderService) {
   }
 
 
-  login(tryLog: Login): Observable<any>{
+  login(tryLog: Login): Observable<any> {
     return this._http.post(this._baseUrlLogin, tryLog);
   }
 
   logout() {
-    window.localStorage.removeItem(`JWT-TOKEN`);
-    //console.log("Auth Service — logout");
-    this._http.post(this._baseUrlLogout, {},{headers: this.headers});
-    this.headers =  this.headers.delete(`JWT-TOKEN`);
-    //console.log("Auth Service — Header (this.headers) : ", this.headers);
-    //console.log("Auth Service — updateHeaders");
-    this.updateHeaders(this.headers);
+
+    return this._http.get(this._baseUrlLogout, {headers: this._httpHeader.getHeaders(), observe: "response"});
   }
 
   checkToken(headers : HttpHeaders){
@@ -74,7 +75,7 @@ export class AuthentificationService {
     }
   }
 
-  updateLoggedBtn(data){
+  updateLoggedBtn(data) {
     this.loggedBtnSource.next(data);
     //console.log("Auth Service — updateLoggedBtn : ", data);
   }
@@ -89,4 +90,14 @@ export class AuthentificationService {
         return result;
       }
   }
+
+  verifyJWT() {
+    return this._http.get<Utilisateur>(`${this._verifyJWT}`,
+      {
+        headers: this._httpHeader.getHeaders(),
+        observe: "response"
+      });
+
+  }
+
 }
