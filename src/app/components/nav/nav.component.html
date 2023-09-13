@@ -56,7 +56,7 @@
 </nav>
 <div class="d-flex flex-row align-items-center p-3">
   <img src="../../../assets/connectedUser.png" alt="logo_utilisateur_connecte" class="w-25">
-  <strong class="text-success ">{{nomUtilisateurCourant$ | async}}</strong>
+  <strong class="text-success ">{{environment.currentUserName}}</strong>
   <a routerLink="login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
     <button type="button" class="btn" [class.btn-outline-primary]="loggedBtn" [class.btn-primary]="!loggedBtn"
       (click)="loggedBtn ? logout() : login()">

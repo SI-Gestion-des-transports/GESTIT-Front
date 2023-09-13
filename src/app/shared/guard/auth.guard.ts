@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
 
 export const authGuard: CanActivateFn =  (route, state):Observable<boolean> => {
   const _authService = inject(AuthentificationService);
-  const dataRole = route.data["roles"];
+  const dataRole:string[] = route.data["roles"];
   const router=inject(Router);
 
   return new Observable<boolean>((observer)=>{
@@ -23,7 +23,7 @@ export const authGuard: CanActivateFn =  (route, state):Observable<boolean> => {
         router.navigateByUrl("/login");
         observer.next(false);
         observer.complete();
-      }else if (res.body.roles.filter(role=> role==dataRole).length==0){
+      }else if (res.body.roles.filter(role=> dataRole.includes(role)).length==0){
         router.navigateByUrl("");
         observer.next(false);
         observer.complete();

@@ -8,7 +8,7 @@
       <input (focus)="errorLogin=false" [(ngModel)]="unLoggedUser.motDePasse" name="motDePasse" type="password" placeholder="Password">
       <br>
       <div class="container d-flex">
-      <input #check="ngModel" name="check" type="checkbox" ngModel> Se souvenir de moi
+      <input (click)="check()" [checked]="environment.check" name="check" type="checkbox" > Se souvenir de moi
       </div>
       <br>
       <button type="submit" class="btn btn-primary" (click)="seConnecter()">Se connecter</button>
