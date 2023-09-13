@@ -7,6 +7,8 @@ import {HttpHeaderService} from "./http-header.service";
 import {Utilisateur} from "../models/utilisateur";
 import {UtilisateursService} from "./utilisateurs.service";
 import {ReservationVsService} from "./reservation.vs.service";
+import {HttpHeaderService} from "./http-header.service";
+import {Utilisateur} from "../models/utilisateur";
 
 
 @Injectable({
@@ -25,6 +27,8 @@ export class AuthentificationService {
   headers$ = this.headersSource.asObservable();
   loggedBtn$ = this.loggedBtnSource.asObservable();
 
+
+  //headers = this._httpHeader.getHeaders();
   headers = new HttpHeaders();
 
   constructor(private _http: HttpClient,
@@ -48,25 +52,27 @@ export class AuthentificationService {
     }
   }
 
-  updateHeaders(data: Object){
-    //console.log("Auth Service — data : ", data);
+  updateHeaders(data: HttpHeaders){
+    console.log("Auth Service — data : ", data);
     this.headers = new HttpHeaders({});
-    Object.keys(data).forEach(key => {
+/*    Object.keys(data).forEach(key => {
       if(data[key] !== null && data[key] !== undefined) {  // Vérification ajoutée ici
-        //console.log("Auth Service — Header set : name:", key, "Values:", data[key]);
+        console.log("Auth Service — Header set : name:", key, "Values:", data[key]);
         this.headers = this.headers.set(key, data[key]);
       }
-    });
-    //console.log("Auth Service — Header (this.headers) : ", this.headers);
-    this.headersSource.next(this.headersToJSON(this.headers));
-    //console.log("Auth Service — Header (this.headersSource) : ", this.headersSource.getValue())
-/*    if(window.localStorage.getItem("JWT-TOKEN") != null){
+    });*/
+    console.log("Auth Service — Header (this.headers) : ", this.headers);
+    //this.headersSource.next(this.headersToJSON(this.headers));
+    this.headersSource.next(data);
+    console.log("Auth Service — Header (this.headersSource) : ", this.headersSource.getValue())
+    this.headers$.subscribe(data =>
+    console.log("Auth Service — header$ : ", data));
+    if(window.localStorage.getItem("JWT-TOKEN") != null){
       let token = window.localStorage.getItem("JWT-TOKEN");
-      console.log("Auth Service — token : ", token)*/
-/*      console.log("Auth Service — Header (this.headers JSON) : ", this.headersToJSON(this.headers));
-      this.headersSource.next(this.headersToJSON(this.headers));
-      */
-/*    }*/
+      console.log("Auth Service — token : ", token)
+      //console.log("Auth Service — Header (this.headers JSON) : ", this.headersToJSON(this.headers));
+      //this.headersSource.next(this.headersToJSON(this.headers));
+    }
   }
 
   updateLoggedBtn(data) {

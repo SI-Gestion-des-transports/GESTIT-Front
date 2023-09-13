@@ -122,8 +122,7 @@ export class ReservationVsComponent implements OnInit, OnChanges {
   }
 
   private _init(){
-    this._reservationVsService
-      .findAll();
+    //this._reservationVsService.findAll();
 /*      .subscribe(reservations => {
         this.reservationsVs = reservations;
       });*/

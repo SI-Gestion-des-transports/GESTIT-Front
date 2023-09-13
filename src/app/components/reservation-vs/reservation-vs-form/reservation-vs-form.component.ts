@@ -129,22 +129,27 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   }
 
   private _init(){
+    //console.log("Réservation Form — _init");
     if(!window.localStorage.getItem("JWT-TOKEN")) {
       //console.log("Reservation Form — _init / localStorage.getItem : false");
       //console.log("Reservation Form ——>>>> Login");
       this._router.navigateByUrl('login');
     }
-    //console.log("Réservation Form — _init");
+    /*
     this._reservationVsService
       .findAll()
       .subscribe(reservations => {
         this.resasVs = reservations;
       });
+    */
   }
 
   onSubmit(event: Event): void {
     event.preventDefault();
     //console.log("Réservation Form — OnSubmit");
+    if(!this.reservationVs.vehiculeServiceId){
+      this.reservationVs.vehiculeServiceId = this.vehiculesSrv[0].id;
+    }
     if(this.currentReservationVs.id){
       this.update(this.reservationVs);
     } else if (!this.currentReservationVs.id){
@@ -165,6 +170,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
     this._reservationVsService
       .create(this.addSecondsToDate(reservationVs))
       .subscribe(() =>{
+        console.log("Created")
         this.reInitResVs();
         this._init();
         this._router.navigateByUrl('reservationsvs/list');
@@ -182,6 +188,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
 
   reInitResVs(){
     //console.log("Réservation Form — ReInitVs");
+    this.currentVs = {};
     this._reservationVsService.updateCurrentReservationVs({});
     this._reservationVsService.updateModifBtn(true);
   }

@@ -103,8 +103,8 @@
     </div>
   </div>
 
-  <select name="Vehicule perso" value="Vehicule perso" [(ngModel)]="vehiculesPersoCurrentUser">
-    <option *ngFor="let vehicule of vehiculesPersoCurrentUser">{{vehicule.modele}}</option>
+  <select name="vehiculePersoId" value="Vehicule perso" [(ngModel)]="selectedVehiculePersoId" >
+    <option *ngFor="let vehicule of listVehiculePerso" value="{{vehicule.id}}" (select)="vehicule.id">{{vehicule.modele}}</option>
   </select>
 
 

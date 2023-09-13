@@ -42,26 +42,36 @@ export class AuthentificationComponent implements OnInit {
 
     this._authService.login(this.unLoggedUser).subscribe({
       next: data => {
-        console.log(data.status);
-
-          //console.log("AuthComp — seConnecter / login.subs(data['JWT-TOKEN']) : " + data['JWT-TOKEN']);
+          //console.log(data.status);
+          console.log("AuthComp — seConnecter / login.subs(data['JWT-TOKEN']) : " + data['JWT-TOKEN']);
           console.log("Auth Comp — seConnecter / login.subs(data) : " + data['JWT-TOKEN']);
-          //console.log("AuthComp — seConnecter / login.subs(data['userId']) : " + data['userId']);
+          console.log("AuthComp — seConnecter / login.subs(data['userId']) : " + data['userId']);
           this.userId = data['userId'];
           console.log("Auth Comp — seConnecter / this.userId : " + this.userId);
+
+          this._utilisateurService.setSharedCurrentUserId(this.userId);
+          console.log("Auth Comp — seConnecter / getSharedCurrentUserId : " + this._utilisateurService.getSharedCurrentUserId());
+
           this._utilisateurService.updateCurrentUserId(this.userId);
           window.localStorage.setItem("JWT-TOKEN", data['JWT-TOKEN']);
-/*          //console.log("Auth Comp — seConnecter / this.headers : ", this.headers);
-          //this.headers = this.headers.set("JWT-TOKEN", data['JWT-TOKEN']);
+          console.log("Auth Comp — seConnecter / this.headers : ", this.headers);
+          const headers = new HttpHeaders().set("JWT-TOKEN",`${data['JWT-TOKEN']}`);
+
+          console.log("Auth Comp — seConnecter / headers affectation : ", `JWT-TOKEN: "${data['JWT-TOKEN']}"`);
+          console.log("Auth Comp — seConnecter / headers : ", headers);
+          console.log("Auth Comp — seConnecter / headers.get() : ",headers.get('JWT-TOKEN'));
+          /*
           //console.log("Auth Comp — seConnecter / this.headers.get(\"JWT-TOKEN\") : ", this.headers.get("JWT-TOKEN"));
           //console.log("Auth Comp — seConnecter / this.headers.keys() : ", this.headers.keys());
           this.headers.keys().forEach(key => {
             console.log("Auth Comp — seConnecter / key:value : ", `${key}: ${this.headers.get(key)}`);
           });
-          this.userId = data['userId'];*/
+          this.userId = data['userId'];
+          */
           this._authService.updateLoggedBtn(true);
           console.log("Auth Comp — seConnecter / loggedBtn : ",this.loggedBtn);
-          this._authService.updateHeaders(data);
+
+          this._authService.updateHeaders(headers);
           this._router.navigateByUrl('');
       },
       //show error username or password is incorrect

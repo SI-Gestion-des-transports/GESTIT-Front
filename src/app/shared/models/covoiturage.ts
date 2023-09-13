@@ -7,10 +7,10 @@ export interface Covoiturage {
   nombrePlacesRestantes?: number;
   dureeTrajet?: number;
   distanceKm?: number;
-  dateDepart?: Date;
+  dateDepart?: Date|string;
   adresseDepart?: Adresse;
   adresseArrivee?: Adresse;
   organisateurId?: number;
-  passagers?: Utilisateur[];
-  vehiculePerso?: VehiculePerso;
+  passagers?: number[];
+  vehiculePersoId?: number;
 }
