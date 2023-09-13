@@ -1,17 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { CovoiturageComponent } from './components/covoiturages/covoiturage/covoiturage.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
-import { SingleCovoiturageComponent } from './components/covoiturages/single-covoiturage/single-covoiturage.component';
-import { CovoiturageListComponent } from './components/covoiturages/covoiturage-list/covoiturage-list.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {CovoiturageComponent} from './components/covoiturages/covoiturage/covoiturage.component';
+import {LandingPageComponent} from './landing-page/landing-page.component';
+import {SingleCovoiturageComponent} from './components/covoiturages/single-covoiturage/single-covoiturage.component';
+import {CovoiturageListComponent} from './components/covoiturages/covoiturage-list/covoiturage-list.component';
 import {ReservationVsComponent} from "./components/reservation-vs/reservation-vs.component";
 import {UtilisateursComponent} from "./components/utilisateurs/utilisateurs.component";
 import {
   ReservationVsItemComponent
 } from "./components/reservation-vs/reservation-vs-item/reservation-vs-item.component";
-import { CovoituragesOrganiseComponent } from './components/covoiturages/covoiturages-organise/covoiturages-organise.component';
-import { AuthentificationComponent } from './components/authentification/authentification.component';
-import { VehiculeServiceComponent } from './components/vehicule-service/vehicule-service.component';
+import {
+  CovoituragesOrganiseComponent
+} from './components/covoiturages/covoiturages-organise/covoiturages-organise.component';
+import {AuthentificationComponent} from './components/authentification/authentification.component';
+import {VehiculeServiceComponent} from './components/vehicule-service/vehicule-service.component';
 import {
   VehiculeServiceListComponent
 } from "./components/vehicule-service/vehicule-service-list/vehicule-service-list.component";
@@ -33,7 +35,9 @@ import {
 import {
   CovoituragesOrganiseFormComponent
 } from "./components/covoiturages/covoiturages-organise/covoiturages-organise-form/covoiturages-organise-form.component";
-import { CovoiturageConformationComponent } from "./components/covoiturages/covoiturage-conformation/covoiturage-conformation.component";
+import {
+  CovoiturageConformationComponent
+} from "./components/covoiturages/covoiturage-conformation/covoiturage-conformation.component";
 import {VehiculePersoComponent} from "./components/vehicule-perso/vehicule-perso.component";
 import {
   VehiculePersoListComponent
@@ -45,54 +49,83 @@ import {
 import {
   CovoituragesOrganiseModifyComponent
 } from "./components/covoiturages/covoiturages-organise/covoiturages-organise-modify/covoiturages-organise-modify.component";
-import { ConfirmationComponent } from './components/covoiturages/confirmation/confirmation.component';
+import {ConfirmationComponent} from './components/covoiturages/confirmation/confirmation.component';
 import {authGuard} from "./shared/guard/auth.guard";
 
 
 const routes: Routes = [
-  {path:'covoituragesConfirmReservation', component: CovoiturageConformationComponent},
-  {path:'covoiturages/:id', component:SingleCovoiturageComponent},   //Route avec paramètre dynamique
-  {path:'covoiturages', component: CovoiturageListComponent,
+  {
+    path: 'covoituragesConfirmReservation', component: CovoiturageConformationComponent,
+    canActivate: [authGuard],
+    data: {roles: ["COLLABORATEUR"]}
+  },
+  {
+    path: 'covoiturages/:id', component: SingleCovoiturageComponent,
+    canActivate: [authGuard],
+    data: {roles: ["COLLABORATEUR"]}
+  },   //Route avec paramètre dynamique
+  {
+    path: 'covoiturages', component: CovoiturageListComponent,
+    canActivate: [authGuard],
+    data: {roles: ["COLLABORATEUR"]},
     children: [
-      {path:'reservations', component: CovoituragesOrganiseListComponent}
-    ]},
-  {path:'covoituragesOrganises-list', component: CovoituragesOrganiseListComponent},
-  {path:'covoituragesOrganises', component: CovoituragesOrganiseComponent,
-    children: [
-      {path:'list', component: CovoituragesOrganiseListComponent},
-      {path:'form', component: CovoituragesOrganiseFormComponent},
-      {path:'modify/:id', component: CovoituragesOrganiseModifyComponent}
-    ]},
-  {path:'', component:LandingPageComponent},
-
-  {path:'reservation', component:ReservationVsComponent},
-  {path:'reservation/upcoming', component:ReservationVsListComponent},
-  {path:'reservation/past', component:ReservationVsListComponent},
-  {path:'reservationsvs', component:ReservationVsComponent,
-  children: [
-    {path:'form', component:ReservationVsFormComponent},
-    {path:'item', component:ReservationVsItemComponent},
-    {path:'list', component:ReservationVsListComponent},
-    {path:':id', component:ReservationVsItemComponent},
-  ]},
-
-  {path:'utilisateurs', component:UtilisateursComponent},
-  {path:'login', component:AuthentificationComponent},
-  {path:'vehiculeperso', component:VehiculePersoComponent,
+      {path: 'reservations', component: CovoituragesOrganiseListComponent}
+    ]
+  },
+  {path: 'covoituragesOrganises-list', component: CovoituragesOrganiseListComponent,
     canActivate:[authGuard],
-    data:{roles:"COLLABORATEUR"},
-  children:[
+    data:{roles:["COLLABORATEUR"]}},
+  {
+    path: 'covoituragesOrganises', component: CovoituragesOrganiseComponent,
+    canActivate:[authGuard],
+    data:{roles:["COLLABORATEUR"]},
+    children: [
+      {path: 'list', component: CovoituragesOrganiseListComponent},
+      {path: 'form', component: CovoituragesOrganiseFormComponent},
+      {path: 'modify/:id', component: CovoituragesOrganiseModifyComponent}
+    ]
+  },
+  {path: '', component: LandingPageComponent},
 
-    {path: "list",component: VehiculePersoListComponent},
-    {path: "add",component: VehiculePersoAddComponent},
-    {path: "modify/:id",component: VehiculePersoModifyComponent},
-    {path: "**",component: VehiculePersoListComponent}
-  ]
+  {path: 'reservation', component: ReservationVsComponent,
+    canActivate:[authGuard],
+    data:{roles:["COLLABORATEUR"]}},
+  {path: 'reservation/upcoming', component: ReservationVsListComponent,
+    canActivate:[authGuard],
+    data:{roles:["COLLABORATEUR"]}},
+  {path: 'reservation/past', component: ReservationVsListComponent,
+    canActivate:[authGuard],
+    data:{roles:["COLLABORATEUR"]}},
+  {
+    path: 'reservationsvs', component: ReservationVsComponent,
+    canActivate:[authGuard],
+    data:{roles:["COLLABORATEUR"]},
+    children: [
+      {path: 'form', component: ReservationVsFormComponent},
+      {path: 'item', component: ReservationVsItemComponent},
+      {path: 'list', component: ReservationVsListComponent},
+      {path: ':id', component: ReservationVsItemComponent},
+    ]
+  },
+
+  {path: 'utilisateurs', component: UtilisateursComponent},
+  {path: 'login', component: AuthentificationComponent},
+  {
+    path: 'vehiculeperso', component: VehiculePersoComponent,
+    canActivate: [authGuard],
+    data: {roles: ["COLLABORATEUR"]},
+    children: [
+
+      {path: "list", component: VehiculePersoListComponent},
+      {path: "add", component: VehiculePersoAddComponent},
+      {path: "modify/:id", component: VehiculePersoModifyComponent},
+      {path: "**", component: VehiculePersoListComponent}
+    ]
   },
   {
     path: 'vehiculeService', component: VehiculeServiceComponent,
-    canActivate:[authGuard],
-    data:{roles:"ADMINISTRATEUR"},
+    canActivate: [authGuard],
+    data: {roles: ["ADMINISTRATEUR"]},
     children: [
 
       {path: "list", component: VehiculeServiceListComponent},
@@ -108,4 +141,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

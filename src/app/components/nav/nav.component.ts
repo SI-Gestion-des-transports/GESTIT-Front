@@ -6,6 +6,7 @@ import {HttpHeaders} from "@angular/common/http";
 import {UtilisateursService} from "../../shared/services/utilisateurs.service";
 import {HttpHeaderService} from "../../shared/services/http-header.service";
 import { Utilisateur } from 'src/app/shared/models/utilisateur';
+import {environment} from "../../../environments/environment.development";
 
 @Component({
   selector: 'app-nav',
@@ -74,6 +75,7 @@ export class NavComponent implements OnInit {
   // Données partagées : subscribe from services
   loggedBtn: boolean = false;
   currentUserId: number = null;
+  currentUserName:string="(Anonyme)";
   exampleUser!:Utilisateur;
 
   nomUtilisateurCourant$: Observable<string>;
@@ -88,6 +90,16 @@ export class NavComponent implements OnInit {
   { }
 
   ngOnInit(): void {
+    if (window.localStorage.getItem(environment.JWT)) {
+      this._authService.verifyJWT().subscribe(res=>{
+        if (res.status!=200) {
+          window.localStorage.removeItem(environment.JWT)
+        }else {
+          environment.currentUserName = res.body.nom;
+          this.loggedBtn=true;
+        };
+      })
+    }
      /*récupération de la référence de l'observable sur le nom de l'utilisateur courant*/
      this.nomUtilisateurCourant$=this._utilisateurService.currentUserNameSource$;
     
@@ -209,7 +221,10 @@ export class NavComponent implements OnInit {
     console.log("===================into logout()====================");
     this._authService.logout().subscribe(res=> {
       console.log("===================into logout()===================="+res.status);
-      if (res.status==200) window.localStorage.removeItem(this._httpHeader.tokenName);
+      if (res.status==200) {
+        window.localStorage.removeItem(this._httpHeader.tokenName);
+        environment.currentUserName="(Anonyme)";
+      }
     });
     this.router.navigateByUrl('')
     this._authService.updateHeaders(new HttpHeaders());
@@ -230,6 +245,7 @@ export class NavComponent implements OnInit {
 
 
   // this.router.navigateByUrl('covoiturages');
+  protected readonly environment = environment;
 }
 
 
