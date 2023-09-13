@@ -7,6 +7,7 @@ import {AuthentificationService} from "../../shared/services/authentification.se
 import {HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Subscription} from "rxjs";
 import {error} from "@angular/compiler-cli/src/transformers/util";
+import {environment} from "../../../environments/environment.development";
 
 @Component({
   selector: 'app-authentification',
@@ -33,12 +34,19 @@ export class AuthentificationComponent implements OnInit {
 
   constructor(private _authService: AuthentificationService,
               private _utilisateurService: UtilisateursService,
-              private _router: Router) {
+              private _router: Router,
+              ) {
+  }
+
+  check(){
+    environment.check=!environment.check;
+    console.log(environment.check)
   }
 
   seConnecter() {
     console.log(this.unLoggedUser.email);
     console.log(this.unLoggedUser);
+
 
     this._authService.login(this.unLoggedUser).subscribe({
       next: data => {
@@ -89,6 +97,15 @@ export class AuthentificationComponent implements OnInit {
 
 
   ngOnInit(): void {
+    if (window.localStorage.getItem(environment.JWT)) {
+      this._authService.verifyJWT().subscribe(res=>{
+        if (res.status!=200) {
+          window.localStorage.removeItem(environment.JWT)
+        }else {
+          this._router.navigateByUrl("");
+        };
+      })
+    }
     this._authService.updateLoggedBtn(false);
     this._authService.updateHeaders(new HttpHeaders());
     this._subscription.add(
@@ -116,4 +133,5 @@ export class AuthentificationComponent implements OnInit {
   }
 
 
+  protected readonly environment = environment;
 }

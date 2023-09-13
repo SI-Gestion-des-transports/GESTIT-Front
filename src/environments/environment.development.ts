@@ -27,6 +27,8 @@ export const environment = {
 
 
   },
-  JWT:"JWT-TOKEN"
+  JWT:"JWT-TOKEN",
+  check:true,
+  currentUserName:"(Anonyme)"
 }
 
