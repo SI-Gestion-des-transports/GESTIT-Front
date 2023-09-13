@@ -9,7 +9,7 @@ import { CovoiturageService } from 'src/app/shared/services/covoiturage.service'
 import { UtilisateursService } from 'src/app/shared/services/utilisateurs.service';
 import { VehiculePersoService } from 'src/app/shared/services/vehicule.perso.service';
 import { environment } from 'src/environments/environment.development';
-import {add} from "ngx-bootstrap/chronos";
+import { add} from "ngx-bootstrap/chronos";
 
 /**
  * Regroupe toutes les fonctions d'affichage  d'un covoiturage avec confirmation de réservation
