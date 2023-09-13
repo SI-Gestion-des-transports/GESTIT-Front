@@ -31,9 +31,11 @@ export class CovoituragesOrganiseListComponent {
   vehiculesPersoCurrentUser: VehiculePerso[] = [];
   currentCovoitOrg : Covoiturage = {};
   covoitOrg: Covoiturage = {};
+  covoitByOrganisateur: Covoiturage[] = [];
   // Fin variables partagées
   modifBtn!: boolean;
   upcompingCovoiturages : boolean = true;
+  errorMessage: string | null = null;
 
 
   private _subscription = new Subscription();
@@ -65,6 +67,11 @@ export class CovoituragesOrganiseListComponent {
           this.currentCovoitOrg = data;
         })
     );
+    this._subscription.add(
+      this._covoitOrgService.covoitByOrganisateur$.subscribe(data => {
+        this.covoitByOrganisateur = data
+      })
+    );
     this._init();
   }
 
@@ -74,7 +81,9 @@ export class CovoituragesOrganiseListComponent {
 
 
   private _init() {
+    console.log("init")
     if (this.currentUser.nom != undefined) {
+      console.log("user != undefined")
       this._covoitOrgService
         .getCovoituragesByOrganisateur(this.currentUser)
         .subscribe((covoitOrgsCreated) => {
@@ -82,7 +91,10 @@ export class CovoituragesOrganiseListComponent {
         });
 
       this.upcompingCovoiturages =true;
-      this._covoitOrgService.findUpcomingCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => this.upcomingCovoitOrgsResByUser = upcomingCovoitOrgRes)
+      this._covoitOrgService.findUpcomingCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => {
+        console.log(upcomingCovoitOrgRes);
+        this.upcomingCovoitOrgsResByUser = upcomingCovoitOrgRes;
+      });
     }
   }
 
@@ -90,21 +102,42 @@ export class CovoituragesOrganiseListComponent {
     this._router.navigateByUrl('covoituragesOrganises/form');
   }
 
-  getIncomingReservations(){
-    this._init();
+  getIncomingCovoiturages(){
+    console.log("TEST");
+    this.upcompingCovoiturages = true;
+    //this._init();
+    this._covoitOrgService.findUpcomingCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => {
+      console.log(upcomingCovoitOrgRes);
+      this.covoitOrgs = upcomingCovoitOrgRes;
+    });
+  }
+
+  getPastCovoiturages(){
+    console.log("TEST");
+    this.upcompingCovoiturages = false;
+    //this._init();
+    this._covoitOrgService.findPastCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => {
+      console.log(upcomingCovoitOrgRes);
+      this.covoitOrgs = upcomingCovoitOrgRes;
+    });
   }
 
   updateCovoitOrg(covoitOrgToEdit: Covoiturage){
-    console.log("UpdateCovoitOrg")
-    this._covoitOrgService.updateModifBtn(false);
-    this.covoitOrg = covoitOrgToEdit;
-    this._covoitOrgService.updateCurrentCovoitOrg(covoitOrgToEdit);
-    //this._covoitOrgService.updateCovoitOrg(covoitOrgToEdit);
-    this._router.navigateByUrl('covoituragesOrganises/modify/:id');
-    console.log("covoitOrgToEdit numero : ",covoitOrgToEdit.adresseArrivee.numero)
-    console.log("covoitOrgToEdit commune : ",covoitOrgToEdit.adresseArrivee.commune)
-    console.log("covoitOrg numero : ",this.covoitOrg.adresseArrivee.numero)
-    console.log("covoitOrg commune : ",this.covoitOrg.adresseArrivee.commune)
+    if(!covoitOrgToEdit.passagers){
+      console.log("UpdateCovoitOrg")
+      this._covoitOrgService.updateModifBtn(false);
+      this.covoitOrg = covoitOrgToEdit;
+      this._covoitOrgService.updateCurrentCovoitOrg(covoitOrgToEdit);
+      //this._covoitOrgService.updateCovoitOrg(covoitOrgToEdit);
+        this._router.navigateByUrl('covoituragesOrganises/modify/${covoitOrgToEdit.id}');
+      console.log("covoitOrgToEdit numero : ",covoitOrgToEdit.adresseArrivee.numero)
+      console.log("covoitOrgToEdit commune : ",covoitOrgToEdit.adresseArrivee.commune)
+      console.log("covoitOrg numero : ",this.covoitOrg.adresseArrivee.numero)
+      console.log("covoitOrg commune : ",this.covoitOrg.adresseArrivee.commune)
+    } else {
+      this.errorMessage = "Vous ne pouvez pas modifier ce covoiturage car il a des passagers.";
+    }
+
   }
 
   deleteCovoitOrg(covoitOrgToDelete: Covoiturage){

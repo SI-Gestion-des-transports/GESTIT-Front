@@ -9,6 +9,9 @@ import { CovoiturageService } from 'src/app/shared/services/covoiturage.service'
 import { UtilisateursService } from 'src/app/shared/services/utilisateurs.service';
 import { VehiculePersoService } from 'src/app/shared/services/vehicule.perso.service';
 import { environment } from 'src/environments/environment.development';
+import {Utilisateur} from "../../../shared/models/utilisateur";
+import {UtilisateursService} from "../../../shared/services/utilisateurs.service";
+import {add} from "ngx-bootstrap/chronos";
 
 /**
  * Regroupe toutes les fonctions d'affichage  d'un covoiturage avec confirmation de réservation
@@ -116,5 +119,18 @@ export class SingleCovoiturageComponent {
         this.covoiturageService.update(this.covoiturageAconfirmer);
       });
   }
+
+  updatePass(covoit: Covoiturage){
+    console.log("SingleCovoitComp —updatePass")
+    console.log("SingleCovoitComp —updatePass / covoit.passagers : ", covoit.passagers)
+    //if (covoit.nombrePlacesRestantes>0){
+    covoit.passagers.push(this.currentUser.id)
+    console.log("SingleCovoitComp —updatePass / covoit.passagers : ", covoit.passagers)
+    this.covoiturageService.updateCovoituragePassager(covoit).subscribe(() => {
+        console.log("CovoitOrg uodated");
+      });
+    //}
+  }
+
 }
 

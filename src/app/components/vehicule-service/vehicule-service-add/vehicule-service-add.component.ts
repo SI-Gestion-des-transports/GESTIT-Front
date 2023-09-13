@@ -29,6 +29,9 @@ export class VehiculeServiceAddComponent implements OnInit{
               private router:Router) {
   }
   ngOnInit(): void {
+    if(!window.localStorage.getItem("JWT-TOKEN")) {
+      this.router.navigateByUrl('login');
+    }
     this._marqueService.findAll().subscribe(res=>{
       this.listMarque = res;
     });

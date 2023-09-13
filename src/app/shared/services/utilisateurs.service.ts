@@ -36,6 +36,10 @@ export class UtilisateursService implements OnInit, OnChanges {
     A chaque fois que currentUser est modifié, ses abonnés en seront donc automatiquement informés,
     et pourront mettre, par exemple, leur affichage à jour
   */
+
+  private _sharedCurrentUser: Utilisateur = {}
+  private _sharedCurrentUserId: number;
+
   private currentUserSource = new BehaviorSubject<Utilisateur>({});
   private currentUserIdSource = new BehaviorSubject<number>(undefined);
   private currentUserNameSource = new BehaviorSubject<string>(undefined);
@@ -50,21 +54,22 @@ export class UtilisateursService implements OnInit, OnChanges {
   private _baseUrl = environment.urlApi.users;
   private _realBaseUrl = environment.urlApi.utilisateur;
 
+
   private _subscription = new Subscription();
 
   constructor(private _http: HttpClient,
-    private _authService: AuthentificationService,
-    private _httpHeaderService: HttpHeaderService) {
+              private _authService: AuthentificationService,
+              private _httpHeader:HttpHeaderService){
   }
 
   ngOnInit() {
-    // this._subscription
-    //   .add(this._authService.headers$
-    //     .subscribe(data => {
-    //       this.headers = data
-    //     })
-    //   );
-      this.headers = this._httpHeaderService.getHeaders();
+/*    this._subscription
+      .add(this._authService.headers$
+        .subscribe(data => {
+          this.headers = data
+        })
+      );*/
+    this.headers = this._httpHeader.getHeaders();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -72,13 +77,17 @@ export class UtilisateursService implements OnInit, OnChanges {
     }
   }
 
-  findAll(): Observable<Utilisateur[]> {
-    return this._http.get<Utilisateur[]>(`${this._baseUrl}`);
+
+  ngOnDestroy(){
+    this._subscription.unsubscribe();
   }
 
-  findById(userId: number): Observable<Utilisateur> {
-    return this._http.get<Utilisateur>(`${this._realBaseUrl}/${userId}`, { headers: this.headers });
+
+  findAll(): Observable<Utilisateur[]>{
+    return this._http.get<Utilisateur[]>(`${this._baseUrl}`,{headers:this._httpHeader.getHeaders()});
+
   }
+
 
 
 
@@ -88,16 +97,24 @@ export class UtilisateursService implements OnInit, OnChanges {
     return user;
   }
 
-  create(createdUser: Utilisateur): Observable<Utilisateur> {
-    return this._http.post<Utilisateur>(this._baseUrl, createdUser);
+
+  findById(userId: number): Observable<Utilisateur>{
+    return this._http.get<Utilisateur>(`${this._realBaseUrl}/${userId}`, {headers: this._httpHeader.getHeaders()});
+
   }
 
-  update(updatedUser: Utilisateur): Observable<Utilisateur> {
-    return this._http.put<Utilisateur>(`${this._baseUrl}/${updatedUser.id}`, updatedUser);
+
+  create(createdUser:Utilisateur): Observable<Utilisateur>{
+    return this._http.post<Utilisateur>(this._baseUrl, createdUser,{headers:this._httpHeader.getHeaders()});
+
   }
 
-  delete(deletedUser: Utilisateur): Observable<Utilisateur> {
-    return this._http.delete<Utilisateur>(`${this._baseUrl}/${deletedUser.id}`);
+  update(updatedUser:Utilisateur): Observable<Utilisateur>{
+    return this._http.put<Utilisateur>(`${this._baseUrl}/${updatedUser.id}`, updatedUser,{headers:this._httpHeader.getHeaders()});
+  }
+
+  delete(deletedUser:Utilisateur): Observable<Utilisateur>{
+    return this._http.delete<Utilisateur>(`${this._baseUrl}/${deletedUser.id}`,{headers:this._httpHeader.getHeaders()});
   }
 
   updateCurrentUser(): void {
@@ -138,4 +155,20 @@ export class UtilisateursService implements OnInit, OnChanges {
     this.fakeCurrentUserSource.next(user);
   }
 
+
+  get getSharedCurrentUser(): Utilisateur {
+    return this._sharedCurrentUser;
+  }
+
+  setSharedCurrentUser(value: Utilisateur) {
+    this._sharedCurrentUser = value;
+  }
+
+  getSharedCurrentUserId(): number {
+    return this._sharedCurrentUserId;
+  }
+
+  setSharedCurrentUserId(value: number) {
+    this._sharedCurrentUserId = value;
+  }
 }

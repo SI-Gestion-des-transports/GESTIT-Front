@@ -46,6 +46,7 @@ import {
   CovoituragesOrganiseModifyComponent
 } from "./components/covoiturages/covoiturages-organise/covoiturages-organise-modify/covoiturages-organise-modify.component";
 import { ConfirmationComponent } from './components/covoiturages/confirmation/confirmation.component';
+import {authGuard} from "./shared/guard/auth.guard";
 
 
 const routes: Routes = [
@@ -78,15 +79,22 @@ const routes: Routes = [
   {path:'utilisateurs', component:UtilisateursComponent},
   {path:'login', component:AuthentificationComponent},
   {path:'vehiculeperso', component:VehiculePersoComponent,
+    canActivate:[authGuard],
+    data:{roles:"COLLABORATEUR"},
   children:[
+
     {path: "list",component: VehiculePersoListComponent},
     {path: "add",component: VehiculePersoAddComponent},
-    {path: "modify/:id",component: VehiculePersoModifyComponent}
+    {path: "modify/:id",component: VehiculePersoModifyComponent},
+    {path: "**",component: VehiculePersoListComponent}
   ]
   },
   {
     path: 'vehiculeService', component: VehiculeServiceComponent,
+    canActivate:[authGuard],
+    data:{roles:"ADMINISTRATEUR"},
     children: [
+
       {path: "list", component: VehiculeServiceListComponent},
       {path: "add", component: VehiculeServiceAddComponent},
       {path: "modify/:id", component: VehiculeServiceModifyComponent},
