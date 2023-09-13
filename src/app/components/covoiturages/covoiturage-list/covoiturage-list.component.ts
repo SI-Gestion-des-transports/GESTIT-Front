@@ -51,8 +51,9 @@ export class CovoiturageListComponent implements OnInit {
 	arrivee_disabledFilter: boolean;
 	arrivee_isFounded: boolean;
 	arrivee_searchValue: string;
-	arrivee_liste: string[];
+	arrivee_liste: string[] = [];
 	arrivee_style_widget: string;
+	arrivee_liste_doublons_cleaned: string[] = [];
 
 	/*Gestion du filtre sur la ville de départ*/
 	depart_verrouillageWidget: boolean;
@@ -117,16 +118,18 @@ export class CovoiturageListComponent implements OnInit {
 				this.covoiturages_listeComplete = liste;
 
 				liste.forEach(covoit => {
-					let covoitReconstitue= covoit;
+					let covoitReconstitue = covoit;
 
 					this.adresseService.findById2(covoit.adresseDepartId)
 						.subscribe(adresse => {
-							this.depart_liste.push(adresse.commune);
+							if (!this.isDoublon(adresse.commune, this.depart_liste))
+								this.depart_liste.push(adresse.commune);
 							covoitReconstitue.adresseDepart = adresse;
 						});
 					this.adresseService.findById2(covoit.adresseArriveeId)
 						.subscribe(adresse => {
-							this.arrivee_liste.push(adresse.commune);
+							if (!this.isDoublon(adresse.commune, this.arrivee_liste))
+								this.arrivee_liste.push(adresse.commune);
 							covoitReconstitue.adresseArrivee = adresse;
 						});
 
@@ -135,10 +138,21 @@ export class CovoiturageListComponent implements OnInit {
 				});
 			});
 
-			console.log("reconstitution des covoits : ", this.covoituragesReconstitues);
+		console.log("reconstitution des covoits : ", this.covoituragesReconstitues);
 
 	}
 
+	isDoublon(villeToInsert: string, listeAccueil:string[]): boolean {
+		console.log("nom de la ville a insérer:", villeToInsert)
+		let foundDoublon = false;
+		let i = 0;
+		for (i = 0; i < listeAccueil.length; i++) {
+			if (villeToInsert === listeAccueil[i])
+				foundDoublon = true;
+			break;
+		}
+		return foundDoublon? true : false;
+	}
 
 
 
@@ -261,7 +275,9 @@ export class CovoiturageListComponent implements OnInit {
 		console.log("liste des covoits:", this.covoituragesReconstitues);
 		if (this.filtrage.filter_VilleArrivee_value !== "") {
 			console.log("des filtres ont été activés");
-			let arrivee_listeFiltree = this.covoiturageArray.filter((covoit) => covoit.adresseArrivee.commune === this.filtrage.filter_VilleArrivee_value);
+			let arrivee_listeFiltree = this.covoituragesReconstitues.filter((covoit) => covoit.adresseArrivee.commune === this.filtrage.filter_VilleArrivee_value);
+			console.log("liste filtrée:", arrivee_listeFiltree)
+
 			if (arrivee_listeFiltree.length > 0) {
 				console.log("il y a au moins 1 filtre sur les villes d'arrivée");
 				this.arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
