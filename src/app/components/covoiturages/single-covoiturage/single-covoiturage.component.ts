@@ -34,7 +34,6 @@ export class SingleCovoiturageComponent {
   showDetailsInProgress!: boolean;
   organisateur!: Utilisateur;
   observableListePassagers!: Observable<Utilisateur[]>;
-  listePassagers: Utilisateur[] = [];
   vehiculeForCovoiturage!: VehiculePerso;
   nombreDePlacesRestances!: number;
 
@@ -72,90 +71,88 @@ export class SingleCovoiturageComponent {
         /*Récupération de l'organisateur*/
         this.utilisateurService.findById(covoit.organisateurId)
           .subscribe(user => this.organisateur = user);
-        
-          /*Récupération de l'adresse de départ*/
-          this.adresseService.findById2(covoit.adresseDepartId)
-          .subscribe(adresse=>this.adresseDepart=adresse);
 
-          this.adresseService.findById2(covoit.adresseArriveeId)
-          .subscribe(adresse=>this.adresseArrivee=adresse);
+        /*Récupération de l'adresse de départ*/
+        this.adresseService.findById2(covoit.adresseDepartId)
+          .subscribe(adresse => this.adresseDepart = adresse);
 
-          
+        this.adresseService.findById2(covoit.adresseArriveeId)
+          .subscribe(adresse => this.adresseArrivee = adresse);
+
+
 
         /*récupération d'un Observable de la liste des Passagers à partir de la liste des ids*/
-         this.observableListePassagers = this.getObservableOfPassengersList(covoit.passagersId);
+        this.observableListePassagers = this.getObservableOfPassengersList(covoit.passagersId);
         // covoit.passagersId.forEach(passagerId => {
         //   this.utilisateurService.findById(passagerId)
         //     .subscribe(passager => this.listePassagers.push(passager))
         // });
-        
+
         /*Récupération du véhicule sur lequel s'opère le covoiturage*/
         this.vehiculePersoService.findVpById(covoit.vehiculePersoId.toString())
           .subscribe(vehicule => {
             this.vehiculeForCovoiturage = vehicule;
-            // /*Calcul du nombre de places restantes*/
-            // this.nombreDePlacesRestances = vehicule.nombreDePlaceDisponibles - covoit.passagersId.length;
           });
-          
+
 
       })
-}
-
-/**
- * Récupère à partir d'un tableau d'identifiants passagers, les données correspondant à chaque
- * utilisateur correspondant à l'id.
- * La fonction combineLatest de rxjs permet de renvoyer un Observable du tableau d'utilisateur
- * généré.
- * Le contenu de ce dernier pourra donc être directement affiché dans le template à l'aide
- * du pipe async.
- * exemple : <div *ngFor="let passager of observableListePassagers | async">{{passager.nom}}</div>.
- *
- * @param listIdPassagers
- * @returns
- */
-getObservableOfPassengersList(listIdPassagers: number[]): Observable < Utilisateur[] > {
-  const arrayOfObservables = listIdPassagers.map(idPassager => {
-    return this.utilisateurService.findById(idPassager);
-  });
-  return combineLatest(arrayOfObservables);
-}
-
-onShowDetails() {
-  if (this.showDetailsInProgress) {
   }
-  else
-    throw new Error('Covoiturage not found!');
-}
 
-onClickAnnuler() {
-  this.router.navigateByUrl('covoiturages');
-}
-
-onClickConfirmerParticipation() {
-  if (this.nombreDePlacesRestances < 1)
-    throw new Error("Le nombre de places restantes pour le covoiturage ne devrait pas être inférieur à 1");
-
-  this.idUtilisateurCourant$
-    .subscribe(id => {
-      this.covoiturageAconfirmer.passagersId.push(id);
-      this.covoiturageService.update(this.covoiturageAconfirmer);
+  /**
+   * Récupère à partir d'un tableau d'identifiants passagers, les données correspondant à chaque
+   * utilisateur correspondant à l'id.
+   * La fonction combineLatest de rxjs permet de renvoyer un Observable du tableau d'utilisateur
+   * généré.
+   * Le contenu de ce dernier pourra donc être directement affiché dans le template à l'aide
+   * du pipe async.
+   * exemple : <div *ngFor="let passager of observableListePassagers | async">{{passager.nom}}</div>.
+   *
+   * @param listIdPassagers
+   * @returns
+   */
+  getObservableOfPassengersList(listIdPassagers: number[]): Observable<Utilisateur[]> {
+    const arrayOfObservables = listIdPassagers.map(idPassager => {
+      return this.utilisateurService.findById(idPassager);
     });
-    this.router.navigateByUrl('covoituragesConfirmReservation');
-}
+    return combineLatest(arrayOfObservables);
+  }
 
-updatePass(covoit: Covoiturage){
-  //console.log("SingleCovoitComp —updatePass")
-  //console.log("SingleCovoitComp —updatePass / covoit : ", covoit)
-  //if (covoit.nombrePlacesRestantes>0){
-  covoit.passagersId.push(this.currentUser.id)
-  //console.log("SingleCovoitComp —updatePass / covoit : ", covoit)
-  this.covoiturageService.updateCovoituragePassager(covoit).subscribe(() => {
-    //console.log("CovoitOrg uodated");
-  });
-  //}
-}
-   // this.router.navigateByUrl('covoiturages');
-   protected readonly environment = environment;
+  onShowDetails() {
+    if (this.showDetailsInProgress) {
+    }
+    else
+      throw new Error('Covoiturage not found!');
+  }
+
+  onClickAnnuler() {
+    this.router.navigateByUrl('covoiturages');
+  }
+
+  onClickConfirmerParticipation() {
+    if (this.nombreDePlacesRestances < 1)
+      throw new Error("Le nombre de places restantes pour le covoiturage ne devrait pas être inférieur à 1");
+
+    this.idUtilisateurCourant$
+      .subscribe(id => {
+        this.covoiturageAconfirmer.passagersId.push(id);
+        this.covoiturageService.update(this.covoiturageAconfirmer);
+      });
+    this.router.navigateByUrl('covoituragesConfirmReservation');
+  }
+
+  updatePass(covoit: Covoiturage) {
+    //console.log("SingleCovoitComp —updatePass")
+    //console.log("SingleCovoitComp —updatePass / covoit : ", covoit)
+    //if (covoit.nombrePlacesRestantes>0){
+    covoit.passagersId.push(this.currentUser.id)
+    //console.log("SingleCovoitComp —updatePass / covoit : ", covoit)
+    this.covoiturageService.updateCovoituragePassager(covoit).subscribe(() => {
+      //console.log("CovoitOrg uodated");
+    });
+    //}
+  }
+  // this.router.navigateByUrl('covoiturages');
+  protected readonly environment = environment;
 
 }
 

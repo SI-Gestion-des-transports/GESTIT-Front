@@ -102,7 +102,6 @@ export class CovoiturageListComponent implements OnInit {
 		this.date_isFounded = false;
 
 		this.filtrageList();
-		//this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
 	}
 
 	/**
@@ -142,7 +141,7 @@ export class CovoiturageListComponent implements OnInit {
 
 	}
 
-	isDoublon(villeToInsert: string, listeAccueil:string[]): boolean {
+	isDoublon(villeToInsert: string, listeAccueil: string[]): boolean {
 		console.log("nom de la ville a insérer:", villeToInsert)
 		let foundDoublon = false;
 		let i = 0;
@@ -151,24 +150,8 @@ export class CovoiturageListComponent implements OnInit {
 				foundDoublon = true;
 			break;
 		}
-		return foundDoublon? true : false;
+		return foundDoublon ? true : false;
 	}
-
-
-
-	// let listVilleArriveeWhithDuplicateItems: string[] = [];
-	// this.covoiturages_listeComplete.forEach((covoit) => {
-	// 	listVilleArriveeWhithDuplicateItems.push(covoit.adresseArrivee.commune);
-	// });
-	// console.log("***** liste complète arrivées:",this.covoiturages_listeComplete);
-
-	// this.arrivee_liste = Array.from(new Set(listVilleArriveeWhithDuplicateItems));
-	// let listVilleDepartWhithDuplicateItems: string[] = [];
-	// this.covoiturages_listeComplete.forEach((covoit) => {
-	// 	listVilleDepartWhithDuplicateItems.push(covoit.adresseDepart.commune);
-	// });
-	// this.depart_liste = Array.from(new Set(listVilleDepartWhithDuplicateItems));
-
 
 
 	/**
@@ -215,41 +198,11 @@ export class CovoiturageListComponent implements OnInit {
 		this.filtrageList();
 	}
 
-
-
-
-	/*  onCreateCovoiturage(): void {
-		this.covoiturageToPush = {
-		  nombrePlacesRestantes: 45,
-		  dureeTrajet: 45,
-		  distanceKm: 99,
-		  /!*       "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
-		  "adresseArrivee": "87 avenue de Maupassant 23000 Guéret" *!/
-		};
-		
-		this.covoiturageService.create(this.covoiturageToPush).subscribe(() => {
-		  /!* this.listeCovoiturages.push *!/
-		});
-		//this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
-		// this._init();
-		
-		/!* private _init() {
-	  this.covoiturageService.findAll(this.user)
-	   .subscribe(covoiturages => {
-		 this.listeCovoiturages = covoiturages;
-	   }) *!/
-	  }*/
-
-	/*
-	private _init() {
-	  this.covoiturageService.getAllCovoiturages();
-		
-		
-	  /**
-	   *Réinitialisation du filtrage
-	   *
-	   * @Author Atsuhiko Mochizuki
-	   */
+	/**
+	 *Réinitialisation du filtrage
+	 *
+	 * @Author Atsuhiko Mochizuki
+	 */
 	onResetFiltrage() {
 		this.ngOnInit();
 		this.depart_liste = [];
@@ -257,21 +210,12 @@ export class CovoiturageListComponent implements OnInit {
 		this.filtrageList();
 	}
 
-
-
 	/**
-	 * Traitement du filtrage de la listes de covoiturages côté passager
-	 *
-	 * @author Atsuhiko Mochizuki
-	 */
+		 * Traitement du filtrage de la listes de covoiturages côté passager
+		 *
+		 * @author Atsuhiko Mochizuki
+		 */
 	filtrageList() {
-		// console.log("il rentre dnas le filtrage");
-		// this.covoiturageService.recupListeCovoituragesOnServer2()
-		// 	.subscribe(listeCovoit => {
-		// 		listeCovoit.forEach(covoit => {
-		// 			this.covoiturageArray.push(covoit);
-		// 		})
-		// 	})
 		console.log("liste des covoits:", this.covoituragesReconstitues);
 		if (this.filtrage.filter_VilleArrivee_value !== "") {
 			console.log("des filtres ont été activés");
@@ -422,13 +366,3 @@ export class CovoiturageListComponent implements OnInit {
 		}
 	}
 }
-
-
-
-
-/*  this.covoiturageService.create(this.covoiturageToPush).subscribe(covoiturageReceived => {
-	 this.createdCovoiturage = covoiturageReceived;});
-
-	 console.log("covoiturage créeeeeeeeee");
-*/
-
