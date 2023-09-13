@@ -40,7 +40,7 @@ export class AuthentificationComponent implements OnInit {
 
   check(){
     environment.check=!environment.check;
-    console.log(environment.check)
+    //console.log(environment.check)
   }
 
   seConnecter() {

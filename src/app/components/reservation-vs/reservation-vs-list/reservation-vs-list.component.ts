@@ -37,6 +37,7 @@ export class ReservationVsListComponent implements OnInit{
 
   upcompingReservations : boolean = true;
   mergedArray = [];
+  currentUserId: number;
 
 
   private _subscription = new Subscription();
@@ -110,6 +111,7 @@ export class ReservationVsListComponent implements OnInit{
         })
     );
     this.mergedArray = [];
+    this.currentUserId = this._utilisateurService.getSharedCurrentUserId();
     this.getIncomingReservations();
   }
 
@@ -213,6 +215,7 @@ export class ReservationVsListComponent implements OnInit{
 
   deleteReservationVs(reservationToDelete: ReservationVs){
     this.mergedArray = [];
+    reservationToDelete.userId = this.currentUserId;
     //console.log("Réservation List — deleteReservationVs");
     this._router.navigateByUrl('reservationsvs/item');
     this._reservationVsService.updateCurrentReservationVs(reservationToDelete);
