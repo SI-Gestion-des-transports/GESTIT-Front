@@ -77,6 +77,7 @@ export class NavComponent implements OnInit {
   exampleUser!:Utilisateur;
 
   nomUtilisateurCourant$: Observable<string>;
+  IdUtilisateurCourant$ : Observable<number>;
 
 
   private _subscription = new Subscription();
@@ -89,7 +90,8 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
      /*récupération de la référence de l'observable sur le nom de l'utilisateur courant*/
      this.nomUtilisateurCourant$=this._utilisateurService.currentUserNameSource$;
-
+    
+     
 
     this._subscription.add(
       this._utilisateurService.currentIdUser$

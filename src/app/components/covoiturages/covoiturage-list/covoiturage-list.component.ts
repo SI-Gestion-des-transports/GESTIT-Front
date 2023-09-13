@@ -91,7 +91,7 @@ export class CovoiturageListComponent implements OnInit {
 		this.date_isFounded = false;
 
 		this.filtrageList();
-    //this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
+		//this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
 	}
 
 	/**
@@ -163,40 +163,42 @@ export class CovoiturageListComponent implements OnInit {
 
 
 
-/*  onCreateCovoiturage(): void {
-    this.covoiturageToPush = {
-      nombrePlacesRestantes: 45,
-      dureeTrajet: 45,
-      distanceKm: 99,
-      /!*       "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
-      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret" *!/
-    };
+	/*  onCreateCovoiturage(): void {
+		this.covoiturageToPush = {
+		  nombrePlacesRestantes: 45,
+		  dureeTrajet: 45,
+		  distanceKm: 99,
+		  /!*       "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
+		  "adresseArrivee": "87 avenue de Maupassant 23000 Guéret" *!/
+		};
+	
+		this.covoiturageService.create(this.covoiturageToPush).subscribe(() => {
+		  /!* this.listeCovoiturages.push *!/
+		});
+		//this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
+		// this._init();
+	
+		/!* private _init() {
+	  this.covoiturageService.findAll(this.user)
+	   .subscribe(covoiturages => {
+		 this.listeCovoiturages = covoiturages;
+	   }) *!/
+	  }*/
 
-    this.covoiturageService.create(this.covoiturageToPush).subscribe(() => {
-      /!* this.listeCovoiturages.push *!/
-    });
-    //this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
-    // this._init();
-
-    /!* private _init() {
-  this.covoiturageService.findAll(this.user)
-   .subscribe(covoiturages => {
-     this.listeCovoiturages = covoiturages;
-   }) *!/
-  }*/
-
-  /*
-  private _init() {
-    this.covoiturageService.getAllCovoiturages();
-
-
-	/**
-	 *Réinitialisation du filtrage
-	 *
-	 * @Author Atsuhiko Mochizuki
-	 */
+	/*
+	private _init() {
+	  this.covoiturageService.getAllCovoiturages();
+  
+  
+	  /**
+	   *Réinitialisation du filtrage
+	   *
+	   * @Author Atsuhiko Mochizuki
+	   */
 	onResetFiltrage() {
 		this.ngOnInit();
+		this.depart_liste = [];
+		this.arrivee_liste = [];
 		this.filtrageList();
 	}
 
@@ -358,8 +360,8 @@ export class CovoiturageListComponent implements OnInit {
 
 
 /*  this.covoiturageService.create(this.covoiturageToPush).subscribe(covoiturageReceived => {
-     this.createdCovoiturage = covoiturageReceived;});
+	 this.createdCovoiturage = covoiturageReceived;});
 
-     console.log("covoiturage créeeeeeeeee");
+	 console.log("covoiturage créeeeeeeeee");
 */
 

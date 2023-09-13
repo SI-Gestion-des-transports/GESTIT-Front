@@ -1,21 +1,19 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Covoiturage } from '../models/covoiturage';
 import { environment } from 'src/environments/environment.development';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Utilisateur } from '../models/utilisateur';
 import { Adresse } from '../models/adresse';
 import { AdressesService } from './adresses.service';
-import {VehiculePerso} from "../models/vehicule.perso";
-import {AuthentificationService} from "./authentification.service";
-import {HttpHeaderService} from "./http-header.service";
-import {UtilisateursService} from "./utilisateurs.service";
+import { VehiculePerso } from "../models/vehicule.perso";
+import { AuthentificationService } from './authentification.service';
+import { HttpHeaderService } from './http-header.service';
+import { UtilisateursService } from './utilisateurs.service';
 
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({providedIn: 'root',})
 export class CovoiturageService implements OnInit {
   user!: Utilisateur;
   headers = new HttpHeaders();
@@ -45,8 +43,10 @@ export class CovoiturageService implements OnInit {
   covoitByOrganisateur$ = this.covoitByOrganisateurSource.asObservable();
   vehiculesPersoCurrentUser$ = this.vehiculesPersoCurrentUserSource.asObservable();
 
-private _subscription = new Subscription();
-/*  covoit:Covoiturage = {
+
+  private _subscription = new Subscription();
+
+  /*  covoit:Covoiturage = {
     adresseDepart: {},
     adresseArrivee: {},
   };
@@ -54,6 +54,7 @@ private _subscription = new Subscription();
   adresseArrivee = this.adresseArriveeSource.value;*/
 
   ngOnInit(): void {
+
     console.log("covoit onInit")
     /*this._listOfAllCovoiturages$.subscribe(value => console.log(value));*/
     this._subscription.add(this._authService.headers$.subscribe(data => {
@@ -105,6 +106,13 @@ private _subscription = new Subscription();
     console.log(this.headers);
     return this._http.get<Covoiturage[]>(`${this._baseCovoitUrl}/upcoming`, {headers: this._httpHeaderService.getHeaders()})
   }
+
+
+  // getFilteredbyUsersCovoit(idUtilisateur: number): Observable<Covoiturage[]> {
+  //   return this._http.get<Covoiturage[]>(this._baseCovoitUrl)
+  //     .pipe(map(res => res.filter(res => res.organisateur?.id === idUtilisateur)));
+      
+  // }
 
   findPastCovoituragesByUserId(userId?: number): Observable<Covoiturage[]>{
     this.ngOnInit();
