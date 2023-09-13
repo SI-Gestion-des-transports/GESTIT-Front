@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import {HttpHeaders} from "@angular/common/http";
+import {environment} from "../../../environments/environment.development";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpHeaderService {
-  tokenName:string = "JWT-TOKEN";
-  headers:HttpHeaders = new HttpHeaders();
-  jwt:string= window.localStorage.getItem(this.tokenName);
+  tokenName:string = environment.JWT;
+
   constructor() { }
   getHeaders():HttpHeaders{
-    console.log(this.jwt);
-   this.headers= this.headers.set(this.tokenName,this.jwt);
-   return this.headers;
+    let headers:HttpHeaders = new HttpHeaders();
+    let jwt:string= window.localStorage.getItem(this.tokenName);
+   headers= headers.set(this.tokenName,jwt);
+   return headers;
   }
 }

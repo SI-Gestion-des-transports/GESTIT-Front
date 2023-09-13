@@ -1,9 +1,10 @@
-import { Injectable, OnChanges, OnInit, SimpleChanges } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { BehaviorSubject, Observable, Subscription } from "rxjs";
-import { Utilisateur } from "../models/utilisateur";
-import { environment } from "../../../environments/environment.development";
-import { AuthentificationService } from "./authentification.service";
+import {Injectable, OnChanges, OnInit, SimpleChanges} from "@angular/core";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {BehaviorSubject, Observable, Subscription} from "rxjs";
+import {Utilisateur} from "../models/utilisateur";
+import {environment} from "../../../environments/environment.development";
+import {AuthentificationService} from "./authentification.service";
+import {HttpHeaderService} from "./http-header.service";
 
 
 @Injectable({
@@ -49,10 +50,13 @@ export class UtilisateursService implements OnInit, OnChanges {
   private _baseUrl = environment.urlApi.users;
   private _realBaseUrl = environment.urlApi.utilisateur;
 
+
   private _subscription = new Subscription();
 
   constructor(private _http: HttpClient,
-    private _authService: AuthentificationService) {
+              private _authService: AuthentificationService,
+              private _httpHeader:HttpHeaderService
+              ){
   }
 
   ngOnInit() {
@@ -69,24 +73,24 @@ export class UtilisateursService implements OnInit, OnChanges {
     }
   }
 
-  findAll(): Observable<Utilisateur[]> {
-    return this._http.get<Utilisateur[]>(`${this._baseUrl}`);
+  findAll(): Observable<Utilisateur[]>{
+    return this._http.get<Utilisateur[]>(`${this._baseUrl}`,{headers:this._httpHeader.getHeaders()});
   }
 
-  findById(userId: number): Observable<Utilisateur> {
-    return this._http.get<Utilisateur>(`${this._realBaseUrl}/${userId}`, { headers: this.headers });
+  findById(userId: number): Observable<Utilisateur>{
+    return this._http.get<Utilisateur>(`${this._realBaseUrl}/${userId}`, {headers: this._httpHeader.getHeaders()});
   }
 
-  create(createdUser: Utilisateur): Observable<Utilisateur> {
-    return this._http.post<Utilisateur>(this._baseUrl, createdUser);
+  create(createdUser:Utilisateur): Observable<Utilisateur>{
+    return this._http.post<Utilisateur>(this._baseUrl, createdUser,{headers:this._httpHeader.getHeaders()});
   }
 
-  update(updatedUser: Utilisateur): Observable<Utilisateur> {
-    return this._http.put<Utilisateur>(`${this._baseUrl}/${updatedUser.id}`, updatedUser);
+  update(updatedUser:Utilisateur): Observable<Utilisateur>{
+    return this._http.put<Utilisateur>(`${this._baseUrl}/${updatedUser.id}`, updatedUser,{headers:this._httpHeader.getHeaders()});
   }
 
-  delete(deletedUser: Utilisateur): Observable<Utilisateur> {
-    return this._http.delete<Utilisateur>(`${this._baseUrl}/${deletedUser.id}`);
+  delete(deletedUser:Utilisateur): Observable<Utilisateur>{
+    return this._http.delete<Utilisateur>(`${this._baseUrl}/${deletedUser.id}`,{headers:this._httpHeader.getHeaders()});
   }
 
   updateCurrentUser(): void {
