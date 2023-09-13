@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   Input,
   OnChanges,
@@ -48,7 +49,8 @@ export class CovoituragesOrganiseListComponent {
 
   constructor(private _covoitOrgService: CovoiturageService,
               private _router: Router,
-              private _adresseService: AdressesService) {}
+              private _adresseService: AdressesService,
+              private cdr: ChangeDetectorRef) {}
   ngOnInit(): void {
     // Subscription aux variables du service
     this._subscription.add(
@@ -80,7 +82,8 @@ export class CovoituragesOrganiseListComponent {
         this.covoitByOrganisateur = data
       })
     );
-    this._init();
+    this.mergedCovoitArray = [];
+    this.getIncomingCovoiturages();
   }
 
   ngOnDestroy(): void {
@@ -97,12 +100,9 @@ export class CovoituragesOrganiseListComponent {
         .subscribe((covoitOrgsCreated) => {
           this.covoitOrgs = covoitOrgsCreated;
         });
-
-      this.upcompingCovoiturages =true;
-      this._covoitOrgService.findUpcomingCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => {
-        console.log(upcomingCovoitOrgRes);
-        this.upcomingCovoitOrgsResByUser = upcomingCovoitOrgRes;
-      });
+      this.mergedCovoitArray = [];
+      this.getIncomingCovoiturages();
+      this.cdr.detectChanges();
     }
   }
 
@@ -113,9 +113,7 @@ export class CovoituragesOrganiseListComponent {
   getIncomingCovoiturages(){
     console.log("TEST");
     this.upcompingCovoiturages = true;
-
     this.mergedCovoitArray = [];
-
     forkJoin({
       covoiturages: this._covoitOrgService.findUpcomingCovoituragesByUserId(this.currentUser.id),
       adresses: this._adresseService.findAll()
@@ -125,9 +123,8 @@ export class CovoituragesOrganiseListComponent {
       this.covoitFromDB = covoiturages;
       this.allAdresses = adresses;
       this.mergedCovoitArray = this.mergedCovoituragesWithAdresses();
+      this.cdr.detectChanges();
     })
-
-
 
     //this._init();
 /*    this._covoitOrgService.findUpcomingCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => {
@@ -139,9 +136,7 @@ export class CovoituragesOrganiseListComponent {
   getPastCovoiturages(){
     console.log("TEST");
     this.upcompingCovoiturages = false;
-
     this.mergedCovoitArray = [];
-
     forkJoin({
       covoiturages: this._covoitOrgService.findPastCovoituragesByUserId(this.currentUser.id),
       adresses: this._adresseService.findAll()
@@ -151,6 +146,7 @@ export class CovoituragesOrganiseListComponent {
       this.covoitFromDB = covoiturages;
       this.allAdresses = adresses;
       this.mergedCovoitArray = this.mergedCovoituragesWithAdresses();
+      this.cdr.detectChanges();
     })
     //this._init();
 /*    this._covoitOrgService.findPastCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => {
@@ -179,7 +175,10 @@ export class CovoituragesOrganiseListComponent {
 
   deleteCovoitOrg(covoitOrgToDelete: Covoiturage){
     this._covoitOrgService.delete(covoitOrgToDelete).subscribe(() => {
-      this._init();
+      this.mergedCovoitArray = [];
+      this.getIncomingCovoiturages();
+      //this._init();
+      this.cdr.detectChanges();
       }
     );
   }
