@@ -102,8 +102,8 @@ export class NavComponent implements OnInit {
     }
      /*récupération de la référence de l'observable sur le nom de l'utilisateur courant*/
      this.nomUtilisateurCourant$=this._utilisateurService.currentUserNameSource$;
-    
-     
+
+
 
     this._subscription.add(
       this._utilisateurService.currentIdUser$
@@ -185,10 +185,12 @@ export class NavComponent implements OnInit {
       case '1':
         this.router.navigateByUrl('covoituragesOrganises');
         break;
-      case '2': console.log(2);
+      case '2':
+        //console.log(2);
         this.router.navigateByUrl('covoituragesOrganises/form');
         break;
-      case '3': console.log(2);
+      case '3':
+        //console.log(2);
         this.router.navigateByUrl('covoituragesOrganises/list');
         break;
       default: throw new Error();
@@ -218,13 +220,14 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
-    console.log("===================into logout()====================");
+    //console.log("===================into logout()====================");
     this._authService.logout().subscribe(res=> {
-      console.log("===================into logout()===================="+res.status);
+      //console.log("===================into logout()===================="+res.status);
       if (res.status==200) {
         window.localStorage.removeItem(this._httpHeader.tokenName);
         environment.currentUserName="(Anonyme)";
       }
+
     });
     this.router.navigateByUrl('')
     this._authService.updateHeaders(new HttpHeaders());

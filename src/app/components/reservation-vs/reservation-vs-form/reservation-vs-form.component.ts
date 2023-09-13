@@ -170,7 +170,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
     this._reservationVsService
       .create(this.addSecondsToDate(reservationVs))
       .subscribe(() =>{
-        console.log("Created")
+        //console.log("Created")
         this.reInitResVs();
         this._init();
         this._router.navigateByUrl('reservationsvs/list');

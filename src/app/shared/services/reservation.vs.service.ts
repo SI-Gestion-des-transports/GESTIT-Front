@@ -70,12 +70,12 @@ export class ReservationVsService implements OnInit {
         this._subscription
           .add(this._utilisateurService.currentUser$
             .subscribe(data => {this.currentUser2 = data}));
-        console.log("Réservation Service — ngOnInit / this.currentUser before :", this.currentUser);
+    //console.log("Réservation Service — ngOnInit / this.currentUser before :", this.currentUser);
         this.currentUser = this._utilisateurService.getSharedCurrentUser;
-        console.log("Réservation Service — ngOnInit / this.currentUser after :", this.currentUser);
-        console.log("Réservation Service — ngOnInit / this.headers before :", this.currentUser);
+    //console.log("Réservation Service — ngOnInit / this.currentUser after :", this.currentUser);
+    //console.log("Réservation Service — ngOnInit / this.headers before :", this.currentUser);
         this.headers = this._httpHeaderService.getHeaders()
-        console.log("Réservation Service — ngOnInit / this.headers after :", this.currentUser);
+    //console.log("Réservation Service — ngOnInit / this.headers after :", this.currentUser);
     }
 
   ngOnDestroy(): void {

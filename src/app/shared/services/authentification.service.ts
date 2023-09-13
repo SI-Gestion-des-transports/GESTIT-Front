@@ -39,7 +39,7 @@ export class AuthentificationService {
   }
 
   logout() {
-    console.log("Auth Service — Logout")
+    //console.log("Auth Service — Logout")
     return this._http.get(this._baseUrlLogout, {headers: this._httpHeader.getHeaders(), observe: "response"});
   }
 

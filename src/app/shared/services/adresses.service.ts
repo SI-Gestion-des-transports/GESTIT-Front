@@ -9,12 +9,12 @@ import {HttpHeaderService} from "./http-header.service";
   providedIn: 'root',
 })
 export class AdressesService {
-  private _baseAdressesUrl = environment.urlApi.adresses;
+  private _baseAdressesUrl = environment.urlApi.adresse;
   constructor(private _http: HttpClient,
               private _httpHeader:HttpHeaderService) {}
 
   findAll(): Observable<Adresse[]> {
-    return this._http.get<Adresse[]>(`${this._baseAdressesUrl}`,{headers:this._httpHeader.getHeaders()});
+    return this._http.get<Adresse[]>(`${this._baseAdressesUrl}/findall`,{headers:this._httpHeader.getHeaders()});
   }
 
   findById(adresse: Adresse): Observable<Adresse> {

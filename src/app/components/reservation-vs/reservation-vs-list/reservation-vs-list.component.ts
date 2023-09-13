@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Utilisateur} from "../../../shared/models/utilisateur";
 import {ReservationVs} from "../../../shared/models/reservation.vs";
 import {ReservationVsService} from "../../../shared/services/reservation.vs.service";
@@ -44,7 +44,8 @@ export class ReservationVsListComponent implements OnInit{
               private _authService: AuthentificationService,
               private _vehiculeSrvService: VehiculeServiceService,
               private _utilisateurService: UtilisateursService,
-              private _router: Router) {
+              private _router: Router,
+              private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -164,6 +165,7 @@ export class ReservationVsListComponent implements OnInit{
       this._reservationVsService.updateAllReservationsVs(reservations);
       this._vehiculeSrvService.updateVehiculesSrv(vehicules);
       this.mergedArray = this.mergeReservationsWithVehicles();
+      this.cdr.detectChanges();
       //console.log("Réservation List — getPastReservations / mergedArray", this.mergedArray);
     });
     //this._reservationVsService.findPastByUserId(this.currentUser.id).subscribe(pastRes => this.pastReservationsVsByUser = pastRes);
@@ -183,6 +185,7 @@ export class ReservationVsListComponent implements OnInit{
       this._reservationVsService.updateAllReservationsVs(reservations);
       this._vehiculeSrvService.updateVehiculesSrv(vehicules);
       this.mergedArray = this.mergeReservationsWithVehicles();
+      this.cdr.detectChanges();
       //console.log("Réservation List — getIncomingReservations / mergedArray", this.mergedArray);
     })
     //this._init();
@@ -193,7 +196,7 @@ export class ReservationVsListComponent implements OnInit{
   }
 
   newReservation(){
-    console.log("Réservation List — newReservation");
+    //console.log("Réservation List — newReservation");
     this.mergedArray = [];
     this._reservationVsService.updateReservationVs({})
     this._router.navigateByUrl('reservationsvs/form');

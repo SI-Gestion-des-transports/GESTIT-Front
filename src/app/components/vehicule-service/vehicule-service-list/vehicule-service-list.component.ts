@@ -59,7 +59,7 @@ export class VehiculeServiceListComponent implements OnInit {
 
   delete(id: number) {
     this._vehiculeServiceService.deleteVehiculeService(id).subscribe(res => {
-      console.log(res);
+      //console.log(res);
       if (res.status == 200) this.initListVs();
     });
   }
