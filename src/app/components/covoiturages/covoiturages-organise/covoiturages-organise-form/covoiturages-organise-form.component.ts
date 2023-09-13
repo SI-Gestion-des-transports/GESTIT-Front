@@ -9,6 +9,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {VehiculeService} from "../../../../shared/models/vehicule.service";
 import {VehiculePersoService} from "../../../../shared/services/vehicule.perso.service";
 import {ReservationVs} from "../../../../shared/models/reservation.vs";
+import {UtilisateursService} from "../../../../shared/services/utilisateurs.service";
 
 @Component({
   selector: 'app-covoiturages-organise-form',
@@ -38,6 +39,7 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
   vehiculesPersoCurrentUser: VehiculePerso[] = [];
   currentCovoitOrg : Covoiturage = {};
   covoitOrg: Covoiturage = {};
+  currentUserId: number;
   // Fin variables partagées
 
 
@@ -45,11 +47,12 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
   private _subscription = new Subscription();
   constructor(private _covoitOrgService: CovoiturageService,
               private _router: Router,
-              private _vehiculePersoService:VehiculePersoService) {}
+              private _vehiculePersoService:VehiculePersoService,
+              private _utilisateurService: UtilisateursService) {}
+
   ngOnInit(): void {
-
+    this.currentUserId = this._utilisateurService.getSharedCurrentUserId();
     //this.reInitCovoitOrg();
-
     // Subscription aux variables du service
     this._subscription.add(
       this._covoitOrgService.covoiturage$.
@@ -85,7 +88,6 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
     });
     this._init();
     this.reInitCovoitOrg()
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -168,29 +170,33 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
   }
 
    create(covoit: Covoiturage){
-    covoit.organisateurId = this.currentUser.id;
+    covoit.organisateurId = parseInt(String(this.currentUserId), 10);
     covoit.adresseDepart = this.adresseDepart;
     covoit.adresseArrivee = this.adresseArrivee;
-    console.log("covoit : ", covoit);
-    console.log("this.selectedVehiculePersoId : ",this.selectedVehiculePersoId);
-    covoit.vehiculePersoId = this.selectedVehiculePersoId;
+    //console.log("covoit : ", covoit);
+/*    console.log("this.selectedVehiculePersoId : ",this.selectedVehiculePersoId);
+    console.log("this.selectedVehiculePersoId typeof : ",typeof(this.selectedVehiculePersoId));*/
+    covoit.vehiculePersoId = parseInt(String(this.selectedVehiculePersoId), 10);
+ /*   console.log("this.selectedVehiculePersoId.valueOf() typeof : ",typeof(this.selectedVehiculePersoId.valueOf()));
+    console.log("this.selectedVehiculePersoId.parseInt() typeof : ",typeof(parseInt(String(this.selectedVehiculePersoId), 10)));*/
+
     covoit.distanceKm = this.covoitOrg.distanceKm;
     covoit.dureeTrajet = this.covoitOrg.dureeTrajet;
-    console.log("covoit : ", covoit);
-    console.log("covoit.dateDepart : ", covoit.dateDepart);
-    covoit.dateDepart = this.reformatDate(this.currentCovoitOrg).dateDepart;
-    console.log("covoit.dateDepart : ", covoit.dateDepart);
+    //console.log("covoit : ", covoit);
+    //console.log("covoit.dateDepart : ", covoit.dateDepart);
+    covoit.dateDepart = this.covoitOrg.dateDepart;
+    //console.log("covoit.dateDepart : ", covoit.dateDepart);
     this._vehiculePersoService.findVpById(this.selectedVehiculePersoId.toString()).subscribe(data =>{
-      console.log("covoit.nombrePlacesRestantes : ", covoit.nombrePlacesRestantes);
+      //console.log("covoit.nombrePlacesRestantes : ", covoit.nombrePlacesRestantes);
       covoit.nombrePlacesRestantes = data.nombreDePlaceDisponibles-1;
-      console.log("covoit.nombrePlacesRestantes : ", covoit.nombrePlacesRestantes);
+      //console.log("covoit.nombrePlacesRestantes : ", covoit.nombrePlacesRestantes);
     })
-    console.log(this.adresseDepart.codePostal);
+/*    console.log(this.adresseDepart.codePostal);
     console.log(this.covoitOrg.dureeTrajet);
-    console.log(this.covoitOrg.distanceKm);
+    console.log(this.covoitOrg.distanceKm);*/
     console.log("COVOITURAGE A CREER : ", covoit)
     this._covoitOrgService.create(covoit).subscribe(() => {
-      console.log("Covoit created");
+      //console.log("Covoit created");
       this.reInitCovoitOrg();
       this._router.navigateByUrl('covoituragesOrganises-list');
     });
@@ -215,7 +221,7 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
   }
 
   private reformatDate(covoit: Covoiturage): Covoiturage {
-    covoit.dateDepart = covoit.dateDepart.toString().slice(0, 10);
+    covoit.dateDepart = covoit.dateDepart.toString().slice(0, 16);
     console.log("reformatDate / covoit.dateDepart : ", covoit.dateDepart);
     return covoit;
   }
