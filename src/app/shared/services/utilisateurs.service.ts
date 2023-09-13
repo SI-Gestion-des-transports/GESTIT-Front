@@ -76,6 +76,10 @@ export class UtilisateursService implements OnInit, OnChanges {
     }
   }
 
+  ngOnDestroy(){
+    this._subscription.unsubscribe();
+  }
+
   findAll(): Observable<Utilisateur[]> {
     return this._http.get<Utilisateur[]>(`${this._baseUrl}`);
   }

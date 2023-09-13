@@ -8,6 +8,7 @@ import {CovoiturageService} from "../../../../shared/services/covoiturage.servic
 import {ActivatedRoute, Router} from "@angular/router";
 import {VehiculeService} from "../../../../shared/models/vehicule.service";
 import {VehiculePersoService} from "../../../../shared/services/vehicule.perso.service";
+import {ReservationVs} from "../../../../shared/models/reservation.vs";
 
 @Component({
   selector: 'app-covoiturages-organise-form',
@@ -23,6 +24,7 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
   covoitOrgs: Covoiturage[] | undefined = [];
   listVehiculePerso: VehiculePerso[] = [];
   selectedVehiculePerso: VehiculeService = {};
+  selectedVehiculePersoId: number;
 
   /*
   @Input()
@@ -137,6 +139,7 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
       });
     }*/
 
+
   onSubmit(){
     if(!this.currentCovoitOrg.id){
       this.create(this.currentCovoitOrg);
@@ -168,18 +171,30 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
     covoit.organisateurId = this.currentUser.id;
     covoit.adresseDepart = this.adresseDepart;
     covoit.adresseArrivee = this.adresseArrivee;
-    console.log("this.selectedVehiculePerso.id : ",this.selectedVehiculePerso.id);
-    covoit.vehiculePersoId = this.selectedVehiculePerso.id;
+    console.log("covoit : ", covoit);
+    console.log("this.selectedVehiculePersoId : ",this.selectedVehiculePersoId);
+    covoit.vehiculePersoId = this.selectedVehiculePersoId;
+    covoit.distanceKm = this.covoitOrg.distanceKm;
+    covoit.dureeTrajet = this.covoitOrg.dureeTrajet;
+    console.log("covoit : ", covoit);
+    console.log("covoit.dateDepart : ", covoit.dateDepart);
+    covoit.dateDepart = this.reformatDate(this.currentCovoitOrg).dateDepart;
+    console.log("covoit.dateDepart : ", covoit.dateDepart);
+    this._vehiculePersoService.findVpById(this.selectedVehiculePersoId.toString()).subscribe(data =>{
+      console.log("covoit.nombrePlacesRestantes : ", covoit.nombrePlacesRestantes);
+      covoit.nombrePlacesRestantes = data.nombreDePlaceDisponibles-1;
+      console.log("covoit.nombrePlacesRestantes : ", covoit.nombrePlacesRestantes);
+    })
     console.log(this.adresseDepart.codePostal);
     console.log(this.covoitOrg.dureeTrajet);
     console.log(this.covoitOrg.distanceKm);
+    console.log("COVOITURAGE A CREER : ", covoit)
     this._covoitOrgService.create(covoit).subscribe(() => {
       console.log("Covoit created");
       this.reInitCovoitOrg();
       this._router.navigateByUrl('covoituragesOrganises-list');
     });
   }
-
 
   updateOrg(covoit: Covoiturage) {
     covoit.organisateurId = this.currentUser.id;
@@ -197,6 +212,12 @@ export class CovoituragesOrganiseFormComponent implements OnInit, OnChanges {
 
   cancel(){
     this._router.navigateByUrl('covoituragesOrganises-list');
+  }
+
+  private reformatDate(covoit: Covoiturage): Covoiturage {
+    covoit.dateDepart = covoit.dateDepart.toString().slice(0, 10);
+    console.log("reformatDate / covoit.dateDepart : ", covoit.dateDepart);
+    return covoit;
   }
 
 
