@@ -45,6 +45,7 @@ export class CovoiturageListComponent implements OnInit {
 	listeAafficher: Array<Covoiturage>;
 
 	covoiturages_listeComplete: Array<Covoiturage>;
+	covoituragesReconstitues: Covoiturage[] = [];
 
 	/*Gestion du filtre sur la ville d'arrivée*/
 	arrivee_disabledFilter: boolean;
@@ -116,15 +117,25 @@ export class CovoiturageListComponent implements OnInit {
 				this.covoiturages_listeComplete = liste;
 
 				liste.forEach(covoit => {
-					this.adresseService.findById2(covoit.adresseDepartId)
-						.subscribe(adresse => this.depart_liste.push(adresse.commune))
-				});
+					let covoitReconstitue= covoit;
 
-				liste.forEach(covoit => {
+					this.adresseService.findById2(covoit.adresseDepartId)
+						.subscribe(adresse => {
+							this.depart_liste.push(adresse.commune);
+							covoitReconstitue.adresseDepart = adresse;
+						});
 					this.adresseService.findById2(covoit.adresseArriveeId)
-						.subscribe(adresse => this.arrivee_liste.push(adresse.commune))
+						.subscribe(adresse => {
+							this.arrivee_liste.push(adresse.commune);
+							covoitReconstitue.adresseArrivee = adresse;
+						});
+
+					this.covoituragesReconstitues.push(covoitReconstitue);
+
 				});
 			});
+
+			console.log("reconstitution des covoits : ", this.covoituragesReconstitues);
 
 	}
 
@@ -240,18 +251,19 @@ export class CovoiturageListComponent implements OnInit {
 	 * @author Atsuhiko Mochizuki
 	 */
 	filtrageList() {
-		console.log("il rentre dnas le filtrage");
-		this.covoiturageService.recupListeCovoituragesOnServer2()
-		.subscribe(listeCovoit => {
-			listeCovoit.forEach(covoit => {
-				this.covoiturageArray.push(covoit);
-			})
-		})
-		console.log("liste des covoits:", this.covoiturageArray);
+		// console.log("il rentre dnas le filtrage");
+		// this.covoiturageService.recupListeCovoituragesOnServer2()
+		// 	.subscribe(listeCovoit => {
+		// 		listeCovoit.forEach(covoit => {
+		// 			this.covoiturageArray.push(covoit);
+		// 		})
+		// 	})
+		console.log("liste des covoits:", this.covoituragesReconstitues);
 		if (this.filtrage.filter_VilleArrivee_value !== "") {
-			//console.log("des filtres ont été activés");
-			let arrivee_listeFiltree = completListOfCovoiturages.filter((covoit) => covoit.adresseArrivee.commune === this.filtrage.filter_VilleArrivee_value);
+			console.log("des filtres ont été activés");
+			let arrivee_listeFiltree = this.covoiturageArray.filter((covoit) => covoit.adresseArrivee.commune === this.filtrage.filter_VilleArrivee_value);
 			if (arrivee_listeFiltree.length > 0) {
+				console.log("il y a au moins 1 filtre sur les villes d'arrivée");
 				this.arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
 				this.arrivee_disabledFilter = false;
 				this.depart_styleWidget = this.WIDGET_STYLE_INIT;
@@ -365,6 +377,7 @@ export class CovoiturageListComponent implements OnInit {
 				}
 			}
 			else {
+				console.log("il n'y a aucun filtre sur les villes d'arrivée");
 				this.arrivee_style_widget = this.WIDGET_STYLE_INPROGRESS;
 				this.arrivee_disabledFilter = false;
 				this.depart_styleWidget = this.WIDGET_STYLE_INIT;
@@ -378,13 +391,15 @@ export class CovoiturageListComponent implements OnInit {
 			}
 		}
 		else {
+			console.log("aucun filtre actif");
 			this.arrivee_style_widget = this.WIDGET_STYLE_INIT;
 			this.arrivee_disabledFilter = false;
 			this.depart_styleWidget = this.WIDGET_STYLE_INIT;
 			this.depart_verrouillageWidget = true;
 			filtre_Date_style_widget: null;
 			this.date_verrouillageWidget = true;
-			this.listeAafficher = completListOfCovoiturages;
+			this.listeAafficher = this.covoituragesReconstitues;
+			console.log("les covoits que l'on doit voir:", this.covoituragesReconstitues);
 			this.arrivee_isFounded = false;
 			this.depart_isFounded = false;
 			this.date_isFounded = false;

@@ -20,6 +20,8 @@ export class CovoiturageComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    console.log("quel est le covoit recu?:",this.covoituragereserve);
+
     this.title = "Mon covoiturage";
     this.showDetailsInProgress = false;
 
