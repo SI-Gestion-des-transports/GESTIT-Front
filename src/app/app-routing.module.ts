@@ -79,7 +79,8 @@ const routes: Routes = [
   {path:'utilisateurs', component:UtilisateursComponent},
   {path:'login', component:AuthentificationComponent},
   {path:'vehiculeperso', component:VehiculePersoComponent,
-
+    canActivate:[authGuard],
+    data:{roles:"COLLABORATEUR"},
   children:[
 
     {path: "list",component: VehiculePersoListComponent},
@@ -91,7 +92,7 @@ const routes: Routes = [
   {
     path: 'vehiculeService', component: VehiculeServiceComponent,
     canActivate:[authGuard],
-    data:{roles:"ADMINISTRATEUR"},
+    data:{roles:"ADMINISTRATEU"},
     children: [
 
       {path: "list", component: VehiculeServiceListComponent},
