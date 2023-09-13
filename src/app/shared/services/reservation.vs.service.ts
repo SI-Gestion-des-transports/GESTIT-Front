@@ -152,7 +152,7 @@ export class ReservationVsService implements OnInit {
   }
 
   create(resVSCreated: ReservationVs): Observable<ReservationVs> {
-    console.log("CREATE")
+    //console.log("CREATE")
     this.updateReservationVs({});
     this.updateCurrentReservationVs({})
     this._init();

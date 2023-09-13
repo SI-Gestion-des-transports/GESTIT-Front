@@ -70,6 +70,14 @@ export class UtilisateursService implements OnInit, OnChanges {
         })
       );*/
     this.headers = this._httpHeader.getHeaders();
+    //console.log("user srv oninit")
+    if (!this._sharedCurrentUserId){
+      this._authService.verifyJWT().subscribe(user => {
+        //console.log(" this._sharedCurrentUserId : ", this._sharedCurrentUserId)
+        this._sharedCurrentUserId = user.body.id
+        //console.log(" this._sharedCurrentUserId : ", this._sharedCurrentUserId)
+      })
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -131,7 +139,7 @@ export class UtilisateursService implements OnInit, OnChanges {
   /*
     updateCurrentUserDevTest(user: Utilisateur): void {
       this.currentUserSource.next(user);
-  
+
       /!*petite incrustation de Mochizuki
       Pour chaque mise à jour de l'utilisateur courant, le subject informe ses abonnés
       de la mise à jour du nom d'utilisateur. Mochizuki l'utilise ici pour afficher le

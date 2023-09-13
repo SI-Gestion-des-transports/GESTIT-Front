@@ -17,6 +17,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
 
   resasVs:ReservationVs[]=[];
   resaVs: ReservationVs = {};
+  currentUserId: number;
 
   reservationVs: ReservationVs = {};
   allReservationsVs: ReservationVs [] = [];
@@ -105,6 +106,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
           this.modifBtn = data;
         })
     );
+    this.currentUserId = this._utilisateurService.getSharedCurrentUserId();
     this._init();
   }
 
@@ -148,6 +150,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
     event.preventDefault();
     //console.log("Réservation Form — OnSubmit");
     if(!this.reservationVs.vehiculeServiceId){
+      this.reservationVs.userId = this.currentUserId;
       this.reservationVs.vehiculeServiceId = this.vehiculesSrv[0].id;
     }
     if(this.currentReservationVs.id){
@@ -164,8 +167,10 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   }
 
   create(reservationVs:ReservationVs){
+    
     //console.log("Réservation Form — CREATE / currentUser.id : " + this.currentUser.id)
-    reservationVs.userId = this.currentUser.id;
+    console.log(this.currentUserId)
+    reservationVs.userId = this.currentUserId;
     //console.log("Réservation Form — CREATE / reservation.user.id : " + reservationVs.userId);
     this._reservationVsService
       .create(this.addSecondsToDate(reservationVs))
