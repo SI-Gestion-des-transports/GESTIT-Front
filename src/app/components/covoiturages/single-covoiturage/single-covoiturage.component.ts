@@ -140,6 +140,7 @@ onClickConfirmerParticipation() {
       this.covoiturageAconfirmer.passagersId.push(id);
       this.covoiturageService.update(this.covoiturageAconfirmer);
     });
+    this.router.navigateByUrl('covoituragesConfirmReservation');
 }
 
 updatePass(covoit: Covoiturage){
