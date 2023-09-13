@@ -26,13 +26,11 @@
         <th>Adresse d'arrivée</th>
         <th>Nombre de voyageur</th>
       </tr>
-      <tr *ngFor="let c of covoitOrgs">
+      <tr *ngFor="let c of mergedCovoitArray">
         <td>{{ c.dateDepart?.toString() | extractDate }}</td>
         <td>{{ c.dateDepart?.toString() | extractTime }}</td>
-        <td>{{ c.adresseDepart?.numero}} {{ c.adresseDepart?.voie}}, <br>
-          {{ c.adresseDepart?.codePostal}} {{ c.adresseDepart?.commune}}</td>
-        <td>{{ c.adresseArrivee?.numero}} {{ c.adresseArrivee?.voie}}, <br>
-          {{ c.adresseArrivee?.codePostal}} {{ c.adresseArrivee?.commune}}</td>
+        <td>{{ c.adresseDepart.numero}} {{ c.adresseDepart.voie}}<br>{{ c.adresseDepart.codePostal}} {{ c.adresseDepart.commune}}</td>
+        <td>{{ c.adresseArrivee.numero}} {{ c.adresseArrivee.voie}}<br>{{ c.adresseArrivee.codePostal}} {{ c.adresseArrivee.commune}}</td>
         <!-- Le nouveau dto qui renvoit une liste d'id d'utilisateurs (auparavant une liste d'utilisateurs)
         créer un conflit de nommage dans le code de lan. J'ai modifié en conséquence  Mochizuki 11092023 01h22-->
         <!-- <td>{{c.passagers?.length}}</td> -->

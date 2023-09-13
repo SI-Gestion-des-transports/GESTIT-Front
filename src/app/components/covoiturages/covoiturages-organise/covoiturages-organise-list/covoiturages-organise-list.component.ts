@@ -9,9 +9,10 @@ import { Adresse } from 'src/app/shared/models/adresse';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
 import { Utilisateur } from 'src/app/shared/models/utilisateur';
 import { CovoiturageService } from '../../../../shared/services/covoiturage.service';
-import {Subscription} from "rxjs";
+import {forkJoin, Subscription} from "rxjs";
 import {VehiculePerso} from "../../../../shared/models/vehicule.perso";
 import {Router} from "@angular/router";
+import {AdressesService} from "../../../../shared/services/adresses.service";
 
 @Component({
   selector: 'app-covoiturages-organise-list',
@@ -23,6 +24,10 @@ export class CovoituragesOrganiseListComponent {
   covoitOrgs: Covoiturage[] | undefined = [];
   upcomingCovoitOrgsResByUser : Covoiturage [] =[];
   pastCovoitOrgsResByUser : Covoiturage [] =[];
+
+  mergedCovoitArray: Covoiturage [] = [];
+  covoitFromDB: Covoiturage [] = [];
+  allAdresses: Adresse[] = [];
 
   // Variables partagées via le service (observable, suscribe)
   adresseDepart: Adresse = {};
@@ -39,8 +44,11 @@ export class CovoituragesOrganiseListComponent {
 
 
   private _subscription = new Subscription();
+
+
   constructor(private _covoitOrgService: CovoiturageService,
-              private _router: Router) {}
+              private _router: Router,
+              private _adresseService: AdressesService) {}
   ngOnInit(): void {
     // Subscription aux variables du service
     this._subscription.add(
@@ -105,25 +113,54 @@ export class CovoituragesOrganiseListComponent {
   getIncomingCovoiturages(){
     console.log("TEST");
     this.upcompingCovoiturages = true;
+
+    this.mergedCovoitArray = [];
+
+    forkJoin({
+      covoiturages: this._covoitOrgService.findUpcomingCovoituragesByUserId(this.currentUser.id),
+      adresses: this._adresseService.findAll()
+    }).subscribe(({covoiturages, adresses}) => {
+      console.log(covoiturages);
+      console.log(adresses);
+      this.covoitFromDB = covoiturages;
+      this.allAdresses = adresses;
+      this.mergedCovoitArray = this.mergedCovoituragesWithAdresses();
+    })
+
+
+
     //this._init();
-    this._covoitOrgService.findUpcomingCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => {
+/*    this._covoitOrgService.findUpcomingCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => {
       console.log(upcomingCovoitOrgRes);
       this.covoitOrgs = upcomingCovoitOrgRes;
-    });
+    });*/
   }
 
   getPastCovoiturages(){
     console.log("TEST");
     this.upcompingCovoiturages = false;
+
+    this.mergedCovoitArray = [];
+
+    forkJoin({
+      covoiturages: this._covoitOrgService.findPastCovoituragesByUserId(this.currentUser.id),
+      adresses: this._adresseService.findAll()
+    }).subscribe(({covoiturages, adresses}) => {
+      console.log(covoiturages);
+      console.log(adresses);
+      this.covoitFromDB = covoiturages;
+      this.allAdresses = adresses;
+      this.mergedCovoitArray = this.mergedCovoituragesWithAdresses();
+    })
     //this._init();
-    this._covoitOrgService.findPastCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => {
+/*    this._covoitOrgService.findPastCovoituragesByUserId(this.currentUser.id).subscribe(upcomingCovoitOrgRes => {
       console.log(upcomingCovoitOrgRes);
       this.covoitOrgs = upcomingCovoitOrgRes;
-    });
+    });*/
   }
 
   updateCovoitOrg(covoitOrgToEdit: Covoiturage){
-    if(!covoitOrgToEdit.passagersId){
+    if(covoitOrgToEdit.passagersId != null){
       console.log("UpdateCovoitOrg")
       this._covoitOrgService.updateModifBtn(false);
       this.covoitOrg = covoitOrgToEdit;
@@ -147,6 +184,19 @@ export class CovoituragesOrganiseListComponent {
     );
   }
 
-
+  mergedCovoituragesWithAdresses():any[]{
+    return this.covoitFromDB.map(covoiturages => {
+      const adresseDepart = this.allAdresses.find(ad => ad.id === covoiturages.adresseDepartId);
+      const adresseArrivee = this.allAdresses.find(ad => ad.id === covoiturages.adresseArriveeId);
+    if (!adresseDepart || !adresseArrivee){
+      return covoiturages;
+    }
+    return {
+      ...covoiturages,
+      adresseDepart: adresseDepart,
+      adresseArrivee: adresseArrivee,
+    };
+    });
+  }
 
 }

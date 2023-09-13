@@ -5,9 +5,9 @@ export const environment = {
     users:'http://localhost:3000/users',
     covoiturage_reservationOK: 'http://localhost:3000/covoiturages/reservationEffectuee',
     reservationsvs:'http://localhost:3000/reservationsvs',
-    adresses: 'http://localhost:3000/adresses',
 
 
+    adresse: 'http://localhost:8080/adresse',
     marque:'http://localhost:8080/marque',
     vehiculeService:'http://localhost:8080/admin/vehiculeservice',
     modele:"http://localhost:8080/modele",
@@ -18,7 +18,6 @@ export const environment = {
     vehiculeperso: 'http://localhost:8080/vehiculeperso',
     reservation: 'http://localhost:8080/reservation',
     covoituragesReserves: 'http://localhost:8080/covoituragesReserves',
-
     covoituragesOrganises: 'http://localhost:8080/covoiturages',
     login: 'http://localhost:8080/login',
     logout: 'http://localhost:8080/signout',

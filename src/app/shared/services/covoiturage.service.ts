@@ -11,6 +11,7 @@ import { VehiculePerso } from "../models/vehicule.perso";
 import { AuthentificationService } from './authentification.service';
 import { HttpHeaderService } from './http-header.service';
 import { UtilisateursService } from './utilisateurs.service';
+import {CovoiturageCreate} from "../models/covoiturageCreate";
 
 
 @Injectable({providedIn: 'root',})
@@ -171,26 +172,38 @@ export class CovoiturageService implements OnInit {
 
 
 
-  public create(createdCovoiturage: Covoiturage): Observable<Covoiturage> {
-    console.log('creation demandee');
-    /*
+  public create(createdCovoiturage: CovoiturageCreate): Observable<CovoiturageCreate> {
+    console.log('Cov Srv — Create / covoit : ', createdCovoiturage);
+/*    console.log("createdCovoiturage.adresseDepart",createdCovoiturage.adresseDepart);
+    console.log("createdCovoiturage.adresseArrivee",createdCovoiturage.adresseArrivee);
     const covoiturageCreated: Covoiturage = createdCovoiturage;
     if (createdCovoiturage.adresseDepart && createdCovoiturage.adresseArrivee) {
       this._adresseService
         .create(createdCovoiturage.adresseDepart)
-        .subscribe((adresse) => (covoiturageCreated.adresseDepart = adresse));
+        .subscribe((adresse) => {
+          console.log("adresseDepart", adresse);
+          covoiturageCreated.adresseDepart = adresse;
+          console.log("covoiturageCreated.adresseDepart : ", covoiturageCreated.adresseDepart);
+        });
       this._adresseService
         .create(createdCovoiturage.adresseArrivee)
-        .subscribe((adresse) => (covoiturageCreated.adresseArrivee = adresse));
-    }
-    */
-    //console.log("Cov Srv — Create / organisateurId : ", createdCovoiturage.organisateurId);
+        .subscribe((adresse) => {
+          console.log("adresseArrivee", adresse);
+          covoiturageCreated.adresseArrivee = adresse;
+          console.log("covoiturageCreated.adresseArrivee : ", covoiturageCreated.adresseArrivee);
+        });
     createdCovoiturage.organisateurId = parseInt(String(this._utilisateurService.getSharedCurrentUserId()), 10);
-    //console.log("Cov Srv — Create / organisateurId : ", createdCovoiturage.organisateurId);
-   // console.log("Cov Srv — Create / createdCovoiturage : ", createdCovoiturage)
-    return this._http.post<Covoiturage>(
+    console.log("covoiturageCreated : ", covoiturageCreated)*/
+    return this._http.post<CovoiturageCreate>(
       `${this._baseCovoitUrl}/create`, createdCovoiturage, {headers: this._httpHeaderService.getHeaders()}
     );
+/*    } else {
+      console.log("ERROR ADRESSE")
+      return null;
+    }*/
+    //console.log("Cov Srv — Create / organisateurId : ", createdCovoiturage.organisateurId);
+    //console.log("Cov Srv — Create / organisateurId : ", createdCovoiturage.organisateurId);
+   // console.log("Cov Srv — Create / createdCovoiturage : ", createdCovoiturage)
   }
 
   public update(updatedCovoitOrg: Covoiturage) {
