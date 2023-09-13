@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, Subscription } from "rxjs";
 import { Utilisateur } from "../models/utilisateur";
 import { environment } from "../../../environments/environment.development";
 import { AuthentificationService } from "./authentification.service";
+import { HttpHeaderService } from "./http-header.service";
 
 
 @Injectable({
@@ -52,16 +53,18 @@ export class UtilisateursService implements OnInit, OnChanges {
   private _subscription = new Subscription();
 
   constructor(private _http: HttpClient,
-    private _authService: AuthentificationService) {
+    private _authService: AuthentificationService,
+    private _httpHeaderService: HttpHeaderService) {
   }
 
   ngOnInit() {
-    this._subscription
-      .add(this._authService.headers$
-        .subscribe(data => {
-          this.headers = data
-        })
-      );
+    // this._subscription
+    //   .add(this._authService.headers$
+    //     .subscribe(data => {
+    //       this.headers = data
+    //     })
+    //   );
+      this.headers = this._httpHeaderService.getHeaders();
   }
 
   ngOnChanges(changes: SimpleChanges) {
