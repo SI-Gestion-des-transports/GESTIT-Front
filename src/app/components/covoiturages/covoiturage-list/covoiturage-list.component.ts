@@ -91,7 +91,7 @@ export class CovoiturageListComponent implements OnInit {
 		this.date_isFounded = false;
 
 		this.filtrageList();
-    //this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
+		//this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
 	}
 
 	/**
@@ -142,7 +142,7 @@ export class CovoiturageListComponent implements OnInit {
 		this.filtrage.filter_VilleDepart_Value = event.target.value;
 
 		if (this.filtrage.filter_VilleDepart_Value === "--Ville de départ--") {
-			console.log("demande init");
+      //console.log("demande init");
 			this.filtrage.filter_VilleDepart_Value = "";
 		}
 
@@ -163,40 +163,42 @@ export class CovoiturageListComponent implements OnInit {
 
 
 
-/*  onCreateCovoiturage(): void {
-    this.covoiturageToPush = {
-      nombrePlacesRestantes: 45,
-      dureeTrajet: 45,
-      distanceKm: 99,
-      /!*       "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
-      "adresseArrivee": "87 avenue de Maupassant 23000 Guéret" *!/
-    };
+	/*  onCreateCovoiturage(): void {
+		this.covoiturageToPush = {
+		  nombrePlacesRestantes: 45,
+		  dureeTrajet: 45,
+		  distanceKm: 99,
+		  /!*       "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
+		  "adresseArrivee": "87 avenue de Maupassant 23000 Guéret" *!/
+		};
 
-    this.covoiturageService.create(this.covoiturageToPush).subscribe(() => {
-      /!* this.listeCovoiturages.push *!/
-    });
-    //this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
-    // this._init();
+		this.covoiturageService.create(this.covoiturageToPush).subscribe(() => {
+		  /!* this.listeCovoiturages.push *!/
+		});
+		//this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
+		// this._init();
 
-    /!* private _init() {
-  this.covoiturageService.findAll(this.user)
-   .subscribe(covoiturages => {
-     this.listeCovoiturages = covoiturages;
-   }) *!/
-  }*/
+		/!* private _init() {
+	  this.covoiturageService.findAll(this.user)
+	   .subscribe(covoiturages => {
+		 this.listeCovoiturages = covoiturages;
+	   }) *!/
+	  }*/
 
-  /*
-  private _init() {
-    this.covoiturageService.getAllCovoiturages();
+	/*
+	private _init() {
+	  this.covoiturageService.getAllCovoiturages();
 
 
-	/**
-	 *Réinitialisation du filtrage
-	 *
-	 * @Author Atsuhiko Mochizuki
-	 */
+	  /**
+	   *Réinitialisation du filtrage
+	   *
+	   * @Author Atsuhiko Mochizuki
+	   */
 	onResetFiltrage() {
 		this.ngOnInit();
+		this.depart_liste = [];
+		this.arrivee_liste = [];
 		this.filtrageList();
 	}
 
@@ -208,10 +210,10 @@ export class CovoiturageListComponent implements OnInit {
 	 * @author Atsuhiko Mochizuki
 	 */
 	async filtrageList() {
-		console.log("il rentre dnas le filtrage");
+    //console.log("il rentre dnas le filtrage");
 		let completListOfCovoiturages = await this.covoiturageService.recupListeCovoituragesOnServer();
 		if (this.filtrage.filter_VilleArrivee_value !== "") {
-			console.log("des filtres ont été activés");
+      //console.log("des filtres ont été activés");
 			let arrivee_listeFiltree = completListOfCovoiturages.filter((covoit) => covoit.adresseArrivee.commune === this.filtrage.filter_VilleArrivee_value);
 			if (arrivee_listeFiltree.length > 0) {
 				this.arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
@@ -241,7 +243,7 @@ export class CovoiturageListComponent implements OnInit {
 						this.date_isFounded = false;
 
 						if (this.filtrage.filter_Date_value) {
-							console.log("présence d'une date")
+              //console.log("présence d'une date")
 							let listeFiltree_byDate = listeFiltree_villeDepart.filter((covoit) => {
 								const dateCovoit = new Date(covoit.dateDepart);
 								const dateSouhaitee = new Date(this.filtrage.filter_Date_value);
@@ -358,8 +360,8 @@ export class CovoiturageListComponent implements OnInit {
 
 
 /*  this.covoiturageService.create(this.covoiturageToPush).subscribe(covoiturageReceived => {
-     this.createdCovoiturage = covoiturageReceived;});
+	 this.createdCovoiturage = covoiturageReceived;});
 
-     console.log("covoiturage créeeeeeeeee");
+	 console.log("covoiturage créeeeeeeeee");
 */
 

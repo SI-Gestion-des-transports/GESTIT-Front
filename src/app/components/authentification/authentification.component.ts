@@ -7,6 +7,7 @@ import {AuthentificationService} from "../../shared/services/authentification.se
 import {HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Subscription} from "rxjs";
 import {error} from "@angular/compiler-cli/src/transformers/util";
+import {environment} from "../../../environments/environment.development";
 
 @Component({
   selector: 'app-authentification',
@@ -33,35 +34,52 @@ export class AuthentificationComponent implements OnInit {
 
   constructor(private _authService: AuthentificationService,
               private _utilisateurService: UtilisateursService,
-              private _router: Router) {
+              private _router: Router,
+              ) {
+  }
+
+  check(){
+    environment.check=!environment.check;
+    //console.log(environment.check)
   }
 
   seConnecter() {
-    console.log(this.unLoggedUser.email);
-    console.log(this.unLoggedUser);
+    //console.log(this.unLoggedUser.email);
+    //console.log(this.unLoggedUser);
+
 
     this._authService.login(this.unLoggedUser).subscribe({
       next: data => {
-        console.log(data.status);
-
-          //console.log("AuthComp — seConnecter / login.subs(data['JWT-TOKEN']) : " + data['JWT-TOKEN']);
-          console.log("Auth Comp — seConnecter / login.subs(data) : " + data['JWT-TOKEN']);
-          //console.log("AuthComp — seConnecter / login.subs(data['userId']) : " + data['userId']);
+          //console.log(data.status);
+        //console.log("AuthComp — seConnecter / login.subs(data['JWT-TOKEN']) : " + data['JWT-TOKEN']);
+        //console.log("Auth Comp — seConnecter / login.subs(data) : " + data['JWT-TOKEN']);
+        //console.log("AuthComp — seConnecter / login.subs(data['userId']) : " + data['userId']);
           this.userId = data['userId'];
-          console.log("Auth Comp — seConnecter / this.userId : " + this.userId);
+        //console.log("Auth Comp — seConnecter / this.userId : " + this.userId);
+
+          this._utilisateurService.setSharedCurrentUserId(this.userId);
+        //console.log("Auth Comp — seConnecter / getSharedCurrentUserId : " + this._utilisateurService.getSharedCurrentUserId());
+
           this._utilisateurService.updateCurrentUserId(this.userId);
           window.localStorage.setItem("JWT-TOKEN", data['JWT-TOKEN']);
-/*          //console.log("Auth Comp — seConnecter / this.headers : ", this.headers);
-          //this.headers = this.headers.set("JWT-TOKEN", data['JWT-TOKEN']);
+        //console.log("Auth Comp — seConnecter / this.headers : ", this.headers);
+          const headers = new HttpHeaders().set("JWT-TOKEN",`${data['JWT-TOKEN']}`);
+
+        //console.log("Auth Comp — seConnecter / headers affectation : ", `JWT-TOKEN: "${data['JWT-TOKEN']}"`);
+        //console.log("Auth Comp — seConnecter / headers : ", headers);
+        //console.log("Auth Comp — seConnecter / headers.get() : ",headers.get('JWT-TOKEN'));
+          /*
           //console.log("Auth Comp — seConnecter / this.headers.get(\"JWT-TOKEN\") : ", this.headers.get("JWT-TOKEN"));
           //console.log("Auth Comp — seConnecter / this.headers.keys() : ", this.headers.keys());
           this.headers.keys().forEach(key => {
             console.log("Auth Comp — seConnecter / key:value : ", `${key}: ${this.headers.get(key)}`);
           });
-          this.userId = data['userId'];*/
+          this.userId = data['userId'];
+          */
           this._authService.updateLoggedBtn(true);
-          console.log("Auth Comp — seConnecter / loggedBtn : ",this.loggedBtn);
-          this._authService.updateHeaders(data);
+        //console.log("Auth Comp — seConnecter / loggedBtn : ",this.loggedBtn);
+
+          this._authService.updateHeaders(headers);
           this._router.navigateByUrl('');
       },
       //show error username or password is incorrect
@@ -79,6 +97,15 @@ export class AuthentificationComponent implements OnInit {
 
 
   ngOnInit(): void {
+    if (window.localStorage.getItem(environment.JWT)) {
+      this._authService.verifyJWT().subscribe(res=>{
+        if (res.status!=200) {
+          window.localStorage.removeItem(environment.JWT)
+        }else {
+          this._router.navigateByUrl("");
+        };
+      })
+    }
     this._authService.updateLoggedBtn(false);
     this._authService.updateHeaders(new HttpHeaders());
     this._subscription.add(
@@ -106,4 +133,5 @@ export class AuthentificationComponent implements OnInit {
   }
 
 
+  protected readonly environment = environment;
 }

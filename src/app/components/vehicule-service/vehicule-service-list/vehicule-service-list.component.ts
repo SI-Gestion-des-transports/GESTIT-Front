@@ -21,6 +21,9 @@ export class VehiculeServiceListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(!window.localStorage.getItem("JWT-TOKEN")) {
+      this.router.navigateByUrl('login');
+    }
     this._marqueService.findAll().subscribe(res => {
       this.listMarque = res;
     });
@@ -56,7 +59,7 @@ export class VehiculeServiceListComponent implements OnInit {
 
   delete(id: number) {
     this._vehiculeServiceService.deleteVehiculeService(id).subscribe(res => {
-      console.log(res);
+      //console.log(res);
       if (res.status == 200) this.initListVs();
     });
   }

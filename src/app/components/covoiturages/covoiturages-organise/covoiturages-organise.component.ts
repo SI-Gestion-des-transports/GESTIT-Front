@@ -63,7 +63,7 @@ export class CovoituragesOrganiseComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.currentUser);
+    //console.log(this.currentUser);
     if (this.currentUser) {
       this._init();
       this.reInitCovoitOrg();
@@ -73,8 +73,8 @@ export class CovoituragesOrganiseComponent implements OnInit, OnChanges {
 
   private _init() {
     if (this.currentUser.nom != undefined) {
-      console.log("_init")
-      console.log("User : " + this.currentUser.nom)
+      //console.log("_init")
+      //console.log("User : " + this.currentUser.nom)
       this._covoitOrgService
         .getCovoituragesByOrganisateur(this.currentUser)
         .subscribe((covoitOrgsCreated) => {
@@ -87,7 +87,7 @@ export class CovoituragesOrganiseComponent implements OnInit, OnChanges {
     this.covoitOrg = {};
     this.adresseDepart = {};
     this.adresseArrivee = {};
-    //this.covoitOrg.organisateurId = this.currentUser;
+    this.covoitOrg.organisateurId = this.currentUser.id;
 
   }
 
@@ -102,14 +102,14 @@ export class CovoituragesOrganiseComponent implements OnInit, OnChanges {
 
 
   onSubmit(){
-   // this.covoitOrg.organisateurId = this.currentUser;
+    this.covoitOrg.organisateurId = this.currentUser.id;
     this.covoitOrg.adresseDepart = this.adresseDepart;
     this.covoitOrg.adresseArrivee = this.adresseArrivee;
-    console.log(this.adresseDepart.codePostal);
-    console.log(this.covoitOrg.dureeTrajet);
-    console.log(this.covoitOrg.distanceKm);
+    //console.log(this.adresseDepart.codePostal);
+    //console.log(this.covoitOrg.dureeTrajet);
+    //console.log(this.covoitOrg.distanceKm);
     this._covoitOrgService.create(this.covoitOrg).subscribe(() => {
-      console.log("Covoit created");
+      //console.log("Covoit created");
       this.reInitCovoitOrg();
       this._router.navigateByUrl('covoituragesOrganises-list');
     });

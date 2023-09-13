@@ -8,6 +8,7 @@ import {VehiculeService} from "../models/vehicule.service";
 import {AuthentificationService} from "./authentification.service";
 import {UtilisateursService} from "./utilisateurs.service";
 import {Router} from "@angular/router";
+import {HttpHeaderService} from "./http-header.service";
 
 
 @Injectable({
@@ -25,7 +26,9 @@ export class ReservationVsService implements OnInit {
 */
 
   headers = new HttpHeaders();
+  headers2 = new HttpHeaders();
   currentUser: Utilisateur = {};
+  currentUser2: Utilisateur = {};
 
   private reservationVsSource = new BehaviorSubject<ReservationVs>({});
   private allReservationsVsSource = new BehaviorSubject<ReservationVs[]>([]);
@@ -53,19 +56,26 @@ export class ReservationVsService implements OnInit {
   constructor(private _http: HttpClient,
               private _authService: AuthentificationService,
               private _utilisateurService: UtilisateursService,
-              private _router: Router) {
+              private _router: Router,
+              private _httpHeaderService: HttpHeaderService) {
   }
 
   ngOnInit(): void {
         this._subscription
           .add(this._authService.headers$
             .subscribe(data => {
-              this.headers = data;
+              this.headers2 = data;
               //console.log("Réservation Service — this.headers : ", this.headers)
             }));
         this._subscription
           .add(this._utilisateurService.currentUser$
-            .subscribe(data => {this.currentUser = data}));
+            .subscribe(data => {this.currentUser2 = data}));
+    //console.log("Réservation Service — ngOnInit / this.currentUser before :", this.currentUser);
+        this.currentUser = this._utilisateurService.getSharedCurrentUser;
+    //console.log("Réservation Service — ngOnInit / this.currentUser after :", this.currentUser);
+    //console.log("Réservation Service — ngOnInit / this.headers before :", this.currentUser);
+        this.headers = this._httpHeaderService.getHeaders()
+    //console.log("Réservation Service — ngOnInit / this.headers after :", this.currentUser);
     }
 
   ngOnDestroy(): void {
@@ -84,19 +94,19 @@ export class ReservationVsService implements OnInit {
     //console.log("Reservation Service — onInit / localStorage.getItem : ",window.localStorage.getItem("JWT-TOKEN"))
     if(!window.localStorage.getItem("JWT-TOKEN")){
       this._authService.updateLoggedBtn(false);
-      this._authService.updateHeaders(new HttpHeaders());
+      //this._authService.updateHeaders(new HttpHeaders());
       this._router.navigateByUrl('login');
     }
     //console.log("Réservation Service —_init / this.headers : ",this.headers);
-    this._authService.headers$.subscribe(data => {
+/*    this._authService.headers$.subscribe(data => {
       //console.log("Réservation Service —_init / _authService.headers$ : ",data);
       this.headers = data;
-    });
+    });*/
   }
   findAll(): Observable<ReservationVs[]> {
     this._http
       .get<ReservationVs[]>(this._baseUrl);
-    return this._http.get<ReservationVs[]>(this._baseUrl);
+    return this._http.get<ReservationVs[]>(this._realBaseUrl, {headers: this.headers});
   }
 
   findById(id: number): Observable<ReservationVs[]> {
@@ -109,10 +119,11 @@ export class ReservationVsService implements OnInit {
 
     arrayResVs: ReservationVs[] = [];
   findUpcomingByUserId(userId?: number): Observable<ReservationVs[]>{
-    console.log(`${this._realBaseUrl}/upcoming`);
+    //console.log(`${this._realBaseUrl}/upcoming`);
     this._init();
+
     //console.log("Réservation Service —findUpcomingByUserId / HttpHeaders : ", this.headers);
-    this._http.get<ReservationVs[]>(`${this._realBaseUrl}/upcoming`, {headers: this.headers}).subscribe(data => {
+/*    this._http.get<ReservationVs[]>(`${this._realBaseUrl}/upcoming`, {headers: new HttpHeaders(window.localStorage.getItem("JWT-TOKEN"))}).subscribe(data => {
         this.arrayResVs = data;
       }
     );
@@ -120,14 +131,14 @@ export class ReservationVsService implements OnInit {
     this.arrayResVs.forEach(resVs => {
       //console.log("Réservation Service —findUpcomingByUserId")
       //console.log("ForEACH : userId =", resVs.userId)
-    })
+    })*/
 
-    return this._http.get<ReservationVs[]>(`${this._realBaseUrl}/upcoming`, {headers: this.headers});
+    return this._http.get<ReservationVs[]>(`${this._realBaseUrl}/upcoming`, {headers: this._httpHeaderService.getHeaders()});
   }
   findPastByUserId(userId?: number): Observable<ReservationVs[]>{
     //console.log(this.headers.keys())
     //this._init();
-    this._http.get<any>(`${this._realBaseUrl}/upcoming`, {headers: this.headers}).subscribe(data => {
+    this._http.get<any>(`${this._realBaseUrl}/upcoming`, {headers: this._httpHeaderService.getHeaders()}).subscribe(data => {
         console.log(data);
         this.arrayResVs = data;
       }
@@ -137,16 +148,17 @@ export class ReservationVsService implements OnInit {
       //console.log("Réservation Service —findUpcomingByUserId")
       //console.log("ForEACH : userId =", resVs.userId)
     })
-    return this._http.get<ReservationVs[]>(`${this._realBaseUrl}/past`, {headers: this.headers})
+    return this._http.get<ReservationVs[]>(`${this._realBaseUrl}/past`, {headers: this._httpHeaderService.getHeaders()})
   }
 
   create(resVSCreated: ReservationVs): Observable<ReservationVs> {
+    //console.log("CREATE")
     this.updateReservationVs({});
     this.updateCurrentReservationVs({})
     this._init();
     //console.log("Réservation Service —create / HttpHeaders : ", this.headers);
-    this._http.post<ReservationVs>(this._baseUrl, resVSCreated).subscribe();
-    return this._http.post(`${this._realBaseUrl}/create`, resVSCreated, {headers: this.headers});
+    //this._http.post<ReservationVs>(this._baseUrl, resVSCreated).subscribe();
+    return this._http.post(`${this._realBaseUrl}/create`, resVSCreated, {headers: this._httpHeaderService.getHeaders()});
   }
 
   update(resVSUpdated: ReservationVs): Observable<ReservationVs> {
@@ -156,14 +168,14 @@ export class ReservationVsService implements OnInit {
     //this.updateReservationVs({});
     //this.updateCurrentReservationVs({})
     //this._http.put<ReservationVs>(`${this._realBaseUrl}/${resVSUpdated.id}`, resVSUpdated, {headers: this.headers}).subscribe();
-    return this._http.put<ReservationVs>(`${this._realBaseUrl}/${resVSUpdated.id}`, resVSUpdated, {headers: this.headers});
+    return this._http.put<ReservationVs>(`${this._realBaseUrl}/${resVSUpdated.id}`, resVSUpdated, {headers: this._httpHeaderService.getHeaders()});
   }
 
   delete(resVSDeleted: ReservationVs): Observable<ReservationVs> {
     //console.log(`${this._realBaseUrl}/${resVSDeleted.id}`)
     //console.log('Deleting reservation with ID:', resVSDeleted.id);
     //this._http.delete<ReservationVs>(`${this._realBaseUrl}/${resVSDeleted.id}`, {headers: this.headers}).subscribe();
-    return this._http.delete<ReservationVs>(`${this._realBaseUrl}/${resVSDeleted.id}`, {headers: this.headers});
+    return this._http.delete<ReservationVs>(`${this._realBaseUrl}/${resVSDeleted.id}`, {headers: this._httpHeaderService.getHeaders()});
   }
 
 

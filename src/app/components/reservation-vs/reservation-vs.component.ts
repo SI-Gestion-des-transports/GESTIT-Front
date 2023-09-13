@@ -7,6 +7,7 @@ import {Subscription} from "rxjs";
 import {HttpHeaders} from "@angular/common/http";
 import {AuthentificationService} from "../../shared/services/authentification.service";
 import {UtilisateursService} from "../../shared/services/utilisateurs.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-reservation-vs',
@@ -29,11 +30,15 @@ export class ReservationVsComponent implements OnInit, OnChanges {
   private _subscription = new Subscription();
   constructor(private _reservationVsService:ReservationVsService,
               private _utilisateurService: UtilisateursService,
-              private _authService: AuthentificationService) {
+              private _authService: AuthentificationService,
+              private _router: Router) {
 }
 
 
   ngOnInit(): void {
+    if(!window.localStorage.getItem("JWT-TOKEN")) {
+      this._router.navigateByUrl('login');
+    }
     this._subscription.add(
       this._reservationVsService.reservationVs$.
       subscribe(data => {
@@ -70,7 +75,7 @@ export class ReservationVsComponent implements OnInit, OnChanges {
         this.currentVs = data;
       })
     );
-    console.log(this.currentReservationVs.dateHeureRetour);
+    //console.log(this.currentReservationVs.dateHeureRetour);
 
     this._subscription.add(
       this._reservationVsService.currentReservationVs$
@@ -78,7 +83,7 @@ export class ReservationVsComponent implements OnInit, OnChanges {
         this.currentReservationVs = data;
       })
     );
-    console.log(this.currentReservationVs.dateHeureRetour);
+    //console.log(this.currentReservationVs.dateHeureRetour);
     this._subscription.add(
       this._reservationVsService.editedReservationVs$
         .subscribe(data => {
@@ -102,12 +107,12 @@ export class ReservationVsComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (this.currentUser){
       this._init();
-      console.log("On changes (currentUser.nom) : " + this.currentUser.nom)
+      //console.log("On changes (currentUser.nom) : " + this.currentUser.nom)
     }
     if (this.currentReservationVs.dateHeureRetour != undefined){
-      console.log("On changes (currentRes) : " + this.currentReservationVs.dateHeureRetour)
-      console.log("TADA")
-      console.log(this.currentReservationVs.dateHeureRetour)
+      //console.log("On changes (currentRes) : " + this.currentReservationVs.dateHeureRetour)
+      //console.log("TADA")
+      //console.log(this.currentReservationVs.dateHeureRetour)
       this._init();
     }
   }
@@ -117,8 +122,7 @@ export class ReservationVsComponent implements OnInit, OnChanges {
   }
 
   private _init(){
-    this._reservationVsService
-      .findAll();
+    //this._reservationVsService.findAll();
 /*      .subscribe(reservations => {
         this.reservationsVs = reservations;
       });*/
@@ -126,8 +130,8 @@ export class ReservationVsComponent implements OnInit, OnChanges {
 
   create(reservationVs:ReservationVs){
     reservationVs.userId = this.currentUser.id;
-    console.log("Réservation : " + reservationVs.userId);
-    console.log("Réservation : " + reservationVs.dateHeureRetour);
+    //console.log("Réservation : " + reservationVs.userId);
+    //console.log("Réservation : " + reservationVs.dateHeureRetour);
     this._reservationVsService
       .create(reservationVs)
       .subscribe(() =>{
@@ -155,26 +159,33 @@ export class ReservationVsComponent implements OnInit, OnChanges {
   }
 
   startUpdateResaVs(reservationVs:ReservationVs){
-    console.log("strated update")
+    //console.log("strated update")
     this.reservationVs = reservationVs;
     this.modifBtn = false;
   }
 
-  undoUpdate(){
+/*  undoUpdate(){
     this.modifBtn = !this.modifBtn;
     this.reInitResVs();
     this._init();
-  }
+  }*/
 
   reInitResVs(){
   }
 
+  reserver(){
+    this._router.navigateByUrl('reservationsvs/form');
+  }
 
-  featuringResVs($event: ReservationVs) {
+  lister(){
+    this._router.navigateByUrl('reservationsvs/list');
+  }
+
+/*  featuringResVs($event: ReservationVs) {
     this.currentReservationVs = $event;
   }
 
   startUpdateResVs($event: ReservationVs){
     this.startUpdateResaVs($event);
-  }
+  }*/
 }

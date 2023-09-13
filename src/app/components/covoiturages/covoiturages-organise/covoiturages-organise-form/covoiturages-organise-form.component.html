@@ -1,96 +1,110 @@
-
-
 <form class="form">
-  <div>
-    <p>Adresse de départ :</p>
-    <label for="numeroD"> Numéro : </label>
-    <input
-      type="number"
-      name="numero"
-      id="numeroD"
-      [(ngModel)]="adresseDepart.numero"
-      placeholder="{{adresseDepart.numero}}"
-    />
 
+  <p>Adresse de départ :</p>
 
-    <label for="voieD"> Voie : </label>
-    <input type="text" name="voie" id="voieD" [(ngModel)]="adresseDepart.voie" placeholder="{{adresseDepart.voie}}"/>
+  <div class = "adresseDepart">
+    <div>
+        <label for="numeroD"> Numéro : </label>
+        <input
+          type="number"
+          name="numero"
+          id="numeroD"
+          [(ngModel)]="adresseDepart.numero"
+          placeholder="{{adresseDepart.numero}}"
+        />
+    </div>
 
+    <div>
+      <label for="voieD"> Voie : </label>
+      <input type="text" name="voie" id="voieD" [(ngModel)]="adresseDepart.voie" placeholder="{{adresseDepart.voie}}"/>
+    </div>
 
-    <label for="codePostalD"> Code Postal : </label>
-    <input
-      type="number"
-      name="codePostal"
-      id="codePostalD"
-      [(ngModel)]="adresseDepart.codePostal"
-      placeholder="{{adresseDepart.codePostal}}"
-    />
+    <div>
+        <label for="codePostalD"> Code Postal : </label>
+        <input
+          type="number"
+          name="codePostal"
+          id="codePostalD"
+          [(ngModel)]="adresseDepart.codePostal"
+          placeholder="{{adresseDepart.codePostal}}"
+        />
+    </div>
 
-
-    <label for="communeD"> Commune : </label>
-    <input
-      type="text"
-      name="commune"
-      id="communeD"
-      [(ngModel)]="adresseDepart.commune"
-      placeholder="{{adresseDepart.commune}}"
-    />
-
-  </div>
-  <div>
-    <p>Adresse d'arrivée :</p>
-    <label for="numeroA"> Numéro : </label>
-    <input
-      type="number"
-      name="numero"
-      id="numeroA"
-      [(ngModel)]="adresseArrivee.numero"
-    />
-
-
-    <label for="voieA"> Voie : </label>
-    <input type="text" name="voie" id="voieA" [(ngModel)]="adresseArrivee.voie" />
-
-
-
-    <label for="codePostalA"> Code Postal : </label>
-    <input
-      type="number"
-      name="codePostal"
-      id="codePostalA"
-      [(ngModel)]="adresseArrivee.codePostal"
-    />
-
-
-    <label for="communeA"> Commune : </label>
-    <input
-      type="text"
-      name="commune"
-      id="communeA"
-      [(ngModel)]="adresseArrivee.commune"
-    />
+    <div>
+        <label for="communeD"> Commune : </label>
+        <input
+          type="text"
+          name="commune"
+          id="communeD"
+          [(ngModel)]="adresseDepart.commune"
+          placeholder="{{adresseDepart.commune}}"
+        />
+    </div>
 
   </div>
+
+
+  <p>Adresse d'arrivée :</p>
+  <div class="adresseArrivee">
+    <div>
+      <label for="numeroA"> Numéro : </label>
+      <input
+        type="number"
+        name="numero"
+        id="numeroA"
+        [(ngModel)]="adresseArrivee.numero"
+      />
+    </div>
+
+
+    <div>
+      <label for="voieA"> Voie : </label>
+      <input type="text" name="voie" id="voieA" [(ngModel)]="adresseArrivee.voie" />
+    </div>
+
+
+    <div>
+      <label for="codePostalA"> Code Postal : </label>
+      <input
+        type="number"
+        name="codePostal"
+        id="codePostalA"
+        [(ngModel)]="adresseArrivee.codePostal"
+      />
+    </div>
+
+    <div>
+      <label for="communeA"> Commune : </label>
+      <input
+        type="text"
+        name="commune"
+        id="communeA"
+        [(ngModel)]="adresseArrivee.commune"
+      />
+    </div>
+
+  </div>
+
   <p>Trajet :</p>
-  <div>
-    <label for="dureeTrajet">Durée trajet</label>
-    <input type="time" name="dureeTrajet" id="dureeTrajet" [(ngModel)]="covoitOrg.dureeTrajet">
+  <div class="trajet">
+    <div class="trajetMargin">
+      <label for="dureeTrajet">Durée trajet</label>
+      <input type="number" name="dureeTrajet" id="dureeTrajet" [(ngModel)]="covoitOrg.dureeTrajet" placeholder="Durée en heures">
+    </div>
 
+    <div class="trajetMargin">
+      <label for="distanceKm">Distance</label>
+      <input type="number" name="distanceKm" id="distanceKm" [(ngModel)]="covoitOrg.distanceKm" placeholder="Distance en km">
+    </div>
+
+    <div class="trajetMargin">
+      <label for="dateDepart">Date</label>
+      <input type="datetime-local" name="dateDepart" id="dateDepart" [(ngModel)]="covoitOrg.dateDepart">
+    </div>
   </div>
-  <div>
-    <label for="distanceKm">Distance</label>
-    <input type="number" name="distanceKm" id="distanceKm" [(ngModel)]="covoitOrg.distanceKm">
 
-  </div>
-  <div>
-    <label for="dateDepart">Date</label>
-    <input type="datetime-local" name="dateDepart" id="dateDepart" [(ngModel)]="covoitOrg.dateDepart">
-
-
-  </div>
-
-  <select name="Vehicule perso" value="Vehicule perso" [(ngModel)]="vehiculesPersoCurrentUser">
-    <option *ngFor="let vehicule of vehiculesPersoCurrentUser">{{vehicule.modele}}</option>
+  <select name="vehiculePersoId" value="Vehicule perso" [(ngModel)]="selectedVehiculePersoId" >
+    <option *ngFor="let vehicule of listVehiculePerso" value="{{vehicule.id}}" (select)="vehicule.id">{{vehicule.modele}}</option>
   </select>
 
 

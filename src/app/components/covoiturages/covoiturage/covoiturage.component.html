@@ -9,7 +9,8 @@
                 <li>Le {{covoituragereserve.dateDepart}}</li>
             </ul>
         </div>
-        <button (click)="onViewCovoiturage()" class="btn btn-primary btn-sm">Réserver</button>
+        <button *ngIf="covoituragereserve.nombrePlacesRestantes>1" (click)="onViewCovoiturage()" class="btn btn-primary btn-sm">Réserver</button>
+        <p *ngIf="covoituragereserve.nombrePlacesRestantes<1" class="text-danger mt-4 "><strong> Nombre maximal de réservations atteint</strong></p>
     </div>
 
     <!--  <p>Distance : {{covoituragereserve.distanceKm}}</p>

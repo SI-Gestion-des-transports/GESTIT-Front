@@ -26,8 +26,10 @@ export class VehiculePersoListComponent {
   }
 
   ngOnInit(): void {
+    if(!window.localStorage.getItem("JWT-TOKEN")) {
+      this.router.navigateByUrl('login');
+    }
     this.initListPerso();
-
   }
 
   initListPerso() {

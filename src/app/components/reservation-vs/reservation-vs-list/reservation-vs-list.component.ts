@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Utilisateur} from "../../../shared/models/utilisateur";
 import {ReservationVs} from "../../../shared/models/reservation.vs";
 import {ReservationVsService} from "../../../shared/services/reservation.vs.service";
@@ -37,6 +37,7 @@ export class ReservationVsListComponent implements OnInit{
 
   upcompingReservations : boolean = true;
   mergedArray = [];
+  currentUserId: number;
 
 
   private _subscription = new Subscription();
@@ -44,7 +45,8 @@ export class ReservationVsListComponent implements OnInit{
               private _authService: AuthentificationService,
               private _vehiculeSrvService: VehiculeServiceService,
               private _utilisateurService: UtilisateursService,
-              private _router: Router) {
+              private _router: Router,
+              private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -108,7 +110,9 @@ export class ReservationVsListComponent implements OnInit{
           this.modifBtn = data;
         })
     );
-    this._init();
+    this.mergedArray = [];
+    this.currentUserId = this._utilisateurService.getSharedCurrentUserId();
+    this.getIncomingReservations();
   }
 
   ngOnDestroy(): void {
@@ -127,8 +131,6 @@ export class ReservationVsListComponent implements OnInit{
       //console.log("Reservation List — _init / localStorage.getItem : false");
       //console.log("Reservation List ——>>>> Login");
       this._router.navigateByUrl('login');
-    } else {
-      this.getIncomingReservations();
     }
 /*    forkJoin({
       reservations: this._reservationVsService.findAll(),
@@ -154,6 +156,7 @@ export class ReservationVsListComponent implements OnInit{
   getPastReservations(){
     //console.log("Réservation List — getPastReservations");
     this.upcompingReservations = false;
+    this.mergedArray = [];
     forkJoin({
       reservations: this._reservationVsService.findPastByUserId(),
       vehicules : this._vehiculeSrvService.findAllEnService()
@@ -164,6 +167,7 @@ export class ReservationVsListComponent implements OnInit{
       this._reservationVsService.updateAllReservationsVs(reservations);
       this._vehiculeSrvService.updateVehiculesSrv(vehicules);
       this.mergedArray = this.mergeReservationsWithVehicles();
+      this.cdr.detectChanges();
       //console.log("Réservation List — getPastReservations / mergedArray", this.mergedArray);
     });
     //this._reservationVsService.findPastByUserId(this.currentUser.id).subscribe(pastRes => this.pastReservationsVsByUser = pastRes);
@@ -172,6 +176,7 @@ export class ReservationVsListComponent implements OnInit{
   getIncomingReservations(){
     //console.log("Réservation List — getIncomingReservations");
     this.upcompingReservations = true;
+    this.mergedArray = [];
     forkJoin({
       reservations: this._reservationVsService.findUpcomingByUserId(),
       vehicules: this._vehiculeSrvService.findAllEnService()
@@ -182,6 +187,7 @@ export class ReservationVsListComponent implements OnInit{
       this._reservationVsService.updateAllReservationsVs(reservations);
       this._vehiculeSrvService.updateVehiculesSrv(vehicules);
       this.mergedArray = this.mergeReservationsWithVehicles();
+      this.cdr.detectChanges();
       //console.log("Réservation List — getIncomingReservations / mergedArray", this.mergedArray);
     })
     //this._init();
@@ -192,7 +198,8 @@ export class ReservationVsListComponent implements OnInit{
   }
 
   newReservation(){
-    console.log("Réservation List — newReservation");
+    //console.log("Réservation List — newReservation");
+    this.mergedArray = [];
     this._reservationVsService.updateReservationVs({})
     this._router.navigateByUrl('reservationsvs/form');
   }
@@ -201,11 +208,14 @@ export class ReservationVsListComponent implements OnInit{
     this._reservationVsService.updateModifBtn(false);
     this._reservationVsService.updateCurrentReservationVs(reservationToEdit);
     this._reservationVsService.updateReservationVs(reservationToEdit);
+    this.mergedArray = [];
     //console.log("Réservation List — startUpdateResVs");
     this._router.navigateByUrl('reservationsvs/form');
   }
 
   deleteReservationVs(reservationToDelete: ReservationVs){
+    this.mergedArray = [];
+    reservationToDelete.userId = this.currentUserId;
     //console.log("Réservation List — deleteReservationVs");
     this._router.navigateByUrl('reservationsvs/item');
     this._reservationVsService.updateCurrentReservationVs(reservationToDelete);

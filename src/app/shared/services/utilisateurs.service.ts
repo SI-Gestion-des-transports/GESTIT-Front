@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, Subscription } from "rxjs";
 import { Utilisateur } from "../models/utilisateur";
 import { environment } from "../../../environments/environment.development";
 import { AuthentificationService } from "./authentification.service";
+import { HttpHeaderService } from "./http-header.service";
 
 
 @Injectable({
@@ -35,6 +36,10 @@ export class UtilisateursService implements OnInit, OnChanges {
     A chaque fois que currentUser est modifié, ses abonnés en seront donc automatiquement informés,
     et pourront mettre, par exemple, leur affichage à jour
   */
+
+  private _sharedCurrentUser: Utilisateur = {}
+  private _sharedCurrentUserId: number;
+
   private currentUserSource = new BehaviorSubject<Utilisateur>({});
   private currentUserIdSource = new BehaviorSubject<number>(undefined);
   private currentUserNameSource = new BehaviorSubject<string>(undefined);
@@ -49,19 +54,30 @@ export class UtilisateursService implements OnInit, OnChanges {
   private _baseUrl = environment.urlApi.users;
   private _realBaseUrl = environment.urlApi.utilisateur;
 
+
   private _subscription = new Subscription();
 
   constructor(private _http: HttpClient,
-    private _authService: AuthentificationService) {
+              private _authService: AuthentificationService,
+              private _httpHeader:HttpHeaderService){
   }
 
   ngOnInit() {
-    this._subscription
+/*    this._subscription
       .add(this._authService.headers$
         .subscribe(data => {
           this.headers = data
         })
-      );
+      );*/
+    this.headers = this._httpHeader.getHeaders();
+    //console.log("user srv oninit")
+    if (!this._sharedCurrentUserId){
+      this._authService.verifyJWT().subscribe(user => {
+        //console.log(" this._sharedCurrentUserId : ", this._sharedCurrentUserId)
+        this._sharedCurrentUserId = user.body.id
+        //console.log(" this._sharedCurrentUserId : ", this._sharedCurrentUserId)
+      })
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -69,24 +85,44 @@ export class UtilisateursService implements OnInit, OnChanges {
     }
   }
 
-  findAll(): Observable<Utilisateur[]> {
-    return this._http.get<Utilisateur[]>(`${this._baseUrl}`);
+
+  ngOnDestroy(){
+    this._subscription.unsubscribe();
   }
 
-  findById(userId: number): Observable<Utilisateur> {
-    return this._http.get<Utilisateur>(`${this._realBaseUrl}/${userId}`, { headers: this.headers });
+
+  findAll(): Observable<Utilisateur[]>{
+    return this._http.get<Utilisateur[]>(`${this._baseUrl}`,{headers:this._httpHeader.getHeaders()});
+
   }
 
-  create(createdUser: Utilisateur): Observable<Utilisateur> {
-    return this._http.post<Utilisateur>(this._baseUrl, createdUser);
+
+
+
+  findbyId2(userId: number): Utilisateur {
+    let user: Utilisateur = {};
+    this._http.get<Utilisateur>(`${this._realBaseUrl}/${userId}`, { headers: this.headers }).subscribe(u => user = u);
+    return user;
   }
 
-  update(updatedUser: Utilisateur): Observable<Utilisateur> {
-    return this._http.put<Utilisateur>(`${this._baseUrl}/${updatedUser.id}`, updatedUser);
+
+  findById(userId: number): Observable<Utilisateur>{
+    return this._http.get<Utilisateur>(`${this._realBaseUrl}/${userId}`, {headers: this._httpHeader.getHeaders()});
+
   }
 
-  delete(deletedUser: Utilisateur): Observable<Utilisateur> {
-    return this._http.delete<Utilisateur>(`${this._baseUrl}/${deletedUser.id}`);
+
+  create(createdUser:Utilisateur): Observable<Utilisateur>{
+    return this._http.post<Utilisateur>(this._baseUrl, createdUser,{headers:this._httpHeader.getHeaders()});
+
+  }
+
+  update(updatedUser:Utilisateur): Observable<Utilisateur>{
+    return this._http.put<Utilisateur>(`${this._baseUrl}/${updatedUser.id}`, updatedUser,{headers:this._httpHeader.getHeaders()});
+  }
+
+  delete(deletedUser:Utilisateur): Observable<Utilisateur>{
+    return this._http.delete<Utilisateur>(`${this._baseUrl}/${deletedUser.id}`,{headers:this._httpHeader.getHeaders()});
   }
 
   updateCurrentUser(): void {
@@ -100,17 +136,17 @@ export class UtilisateursService implements OnInit, OnChanges {
     })
   }
 
-/*
-  updateCurrentUserDevTest(user: Utilisateur): void {
-    this.currentUserSource.next(user);
+  /*
+    updateCurrentUserDevTest(user: Utilisateur): void {
+      this.currentUserSource.next(user);
 
-    /!*petite incrustation de Mochizuki
-    Pour chaque mise à jour de l'utilisateur courant, le subject informe ses abonnés
-    de la mise à jour du nom d'utilisateur. Mochizuki l'utilise ici pour afficher le
-    nom de l'utilisateur courant et connecté, dans la navBar*!/
-    this.currentUserNameSource.next(user.nom);
-  }
-  */
+      /!*petite incrustation de Mochizuki
+      Pour chaque mise à jour de l'utilisateur courant, le subject informe ses abonnés
+      de la mise à jour du nom d'utilisateur. Mochizuki l'utilise ici pour afficher le
+      nom de l'utilisateur courant et connecté, dans la navBar*!/
+      this.currentUserNameSource.next(user.nom);
+    }
+    */
 
   updateCurrentUserId(userId: number): void {
     //console.log("UserSrv — updateCurrentUserId / CurrentUserId : " + userId);
@@ -119,12 +155,28 @@ export class UtilisateursService implements OnInit, OnChanges {
     this.updateCurrentUser();
   }
 
-  updateCurrentUserName(userName: string){
+  updateCurrentUserName(userName: string) {
     this.currentUserNameSource.next(userName);
   }
 
-  updateFakeCurrentUser(user: Utilisateur){
+  updateFakeCurrentUser(user: Utilisateur) {
     this.fakeCurrentUserSource.next(user);
   }
 
+
+  get getSharedCurrentUser(): Utilisateur {
+    return this._sharedCurrentUser;
+  }
+
+  setSharedCurrentUser(value: Utilisateur) {
+    this._sharedCurrentUser = value;
+  }
+
+  getSharedCurrentUserId(): number {
+    return this._sharedCurrentUserId;
+  }
+
+  setSharedCurrentUserId(value: number) {
+    this._sharedCurrentUserId = value;
+  }
 }
