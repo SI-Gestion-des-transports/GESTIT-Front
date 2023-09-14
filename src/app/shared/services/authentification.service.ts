@@ -98,4 +98,18 @@ export class AuthentificationService {
 
   }
 
+  initEnviroVar(){
+    environment.check=true;
+    environment.currentUserName = "(Anonyme)";
+    environment.viewAdmin = false;
+    environment.viewCol=false;
+    environment.loggedBtn=false;
+  }
+  setEnviroVar(res:Utilisateur){
+    environment.currentUserName = res.nom;
+    environment.viewAdmin = res.roles.includes("ADMINISTRATEUR");
+    environment.viewCol=res.roles.includes("COLLABORATEUR");
+    environment.loggedBtn=true;
+  }
+
 }

@@ -11,8 +11,11 @@ export const authGuard: CanActivateFn =  (route, state):Observable<boolean> => {
   const dataRole:string[] = route.data["roles"];
   const router=inject(Router);
 
+
   return new Observable<boolean>((observer)=>{
+
     if (!window.localStorage.getItem(environment.JWT)) {
+      _authService.initEnviroVar();
       router.navigateByUrl("/login");
       observer.next(false);
       observer.complete();
@@ -28,6 +31,7 @@ export const authGuard: CanActivateFn =  (route, state):Observable<boolean> => {
         observer.next(false);
         observer.complete();
       }else {
+        _authService.setEnviroVar(res.body);
         observer.next(true);
         observer.complete();
       }

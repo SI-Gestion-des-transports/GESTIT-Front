@@ -76,12 +76,12 @@
       <div>
         <label for="dateHeureDepart">Date et heure de départ : </label>
         <input type="datetime-local" name="dateHeureDepart" id="dateHeureDepart" (focus)="changeStatus()" [(ngModel)]="reservationVs.dateHeureDepart" class="inputDate">
-        <p *ngIf="currentReservationVs.id">Initialement prévu le {{oldResVs.dateHeureDepart | extractDate}} à {{oldResVs.dateHeureDepart | extractTime}}</p>
+<!--        <p *ngIf="currentReservationVs.id">Initialement prévu le {{oldResVs.dateHeureDepart | extractDate}} à {{oldResVs.dateHeureDepart | extractTime}}</p>-->
       </div>
       <div>
         <label for="dateHeureRetour">Date et heure de retour : </label>
         <input type="datetime-local" name="dateHeureRetour" id="dateHeureRetour" [(ngModel)]="reservationVs.dateHeureRetour" class="inputDate" (focus)="changeStatus()">
-        <p *ngIf="currentReservationVs.id"> Initialement prévu le {{oldResVs.dateHeureRetour | extractDate}} à {{oldResVs.dateHeureRetour | extractTime}}</p>
+<!--        <p *ngIf="currentReservationVs.id"> Initialement prévu le {{oldResVs.dateHeureRetour | extractDate}} à {{oldResVs.dateHeureRetour | extractTime}}</p>-->
       </div>
     </div>
     <div class="action-btn">
