@@ -1,5 +1,5 @@
 <div class="covoiturages-organises-card container " [ngClass]="{showDetails : showDetailsInProgress === true}">
-    <div class="d-flex justify-content-between border border-2 border-radius: 7px"  style="background-color: gray  ">
+    <div class="d-flex justify-content-between border border-2 border-radius: 7px"  style="background-color: lightgray  ">
         <div class="d-flex flex-column covoiturages-card"  >
             <strong>Covoiturage n° {{covoituragereserve.id}}</strong>
             <ul>
@@ -10,8 +10,9 @@
             </ul>
         </div>
         <button *ngIf="covoituragereserve.nombrePlacesRestantes>1" (click)="onViewCovoiturage()" class="btn btn-primary btn-sm">Réserver</button>
-        <p *ngIf="covoituragereserve.nombrePlacesRestantes<1" class="text-danger mt-4 "><strong> Nombre maximal de réservations atteint</strong></p>
+        <button  *ngIf="covoituragereserve.nombrePlacesRestantes<1" type="button" class="text-danger mt-4 " style="font-size: 1.2em"><strong>Nombre maximal de réservations atteint</strong></button>
+       <!-- <p *ngIf="covoituragereserve.nombrePlacesRestantes<1" class="text-danger mt-4 "><strong> Nombre maximal de réservations atteint</strong></p>-->
     </div>
 
-  
+
 </div>
