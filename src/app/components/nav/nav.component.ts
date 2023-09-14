@@ -90,6 +90,7 @@ export class NavComponent implements OnInit {
   { }
 
   ngOnInit(): void {
+/*
     if (window.localStorage.getItem(environment.JWT)) {
       this._authService.verifyJWT().subscribe(res=>{
         if (res.status!=200) {
@@ -100,6 +101,7 @@ export class NavComponent implements OnInit {
         };
       })
     }
+*/
      /*récupération de la référence de l'observable sur le nom de l'utilisateur courant*/
      this.nomUtilisateurCourant$=this._utilisateurService.currentUserNameSource$;
 
@@ -221,15 +223,7 @@ export class NavComponent implements OnInit {
 
   logout() {
     //console.log("===================into logout()====================");
-    this._authService.logout().subscribe(res=> {
-      //console.log("===================into logout()===================="+res.status);
-      if (res.status==200) {
-        window.localStorage.removeItem(this._httpHeader.tokenName);
-        environment.currentUserName="(Anonyme)";
-      }
 
-    });
-    this.router.navigateByUrl('')
     this._authService.updateHeaders(new HttpHeaders());
     //console.log("NavComp — logout / currentUserId : ", this.currentUserId);
     this._utilisateurService.updateCurrentUserId(null);
@@ -239,6 +233,15 @@ export class NavComponent implements OnInit {
     //console.log("NavComp — logout / loggedBtn : ",this.loggedBtn);
     this._authService.updateLoggedBtn(false);
     //console.log("NavComp — logout / loggedBtn : ",this.loggedBtn);
+    this._authService.logout().subscribe(res=> {
+      //console.log("===================into logout()===================="+res.status);
+      if (res.status==200) {
+        window.localStorage.removeItem(this._httpHeader.tokenName);
+        this._authService.initEnviroVar();
+      }
+
+    });
+    this.router.navigateByUrl('');
   }
 
 
@@ -248,7 +251,9 @@ export class NavComponent implements OnInit {
 
 
   // this.router.navigateByUrl('covoiturages');
+
   protected readonly environment = environment;
+
 }
 
 

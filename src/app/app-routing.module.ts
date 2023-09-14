@@ -55,51 +55,74 @@ import {authGuard} from "./shared/guard/auth.guard";
 
 const routes: Routes = [
   {
-    path: 'covoituragesConfirmReservation', component: CovoiturageConformationComponent,
+    path: 'covoituragesConfirmReservation',
+    component: CovoiturageConformationComponent,
     canActivate: [authGuard],
     data: {roles: ["COLLABORATEUR"]}
   },
   {
-    path: 'covoiturages/:id', component: SingleCovoiturageComponent,
+    path: 'covoiturages/:id',
+    component: SingleCovoiturageComponent,
     canActivate: [authGuard],
     data: {roles: ["COLLABORATEUR"]}
   },   //Route avec paramètre dynamique
   {
-    path: 'covoiturages', component: CovoiturageListComponent,
+    path: 'covoiturages',
+    component: CovoiturageListComponent,
     canActivate: [authGuard],
     data: {roles: ["COLLABORATEUR"]},
     children: [
-      {path: 'reservations', component: CovoituragesOrganiseListComponent}
+      {
+        path: 'reservations',
+        component: CovoituragesOrganiseListComponent
+      }
     ]
   },
-  {path: 'covoituragesOrganises-list', component: CovoituragesOrganiseListComponent,
-    canActivate:[authGuard],
-    data:{roles:["COLLABORATEUR"]}},
   {
-    path: 'covoituragesOrganises', component: CovoituragesOrganiseComponent,
-    canActivate:[authGuard],
-    data:{roles:["COLLABORATEUR"]},
+    path: 'covoituragesOrganises-list',
+    component: CovoituragesOrganiseListComponent,
+    canActivate: [authGuard],
+    data: {roles: ["COLLABORATEUR"]}
+  },
+  {
+    path: 'covoituragesOrganises',
+    component: CovoituragesOrganiseComponent,
+    canActivate: [authGuard],
+    data: {roles: ["COLLABORATEUR"]},
     children: [
       {path: 'list', component: CovoituragesOrganiseListComponent},
       {path: 'form', component: CovoituragesOrganiseFormComponent},
       {path: 'modify/:id', component: CovoituragesOrganiseModifyComponent}
     ]
   },
-  {path: '', component: LandingPageComponent},
-
-  {path: 'reservation', component: ReservationVsComponent,
-    canActivate:[authGuard],
-    data:{roles:["COLLABORATEUR"]}},
-  {path: 'reservation/upcoming', component: ReservationVsListComponent,
-    canActivate:[authGuard],
-    data:{roles:["COLLABORATEUR"]}},
-  {path: 'reservation/past', component: ReservationVsListComponent,
-    canActivate:[authGuard],
-    data:{roles:["COLLABORATEUR"]}},
   {
-    path: 'reservationsvs', component: ReservationVsComponent,
-    canActivate:[authGuard],
-    data:{roles:["COLLABORATEUR"]},
+    path: '',
+    component: LandingPageComponent
+  },
+
+  {
+    path: 'reservation',
+    component: ReservationVsComponent,
+    canActivate: [authGuard],
+    data: {roles: ["COLLABORATEUR"]}
+  },
+  {
+    path: 'reservation/upcoming',
+    component: ReservationVsListComponent,
+    canActivate: [authGuard],
+    data: {roles: ["COLLABORATEUR"]}
+  },
+  {
+    path: 'reservation/past',
+    component: ReservationVsListComponent,
+    canActivate: [authGuard],
+    data: {roles: ["COLLABORATEUR"]}
+  },
+  {
+    path: 'reservationsvs',
+    component: ReservationVsComponent,
+    canActivate: [authGuard],
+    data: {roles: ["COLLABORATEUR"]},
     children: [
       {path: 'form', component: ReservationVsFormComponent},
       {path: 'item', component: ReservationVsItemComponent},
@@ -108,10 +131,17 @@ const routes: Routes = [
     ]
   },
 
-  {path: 'utilisateurs', component: UtilisateursComponent},
-  {path: 'login', component: AuthentificationComponent},
   {
-    path: 'vehiculeperso', component: VehiculePersoComponent,
+    path: 'utilisateurs',
+    component: UtilisateursComponent
+  },
+  {
+    path: 'login',
+    component: AuthentificationComponent
+  },
+  {
+    path: 'vehiculeperso',
+    component: VehiculePersoComponent,
     canActivate: [authGuard],
     data: {roles: ["COLLABORATEUR"]},
     children: [
@@ -123,7 +153,8 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'vehiculeService', component: VehiculeServiceComponent,
+    path: 'vehiculeService',
+    component: VehiculeServiceComponent,
     canActivate: [authGuard],
     data: {roles: ["ADMINISTRATEUR"]},
     children: [
