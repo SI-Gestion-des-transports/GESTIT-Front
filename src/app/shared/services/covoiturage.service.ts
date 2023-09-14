@@ -233,8 +233,9 @@ export class CovoiturageService implements OnInit {
   updateAdresseArrivee(data: Adresse) {
     this.adresseArriveeSource.next(data);
   }
-  updateCurrentCovoitOrg(data: Covoiturage) {
-    this.currentCovoitOrgSource.next(data);
+  updateCurrentCovoitOrg(covoit: Covoiturage) {
+    this.currentCovoitOrgSource.next(covoit);
+    return this._http.put<Covoiturage>(`${this._baseCovoitUrl}/co${covoit.id}`, covoit, {headers: this._httpHeaderService.getHeaders()});
   }
 
   updateCovoitOrg(data: Covoiturage) {

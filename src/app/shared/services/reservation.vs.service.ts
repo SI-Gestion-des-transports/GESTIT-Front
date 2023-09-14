@@ -52,6 +52,7 @@ export class ReservationVsService implements OnInit {
 
   private _baseUrl = environment.urlApi.reservationsvs;
   private _realBaseUrl = environment.urlApi.reservation;
+  private _oldResVs: ReservationVs= {};
   private _subscription = new Subscription();
   constructor(private _http: HttpClient,
               private _authService: AuthentificationService,
@@ -139,7 +140,7 @@ export class ReservationVsService implements OnInit {
     //console.log(this.headers.keys())
     //this._init();
     this._http.get<any>(`${this._realBaseUrl}/upcoming`, {headers: this._httpHeaderService.getHeaders()}).subscribe(data => {
-        console.log(data);
+        //console.log(data);
         this.arrayResVs = data;
       }
     );
@@ -221,6 +222,14 @@ export class ReservationVsService implements OnInit {
       dateHeureDepart: reservation.dateHeureDepart,
       dateHeureRetour: reservation.dateHeureRetour
     };
+  }
+
+  getOldResVs (){
+    return this._oldResVs;
+  }
+
+  setOldResVs(res : ReservationVs){
+    this._oldResVs = res;
   }
 
 }
