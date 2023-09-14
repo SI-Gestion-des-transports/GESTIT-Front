@@ -156,13 +156,16 @@ export class CovoituragesOrganiseListComponent {
   }
 
   updateCovoitOrg(covoitOrgToEdit: Covoiturage){
+
     if(covoitOrgToEdit.passagersId != null){
       //console.log("UpdateCovoitOrg")
       this._covoitOrgService.updateModifBtn(false);
       this.covoitOrg = covoitOrgToEdit;
-      this._covoitOrgService.updateCurrentCovoitOrg(covoitOrgToEdit);
-      //this._covoitOrgService.updateCovoitOrg(covoitOrgToEdit);
+      //this._router.navigateByUrl('covoituragesOrganises/form');
+      this._covoitOrgService.updateCurrentCovoitOrg(covoitOrgToEdit).subscribe(data => {
         this._router.navigateByUrl('covoituragesOrganises/modify/${covoitOrgToEdit.id}');
+      });
+      //this._covoitOrgService.updateCovoitOrg(covoitOrgToEdit);
       //console.log("covoitOrgToEdit numero : ",covoitOrgToEdit.adresseArrivee.numero)
       //console.log("covoitOrgToEdit commune : ",covoitOrgToEdit.adresseArrivee.commune)
       //console.log("covoitOrg numero : ",this.covoitOrg.adresseArrivee.numero)
@@ -170,7 +173,6 @@ export class CovoituragesOrganiseListComponent {
     } else {
       this.errorMessage = "Vous ne pouvez pas modifier ce covoiturage car il a des passagers.";
     }
-
   }
 
   deleteCovoitOrg(covoitOrgToDelete: Covoiturage){

@@ -41,6 +41,7 @@ export class ReservationVsListComponent implements OnInit{
 
 
   private _subscription = new Subscription();
+  private _oldResVs: ReservationVs= {};
   constructor(private _reservationVsService:ReservationVsService,
               private _authService: AuthentificationService,
               private _vehiculeSrvService: VehiculeServiceService,
@@ -209,6 +210,7 @@ export class ReservationVsListComponent implements OnInit{
     this._reservationVsService.updateCurrentReservationVs(reservationToEdit);
     this._reservationVsService.updateReservationVs(reservationToEdit);
     this.mergedArray = [];
+    this._reservationVsService.setOldResVs(reservationToEdit);
     //console.log("Réservation List — startUpdateResVs");
     this._router.navigateByUrl('reservationsvs/form');
   }
@@ -242,5 +244,7 @@ export class ReservationVsListComponent implements OnInit{
       };
     });
   }
+
+
 
 }
