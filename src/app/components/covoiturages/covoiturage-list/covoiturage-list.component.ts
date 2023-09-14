@@ -81,7 +81,7 @@ export class CovoiturageListComponent implements OnInit {
 		this.covoiturages_listeComplete = [];
 
 		this.recupVilles();
-		console.log("on sort de recupville");
+		//console.log("on sort de recupville");
 
 		this.arrivee_disabledFilter = false;
 		this.arrivee_isFounded = false;
@@ -137,18 +137,19 @@ export class CovoiturageListComponent implements OnInit {
 				});
 			});
 
-		console.log("reconstitution des covoits : ", this.covoituragesReconstitues);
+		//console.log("reconstitution des covoits : ", this.covoituragesReconstitues);
 
 	}
 
 	isDoublon(villeToInsert: string, listeAccueil: string[]): boolean {
-		console.log("nom de la ville a insérer:", villeToInsert)
+		//console.log("nom de la ville a insérer:", villeToInsert)
 		let foundDoublon = false;
 		let i = 0;
 		for (i = 0; i < listeAccueil.length; i++) {
-			if (villeToInsert === listeAccueil[i])
-				foundDoublon = true;
-			break;
+			if (villeToInsert === listeAccueil[i]) {
+        foundDoublon = true;
+        break;
+      }
 		}
 		return foundDoublon ? true : false;
 	}
@@ -216,14 +217,14 @@ export class CovoiturageListComponent implements OnInit {
 		 * @author Atsuhiko Mochizuki
 		 */
 	filtrageList() {
-		console.log("liste des covoits:", this.covoituragesReconstitues);
+		//console.log("liste des covoits:", this.covoituragesReconstitues);
 		if (this.filtrage.filter_VilleArrivee_value !== "") {
-			console.log("des filtres ont été activés");
+			//console.log("des filtres ont été activés");
 			let arrivee_listeFiltree = this.covoituragesReconstitues.filter((covoit) => covoit.adresseArrivee.commune === this.filtrage.filter_VilleArrivee_value);
-			console.log("liste filtrée:", arrivee_listeFiltree)
+			//console.log("liste filtrée:", arrivee_listeFiltree)
 
 			if (arrivee_listeFiltree.length > 0) {
-				console.log("il y a au moins 1 filtre sur les villes d'arrivée");
+				//console.log("il y a au moins 1 filtre sur les villes d'arrivée");
 				this.arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
 				this.arrivee_disabledFilter = false;
 				this.depart_styleWidget = this.WIDGET_STYLE_INIT;
@@ -337,7 +338,7 @@ export class CovoiturageListComponent implements OnInit {
 				}
 			}
 			else {
-				console.log("il n'y a aucun filtre sur les villes d'arrivée");
+				//console.log("il n'y a aucun filtre sur les villes d'arrivée");
 				this.arrivee_style_widget = this.WIDGET_STYLE_INPROGRESS;
 				this.arrivee_disabledFilter = false;
 				this.depart_styleWidget = this.WIDGET_STYLE_INIT;
@@ -351,7 +352,7 @@ export class CovoiturageListComponent implements OnInit {
 			}
 		}
 		else {
-			console.log("aucun filtre actif");
+			//console.log("aucun filtre actif");
 			this.arrivee_style_widget = this.WIDGET_STYLE_INIT;
 			this.arrivee_disabledFilter = false;
 			this.depart_styleWidget = this.WIDGET_STYLE_INIT;
@@ -359,7 +360,7 @@ export class CovoiturageListComponent implements OnInit {
 			filtre_Date_style_widget: null;
 			this.date_verrouillageWidget = true;
 			this.listeAafficher = this.covoituragesReconstitues;
-			console.log("les covoits que l'on doit voir:", this.covoituragesReconstitues);
+			//console.log("les covoits que l'on doit voir:", this.covoituragesReconstitues);
 			this.arrivee_isFounded = false;
 			this.depart_isFounded = false;
 			this.date_isFounded = false;
