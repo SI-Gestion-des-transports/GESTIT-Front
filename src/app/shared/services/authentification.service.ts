@@ -101,8 +101,8 @@ export class AuthentificationService {
   initEnviroVar(){
     environment.check=true;
     environment.currentUserName = "(Anonyme)";
-    environment.viewAdmin = true;
-    environment.viewCol=true;
+    environment.viewAdmin = false;
+    environment.viewCol=false;
     environment.loggedBtn=false;
   }
   setEnviroVar(res:Utilisateur){

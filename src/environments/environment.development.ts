@@ -30,8 +30,8 @@ export const environment = {
   JWT:"JWT-TOKEN",
   check:true,
   currentUserName:"(Anonyme)",
-  viewCol:true,
-  viewAdmin:true,
+  viewCol:false,
+  viewAdmin:false,
   loggedBtn:false
 }
 
