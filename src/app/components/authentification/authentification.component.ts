@@ -97,15 +97,8 @@ export class AuthentificationComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if (window.localStorage.getItem(environment.JWT)) {
-      this._authService.verifyJWT().subscribe(res=>{
-        if (res.status!=200) {
-          window.localStorage.removeItem(environment.JWT)
-        }else {
-          this._router.navigateByUrl("");
-        };
-      })
-    }
+
+    this._authService.initEnviroVar();
     this._authService.updateLoggedBtn(false);
     this._authService.updateHeaders(new HttpHeaders());
     this._subscription.add(
@@ -126,6 +119,16 @@ export class AuthentificationComponent implements OnInit {
           this.loggedBtn = data;
         })
     );
+    if (window.localStorage.getItem(environment.JWT)) {
+      this._authService.verifyJWT().subscribe(res=>{
+        if (res.status!=200) {
+
+          window.localStorage.removeItem(environment.JWT)
+        }else {
+          this._router.navigateByUrl("");
+        };
+      })
+    }
   }
 
   ngOnDestroy(): void {

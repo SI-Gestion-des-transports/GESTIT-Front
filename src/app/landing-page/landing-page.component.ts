@@ -27,12 +27,12 @@ export class LandingPageComponent implements OnInit{
       this._authService.verifyJWT().subscribe(res=>{
         if (res.status!=200) {
           window.localStorage.removeItem(environment.JWT)
+          this._authService.initEnviroVar()
         }else {
-          environment.currentUserName = res.body.nom;
-
+         this._authService.setEnviroVar(res.body);
         };
       })
-    }
+    }else this._authService.initEnviroVar()
   }
 
 }
