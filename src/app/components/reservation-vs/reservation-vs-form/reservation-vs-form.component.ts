@@ -86,7 +86,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
             this.currentVs = this.vehiculesSrv[0];
             this.currentIndex=0;
           }
-        });
+        }));
     this._vehiculeSrvService.findAllEnService().subscribe(data => this.vehiculesSrv = data);
     this._subscription.add(
       this._reservationVsService.currentReservationVs$
@@ -167,7 +167,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   }
 
   create(reservationVs:ReservationVs){
-    
+
     //console.log("Réservation Form — CREATE / currentUser.id : " + this.currentUser.id)
     console.log(this.currentUserId)
     reservationVs.userId = this.currentUserId;
