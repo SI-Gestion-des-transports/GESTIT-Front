@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {VehiculeService} from "../../../shared/models/vehicule.service";
 import {UtilisateursService} from "../../../shared/services/utilisateurs.service";
 import {VehiculeServiceService} from "../../../shared/services/vehicule-service.service";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-reservation-vs-form',
@@ -30,6 +31,9 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   currentReservationVs: ReservationVs = {};
   editedReservationVs: ReservationVs = {};
   modifBtn!: boolean;
+  createError: boolean = false;
+
+  oldResVs: ReservationVs = {};
 
   private _subscription = new Subscription();
 
@@ -107,6 +111,7 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
         })
     );
     this.currentUserId = this._utilisateurService.getSharedCurrentUserId();
+    this.oldResVs = this._reservationVsService.getOldResVs();
     this._init();
   }
 
@@ -167,28 +172,39 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   }
 
   create(reservationVs:ReservationVs){
-    
     //console.log("Réservation Form — CREATE / currentUser.id : " + this.currentUser.id)
     console.log(this.currentUserId)
     reservationVs.userId = this.currentUserId;
     //console.log("Réservation Form — CREATE / reservation.user.id : " + reservationVs.userId);
     this._reservationVsService
       .create(this.addSecondsToDate(reservationVs))
-      .subscribe(() =>{
+      .subscribe( {
+        next: data =>{
+
         //console.log("Created")
         this.reInitResVs();
         this._init();
         this._router.navigateByUrl('reservationsvs/list');
+        }, error: error => {
+            this.createError = true;
+      }
       });
   }
 
   update(updatedReservation : ReservationVs){
     //console.log("Réservation Form — UPDATE / reservation.user.id : " + updatedReservation.userId);
-    this._reservationVsService.update(this.addSecondsToDate(updatedReservation)).subscribe((data) => {
+    this._reservationVsService
+      .update(this.addSecondsToDate(updatedReservation))
+      .subscribe( {
+        next:data =>{
+          this.reInitResVs();
+          this._router.navigateByUrl('reservationsvs/list');
+
+        }, error:error =>{
+            this.createError = true;
+        }
       //console.log("Réservation Form — UPDATED ResVS : ",data)
     });
-    this.reInitResVs();
-    this._router.navigateByUrl('reservationsvs/list');
   }
 
   reInitResVs(){
@@ -212,13 +228,19 @@ export class ReservationVsFormComponent implements OnInit, OnChanges{
   previous(){
     this.currentIndex= (this.vehiculesSrv.length+this.currentIndex-1)%this.vehiculesSrv.length;
     this.currentVs=this.vehiculesSrv[this.currentIndex];
-    console.log(this.currentVs);
+    //console.log(this.currentVs);
+    this.changeStatus();
     this.reservationVs.vehiculeServiceId = this.currentVs.id;
   }
   next(){
     this.currentIndex= (this.currentIndex+1)%this.vehiculesSrv.length;
     this.currentVs=this.vehiculesSrv[this.currentIndex];
-    console.log(this.currentVs);
+    //console.log(this.currentVs);
+    this.changeStatus();
     this.reservationVs.vehiculeServiceId = this.currentVs.id;
+  }
+
+  changeStatus() {
+    this.createError = false;
   }
 }
