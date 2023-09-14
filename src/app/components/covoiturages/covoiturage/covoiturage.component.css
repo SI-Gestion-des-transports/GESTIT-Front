@@ -1,5 +1,5 @@
 .elem{
-  background-color: gray;
+  background-color: grey;
 }
 
 .covoiturages-card{
@@ -7,9 +7,9 @@
   background-color:unset;
   box-sizing:content-box  ;
   width: 100%;
-  
-  
-  
+
+
+
   /*img {
     width: 100%;
   }
@@ -20,12 +20,12 @@
     font-weight: 300;
     font-size: 16px;
   } */
- 
+
 }
 .showDetails {
   background-color: rgba(lightgreen, 0.4);
   color: darkgreen;
-  button {
+  & button {
     box-shadow: lightgreen 3px 3px 7px;
     color: darkgreen;
     &:active {
