@@ -161,6 +161,13 @@ export class CovoiturageService implements OnInit {
   }
 
 
+  recupListeCovoituragesOnServer2():Observable<Covoiturage[]>{
+    return this.getAllCovoiturages();
+  }
+
+  
+
+
 
 
 

@@ -6,7 +6,7 @@
         <label for="userId"></label>
         <input type="hidden" name="userId" id="userId" value="{{currentUser.id}}" [(ngModel)]="reservationVs.userId">
       </div>-->
-      <!--
+
       <div>
         <img *ngIf="!currentVs.id" src="https://cdn.motor1.com/images/mgl/JO3m6Q/s1/peugeot-208.webp" class="img">
         <img *ngIf="currentVs.id" src="{{currentVs.photoURL}}" class="img">
@@ -63,6 +63,7 @@
       </div>
       <h5 >Véhicule n°{{currentVs.id? currentVs.id:vehiculesSrv[0].id}} — {{currentVs.id? currentVs.marque:vehiculesSrv[0].marque}} {{currentVs.id? currentVs.modele:vehiculesSrv[0].modele}}</h5>
       <div *ngIf="createError" class="mt-2 text-bg-danger">La réservation n'est pas disponible à ces dates</div>
+
       <hr>
 
       <!--

@@ -1,11 +1,14 @@
 <div class="border border-2 p-3 border rounded-5 card mb-3 shadow-sm p-3 mb-5 bg-body-tertiary rounded"
-    *ngIf="covoiturageAconfirmer as covoiturage" [ngClass]="{showDetails : showDetailsInProgress === true}">
-    <h2 class="text-center mb-3 text-bg-danger">Demande de réservation</h2>
-    <p class="text-danger  ">Vous êtes sur le point de réserver une place pour le trajet n° {{covoiturage.id}}.<br>
-    Veuillez vérifier les informations ci-dessous puis validez votre place en appuyant sur
-    le bouton "Confirmer ma participation"
-    </p>
-    <div class="container mt-4 ">
+    *ngIf="covoiturageAconfirmer" [ngClass]="{showDetails : showDetailsInProgress === true}">
+
+    <h2 class="text-center mb-3 text-bg-danger">Demande de réservation pour <strong>{{environment.currentUserName}}</strong></h2>
+
+    <p class="text-danger  "> <strong>Nous réclamons ici votre attention {{environment.currentUserName}}.</strong><br>Vous êtes sur le point de réserver une place pour le trajet n°
+        {{covoiturageAconfirmer.id}}.<br>
+        Veuillez vérifier les informations ci-dessous puis validez votre place en appuyant sur
+        le bouton "Confirmer ma participation"
+
+    <div class="container mt-4 " *ngIf="vehiculeForCovoiturage">
         <div class="row border-5 gap-5 ">
             <!-- colonne de gauche -->
             <div class="col">
@@ -29,8 +32,10 @@
                 </div>
                 <div class="row ms-2">
                     <div class="col col-md-3"><img src="assets/organisateur.png" alt="image_vehicule"></div>
-                    <div class="col border-3 ">
-                        <p class="mt-4 ">{{covoiturage.organisateurId}}</p>
+                    <div class="col border-3 mt-4">
+                        <p><strong>{{organisateur.nom}}</strong></p>
+                        <p>{{organisateur.email}}</p>
+                        <p class="mt-4 "></p>
                     </div>
                 </div>
 
@@ -66,7 +71,7 @@
                     <div class="col  col-md-3"><img src="assets/nbre_places_restantes.png" alt="image_vehicule">
                     </div>
                     <div class="col  ">
-                        <p class="mt-3"><strong>{{nombreDePlacesRestances}}</strong></p>
+                        <p class="mt-3"><strong>{{covoiturageAconfirmer.nombrePlacesRestantes}}</strong></p>
                     </div>
                 </div>
                 <div class="row ms-2 mt-2">
@@ -75,9 +80,7 @@
                 <div class="row  ms-2">
                     <div class="col   col-md-3"><img src="assets/adresse_depart.png" alt="image_vehicule"></div>
                     <div class="col   ">
-                        <p class="mt-3"> {{covoiturageAconfirmer.adresseDepart.voie}}
-                            {{covoiturageAconfirmer.adresseDepart.codePostal}}
-                            {{covoiturageAconfirmer.adresseDepart.commune}}</p>
+                        <p class="mt-3">{{adresseDepart.voie}} {{adresseDepart.codePostal}} {{adresseDepart.commune}}</p>
                     </div>
                 </div>
 
@@ -86,10 +89,8 @@
                 </div>
                 <div class="row  ms-2">
                     <div class="col  col-md-3"><img src="assets/adresse_arrivee.png" alt="image_vehicule"></div>
-                    <div class="col  ">
-                        <p class="mt-3">{{covoiturageAconfirmer.adresseArrivee.voie}}
-                            {{covoiturageAconfirmer.adresseArrivee.codePostal}}
-                            {{covoiturageAconfirmer.adresseArrivee.commune}}</p>
+                    <div class="col   ">
+                        <p class="mt-3">{{adresseArrivee.voie}} {{adresseArrivee.codePostal}} {{adresseArrivee.commune}}</p>
                     </div>
                 </div>
             </div>
