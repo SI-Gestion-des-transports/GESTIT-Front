@@ -27,7 +27,7 @@
           <th>Immatriculation</th>
           <th>Marque</th>
           <th>Modèle</th>
-          <th>Actions</th>
+          <th  *ngIf="upcompingReservations" >Actions</th>
         </tr>
         <tr *ngFor="let res of mergedArray">
           <td>{{ res.dateHeureDepart | extractDate }}</td>
@@ -37,7 +37,7 @@
           <td>{{ res.immatriculation }}</td>
           <td>{{ res.marque }}</td>
           <td>{{ res.modele }}</td>
-          <td>
+          <td *ngIf="upcompingReservations" >
             <button type="button"
                     class="btn"
                     [class.btn-outline-secondary]="modifBtn"

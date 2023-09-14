@@ -2,7 +2,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CovoiturageFiltrage } from 'src/app/shared/models/CovoiturageFiltrage';
 import { Covoiturage } from 'src/app/shared/models/covoiturage';
+import { AdressesService } from 'src/app/shared/services/adresses.service';
 import { CovoiturageService } from 'src/app/shared/services/covoiturage.service';
+
+import { map } from 'rxjs';
 
 /**
  * Gestion visuelle de l'interface dédiée aux covoiturages
@@ -42,19 +45,21 @@ export class CovoiturageListComponent implements OnInit {
 	listeAafficher: Array<Covoiturage>;
 
 	covoiturages_listeComplete: Array<Covoiturage>;
+	covoituragesReconstitues: Covoiturage[] = [];
 
 	/*Gestion du filtre sur la ville d'arrivée*/
 	arrivee_disabledFilter: boolean;
 	arrivee_isFounded: boolean;
 	arrivee_searchValue: string;
-	arrivee_liste: string[];
+	arrivee_liste: string[] = [];
 	arrivee_style_widget: string;
+	arrivee_liste_doublons_cleaned: string[] = [];
 
 	/*Gestion du filtre sur la ville de départ*/
 	depart_verrouillageWidget: boolean;
 	depart_isFounded: boolean;
 	depart_searchValue: string;
-	depart_liste: string[];
+	depart_liste: string[] = [];
 	depart_styleWidget: string;
 
 	/*gestion du filtre sur la date*/
@@ -63,14 +68,20 @@ export class CovoiturageListComponent implements OnInit {
 	date_searchValue: Date;
 	date_styleWidget: string;
 
+	covoiturageArray: Covoiturage[] = [];
+
 	/*Injection du service*/
-	constructor(private covoiturageService: CovoiturageService) { }
+	constructor(private covoiturageService: CovoiturageService,
+		private adresseService: AdressesService) { }
 
 	/*initialisation de la page*/
 	ngOnInit(): void {
+
 		this.filtrage = new CovoiturageFiltrage();
 		this.covoiturages_listeComplete = [];
+
 		this.recupVilles();
+		//console.log("on sort de recupville");
 
 		this.arrivee_disabledFilter = false;
 		this.arrivee_isFounded = false;
@@ -91,30 +102,58 @@ export class CovoiturageListComponent implements OnInit {
 		this.date_isFounded = false;
 
 		this.filtrageList();
-		//this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
 	}
 
 	/**
 	 * Récupère sur le serveur la liste des covoiturages enregistrés, puis
 	 * en extrait les villes pour pourvoir les intégrer par la suite aux dropdown
 	 *
-	 * @author Atsuhimo Mochizuki
+	 * @author Atsuhiko Mochizuki
 	 */
-	async recupVilles() {
-		this.covoiturages_listeComplete = await this.covoiturageService.recupListeCovoituragesOnServer();
+	recupVilles() {
 
-		let listVilleArriveeWhithDuplicateItems: string[] = [];
-		this.covoiturages_listeComplete.forEach((covoit) => {
-			listVilleArriveeWhithDuplicateItems.push(covoit.adresseArrivee.commune);
-		});
-		this.arrivee_liste = Array.from(new Set(listVilleArriveeWhithDuplicateItems));
+		this.covoiturageService.recupListeCovoituragesOnServer2()
+			.subscribe(liste => {
+				this.covoiturages_listeComplete = liste;
 
-		let listVilleDepartWhithDuplicateItems: string[] = [];
-		this.covoiturages_listeComplete.forEach((covoit) => {
-			listVilleDepartWhithDuplicateItems.push(covoit.adresseDepart.commune);
-		});
-		this.depart_liste = Array.from(new Set(listVilleDepartWhithDuplicateItems));
+				liste.forEach(covoit => {
+					let covoitReconstitue = covoit;
+
+					this.adresseService.findById2(covoit.adresseDepartId)
+						.subscribe(adresse => {
+							if (!this.isDoublon(adresse.commune, this.depart_liste))
+								this.depart_liste.push(adresse.commune);
+							covoitReconstitue.adresseDepart = adresse;
+						});
+					this.adresseService.findById2(covoit.adresseArriveeId)
+						.subscribe(adresse => {
+							if (!this.isDoublon(adresse.commune, this.arrivee_liste))
+								this.arrivee_liste.push(adresse.commune);
+							covoitReconstitue.adresseArrivee = adresse;
+						});
+
+					this.covoituragesReconstitues.push(covoitReconstitue);
+
+				});
+			});
+
+		//console.log("reconstitution des covoits : ", this.covoituragesReconstitues);
+
 	}
+
+	isDoublon(villeToInsert: string, listeAccueil: string[]): boolean {
+		//console.log("nom de la ville a insérer:", villeToInsert)
+		let foundDoublon = false;
+		let i = 0;
+		for (i = 0; i < listeAccueil.length; i++) {
+			if (villeToInsert === listeAccueil[i]) {
+        foundDoublon = true;
+        break;
+      }
+		}
+		return foundDoublon ? true : false;
+	}
+
 
 	/**
 	 * Récupère la donnée transmise par l'évènement
@@ -142,7 +181,7 @@ export class CovoiturageListComponent implements OnInit {
 		this.filtrage.filter_VilleDepart_Value = event.target.value;
 
 		if (this.filtrage.filter_VilleDepart_Value === "--Ville de départ--") {
-      //console.log("demande init");
+			//console.log("demande init");
 			this.filtrage.filter_VilleDepart_Value = "";
 		}
 
@@ -160,41 +199,11 @@ export class CovoiturageListComponent implements OnInit {
 		this.filtrageList();
 	}
 
-
-
-
-	/*  onCreateCovoiturage(): void {
-		this.covoiturageToPush = {
-		  nombrePlacesRestantes: 45,
-		  dureeTrajet: 45,
-		  distanceKm: 99,
-		  /!*       "adresseDepart": "1 place du menuet dansant 78350 Noisy les ardillons",
-		  "adresseArrivee": "87 avenue de Maupassant 23000 Guéret" *!/
-		};
-
-		this.covoiturageService.create(this.covoiturageToPush).subscribe(() => {
-		  /!* this.listeCovoiturages.push *!/
-		});
-		//this.covoiturages$ = this.covoiturageService.getAllCovoiturages();
-		// this._init();
-
-		/!* private _init() {
-	  this.covoiturageService.findAll(this.user)
-	   .subscribe(covoiturages => {
-		 this.listeCovoiturages = covoiturages;
-	   }) *!/
-	  }*/
-
-	/*
-	private _init() {
-	  this.covoiturageService.getAllCovoiturages();
-
-
-	  /**
-	   *Réinitialisation du filtrage
-	   *
-	   * @Author Atsuhiko Mochizuki
-	   */
+	/**
+	 *Réinitialisation du filtrage
+	 *
+	 * @Author Atsuhiko Mochizuki
+	 */
 	onResetFiltrage() {
 		this.ngOnInit();
 		this.depart_liste = [];
@@ -202,20 +211,20 @@ export class CovoiturageListComponent implements OnInit {
 		this.filtrageList();
 	}
 
-
-
 	/**
-	 * Traitement du filtrage de la listes de covoiturages côté passager
-	 *
-	 * @author Atsuhiko Mochizuki
-	 */
-	async filtrageList() {
-    //console.log("il rentre dnas le filtrage");
-		let completListOfCovoiturages = await this.covoiturageService.recupListeCovoituragesOnServer();
+		 * Traitement du filtrage de la listes de covoiturages côté passager
+		 *
+		 * @author Atsuhiko Mochizuki
+		 */
+	filtrageList() {
+		//console.log("liste des covoits:", this.covoituragesReconstitues);
 		if (this.filtrage.filter_VilleArrivee_value !== "") {
-      //console.log("des filtres ont été activés");
-			let arrivee_listeFiltree = completListOfCovoiturages.filter((covoit) => covoit.adresseArrivee.commune === this.filtrage.filter_VilleArrivee_value);
+			//console.log("des filtres ont été activés");
+			let arrivee_listeFiltree = this.covoituragesReconstitues.filter((covoit) => covoit.adresseArrivee.commune === this.filtrage.filter_VilleArrivee_value);
+			//console.log("liste filtrée:", arrivee_listeFiltree)
+
 			if (arrivee_listeFiltree.length > 0) {
+				//console.log("il y a au moins 1 filtre sur les villes d'arrivée");
 				this.arrivee_style_widget = this.WIDGET_STYLE_SUCCESS;
 				this.arrivee_disabledFilter = false;
 				this.depart_styleWidget = this.WIDGET_STYLE_INIT;
@@ -243,7 +252,7 @@ export class CovoiturageListComponent implements OnInit {
 						this.date_isFounded = false;
 
 						if (this.filtrage.filter_Date_value) {
-              //console.log("présence d'une date")
+							//console.log("présence d'une date")
 							let listeFiltree_byDate = listeFiltree_villeDepart.filter((covoit) => {
 								const dateCovoit = new Date(covoit.dateDepart);
 								const dateSouhaitee = new Date(this.filtrage.filter_Date_value);
@@ -329,6 +338,7 @@ export class CovoiturageListComponent implements OnInit {
 				}
 			}
 			else {
+				//console.log("il n'y a aucun filtre sur les villes d'arrivée");
 				this.arrivee_style_widget = this.WIDGET_STYLE_INPROGRESS;
 				this.arrivee_disabledFilter = false;
 				this.depart_styleWidget = this.WIDGET_STYLE_INIT;
@@ -342,26 +352,18 @@ export class CovoiturageListComponent implements OnInit {
 			}
 		}
 		else {
+			//console.log("aucun filtre actif");
 			this.arrivee_style_widget = this.WIDGET_STYLE_INIT;
 			this.arrivee_disabledFilter = false;
 			this.depart_styleWidget = this.WIDGET_STYLE_INIT;
 			this.depart_verrouillageWidget = true;
 			filtre_Date_style_widget: null;
 			this.date_verrouillageWidget = true;
-			this.listeAafficher = completListOfCovoiturages;
+			this.listeAafficher = this.covoituragesReconstitues;
+			//console.log("les covoits que l'on doit voir:", this.covoituragesReconstitues);
 			this.arrivee_isFounded = false;
 			this.depart_isFounded = false;
 			this.date_isFounded = false;
 		}
 	}
 }
-
-
-
-
-/*  this.covoiturageService.create(this.covoiturageToPush).subscribe(covoiturageReceived => {
-	 this.createdCovoiturage = covoiturageReceived;});
-
-	 console.log("covoiturage créeeeeeeeee");
-*/
-
