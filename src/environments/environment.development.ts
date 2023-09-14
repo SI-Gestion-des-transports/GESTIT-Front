@@ -22,12 +22,16 @@ export const environment = {
     login: 'http://localhost:8080/login',
     logout: 'http://localhost:8080/signout',
     utilisateur: 'http://localhost:8080/utilisateur',
-    verifyJwt:'http://localhost:8080/getuserbyjwt'
+    verifyJwt:'http://localhost:8080/getuserbyjwt',
+
 
 
   },
   JWT:"JWT-TOKEN",
   check:true,
-  currentUserName:"(Anonyme)"
+  currentUserName:"(Anonyme)",
+  viewCol:true,
+  viewAdmin:true,
+  loggedBtn:false
 }
 
